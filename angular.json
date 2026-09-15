@@ -20,6 +20,10 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "outputPath": {
+              "base": "./www",
+              "browser": ""
+            },
             "assets": [
               {
                 "glob": "**/*",
@@ -83,6 +87,32 @@
             "styles": [
               "src/styles.scss"
             ]
+          }
+        }
+      }
+    },
+    "wui": {
+      "projectType": "library",
+      "root": "projects/wui",
+      "sourceRoot": "projects/wui/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/wui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/wui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/wui/tsconfig.spec.json"
           }
         }
       }
