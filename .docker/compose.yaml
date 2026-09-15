@@ -1,0 +1,18 @@
+name: wui_angular
+services:
+  http:
+    container_name: wui_angular_dev
+    image: mochrira/dev:latest
+    volumes:
+      - ../:/workspace
+      - ./vhost.conf:/etc/apache2/conf.d/vhost.conf
+    environment:
+      - NG_INSTALL=YES
+      - NG_VERSION=20
+    networks:
+      - environment
+
+networks:
+  environment:
+    name: environment
+    external: true
