@@ -1,0 +1,17 @@
+// Level 2 — reset.
+// SENGAJA MINIMAL: hanya hal yang hampir selalu diinginkan dan aman ditambahkan ke
+// aplikasi konsumen. Belum ada normalize penuh, belum ada aturan tipografi elemen.
+// Kalau nanti ingin lebih agresif, cukup ganti isi mixin ini — `wui.scss` tidak perlu diubah.
+
+/// Reset minimal: `box-sizing` untuk semua elemen dan menghapus margin bawaan `body`.
+@mixin reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+}

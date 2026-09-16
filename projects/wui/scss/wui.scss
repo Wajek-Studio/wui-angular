@@ -1,19 +1,27 @@
 // =============================================================================
 // @wajek/wui — Entry point style layer
 // -----------------------------------------------------------------------------
-// Kontrak konsumsi di real app (dipasang manual di src/styles.scss):
+// Konsumsi di real app (dipasang manual di src/styles.scss):
 //     @use '@wajek/wui/scss/wui.scss';
-// Konvensi internal (lihat docs/planning/scss-wui-plan.md §3 & §5):
-//   - nama folder `scss/` dan file `wui.scss` adalah public API → jangan diubah
-//   - file tanpa prefix `_` = boleh di-@use konsumen
-//   - file dengan prefix `_` = internal, tidak boleh di-@use dari luar paket
-//   - urutan layer: tokens → tools → base → layout → components → utilities → themes
-// FASE 0 — masih placeholder (baru membuktikan jalur distribusi SCSS):
-//   selain penanda di bawah, file ini belum meng-emit style apa pun.
-//   Layer sebenarnya diisi bertahap mulai Fase 1 (token layer).
-// Penanda sementara untuk verifikasi end-to-end pipeline style.
-// HAPUS saat Fase 1 selesai.
+// Struktur 4 level: abstracts → base → themes → components
+//   abstracts/   token, fungsi, mixin — tanpa output
+//   base/        reset & tipografi dasar
+//   themes/      --wui-* untuk mode terang & gelap (prefers-color-scheme)
+//   components/  style per komponen
+// File ini hanya MEMANGGIL mixin tiap layer — tidak ada style yang ditulis di sini.
+// Mencopot sesuatu = menghapus satu baris `@include` di bawah.
+// Urutan wajib: themes sebelum components (komponen membaca var(--wui-*) dari tema).
 // =============================================================================
-:root {
-  --wui-loaded: 1;
-}
+
+@use 'base';
+@use 'components';
+@use 'themes';
+
+// Salakan layer — hapus barisnya kalau tidak ingin dipakai.
+@include base.reset;
+@include base.typography;
+@include base.layout;
+@include themes.light-theme;
+@include themes.dark-theme;
+@include components.app;
+@include components.page;

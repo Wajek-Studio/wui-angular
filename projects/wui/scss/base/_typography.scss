@@ -1,0 +1,20 @@
+// Level 2 — tipografi & warna dasar dokumen.
+
+/// Menerapkan font dasar dan warna tema pada dokumen.
+/// Di sinilah efek `prefers-color-scheme` mulai terlihat — komponen lain hanya
+/// perlu membaca `var(--wui-color-background)` / `var(--wui-color-text)`.
+@mixin typography {
+  :root {
+    font-family:
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      sans-serif;
+    line-height: 1.5;
+  }
+
+  body {
+    background-color: var(--wui-color-background);
+    color: var(--wui-color-text);
+  }
+}

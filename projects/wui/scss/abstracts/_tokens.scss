@@ -1,0 +1,41 @@
+// =============================================================================
+// Design token @wajek/wui — sumber kebenaran nilai (compile-time).
+// File ini TIDAK boleh menghasilkan CSS. Emisinya ada di `themes/`.
+// Konsumen mengganti nilai lewat CSS variable, bukan lewat file ini.
+// =============================================================================
+
+// ── Warna: mode terang ──────────────────────────────────────────────────────
+$wui-light-background: #FDF8FF !default;
+$wui-light-text: #1a1a1a !default;
+$wui-light-primary: #0057ff !default;
+
+// ── Warna: mode gelap ───────────────────────────────────────────────────────
+$wui-dark-background: #14121A !default;
+$wui-dark-text: #f5f5f5 !default;
+$wui-dark-primary: #6ea8ff !default;
+
+// ── Spasi ───────────────────────────────────────────────────────────────────
+$wui-space-1: 4px !default;
+$wui-space-2: 8px !default;
+$wui-space-3: 12px !default;
+$wui-space-4: 16px !default;
+$wui-space-6: 24px !default;
+
+// ── Radius ──────────────────────────────────────────────────────────────────
+$wui-radius-md: 8px !default;
+$wui-radius-lg: 12px !default;
+$wui-page-radius: 12px !default;
+
+// ── Z-index ─────────────────────────────────────────────────────────────────
+// Wajib dipakai semua komponen — dilarang menulis z-index mentah.
+$wui-z-base: 0 !default;
+$wui-z-overlay: 1000 !default;
+
+// ── Motion ──────────────────────────────────────────────────────────────────
+// Animasi yang memakainya wajib menghormati `prefers-reduced-motion`.
+$wui-motion-duration-fast: 120ms !default;
+$wui-motion-duration-base: 200ms !default;
+$wui-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1) !default;
+
+// ── Overlay ─────────────────────────────────────────────────────────────────
+$wui-overlay-color: rgb(0 0 0 / 40%) !default;

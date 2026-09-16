@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Wui } from './wui';
+import { App } from './app';
 
-describe('Wui', () => {
-  let component: Wui;
-  let fixture: ComponentFixture<Wui>;
+describe('App', () => {
+  let component: App;
+  let fixture: ComponentFixture<App>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Wui]
+      imports: [App]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Wui);
+    fixture = TestBed.createComponent(App);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

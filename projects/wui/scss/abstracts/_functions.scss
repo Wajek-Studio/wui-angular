@@ -1,0 +1,13 @@
+// Fungsi SCSS kustom. TIDAK menghasilkan CSS.
+@use 'sass:color';
+@use 'tokens';
+
+/// Jarak dari skala spasi. Contoh: `spacing(2)` → `8px`.
+@function spacing($step) {
+  @return tokens.$wui-space-1 * $step;
+}
+
+/// Mengubah tingkat transparansi sebuah warna. Contoh: `alpha(#0057ff, 0.2)`.
+@function alpha($color, $amount) {
+  @return color.change($color, $alpha: $amount);
+}

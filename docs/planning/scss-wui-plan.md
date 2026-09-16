@@ -127,6 +127,10 @@ Satu sumber, tidak ada copy-paste antar komponen.
 
 ## 3. Struktur folder yang diusulkan
 
+> ⚠️ **Struktur di bawah ini DIGANTIKAN** oleh `docs/planning/scss-structure-plan.md`
+> (4 level: `abstracts` → `base` → `themes` → `components`). Level `tools/`, `layout/`, dan
+> `utilities/` **tidak dipakai**. Sisanya di dokumen ini (kontrak konsumsi, token, config build) masih berlaku.
+
 ```
 projects/wui/scss/
 │

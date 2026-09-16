@@ -1,0 +1,16 @@
+// Mixin global. TIDAK menghasilkan CSS sampai dipanggil.
+
+/// Media query dari lebar tertentu ke atas.
+@mixin media-up($min-width) {
+  @media (min-width: $min-width) {
+    @content;
+  }
+}
+
+/// Cincin fokus yang konsisten — hanya muncul untuk navigasi keyboard.
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--wui-color-primary);
+    outline-offset: 2px;
+  }
+}

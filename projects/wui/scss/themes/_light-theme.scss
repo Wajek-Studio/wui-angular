@@ -1,0 +1,39 @@
+// Level 3 — tema terang.
+// Dipasang TANPA media query supaya jadi nilai default aplikasi.
+// Token yang tidak bergantung mode (z-index, motion, radius, overlay) juga di-emit di sini
+// karena blok ini adalah `:root` dasar.
+@use '../abstracts' as a;
+
+/// Tema terang + token yang tidak bergantung mode.
+@mixin light-theme {
+  :root {
+    color-scheme: light;
+
+    // Warna
+    --wui-color-background: #{a.$wui-light-background};
+    --wui-color-text: #{a.$wui-light-text};
+    --wui-color-primary: #{a.$wui-light-primary};
+
+    // Spasi & radius
+    --wui-space-1: #{a.$wui-space-1};
+    --wui-space-2: #{a.$wui-space-2};
+    --wui-space-3: #{a.$wui-space-3};
+    --wui-space-4: #{a.$wui-space-4};
+    --wui-space-6: #{a.$wui-space-6};
+    --wui-radius-md: #{a.$wui-radius-md};
+    --wui-radius-lg: #{a.$wui-radius-lg};
+    --wui-page-radius: #{a.$wui-page-radius};
+
+    // Z-index
+    --wui-z-base: #{a.$wui-z-base};
+    --wui-z-overlay: #{a.$wui-z-overlay};
+
+    // Motion
+    --wui-motion-duration-fast: #{a.$wui-motion-duration-fast};
+    --wui-motion-duration-base: #{a.$wui-motion-duration-base};
+    --wui-motion-easing-standard: #{a.$wui-motion-easing-standard};
+
+    // Overlay
+    --wui-overlay-color: #{a.$wui-overlay-color};
+  }
+}

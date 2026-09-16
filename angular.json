@@ -7,7 +7,8 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "skipTests": true
         }
       },
       "root": "",
@@ -99,9 +100,15 @@
     },
     "wui": {
       "projectType": "library",
+      "schematics": {
+        "@schematics/angular:component": {
+          "path": "projects/wui/src",
+          "style": "scss"
+        }
+      },
       "root": "projects/wui",
       "sourceRoot": "projects/wui/src",
-      "prefix": "lib",
+      "prefix": "wui",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
