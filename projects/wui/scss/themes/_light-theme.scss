@@ -35,5 +35,9 @@
 
     // Overlay
     --wui-overlay-color: #{a.$wui-overlay-color};
+
+    // Sidenav
+    --wui-sidenav-width: #{a.$wui-sidenav-width};
+    --wui-sidenav-mini-width: #{a.$wui-sidenav-mini-width};
   }
 }

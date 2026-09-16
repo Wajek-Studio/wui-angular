@@ -1,10 +1,20 @@
 <ng-template #page>
     <wui-page>
-        <wui-sidenav></wui-sidenav>
+        <wui-sidenav id="home-sidenav">
+            <div class="wui-sidenav-mini-content">
+                <p>Mini</p>
+            </div>
+
+            <div class="wui-sidenav-full-content">
+                <p>Full Sidenav</p>
+            </div>
+        </wui-sidenav>
         <div class="wui-page-content">
             <h2>Halaman Demo</h2>
 
             <button type="button" routerLink="nested">Open Nested</button>
+            <button type="button" (click)="toggleSidenav()">Toggle Sidenav</button>
+            <button type="button" (click)="toggleSidenavMini()">Toggle Sidenav Mini</button>
             
             <div id="lipsum">
                 <p>

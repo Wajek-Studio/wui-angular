@@ -1,19 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Sidenav } from './sidenav';
+import { WuiSidenav } from './sidenav';
 
-describe('Sidenav', () => {
-  let component: Sidenav;
-  let fixture: ComponentFixture<Sidenav>;
+describe('WuiSidenav', () => {
+  let component: WuiSidenav;
+  let fixture: ComponentFixture<WuiSidenav>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Sidenav]
+      imports: [WuiSidenav]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Sidenav);
+    fixture = TestBed.createComponent(WuiSidenav);
     component = fixture.componentInstance;
+    // `id` wajib — jadi kunci state di WuiSidenavService.
+    fixture.componentRef.setInput('id', 'menu-test');
     fixture.detectChanges();
   });
 

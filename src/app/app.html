@@ -1,4 +1,7 @@
 <wui-app>
-  <wui-sidenav></wui-sidenav>
+  <wui-sidenav id="app-sidenav">
+    <p>This is app sidenav</p>
+    <button type="button" (click)="toggleSidenav()">Toggle Sidenav</button>
+  </wui-sidenav>
   <router-outlet/>
 </wui-app>

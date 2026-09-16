@@ -33,9 +33,13 @@ $wui-z-overlay: 1000 !default;
 
 // ── Motion ──────────────────────────────────────────────────────────────────
 // Animasi yang memakainya wajib menghormati `prefers-reduced-motion`.
-$wui-motion-duration-fast: 120ms !default;
-$wui-motion-duration-base: 200ms !default;
+$wui-motion-duration-fast: 240ms !default;
+$wui-motion-duration-base: 400ms !default;
 $wui-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1) !default;
 
 // ── Overlay ─────────────────────────────────────────────────────────────────
 $wui-overlay-color: rgb(0 0 0 / 40%) !default;
+
+// ── Sidenav ─────────────────────────────────────────────────────────────────
+$wui-sidenav-width: 16rem !default;
+$wui-sidenav-mini-width: 4rem !default;
