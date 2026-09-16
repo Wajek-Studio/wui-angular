@@ -1,0 +1,208 @@
+<ng-template #page>
+  <wui-page>
+    <div class="wui-page-content button-container">
+      <header class="button-header">
+        <a routerLink="/home" class="button-back-btn">← Kembali ke Beranda</a>
+        <h1 class="button-title">WUI Button Specimen</h1>
+        <p class="button-subtitle">
+          Tombol <code>@wajek/wui</code> mengikuti Material 3 — tiga varian warna dan empat ukuran.
+          Dipasang sebagai atribut pada <code>&lt;button&gt;</code> native, sehingga <code>disabled</code>,
+          <code>type</code>, dan perilaku form tetap milik browser.
+        </p>
+      </header>
+
+      <p class="page-note">
+        State <em>hover</em> dan <em>pressed</em> dipaksa lewat class <code>.is-hover</code> / <code>.is-pressed</code>
+        (pola yang sama dengan <code>.is-dragged</code>) supaya bisa dilihat tanpa menggerakkan mouse.
+        Semua contoh di halaman ini memakai ukuran default <code>md</code>.
+      </p>
+
+      <!-- 1. FILLED -->
+      <section class="button-section">
+        <h2 class="section-title">1. Filled <code>variant="filled"</code></h2>
+        <p class="section-note">
+          Varian default: container <code>--wui-color-primary</code>, label <code>--wui-color-on-primary</code>,
+          elevasi 1 saat hover. Lapisan interaksinya dicampur ke warna container sehingga latar primary
+          tidak tertimpa.
+        </p>
+
+        <div class="button-grid">
+          <div class="button-sample">
+            <button wuiButton variant="filled">Filled</button>
+            <span class="sample-label">normal</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="filled" class="is-hover">Filled</button>
+            <span class="sample-label"><code>.is-hover</code> · layer on-primary 8% + elevasi 1</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="filled" class="is-pressed">Filled</button>
+            <span class="sample-label"><code>.is-pressed</code> · layer on-primary 10%</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="filled" disabled>Filled</button>
+            <span class="sample-label">disabled · container 12%, label 38%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. OUTLINED -->
+      <section class="button-section">
+        <h2 class="section-title">2. Outlined <code>variant="outlined"</code></h2>
+        <p class="section-note">
+          Container transparan dengan border 1px <code>--wui-color-outline</code>, label
+          <code>--wui-color-primary</code>. State layer-nya memakai peran <code>primary</code> sebagai
+          lapisan transparan.
+        </p>
+
+        <div class="button-grid">
+          <div class="button-sample">
+            <button wuiButton variant="outlined">Outlined</button>
+            <span class="sample-label">normal</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="outlined" class="is-hover">Outlined</button>
+            <span class="sample-label"><code>.is-hover</code> · layer primary 8%</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="outlined" class="is-pressed">Outlined</button>
+            <span class="sample-label"><code>.is-pressed</code> · layer primary 10%</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="outlined" disabled>Outlined</button>
+            <span class="sample-label">disabled · border 12%, label 38%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. TEXT -->
+      <section class="button-section">
+        <h2 class="section-title">3. Text <code>variant="text"</code></h2>
+        <p class="section-note">
+          Tanpa container dan border, label <code>--wui-color-primary</code>, dengan padding inline yang
+          lebih rapat (lihat tabel ukuran di bawah).
+        </p>
+
+        <div class="button-grid">
+          <div class="button-sample">
+            <button wuiButton variant="text">Text button</button>
+            <span class="sample-label">normal</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="text" class="is-hover">Text button</button>
+            <span class="sample-label"><code>.is-hover</code> · layer primary 8%</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="text" class="is-pressed">Text button</button>
+            <span class="sample-label"><code>.is-pressed</code> · layer primary 10%</span>
+          </div>
+          <div class="button-sample">
+            <button wuiButton variant="text" disabled>Text button</button>
+            <span class="sample-label">disabled · label 38%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. MODIFIER -->
+      <section class="button-section">
+        <h2 class="section-title">4. Modifier yang tersedia</h2>
+        <p class="section-note">
+          Varian dan ukuran bisa digabung bebas, mis. <code>&lt;button wuiButton variant="outlined" size="lg"&gt;</code>.
+          Ukuran tidak dijadikan contoh visual di halaman ini — cukup tabel berikut.
+        </p>
+
+        <h3 class="table-title">Varian warna · input <code>variant</code></h3>
+        <table class="modifier-table">
+          <thead>
+            <tr>
+              <th>Nilai</th>
+              <th>Kelas CSS</th>
+              <th>Container</th>
+              <th>Label</th>
+              <th>State layer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>filled</code> (default)</td>
+              <td><code>.wui-button--filled</code></td>
+              <td>primary</td>
+              <td>on-primary</td>
+              <td>on-primary 8% / 10% di atas primary</td>
+            </tr>
+            <tr>
+              <td><code>outlined</code></td>
+              <td><code>.wui-button--outlined</code></td>
+              <td>transparan + border outline</td>
+              <td>primary</td>
+              <td>primary 8% / 10%</td>
+            </tr>
+            <tr>
+              <td><code>text</code></td>
+              <td><code>.wui-button--text</code></td>
+              <td>transparan (tanpa border)</td>
+              <td>primary</td>
+              <td>primary 8% / 10%</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="table-title">Ukuran · input <code>size</code></h3>
+        <table class="modifier-table">
+          <thead>
+            <tr>
+              <th>Nilai</th>
+              <th>Kelas CSS</th>
+              <th>Tinggi</th>
+              <th>Padding inline</th>
+              <th>Padding text</th>
+              <th>Tipografi label</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>sm</code></td>
+              <td><code>.wui-button--sm</code></td>
+              <td>32px (2rem)</td>
+              <td>16px</td>
+              <td>8px</td>
+              <td><code>label-medium</code></td>
+            </tr>
+            <tr>
+              <td><code>md</code> (default)</td>
+              <td><code>.wui-button--md</code></td>
+              <td>40px (2.5rem)</td>
+              <td>24px</td>
+              <td>12px</td>
+              <td><code>label-large</code></td>
+            </tr>
+            <tr>
+              <td><code>lg</code></td>
+              <td><code>.wui-button--lg</code></td>
+              <td>48px (3rem)</td>
+              <td>28px</td>
+              <td>16px</td>
+              <td><code>label-large</code></td>
+            </tr>
+            <tr>
+              <td><code>xl</code></td>
+              <td><code>.wui-button--xl</code></td>
+              <td>56px (3.5rem)</td>
+              <td>32px</td>
+              <td>20px</td>
+              <td><code>title-medium</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="section-note">
+          Angka di tabel ini berasal dari <code>$wui-button-sizes</code> di
+          <code>scss/abstracts/_tokens.scss</code> — mengubah satu angka di sana mengubah kelas, CSS variable,
+          dan directive sekaligus. Semua ukuran juga bisa ditimpa per pemakaian lewat
+          <code>style="--wui-button-height: 3.25rem"</code>.
+        </p>
+      </section>
+    </div>
+  </wui-page>
+</ng-template>
+

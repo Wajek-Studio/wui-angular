@@ -16,5 +16,7 @@ export const routes: Routes = [{
 }, {
     path: 'tipografi', loadComponent: () => import('./pages/tipografi.page/tipografi.page').then(m => m.TipografiPage)
 }, {
+    path: 'button', loadComponent: () => import('./pages/button/button.page/button.page').then(m => m.ButtonPage)
+}, {
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

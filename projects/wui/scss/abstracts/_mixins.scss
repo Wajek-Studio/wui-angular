@@ -90,20 +90,33 @@
 }
 
 /// Menempelkan state layer standar pada elemen interaktif: hover `0.08`, pressed `0.10`,
-/// dragged `0.16`. Pakai di elemen yang latarnya transparan — komponen tetap yang mengatur
-/// warna dasarnya, mixin ini hanya menumpuk lapisan interaksinya.
+/// dragged `0.16`. Hover dibungkus `@media (hover: hover)` supaya tidak "lengket" di layar sentuh.
 /// @param {String} $wui-role - `'primary'` (default), atau `'on-primary'` bila elemen
 ///   berada di atas permukaan primary.
-@mixin interactive-state($wui-role: 'primary') {
-  &:hover {
-    background-color: functions.state-layer($wui-role, '08');
+/// @param {String|null} $wui-surface - Warna dasar elemen. Bila diisi, lapisan dicampur ke
+///   permukaan itu sehingga warna dasarnya tidak tertimpa (dipakai tombol `filled`).
+@mixin interactive-state($wui-role: 'primary', $wui-surface: null) {
+  @media (hover: hover) {
+    &:hover {
+      background-color: functions.state-layer($wui-role, '08', $wui-surface);
+    }
   }
 
   &:active {
-    background-color: functions.state-layer($wui-role, '10');
+    background-color: functions.state-layer($wui-role, '10', $wui-surface);
   }
 
   &.is-dragged {
-    background-color: functions.state-layer($wui-role, '16');
+    background-color: functions.state-layer($wui-role, '16', $wui-surface);
+  }
+
+  // Class bantu untuk MEMAKSA state — dipakai halaman demo, screenshot, dan pengujian visual
+  // tanpa perlu hover/klik sungguhan. Tidak dipakai oleh komponen di produksi.
+  &.is-hover {
+    background-color: functions.state-layer($wui-role, '08', $wui-surface);
+  }
+
+  &.is-pressed {
+    background-color: functions.state-layer($wui-role, '10', $wui-surface);
   }
 }

@@ -65,14 +65,29 @@
 /// Mengembalikan CSS variable state layer satu peran — dipakai komponen lewat mixin
 /// `interactive-state()`, supaya nama token-nya tidak ditulis manual.
 /// Contoh: `state-layer('primary', '08')` → `var(--wui-color-state-layer-primary-opacity-08)`
-@function state-layer($role, $opacity) {
+/// @param {String|null} $surface - Warna dasar elemen. Bila diisi, lapisan dicampur ke permukaan
+///   itu lewat `color-mix()` sehingga warna dasarnya tidak tertimpa (dipakai tombol `filled`).
+@function state-layer($role, $opacity, $surface: null) {
   @if not list.index(tokens.$wui-state-layer-roles, $role) {
     @error 'wui: state-layer(#{$role}, …) tidak ada. Peran yang tersedia: #{tokens.$wui-state-layer-roles}.';
   }
 
-  @if not map.has-key(tokens.$wui-state-layer-opacities, $opacity) {
-    @error 'wui: state-layer(…, #{$opacity}) tidak ada. Nilai yang tersedia: #{map.keys(tokens.$wui-state-layer-opacities)}.';
+  $wui-step: state-layer-step($opacity);
+
+  @if not $surface {
+    @return var(--wui-color-state-layer-#{$role}-opacity-#{$wui-step});
   }
 
-  @return var(--wui-color-state-layer-#{$role}-opacity-#{$opacity});
+  // `* 100%` (bukan `#{}%`) supaya hasilnya `8%` tanpa spasi — spasi antara angka dan `%`
+  // membuat deklarasinya tidak valid dan dibuang browser.
+  @return color-mix(in srgb, var(--wui-color-#{$role}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface});
+}
+
+/// Memvalidasi kunci opacity state layer sekaligus mengembalikannya.
+@function state-layer-step($opacity) {
+  @if not map.has-key(tokens.$wui-state-layer-opacities, $opacity) {
+    @error 'wui: opacity state layer #{$opacity} tidak ada. Nilai yang tersedia: #{map.keys(tokens.$wui-state-layer-opacities)}.';
+  }
+
+  @return $opacity;
 }

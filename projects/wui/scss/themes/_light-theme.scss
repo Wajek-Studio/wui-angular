@@ -41,6 +41,13 @@
     // Overlay
     --wui-overlay-color: #{a.$wui-overlay-color};
 
+    // Disabled — diturunkan dari warna teks, jadi satu definisi berlaku untuk dua mode.
+    --wui-color-disabled-container: color-mix(in srgb, var(--wui-color-text) #{a.$wui-disabled-container-opacity * 100}%, transparent);
+    --wui-color-disabled-content: color-mix(in srgb, var(--wui-color-text) #{a.$wui-disabled-content-opacity * 100}%, transparent);
+
+    // Elevasi
+    --wui-elevation-1: #{a.$wui-elevation-1};
+
     // Tipografi: Bobot Font
     --wui-font-weight-regular: #{a.$wui-font-weight-regular};
     --wui-font-weight-medium: #{a.$wui-font-weight-medium};

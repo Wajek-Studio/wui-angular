@@ -74,6 +74,27 @@ $wui-state-layer-opacities: (
   '16': 0.16,
 ) !default;
 
+// ── Button (Material 3) ─────────────────────────────────────────────────────
+// Satu sumber kebenaran ukuran tombol — `components/_button.scss` menerjemahkannya jadi CSS
+// variable, jadi mengubah satu angka cukup di sini.
+// `padding` = padding inline varian filled/outlined, `padding-text` = varian text (tanpa border).
+$wui-button-sizes: (
+  'sm': ('height': 2rem,   'padding': 1rem,    'padding-text': 0.5rem,  'icon': 1rem,     'label-role': 'label', 'label-size': 'medium'),
+  'md': ('height': 2.5rem, 'padding': 1.5rem,  'padding-text': 0.75rem, 'icon': 1.125rem, 'label-role': 'label', 'label-size': 'large'),
+  'lg': ('height': 3rem,   'padding': 1.75rem, 'padding-text': 1rem,    'icon': 1.25rem,  'label-role': 'label', 'label-size': 'large'),
+  'xl': ('height': 3.5rem, 'padding': 2rem,    'padding-text': 1.25rem, 'icon': 1.5rem,   'label-role': 'title', 'label-size': 'medium'),
+) !default;
+
+// Radius penuh (bentuk pil) sesuai shape `round` default M3.
+$wui-button-radius: 9999px !default;
+
+// Disabled M3: container 12%, isi (label/border) 38% dari warna `on-surface`.
+$wui-disabled-container-opacity: 0.12 !default;
+$wui-disabled-content-opacity: 0.38 !default;
+
+// Elevasi level 1 M3 — dipakai tombol filled saat hover.
+$wui-elevation-1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%) !default;
+
 // ── Spasi ───────────────────────────────────────────────────────────────────
 // Metrik Bootstrap: 0 · 0.25rem · 0.5rem · 1rem · 1.5rem · 3rem
 // `$wui-spacers` adalah sumber kebenarannya — dipakai utilitas `.wui-m-*` / `.wui-p-*`

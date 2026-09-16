@@ -37,6 +37,7 @@
 // Kalau aplikasi menyetel `$wui-palette: false`, baris ini tidak melakukan apa pun.
 @include themes.palette(themes.$wui-palette);
 @include components.app;
+@include components.button;
 @include components.page;
 @include components.sidenav;
 @include components.topbar;

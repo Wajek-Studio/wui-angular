@@ -1,0 +1,115 @@
+// Level 4 — tombol (Material 3).
+// Varian: filled (default M3) / outlined / text. Ukuran: sm / md / lg / xl.
+// Semua angkanya ada di `abstracts/_tokens.scss` (seksi `Button (M3)`); berkas ini hanya
+// menerjemahkannya jadi CSS variable `--wui-button-*` + aturan state — jadi aplikasi bisa
+// menyesuaikan per pemakaian, mis. `style="--wui-button-height: 3.25rem"`.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+/// Tombol Material 3 — `.wui-button` (default filled) dengan modifier
+/// `--filled` / `--outlined` / `--text` dan `--sm` / `--md` / `--lg` / `--xl`.
+@mixin button {
+    $wui-md: map.get(a.$wui-button-sizes, 'md');
+
+    // Bentuk, ukuran dasar (md), tipografi label, dan cincin fokus.
+    .wui-button {
+        --wui-button-height: #{map.get($wui-md, 'height')};
+        --wui-button-padding: #{map.get($wui-md, 'padding')};
+        --wui-button-padding-text: #{map.get($wui-md, 'padding-text')};
+        --wui-button-icon-size: #{map.get($wui-md, 'icon')};
+        --wui-button-radius: #{a.$wui-button-radius};
+
+        // Reset lokal — hanya tombol ber-class ini yang terpengaruh, tombol lain di aplikasi aman.
+        appearance: none;
+        border: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--wui-button-height);
+        padding-inline: var(--wui-button-padding);
+        border-radius: var(--wui-button-radius);
+        font: inherit;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), box-shadow var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
+
+        @include a.typography(map.get($wui-md, 'label-role'), map.get($wui-md, 'label-size'));
+        @include a.focus-ring;
+
+        &:disabled {
+            cursor: default;
+        }
+    }
+
+    // ── Varian filled (default) ─────────────────────────────────────────────
+    // Lapisan interaksinya dicampur dengan warna container (`on-primary` di atas primary),
+    // jadi warna dasarnya tidak tertimpa.
+    .wui-button,
+    .wui-button--filled {
+        background-color: var(--wui-color-primary);
+        color: var(--wui-color-on-primary);
+
+        @include a.interactive-state('on-primary', var(--wui-color-primary));
+
+        @media (hover: hover) {
+            &:hover {
+                box-shadow: var(--wui-elevation-1);
+            }
+        }
+
+        // Versi paksa untuk demo/screenshot (lihat `interactive-state()`).
+        &.is-hover {
+            box-shadow: var(--wui-elevation-1);
+        }
+
+        &:disabled {
+            background-color: var(--wui-color-disabled-container);
+            box-shadow: none;
+            color: var(--wui-color-disabled-content);
+        }
+    }
+
+    // ── Varian outlined ─────────────────────────────────────────────────────
+    // `background-color: transparent` wajib: elemen tombol selalu membawa class dasar
+    // `.wui-button` (latar filled), jadi varian harus mereset latarnya sendiri.
+    .wui-button--outlined {
+        background-color: transparent;
+        border: 1px solid var(--wui-color-outline);
+        color: var(--wui-color-primary);
+
+        @include a.interactive-state('primary');
+
+        &:disabled {
+            background-color: transparent;
+            border-color: var(--wui-color-disabled-container);
+            color: var(--wui-color-disabled-content);
+        }
+    }
+
+    // ── Varian text ─────────────────────────────────────────────────────────
+    // Tanpa border, padding lebih rapat (nilai `padding-text` per ukuran).
+    .wui-button--text {
+        background-color: transparent;
+        padding-inline: var(--wui-button-padding-text);
+        color: var(--wui-color-primary);
+
+        @include a.interactive-state('primary');
+
+        &:disabled {
+            background-color: transparent;
+            color: var(--wui-color-disabled-content);
+        }
+    }
+
+    // ── Ukuran ──────────────────────────────────────────────────────────────
+    @each $wui-size, $wui-props in a.$wui-button-sizes {
+        .wui-button--#{$wui-size} {
+            --wui-button-height: #{map.get($wui-props, 'height')};
+            --wui-button-padding: #{map.get($wui-props, 'padding')};
+            --wui-button-padding-text: #{map.get($wui-props, 'padding-text')};
+            --wui-button-icon-size: #{map.get($wui-props, 'icon')};
+
+            @include a.typography(map.get($wui-props, 'label-role'), map.get($wui-props, 'label-size'));
+        }
+    }
+}

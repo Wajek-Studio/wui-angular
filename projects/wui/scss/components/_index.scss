@@ -1,6 +1,7 @@
 // Style yang HARUS ter-emit ke global — tidak bisa ditangani component style (view encapsulation).
 
 @forward 'app';
+@forward 'button';
 @forward 'page';
 @forward 'sidenav';
 @forward 'topbar';

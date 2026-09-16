@@ -4,6 +4,9 @@
 
 export * from './app/app';
 
+export * from './button/button';
+export * from './button/button.options';
+
 export * from './page/page.component';
 export * from './page/page.options';
 export * from './page/page.ref';
