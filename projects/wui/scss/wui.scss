@@ -3,11 +3,12 @@
 // -----------------------------------------------------------------------------
 // Konsumsi di real app (dipasang manual di src/styles.scss):
 //     @use '@wajek/wui/scss/wui.scss';
-// Struktur 4 level: abstracts → base → themes → components
+// Struktur 5 level: abstracts → base → themes → components → utilities
 //   abstracts/   token, fungsi, mixin — tanpa output
-//   base/        reset & tipografi dasar
+//   base/        reset, tipografi, layout dasar
 //   themes/      --wui-* untuk mode terang & gelap (prefers-color-scheme)
 //   components/  style per komponen
+//   utilities/   class bantu (spacing)
 // File ini hanya MEMANGGIL mixin tiap layer — tidak ada style yang ditulis di sini.
 // Mencopot sesuatu = menghapus satu baris `@include` di bawah.
 // Urutan wajib: themes sebelum components (komponen membaca var(--wui-*) dari tema).
@@ -17,6 +18,7 @@
 @use 'components';
 @use 'themes';
 @forward 'themes';
+@use 'utilities';
 
 // Salakan layer — hapus barisnya kalau tidak ingin dipakai.
 @include base.reset;
@@ -28,3 +30,6 @@
 @include components.page;
 @include components.sidenav;
 @include components.topbar;
+
+// Utilitas dipanggil TERAKHIR supaya bisa menimpa style komponen tanpa perlu `!important`.
+@include utilities.spacing;

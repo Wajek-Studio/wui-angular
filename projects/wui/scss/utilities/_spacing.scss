@@ -1,0 +1,33 @@
+// Level 5 — utilitas spacing (margin & padding).
+// Class di bawah hanya pembungkus tipis dari mixin `space()` di `abstracts/`,
+// jadi daftar arah, properti, dan varian `auto` tidak mungkin berbeda dengan
+// yang dipakai di dalam komponen.
+// Ukuran mengikuti metrik Bootstrap: 0 · 0.25rem · 0.5rem · 1rem · 1.5rem · 3rem.
+// Nilainya diambil dari CSS variable `--wui-space-*` supaya aplikasi bisa
+// mengubah ukuran spasi global cukup dengan meng-override variable tersebut;
+// nilai dari map dipasang sebagai fallback kalau layer `themes` tidak diikutkan.
+// Class-nya diberi prefix `wui-` supaya tidak bentrok kalau aplikasi juga memakai
+// Bootstrap/Tailwind yang punya `.m-3` / `.p-3` sendiri.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+@mixin spacing {
+    // Margin & padding per langkah: `.wui-m-3`, `.wui-mt-3`, `.wui-px-3`, dst.
+    // `map.keys()` supaya yang diulang hanya nama arah/langkahnya, bukan pasangan key-value.
+    @each $step in map.keys(a.$wui-spacers) {
+        @each $dir in map.keys(a.$wui-margin-dirs) {
+            .wui-#{$dir}-#{$step} { @include a.space($dir, $step); }
+        }
+
+        @each $dir in map.keys(a.$wui-padding-dirs) {
+            .wui-#{$dir}-#{$step} { @include a.space($dir, $step); }
+        }
+    }
+
+    // Varian `auto` — hanya margin, untuk mendorong atau memusatkan elemen
+    // (seperti `mx-auto` Bootstrap). Contoh: `.wui-mx-auto`, `.wui-mt-auto`.
+    @each $dir in map.keys(a.$wui-margin-dirs) {
+        .wui-#{$dir}-auto { @include a.space($dir, auto); }
+    }
+
+}

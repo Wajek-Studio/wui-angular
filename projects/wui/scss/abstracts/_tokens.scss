@@ -3,6 +3,7 @@
 // File ini TIDAK boleh menghasilkan CSS. Emisinya ada di `themes/`.
 // Konsumen mengganti nilai lewat CSS variable, bukan lewat file ini.
 // =============================================================================
+@use 'sass:map';
 
 // ── Palet Warna (Figma wui/color) ───────────────────────────────────────────
 $wui-color-palettes: (
@@ -49,11 +50,52 @@ $wui-dark-primary: #6ea8ff !default;
 $wui-dark-outline: #484553 !default;
 
 // ── Spasi ───────────────────────────────────────────────────────────────────
-$wui-space-1: 4px !default;
-$wui-space-2: 8px !default;
-$wui-space-3: 12px !default;
-$wui-space-4: 16px !default;
-$wui-space-6: 24px !default;
+// Metrik Bootstrap: 0 · 0.25rem · 0.5rem · 1rem · 1.5rem · 3rem
+// `$wui-spacers` adalah sumber kebenarannya — dipakai utilitas `.wui-m-*` / `.wui-p-*`
+// dan fungsi `spacing()`.
+$wui-spacer: 1rem !default;
+$wui-spacers: (
+    0: 0,
+    1: $wui-spacer * 0.25,
+    2: $wui-spacer * 0.5,
+    3: $wui-spacer,
+    4: $wui-spacer * 1.5,
+    5: $wui-spacer * 3,
+) !default;
+
+// Turunan dari map di atas — dipakai `themes/` untuk meng-emit `--wui-space-*`.
+$wui-space-0: map.get($wui-spacers, 0) !default;
+$wui-space-1: map.get($wui-spacers, 1) !default;
+$wui-space-2: map.get($wui-spacers, 2) !default;
+$wui-space-3: map.get($wui-spacers, 3) !default;
+$wui-space-4: map.get($wui-spacers, 4) !default;
+$wui-space-5: map.get($wui-spacers, 5) !default;
+
+// Peta arah spasi → properti CSS yang harus ditulis. Dua peta di bawah adalah
+// sumber kebenaran bersama untuk mixin `space()` (dipakai di dalam komponen)
+// dan utilitas `.wui-*` (dipakai di template), jadi keduanya tidak mungkin beda.
+// Sumbu `x`/`y` dan sisi `s`/`e` memakai logical property supaya RTL ikut benar:
+// pada dokumen LTR, `px` = padding-left + padding-right.
+$wui-margin-dirs: (
+    m: (margin),
+    mt: (margin-top),
+    mb: (margin-bottom),
+    ms: (margin-inline-start),
+    me: (margin-inline-end),
+    mx: (margin-inline),
+    my: (margin-block),
+) !default;
+
+// Padding tidak mengenal nilai `auto`.
+$wui-padding-dirs: (
+    p: (padding),
+    pt: (padding-top),
+    pb: (padding-bottom),
+    ps: (padding-inline-start),
+    pe: (padding-inline-end),
+    px: (padding-inline),
+    py: (padding-block),
+) !default;
 
 // ── Radius ──────────────────────────────────────────────────────────────────
 $wui-radius-md: 8px !default;

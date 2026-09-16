@@ -1,4 +1,7 @@
 // Mixin global. TIDAK menghasilkan CSS sampai dipanggil.
+@use 'sass:map';
+@use 'functions';
+@use 'tokens';
 
 /// Media query dari lebar tertentu ke atas.
 @mixin media-up($min-width) {
@@ -49,4 +52,39 @@
 
 @mixin label($size: 'medium', $weight: null) {
   @include typography('label', $size, $weight);
+}
+
+/// Menuliskan margin/padding untuk satu sisi atau satu sumbu tanpa mengetik
+/// properti CSS-nya manual. Contoh:
+///   `@include a.space(mt, 3);`    → `margin-top: var(--wui-space-3, 1rem)`
+///   `@include a.space(px, 4);`    → `padding-inline: var(--wui-space-4, 1.5rem)`
+///   `@include a.space(mx, auto);` → `margin-inline: auto`
+/// Arah yang tersedia: `m` `mt` `mb` `ms` `me` `mx` `my` (margin) dan
+/// `p` `pt` `pb` `ps` `pe` `px` `py` (padding). Sumbu `x`/`y` dan sisi `s`/`e`
+/// memakai logical property, jadi RTL ikut benar tanpa aturan tambahan.
+/// Nilai `auto` hanya berlaku untuk margin.
+@mixin space($dir, $step) {
+  $wui-props: map.get(tokens.$wui-margin-dirs, $dir);
+
+  @if not $wui-props {
+    $wui-props: map.get(tokens.$wui-padding-dirs, $dir);
+  }
+
+  @if not $wui-props {
+    @error 'wui: arah spasi `#{$dir}` tidak dikenal. Pakai: m, mt, mb, ms, me, mx, my, p, pt, pb, ps, pe, px, py.';
+  }
+
+  @if $step == auto and map.get(tokens.$wui-padding-dirs, $dir) {
+    @error 'wui: space(#{$dir}, auto) tidak valid — padding tidak mengenal nilai `auto`.';
+  }
+
+  $wui-value: auto;
+
+  @if $step != auto {
+    $wui-value: functions.spacing-var($step);
+  }
+
+  @each $wui-prop in $wui-props {
+    #{$wui-prop}: $wui-value;
+  }
 }

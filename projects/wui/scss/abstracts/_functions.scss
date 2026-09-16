@@ -3,9 +3,22 @@
 @use 'sass:map';
 @use 'tokens';
 
-/// Jarak dari skala spasi. Contoh: `spacing(2)` → `8px`.
+/// Jarak dari skala spasi. Contoh: `spacing(3)` → `1rem`.
+/// Ukuran yang tersedia: 0, 1, 2, 3, 4, 5 (metrik Bootstrap).
 @function spacing($step) {
-  @return tokens.$wui-space-1 * $step;
+  @if not map.has-key(tokens.$wui-spacers, $step) {
+    @error 'wui: spacing(#{$step}) tidak ada. Ukuran yang tersedia: 0, 1, 2, 3, 4, 5.';
+  }
+
+  @return map.get(tokens.$wui-spacers, $step);
+}
+
+/// Nilai spasi siap pakai yang membaca CSS variable, dengan nilai dari map
+/// sebagai fallback: `spacing-var(3)` → `var(--wui-space-3, 1rem)`.
+/// Dipakai mixin `space()` dan utilitas `.wui-*` supaya ukuran spasi bisa
+/// diubah aplikasi lewat `--wui-space-*` tanpa rebuild.
+@function spacing-var($step) {
+  @return var(--wui-space-#{$step}, #{spacing($step)});
 }
 
 /// Mengubah tingkat transparansi sebuah warna. Contoh: `alpha(#0057ff, 0.2)`.
