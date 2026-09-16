@@ -1,0 +1,8 @@
+@mixin topbar {
+
+    wui-topbar {
+        border-bottom: 1px solid var(--wui-color-outline);
+        width: 100%;
+    }
+
+}

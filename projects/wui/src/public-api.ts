@@ -12,3 +12,5 @@ export * from './page/page.service';
 export * from './sidenav/sidenav';
 export * from './sidenav/sidenav.options';
 export * from './sidenav/sidenav.service';
+
+export * from './topbar/topbar';

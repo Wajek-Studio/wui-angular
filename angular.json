@@ -103,7 +103,8 @@
       "schematics": {
         "@schematics/angular:component": {
           "path": "projects/wui/src",
-          "style": "scss"
+          "style": "scss",
+          "skipTests": true
         }
       },
       "root": "projects/wui",

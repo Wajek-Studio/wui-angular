@@ -22,6 +22,8 @@
 
     wui-page {
         background-color: var(--wui-color-background);
+        display: flex;
+        flex-direction: column;
     }
 
 }

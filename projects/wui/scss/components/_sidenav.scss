@@ -13,6 +13,13 @@
         overflow: hidden;
         opacity: 1;
 
+        // Garis pemisah digambar dengan inset box-shadow, bukan `border-right`.
+        // Border biasa selalu tergambar minimal setebal border-nya walau `width: 0` — browser
+        // tidak bisa mengecilkan border di bawah ketebalannya — sehingga garisnya tetap terlihat
+        // saat sidenav tertutup. Inset shadow digambar DI DALAM kotak elemen, jadi ikut terpotong
+        // habis begitu lebar menyusut ke 0, dan menyusut mulus selama transisi.
+        box-shadow: inset -1px 0 0 var(--wui-color-outline);
+
         // Lebar default = state `is-open`.
         width: var(--wui-sidenav-width, 16rem);
         background-color: var(--wui-color-background);

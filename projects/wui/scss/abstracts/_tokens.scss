@@ -8,11 +8,13 @@
 $wui-light-background: #FDF8FF !default;
 $wui-light-text: #1a1a1a !default;
 $wui-light-primary: #0057ff !default;
+$wui-light-outline: #CAC4D5 !default;
 
 // ── Warna: mode gelap ───────────────────────────────────────────────────────
 $wui-dark-background: #14121A !default;
 $wui-dark-text: #f5f5f5 !default;
 $wui-dark-primary: #6ea8ff !default;
+$wui-dark-outline: #484553 !default;
 
 // ── Spasi ───────────────────────────────────────────────────────────────────
 $wui-space-1: 4px !default;
@@ -77,3 +79,5 @@ $wui-typography-scales: (
 // ── Sidenav ─────────────────────────────────────────────────────────────────
 $wui-sidenav-width: 16rem !default;
 $wui-sidenav-mini-width: 4rem !default;
+
+// ── Outline ─────────────────────────────────────────────────────────────────
