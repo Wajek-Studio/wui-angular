@@ -39,3 +39,38 @@ $wui-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1) !default;
 
 // ── Overlay ─────────────────────────────────────────────────────────────────
 $wui-overlay-color: rgb(0 0 0 / 40%) !default;
+
+// ── Tipografi: Bobot Font ───────────────────────────────────────────────────
+$wui-font-weight-regular: 400 !default;
+$wui-font-weight-medium: 500 !default;
+$wui-font-weight-semibold: 600 !default;
+$wui-font-weight-bold: 700 !default;
+
+// ── Tipografi: Master Map Skala Tipografi (Figma wui/*) ──────────────────────
+$wui-typography-scales: (
+  'display': (
+    'large':  ('size': 3.5625rem, 'line-height': 4rem,    'letter-spacing': -0.25px, 'weight': 400),
+    'medium': ('size': 2.8125rem, 'line-height': 3.25rem, 'letter-spacing': 0px,    'weight': 400),
+    'small':  ('size': 2.25rem,   'line-height': 2.75rem, 'letter-spacing': 0px,    'weight': 400),
+  ),
+  'headline': (
+    'large':  ('size': 2rem,      'line-height': 2.5rem,  'letter-spacing': 0px,    'weight': 400),
+    'medium': ('size': 1.75rem,   'line-height': 2.25rem, 'letter-spacing': 0px,    'weight': 400),
+    'small':  ('size': 1.5rem,    'line-height': 2rem,    'letter-spacing': 0px,    'weight': 400),
+  ),
+  'title': (
+    'large':  ('size': 1.375rem,  'line-height': 1.75rem, 'letter-spacing': 0px,    'weight': 400),
+    'medium': ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.15px, 'weight': 500),
+    'small':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,  'weight': 500),
+  ),
+  'body': (
+    'large':  ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.5px,  'weight': 400),
+    'medium': ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.25px, 'weight': 400),
+    'small':  ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.4px,  'weight': 400),
+  ),
+  'label': (
+    'large':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,  'weight': 500),
+    'medium': ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.5px,  'weight': 500),
+    'small':  ('size': 0.6875rem, 'line-height': 1rem,    'letter-spacing': 0.5px,  'weight': 500),
+  ),
+) !default;

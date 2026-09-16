@@ -2,6 +2,7 @@
 // Dipasang TANPA media query supaya jadi nilai default aplikasi.
 // Token yang tidak bergantung mode (z-index, motion, radius, overlay) juga di-emit di sini
 // karena blok ini adalah `:root` dasar.
+@use 'sass:map';
 @use '../abstracts' as a;
 
 /// Tema terang + token yang tidak bergantung mode.
@@ -35,5 +36,21 @@
 
     // Overlay
     --wui-overlay-color: #{a.$wui-overlay-color};
+
+    // Tipografi: Bobot Font
+    --wui-font-weight-regular: #{a.$wui-font-weight-regular};
+    --wui-font-weight-medium: #{a.$wui-font-weight-medium};
+    --wui-font-weight-semibold: #{a.$wui-font-weight-semibold};
+    --wui-font-weight-bold: #{a.$wui-font-weight-bold};
+
+    // Tipografi: Custom Properties (Display, Headline, Title, Body, Label)
+    @each $role, $sizes in a.$wui-typography-scales {
+      @each $size, $props in $sizes {
+        --wui-font-size-#{$role}-#{$size}: #{map.get($props, 'size')};
+        --wui-line-height-#{$role}-#{$size}: #{map.get($props, 'line-height')};
+        --wui-letter-spacing-#{$role}-#{$size}: #{map.get($props, 'letter-spacing')};
+        --wui-font-weight-#{$role}-#{$size}: #{map.get($props, 'weight')};
+      }
+    }
   }
 }

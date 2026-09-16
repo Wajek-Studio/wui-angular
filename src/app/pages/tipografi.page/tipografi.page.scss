@@ -1,0 +1,132 @@
+.tipografi-container {
+  padding: 2rem 2.5rem;
+  max-width: 1200px;
+}
+
+.tipografi-header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgb(125 125 125 / 15%);
+  padding-bottom: 1.5rem;
+}
+
+.tipografi-back-btn {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--wui-color-primary);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.tipografi-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.tipografi-subtitle {
+  margin: 0;
+  color: rgb(125 125 125 / 80%);
+  font-size: 0.95rem;
+
+  code {
+    background: rgb(125 125 125 / 10%);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+}
+
+.scale-section {
+  margin-bottom: 3.5rem;
+}
+
+.scale-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+  color: var(--wui-color-text);
+
+  code {
+    font-size: 1rem;
+    color: var(--wui-color-primary);
+  }
+}
+
+.specimen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 2.5rem;
+}
+
+.specimen-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid rgb(125 125 125 / 20%);
+  padding-bottom: 0.75rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+}
+
+.column-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgb(125 125 125 / 12%);
+  color: var(--wui-color-text);
+
+  &--medium {
+    background: rgb(0 87 255 / 12%);
+    color: var(--wui-color-primary);
+  }
+}
+
+.specimen-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border-radius: 8px;
+  background: rgb(125 125 125 / 4%);
+  border: 1px solid rgb(125 125 125 / 10%);
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: rgb(125 125 125 / 25%);
+  }
+}
+
+.specimen-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.meta-name {
+  font-family: monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--wui-color-primary);
+}
+
+.meta-props {
+  font-size: 0.75rem;
+  color: rgb(125 125 125 / 75%);
+}

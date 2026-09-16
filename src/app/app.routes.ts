@@ -3,6 +3,7 @@ import { SettingPage } from './pages/setting/setting.page/setting.page';
 import { SettingNestedPage } from './pages/setting/setting-nested.page/setting-nested.page';
 import { HomePage } from './pages/home/home.page/home.page';
 import { HomeNestedPage } from './pages/home/home-nested.page/home-nested.page';
+import { TipografiPage } from './pages/tipografi.page/tipografi.page';
 
 export const routes: Routes = [{
     path: 'home', component: HomePage, children: [{
@@ -12,6 +13,8 @@ export const routes: Routes = [{
     path: 'setting', component: SettingPage, children: [{
         path: 'nested', component: SettingNestedPage
     }]
+}, {
+    path: 'tipografi', component: TipografiPage
 }, {
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

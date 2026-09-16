@@ -14,3 +14,37 @@
     outline-offset: 2px;
   }
 }
+
+/// Menerapkan styling tipografi lengkap ke selector berdasarkan peran & ukuran.
+/// Contoh: `@include a.typography('title', 'large', 'semibold');`
+@mixin typography($role, $size: 'medium', $weight: null) {
+  font-size: var(--wui-font-size-#{$role}-#{$size});
+  line-height: var(--wui-line-height-#{$role}-#{$size});
+  letter-spacing: var(--wui-letter-spacing-#{$role}-#{$size});
+  font-weight: var(--wui-font-weight-#{$role}-#{$size});
+
+  @if $weight {
+    font-weight: var(--wui-font-weight-#{$weight});
+  }
+}
+
+/// Convenience aliases untuk masing-masing peran tipografi:
+@mixin display($size: 'medium', $weight: null) {
+  @include typography('display', $size, $weight);
+}
+
+@mixin headline($size: 'medium', $weight: null) {
+  @include typography('headline', $size, $weight);
+}
+
+@mixin title($size: 'medium', $weight: null) {
+  @include typography('title', $size, $weight);
+}
+
+@mixin body($size: 'medium', $weight: null) {
+  @include typography('body', $size, $weight);
+}
+
+@mixin label($size: 'medium', $weight: null) {
+  @include typography('label', $size, $weight);
+}

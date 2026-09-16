@@ -1,11 +1,11 @@
 // Level 2 — tipografi & warna dasar dokumen.
+@use '../abstracts' as a;
 
-/// Menerapkan font dasar dan warna tema pada dokumen.
-/// Di sinilah efek `prefers-color-scheme` mulai terlihat — komponen lain hanya
-/// perlu membaca `var(--wui-color-background)` / `var(--wui-color-text)`.
+/// Menerapkan font dasar, warna tema, dan kelas tipografi pada dokumen.
 @mixin typography {
   :root {
     font-family:
+      Roboto,
       system-ui,
       -apple-system,
       'Segoe UI',
@@ -16,5 +16,50 @@
   body {
     background-color: var(--wui-color-background);
     color: var(--wui-color-text);
+  }
+
+  // ── Kelas Tipografi WUI (Display, Headline, Title, Body, Label) ───────────
+  @each $role, $sizes in a.$wui-typography-scales {
+    @each $size, $props in $sizes {
+      .wui-#{$role}-#{$size} {
+        font-size: var(--wui-font-size-#{$role}-#{$size});
+        line-height: var(--wui-line-height-#{$role}-#{$size});
+        letter-spacing: var(--wui-letter-spacing-#{$role}-#{$size});
+        font-weight: var(--wui-font-weight-#{$role}-#{$size});
+
+        &--regular {
+          font-weight: var(--wui-font-weight-regular);
+        }
+
+        &--medium {
+          font-weight: var(--wui-font-weight-medium);
+        }
+
+        &--semibold {
+          font-weight: var(--wui-font-weight-semibold);
+        }
+
+        &--bold {
+          font-weight: var(--wui-font-weight-bold);
+        }
+      }
+    }
+  }
+
+  // ── Utilitas Bobot Font ───────────────────────────────────────────────────
+  .wui-font-regular {
+    font-weight: var(--wui-font-weight-regular);
+  }
+
+  .wui-font-medium {
+    font-weight: var(--wui-font-weight-medium);
+  }
+
+  .wui-font-semibold {
+    font-weight: var(--wui-font-weight-semibold);
+  }
+
+  .wui-font-bold {
+    font-weight: var(--wui-font-weight-bold);
   }
 }

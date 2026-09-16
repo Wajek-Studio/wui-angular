@@ -1,0 +1,366 @@
+<ng-template #page>
+  <wui-page>
+    <wui-sidenav></wui-sidenav>
+    <div class="wui-page-content tipografi-container">
+      <header class="tipografi-header">
+        <div>
+          <a routerLink="/home" class="tipografi-back-btn">← Kembali ke Beranda</a>
+          <h1 class="tipografi-title">WUI Typography Specimen</h1>
+          <p class="tipografi-subtitle">
+            Koleksi gaya tipografi <code>@wajek/wui</code> sesuai spesifikasi Figma (Roboto, Display & Headline scales).
+          </p>
+        </div>
+      </header>
+
+      <!-- SEKSI 1: DISPLAY SCALE -->
+      <section class="scale-section">
+        <h2 class="scale-title">1. Display Scale (<code>wui/display</code>)</h2>
+        <main class="specimen-grid">
+          <!-- Kolom Kiri: Regular (400) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Regular (400)</h3>
+              <span class="column-badge">Default Class</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-display-large</span>
+                <span class="meta-props">57px / 64px &bull; letter-spacing: -0.25px</span>
+              </div>
+              <div class="wui-display-large">Display-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-display-medium</span>
+                <span class="meta-props">45px / 52px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-display-medium">Display-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-display-small</span>
+                <span class="meta-props">36px / 44px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-display-small">Display-Small</div>
+            </article>
+          </section>
+
+          <!-- Kolom Kanan: Medium (500) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Medium (500)</h3>
+              <span class="column-badge column-badge--medium">Modifier --medium</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-display-large--medium</span>
+                <span class="meta-props">57px / 64px &bull; letter-spacing: -0.25px</span>
+              </div>
+              <div class="wui-display-large wui-display-large--medium">Display-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-display-medium--medium</span>
+                <span class="meta-props">45px / 52px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-display-medium wui-display-medium--medium">Display-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-display-small--medium</span>
+                <span class="meta-props">36px / 44px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-display-small wui-display-small--medium">Display-Small</div>
+            </article>
+          </section>
+        </main>
+      </section>
+
+      <!-- SEKSI 2: HEADLINE SCALE -->
+      <section class="scale-section">
+        <h2 class="scale-title">2. Headline Scale (<code>wui/headline</code>)</h2>
+        <main class="specimen-grid">
+          <!-- Kolom Kiri: Regular (400) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Regular (400)</h3>
+              <span class="column-badge">Default Class</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-headline-large</span>
+                <span class="meta-props">32px / 40px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-headline-large">Headline-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-headline-medium</span>
+                <span class="meta-props">28px / 36px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-headline-medium">Headline-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-headline-small</span>
+                <span class="meta-props">24px / 32px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-headline-small">Headline-Small</div>
+            </article>
+          </section>
+
+          <!-- Kolom Kanan: Medium (500) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Medium (500)</h3>
+              <span class="column-badge column-badge--medium">Modifier --medium</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-headline-large--medium</span>
+                <span class="meta-props">32px / 40px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-headline-large wui-headline-large--medium">Headline-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-headline-medium--medium</span>
+                <span class="meta-props">28px / 36px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-headline-medium wui-headline-medium--medium">Headline-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-headline-small--medium</span>
+                <span class="meta-props">24px / 32px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-headline-small wui-headline-small--medium">Headline-Small</div>
+            </article>
+          </section>
+        </main>
+      </section>
+
+      <!-- SEKSI 3: BODY SCALE -->
+      <section class="scale-section">
+        <h2 class="scale-title">3. Body Scale (<code>wui/body</code>)</h2>
+        <main class="specimen-grid">
+          <!-- Kolom Kiri: Regular (400) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Regular (400)</h3>
+              <span class="column-badge">Default Class</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-body-large</span>
+                <span class="meta-props">16px / 24px &bull; letter-spacing: 0.5px</span>
+              </div>
+              <div class="wui-body-large">Body-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-body-medium</span>
+                <span class="meta-props">14px / 20px &bull; letter-spacing: 0.25px</span>
+              </div>
+              <div class="wui-body-medium">Body-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-body-small</span>
+                <span class="meta-props">12px / 16px &bull; letter-spacing: 0.4px</span>
+              </div>
+              <div class="wui-body-small">Body-Small</div>
+            </article>
+          </section>
+
+          <!-- Kolom Kanan: Medium (500) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Medium (500)</h3>
+              <span class="column-badge column-badge--medium">Modifier --medium</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-body-large--medium</span>
+                <span class="meta-props">16px / 24px &bull; letter-spacing: 0.5px</span>
+              </div>
+              <div class="wui-body-large wui-body-large--medium">Body-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-body-medium--medium</span>
+                <span class="meta-props">14px / 20px &bull; letter-spacing: 0.25px</span>
+              </div>
+              <div class="wui-body-medium wui-body-medium--medium">Body-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-body-small--medium</span>
+                <span class="meta-props">12px / 16px &bull; letter-spacing: 0.4px</span>
+              </div>
+              <div class="wui-body-small wui-body-small--medium">Body-Small</div>
+            </article>
+          </section>
+        </main>
+      </section>
+
+      <!-- SEKSI 4: LABEL SCALE -->
+      <section class="scale-section">
+        <h2 class="scale-title">4. Label Scale (<code>wui/label</code>)</h2>
+        <main class="specimen-grid">
+          <!-- Kolom Kiri: Medium (500) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Medium (500)</h3>
+              <span class="column-badge">Default Class</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-label-large</span>
+                <span class="meta-props">14px / 20px &bull; letter-spacing: 0.1px</span>
+              </div>
+              <div class="wui-label-large">Label-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-label-medium</span>
+                <span class="meta-props">12px / 16px &bull; letter-spacing: 0.5px</span>
+              </div>
+              <div class="wui-label-medium">Label-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-label-small</span>
+                <span class="meta-props">11px / 16px &bull; letter-spacing: 0.5px</span>
+              </div>
+              <div class="wui-label-small">Label-Small</div>
+            </article>
+          </section>
+
+          <!-- Kolom Kanan: SemiBold (600) -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>SemiBold (600)</h3>
+              <span class="column-badge column-badge--medium">Modifier --semibold</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-label-large--semibold</span>
+                <span class="meta-props">14px / 20px &bull; letter-spacing: 0.1px</span>
+              </div>
+              <div class="wui-label-large wui-label-large--semibold">Label-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-label-medium--semibold</span>
+                <span class="meta-props">12px / 16px &bull; letter-spacing: 0.5px</span>
+              </div>
+              <div class="wui-label-medium wui-label-medium--semibold">Label-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-label-small--semibold</span>
+                <span class="meta-props">11px / 16px &bull; letter-spacing: 0.5px</span>
+              </div>
+              <div class="wui-label-small wui-label-small--semibold">Label-Small</div>
+            </article>
+          </section>
+        </main>
+      </section>
+
+      <!-- SEKSI 5: TITLE SCALE -->
+      <section class="scale-section">
+        <h2 class="scale-title">5. Title Scale (<code>wui/title</code>)</h2>
+        <main class="specimen-grid">
+          <!-- Kolom Kiri: Base Default -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Regular / Medium</h3>
+              <span class="column-badge">Default Class</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-title-large</span>
+                <span class="meta-props">22px / 28px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-title-large">Title-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-title-medium</span>
+                <span class="meta-props">16px / 24px &bull; letter-spacing: 0.15px</span>
+              </div>
+              <div class="wui-title-medium">Title-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-title-small</span>
+                <span class="meta-props">14px / 20px &bull; letter-spacing: 0.1px</span>
+              </div>
+              <div class="wui-title-small">Title-Small</div>
+            </article>
+          </section>
+
+          <!-- Kolom Kanan: Modifier Weight -->
+          <section class="specimen-column">
+            <div class="column-header">
+              <h3>Medium / SemiBold</h3>
+              <span class="column-badge column-badge--medium">Modifier Class</span>
+            </div>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-title-large--medium</span>
+                <span class="meta-props">22px / 28px &bull; letter-spacing: 0px</span>
+              </div>
+              <div class="wui-title-large wui-title-large--medium">Title-Large</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-title-medium--semibold</span>
+                <span class="meta-props">16px / 24px &bull; letter-spacing: 0.15px</span>
+              </div>
+              <div class="wui-title-medium wui-title-medium--semibold">Title-Medium</div>
+            </article>
+
+            <article class="specimen-card">
+              <div class="specimen-meta">
+                <span class="meta-name">.wui-title-small--semibold</span>
+                <span class="meta-props">14px / 20px &bull; letter-spacing: 0.1px</span>
+              </div>
+              <div class="wui-title-small wui-title-small--semibold">Title-Small</div>
+            </article>
+          </section>
+        </main>
+      </section>
+    </div>
+  </wui-page>
+</ng-template>
