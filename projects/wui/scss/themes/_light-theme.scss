@@ -13,7 +13,9 @@
     // Warna
     --wui-color-background: #{a.$wui-light-background};
     --wui-color-text: #{a.$wui-light-text};
-    --wui-color-primary: #{a.$wui-light-primary};
+
+    // `--wui-color-primary` tidak ditulis di sini: nilainya mengikuti palet yang dipilih
+    // aplikasi, jadi di-emit oleh `themes/_palette.scss`.
     --wui-color-outline: #{a.$wui-light-outline};
 
     // Spasi & radius

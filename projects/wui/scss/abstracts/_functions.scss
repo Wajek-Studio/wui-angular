@@ -1,5 +1,6 @@
 // Fungsi SCSS kustom. TIDAK menghasilkan CSS.
 @use 'sass:color';
+@use 'sass:list';
 @use 'sass:map';
 @use 'tokens';
 
@@ -40,10 +41,10 @@
 /// Mengambil nilai HEX mentah warna dari palet (compile-time).
 /// Contoh: `color-raw('purple', 'light', 500)` → `#320095`
 @function color-raw($name, $mode, $tone) {
-  $wui-palette: map.get(tokens.$wui-color-palettes, $name);
+  $wui-palette: map.get(tokens.$wui-palettes, $name);
 
   @if not $wui-palette {
-    @error "Palet warna '#{$name}' tidak ditemukan.";
+    @error 'wui: palet #{$name} tidak ada. Palet yang tersedia: #{map.keys(tokens.$wui-palettes)}.';
   }
 
   $wui-tones: map.get($wui-palette, $mode);
@@ -55,8 +56,23 @@
   $wui-hex: map.get($wui-tones, $tone);
 
   @if not $wui-hex {
-    @error "Tingkat '#{$tone}' tidak ditemukan pada palet '#{$name}' (#{$mode}).";
+    @error 'wui: tone #{$tone} tidak ada di palet #{$name} (#{$mode}).';
   }
 
   @return $wui-hex;
+}
+
+/// Mengembalikan CSS variable state layer satu peran — dipakai komponen lewat mixin
+/// `interactive-state()`, supaya nama token-nya tidak ditulis manual.
+/// Contoh: `state-layer('primary', '08')` → `var(--wui-color-state-layer-primary-opacity-08)`
+@function state-layer($role, $opacity) {
+  @if not list.index(tokens.$wui-state-layer-roles, $role) {
+    @error 'wui: state-layer(#{$role}, …) tidak ada. Peran yang tersedia: #{tokens.$wui-state-layer-roles}.';
+  }
+
+  @if not map.has-key(tokens.$wui-state-layer-opacities, $opacity) {
+    @error 'wui: state-layer(…, #{$opacity}) tidak ada. Nilai yang tersedia: #{map.keys(tokens.$wui-state-layer-opacities)}.';
+  }
+
+  @return var(--wui-color-state-layer-#{$role}-opacity-#{$opacity});
 }

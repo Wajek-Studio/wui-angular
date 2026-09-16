@@ -13,9 +13,10 @@
       // ikut menyesuaikan. Tanpa ini, bagian tersebut tetap terang di mode gelap.
       color-scheme: dark;
 
+      // `--wui-color-primary` sengaja tidak di-override di sini: token palet yang dipakai
+      // (`--wui-color-<palet>-<tone>`) sudah otomatis bernilai tone mode gelap.
       --wui-color-background: #{a.$wui-dark-background};
       --wui-color-text: #{a.$wui-dark-text};
-      --wui-color-primary: #{a.$wui-dark-primary};
       --wui-color-outline: #{a.$wui-dark-outline};
     }
   }

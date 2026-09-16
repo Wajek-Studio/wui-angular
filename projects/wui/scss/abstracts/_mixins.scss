@@ -88,3 +88,22 @@
     #{$wui-prop}: $wui-value;
   }
 }
+
+/// Menempelkan state layer standar pada elemen interaktif: hover `0.08`, pressed `0.10`,
+/// dragged `0.16`. Pakai di elemen yang latarnya transparan — komponen tetap yang mengatur
+/// warna dasarnya, mixin ini hanya menumpuk lapisan interaksinya.
+/// @param {String} $wui-role - `'primary'` (default), atau `'on-primary'` bila elemen
+///   berada di atas permukaan primary.
+@mixin interactive-state($wui-role: 'primary') {
+  &:hover {
+    background-color: functions.state-layer($wui-role, '08');
+  }
+
+  &:active {
+    background-color: functions.state-layer($wui-role, '10');
+  }
+
+  &.is-dragged {
+    background-color: functions.state-layer($wui-role, '16');
+  }
+}

@@ -6,9 +6,14 @@
 @use 'sass:map';
 
 // ── Palet Warna (Figma wui/color) ───────────────────────────────────────────
-$wui-color-palettes: (
+// `$wui-palettes-builtin` = palet bawaan library, `$wui-palettes-extra` = palet milik
+// aplikasi. Keduanya digabung jadi `$wui-palettes` — satu-satunya map yang dibaca fungsi
+// & mixin lain. `extra` di-merge paling akhir, jadi aplikasi juga boleh meretur tone bawaan.
+$wui-palettes-builtin: (
   'purple': (
+    // `'on-primary'` bukan tone, tapi peran: warna teks/ikon di atas primary.
     'light': (
+      'on-primary': #fff,
       50: #844cf6,
       100: #7331f6,
       200: #6115f9,
@@ -22,6 +27,7 @@ $wui-color-palettes: (
       950: #000,
     ),
     'dark': (
+      'on-primary': #05000f,
       50: #fff,
       100: #fff,
       200: #fff,
@@ -37,17 +43,36 @@ $wui-color-palettes: (
   ),
 ) !default;
 
+// Palet milik aplikasi — disuntik lewat `@use … with ($wui-palettes-extra: (…))`.
+$wui-palettes-extra: () !default;
+$wui-palettes: map.merge($wui-palettes-builtin, $wui-palettes-extra) !default;
+
+// Tone yang wajib ada di setiap palet (kedua mode) karena dipakai peran semantik.
+$wui-palette-required-tones: (500,) !default;
+
 // ── Warna: mode terang ──────────────────────────────────────────────────────
+// Hanya warna netral. Warna brand (`--wui-color-primary`) TIDAK di sini karena
+// nilainya mengikuti palet yang dipilih aplikasi — lihat `themes/_palette.scss`.
 $wui-light-background: #FDF8FF !default;
 $wui-light-text: #1a1a1a !default;
-$wui-light-primary: #0057ff !default;
 $wui-light-outline: #CAC4D5 !default;
 
 // ── Warna: mode gelap ───────────────────────────────────────────────────────
 $wui-dark-background: #14121A !default;
 $wui-dark-text: #f5f5f5 !default;
-$wui-dark-primary: #6ea8ff !default;
 $wui-dark-outline: #484553 !default;
+
+// ── State layer ─────────────────────────────────────────────────────────────
+// Nilainya diturunkan di CSS dari warna perannya (lihat `themes/_palette.scss`),
+// jadi tidak ada hex tambahan yang perlu diisi.
+// Kunci opacity WAJIB string: angka `08` dibaca Sass sebagai `8`, sehingga nama
+// token-nya jadi `opacity-8` — bukan `opacity-08`.
+$wui-state-layer-roles: ('primary', 'on-primary') !default;
+$wui-state-layer-opacities: (
+  '08': 0.08,
+  '10': 0.10,
+  '16': 0.16,
+) !default;
 
 // ── Spasi ───────────────────────────────────────────────────────────────────
 // Metrik Bootstrap: 0 · 0.25rem · 0.5rem · 1rem · 1.5rem · 3rem
@@ -156,3 +181,4 @@ $wui-sidenav-width: 16rem !default;
 $wui-sidenav-mini-width: 4rem !default;
 
 // ── Outline ─────────────────────────────────────────────────────────────────
+ 
