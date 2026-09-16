@@ -1,8 +1,13 @@
 @mixin topbar {
 
     wui-topbar {
+        flex: 0 0 auto;
         border-bottom: 1px solid var(--wui-color-outline);
         width: 100%;
+        height: 4rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
 
 }
