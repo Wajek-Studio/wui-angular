@@ -51,8 +51,10 @@
         --wui-line-height-#{$role}-#{$size}: #{map.get($props, 'line-height')};
         --wui-letter-spacing-#{$role}-#{$size}: #{map.get($props, 'letter-spacing')};
         --wui-font-weight-#{$role}-#{$size}: #{map.get($props, 'weight')};
+        --wui-font-weight-#{$role}-#{$size}-em: #{map.get($props, 'weight-em')};
       }
     }
+
     // Sidenav
     --wui-sidenav-width: #{a.$wui-sidenav-width};
     --wui-sidenav-mini-width: #{a.$wui-sidenav-mini-width};

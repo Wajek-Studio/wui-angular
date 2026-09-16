@@ -90,7 +90,8 @@
   background: rgb(125 125 125 / 12%);
   color: var(--wui-color-text);
 
-  &--medium {
+  &--medium,
+  &--em {
     background: rgb(0 87 255 / 12%);
     color: var(--wui-color-primary);
   }

@@ -14,7 +14,7 @@ export const routes: Routes = [{
         path: 'nested', component: SettingNestedPage
     }]
 }, {
-    path: 'tipografi', component: TipografiPage
+    path: 'tipografi', loadComponent: () => import('./pages/tipografi.page/tipografi.page').then(m => m.TipografiPage)
 }, {
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

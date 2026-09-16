@@ -23,7 +23,9 @@
   letter-spacing: var(--wui-letter-spacing-#{$role}-#{$size});
   font-weight: var(--wui-font-weight-#{$role}-#{$size});
 
-  @if $weight {
+  @if $weight == 'em' {
+    font-weight: var(--wui-font-weight-#{$role}-#{$size}-em);
+  } @else if $weight {
     font-weight: var(--wui-font-weight-#{$weight});
   }
 }

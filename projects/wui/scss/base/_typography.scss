@@ -21,26 +21,18 @@
   // ── Kelas Tipografi WUI (Display, Headline, Title, Body, Label) ───────────
   @each $role, $sizes in a.$wui-typography-scales {
     @each $size, $props in $sizes {
-      .wui-#{$role}-#{$size} {
+      .wui-#{$role}-#{$size},
+      .wui-#{$role}-#{$size}--em {
         font-size: var(--wui-font-size-#{$role}-#{$size});
         line-height: var(--wui-line-height-#{$role}-#{$size});
         letter-spacing: var(--wui-letter-spacing-#{$role}-#{$size});
+      }
+
+      .wui-#{$role}-#{$size} {
         font-weight: var(--wui-font-weight-#{$role}-#{$size});
 
-        &--regular {
-          font-weight: var(--wui-font-weight-regular);
-        }
-
-        &--medium {
-          font-weight: var(--wui-font-weight-medium);
-        }
-
-        &--semibold {
-          font-weight: var(--wui-font-weight-semibold);
-        }
-
-        &--bold {
-          font-weight: var(--wui-font-weight-bold);
+        &--em {
+          font-weight: var(--wui-font-weight-#{$role}-#{$size}-em);
         }
       }
     }
