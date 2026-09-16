@@ -1,15 +1,15 @@
-import { Component, inject, OnDestroy, OnInit, TemplateRef, viewChild } from '@angular/core';
+import { Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { WuiPage, WuiPageRef, WuiPageService } from '@wajek/wui';
 
 @Component({
-  selector: 'app-nested-page',
+  selector: 'app-home-nested.page',
   imports: [WuiPage, RouterLink],
-  templateUrl: './nested.page.html',
-  styleUrl: './nested.page.scss',
+  templateUrl: './home-nested.page.html',
+  styleUrl: './home-nested.page.scss',
 })
-export class NestedPage implements OnInit, OnDestroy {
-
+export class HomeNestedPage {
+  
   pageService : WuiPageService = inject(WuiPageService);
   pageTpl = viewChild.required<TemplateRef<any>>('page');
   pageRef? : WuiPageRef;
@@ -21,5 +21,5 @@ export class NestedPage implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.pageRef?.close();
   }
-  
+
 }
