@@ -24,6 +24,13 @@
         ],
         "scss/load-no-partial-leading-underscore": true,
         "at-rule-disallowed-list": ["import"],
+        "rule-empty-line-before": [
+          "always-multi-line",
+          {
+            "except": ["first-nested"],
+            "ignore": ["after-comment", "first-nested"]
+          }
+        ],
         "max-nesting-depth": 3,
         "declaration-no-important": true
       }

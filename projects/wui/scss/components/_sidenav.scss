@@ -1,7 +1,107 @@
+// Level 4 — style komponen `WuiSidenav`.
+// Class state (`is-open` / `is-mini` / `is-closed`) di-bind ke host element dari
+// `WuiSidenavService` — lihat `host` di `projects/wui/src/sidenav/sidenav.ts`.
+// Karena `.wui-sidenav` menempel di host, cukup satu selector untuk semuanya.
+
 @mixin sidenav {
-    wui-sidenav {
-        width: 16rem;
+
+    .wui-sidenav {
+        // Flex item di dalam `.wui-layout` / `.wui-page-container`.
         flex: 0 0 auto;
+        display: block;
+        height: 100%;
+        overflow: hidden;
+        opacity: 1;
+
+        // Lebar default = state `is-open`.
+        width: var(--wui-sidenav-width, 16rem);
+        background-color: var(--wui-color-background);
+        color: var(--wui-color-text);
+        transition: 
+            width var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
+            opacity calc(var(--wui-motion-duration-base) * 0.8) var(--wui-motion-easing-standard);
+        will-change: width, opacity;
+
+        // `&-inner` menghasilkan selector `.wui-sidenav-inner` (bukan descendant), karena
+        // elemennya punya class sendiri di template komponen.
+        &-inner {
+            // Jadi acuan posisi untuk konten mini/full yang bertumpuk.
+            position: relative;
+            width: var(--wui-sidenav-width, 16rem);
+            height: 100%;
+            transform: translateX(0);
+            opacity: 1;
+            transition:
+                transform var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
+                opacity var(--wui-motion-duration-base) var(--wui-motion-easing-standard);
+            will-change: transform, opacity;
+        }
+
+        // Bentuk ringkas — hanya ikon.
+        &.is-mini {
+            width: var(--wui-sidenav-mini-width, 4rem);
+        }
+
+        // Tertutup: panel menyusut sampai nol, dan isinya bergeser ke kiri sambil memudar.
+        &.is-closed {
+            width: 0;
+            pointer-events: none;
+
+            .wui-sidenav-inner {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+    }
+
+    // Konten mini & full sengaja bertumpuk di area yang sama supaya bisa saling silang
+    // (cross-fade) saat mode berubah. Dipakai `position: absolute` agar elemen lain yang
+    // ikut ter-proyeksi tidak terganggu.
+    .wui-sidenav-mini-content,
+    .wui-sidenav-full-content {
+        position: absolute;
+        inset: 0;
+        transition:
+            transform var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
+            opacity var(--wui-motion-duration-base) var(--wui-motion-easing-standard);
+    }
+
+    // Mode penuh (open / closed): konten penuh di tempatnya, konten ringkas menunggu di kiri.
+    .wui-sidenav-full-content {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .wui-sidenav-mini-content {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    // Mode mini: konten penuh keluar ke kiri sambil memudar,
+    // konten ringkas masuk dari kiri bergerak ke kanan sambil muncul.
+    .wui-sidenav.is-mini .wui-sidenav-full-content {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    .wui-sidenav.is-mini .wui-sidenav-mini-content {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    // Konten yang sedang tak terlihat tidak boleh menangkap klik.
+    .wui-sidenav:not(.is-mini) .wui-sidenav-mini-content,
+    .wui-sidenav.is-mini .wui-sidenav-full-content {
+        pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .wui-sidenav,
+        .wui-sidenav-inner,
+        .wui-sidenav-mini-content,
+        .wui-sidenav-full-content {
+            transition: none;
+        }
     }
 
 }
