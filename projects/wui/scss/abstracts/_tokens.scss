@@ -4,6 +4,38 @@
 // Konsumen mengganti nilai lewat CSS variable, bukan lewat file ini.
 // =============================================================================
 
+// ── Palet Warna (Figma wui/color) ───────────────────────────────────────────
+$wui-color-palettes: (
+  'purple': (
+    'light': (
+      50: #844cf6,
+      100: #7331f6,
+      200: #6115f9,
+      300: #4a02d9,
+      400: #3800a8,
+      500: #320095,
+      600: #30008f,
+      700: #270075,
+      800: #160042,
+      900: #05000f,
+      950: #000,
+    ),
+    'dark': (
+      50: #fff,
+      100: #fff,
+      200: #fff,
+      300: #fff,
+      400: #ded6ff,
+      500: #d9d0ff,
+      600: #cabdff,
+      700: #b6a3ff,
+      800: #8d70ff,
+      900: #643dff,
+      950: #3b0aff,
+    ),
+  ),
+) !default;
+
 // ── Warna: mode terang ──────────────────────────────────────────────────────
 $wui-light-background: #FDF8FF !default;
 $wui-light-text: #1a1a1a !default;

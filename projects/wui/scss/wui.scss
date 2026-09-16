@@ -16,6 +16,7 @@
 @use 'base';
 @use 'components';
 @use 'themes';
+@forward 'themes';
 
 // Salakan layer — hapus barisnya kalau tidak ingin dipakai.
 @include base.reset;

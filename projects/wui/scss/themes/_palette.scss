@@ -1,0 +1,50 @@
+// Level 3 — Palet warna modular (opt-in).
+// Tidak menghasilkan CSS sampai di-@include eksplisit oleh pengguna.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+/// Meng-emit CSS custom properties untuk palet warna tertentu (Light & Dark).
+/// Contoh: `@include palette('purple');`
+@mixin palette($wui-name) {
+  $wui-palette: map.get(a.$wui-color-palettes, $wui-name);
+
+  @if not $wui-palette {
+    @error "Palet warna '#{$wui-name}' tidak ditemukan di $wui-color-palettes.";
+  }
+
+  $wui-light-tones: map.get($wui-palette, 'light');
+  $wui-dark-tones: map.get($wui-palette, 'dark');
+
+  // Mode Terang (Default di :root)
+  :root {
+    @each $wui-tone, $wui-color in $wui-light-tones {
+      --wui-color-#{$wui-name}-light-#{$wui-tone}: #{$wui-color};
+      --wui-color-#{$wui-name}-#{$wui-tone}: #{$wui-color};
+    }
+
+    @each $wui-tone, $wui-color in $wui-dark-tones {
+      --wui-color-#{$wui-name}-dark-#{$wui-tone}: #{$wui-color};
+    }
+  }
+
+  // Mode Gelap (Override dinamis di prefers-color-scheme)
+  @media (prefers-color-scheme: dark) {
+    :root {
+      @each $wui-tone, $wui-color in $wui-dark-tones {
+        --wui-color-#{$wui-name}-#{$wui-tone}: #{$wui-color};
+      }
+    }
+  }
+}
+
+/// Shortcut helper untuk palet ungu
+@mixin purple-palette {
+  @include palette('purple');
+}
+
+/// Helper untuk mengaktifkan seluruh palet sekaligus jika diinginkan
+@mixin all-palettes {
+  @each $wui-name, $wui-modes in a.$wui-color-palettes {
+    @include palette($wui-name);
+  }
+}
