@@ -1,12 +1,19 @@
 {
-  "name": "wui",
+  "name": "@wajek/wui",
   "version": "0.0.1",
+  "description": "Wajek UI — komponen dan style layer Angular yang bisa dimuat manual per project.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
   "peerDependencies": {
     "@angular/common": "^20.3.0",
     "@angular/core": "^20.3.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
-  },
-  "sideEffects": false
+  }
 }

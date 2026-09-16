@@ -20,6 +20,9 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["dist"]
+            },
             "outputPath": {
               "base": "./www",
               "browser": ""
@@ -78,6 +81,9 @@
           "options": {
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["dist"]
+            },
             "assets": [
               {
                 "glob": "**/*",

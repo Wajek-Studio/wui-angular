@@ -1,0 +1,32 @@
+{
+  "extends": ["stylelint-config-standard-scss"],
+  "overrides": [
+    {
+      "files": ["projects/wui/scss/**/*.scss"],
+      "rules": {
+        "selector-class-pattern": [
+          "^(wui-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?|is-[a-z0-9]+(-[a-z0-9]+)*)$",
+          {
+            "message": "Class harus pakai prefix `wui-` (BEM ringan) atau state `.is-*`."
+          }
+        ],
+        "custom-property-pattern": [
+          "^wui-[a-z0-9]+(-[a-z0-9]+)*$",
+          {
+            "message": "CSS custom property harus memakai prefix `--wui-`."
+          }
+        ],
+        "scss/dollar-variable-pattern": [
+          "^wui-[a-z0-9]+(-[a-z0-9]+)*$",
+          {
+            "message": "SCSS variable harus memakai prefix `$wui-`."
+          }
+        ],
+        "scss/load-no-partial-leading-underscore": true,
+        "at-rule-disallowed-list": ["import"],
+        "max-nesting-depth": 3,
+        "declaration-no-important": true
+      }
+    }
+  ]
+}

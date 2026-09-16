@@ -15,8 +15,8 @@
     "target": "ES2022",
     "module": "preserve",
     "paths": {
-      "wui": [
-        "./dist/wui"
+      "@wajek/wui": [
+        "./dist/@wajek/wui"
       ]
     }
   },

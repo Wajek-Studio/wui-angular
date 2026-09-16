@@ -1,0 +1,19 @@
+// =============================================================================
+// @wajek/wui — Entry point style layer
+// -----------------------------------------------------------------------------
+// Kontrak konsumsi di real app (dipasang manual di src/styles.scss):
+//     @use '@wajek/wui/scss/wui.scss';
+// Konvensi internal (lihat docs/planning/scss-wui-plan.md §3 & §5):
+//   - nama folder `scss/` dan file `wui.scss` adalah public API → jangan diubah
+//   - file tanpa prefix `_` = boleh di-@use konsumen
+//   - file dengan prefix `_` = internal, tidak boleh di-@use dari luar paket
+//   - urutan layer: tokens → tools → base → layout → components → utilities → themes
+// FASE 0 — masih placeholder (baru membuktikan jalur distribusi SCSS):
+//   selain penanda di bawah, file ini belum meng-emit style apa pun.
+//   Layer sebenarnya diisi bertahap mulai Fase 1 (token layer).
+// Penanda sementara untuk verifikasi end-to-end pipeline style.
+// HAPUS saat Fase 1 selesai.
+// =============================================================================
+:root {
+  --wui-loaded: 1;
+}
