@@ -1,0 +1,13 @@
+@mixin icon {
+
+    wui-icon {
+        color: var(--wui-color-text);
+
+        svg {
+            path {
+                fill: currentColor;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,16 @@
+// Style komponen ikon (dipindah dari `styles` inline di `icon.ts` supaya sama dengan
+// komponen lain yang memakai `styleUrl`). Warna dasar elemen `wui-icon` diatur di
+// `scss/components/_icon.scss` bersama token tema.
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+svg {
+  display: block;
+  fill: currentColor;
+  transition: width 0.15s ease, height 0.15s ease, color 0.15s ease;
+}

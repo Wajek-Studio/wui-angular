@@ -17,3 +17,8 @@ export * from './sidenav/sidenav.options';
 export * from './sidenav/sidenav.service';
 
 export * from './topbar/topbar';
+
+export * from './icon/icon';
+export * from './icon/icon.provider';
+export * from './icon/icon.service';
+export * from './icon/icon.model';

@@ -2,11 +2,18 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessC
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
+import { provideIcons } from '@wajek/wui';
+import { mdiAccount, mdiCog, mdiHome } from '@mdi/js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes)
+    provideRouter(routes),
+    provideIcons(
+      { name: 'home', path: mdiHome },
+      { name: 'account', path: mdiAccount },
+      { name: 'settings', path: mdiCog }
+    )
   ]
 };
