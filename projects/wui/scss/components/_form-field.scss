@@ -15,6 +15,7 @@
         // Keadaan label dikomunikasikan lewat custom property: `:has()` di bawah yang mengubah,
         // `.wui-form-field__label` yang membaca. Jadi selector `:has()` panjang tidak digandakan.
         --wui-field-label-top: var(--wui-field-label-rest, #{a.$wui-field-label-rest});
+        --wui-field-label-padding: 0px;
         --wui-field-label-scale: 1;
 
         position: relative;
@@ -37,15 +38,13 @@
     .wui-form-field--outlined:has(.wui-input:focus),
     .wui-form-field--outlined:has(.wui-input:not(:placeholder-shown)) {
         --wui-field-label-top: var(--wui-field-label-float-outlined, #{a.$wui-field-label-float-outlined});
-    }
-
-    // Filled: teks kontrol turun (lihat `.wui-form-field--filled .wui-input`), jadi label saat
-    // istirahat ikut sejajar baris teks itu — bukan di titik tengah kotak.
-    .wui-form-field--filled {
-        --wui-field-label-top: var(--wui-field-label-rest-filled, #{a.$wui-field-label-rest-filled});
+        --wui-field-label-padding: 4px;
     }
 
     // Filled: label mengapung DI DALAM kotak, di bawah garis atasnya — jadi tidak perlu memotong apa pun.
+    // Posisi istirahatnya sengaja TIDAK ditulis di sini: varian ini memakai nilai default (titik tengah
+    // kotak) yang sama dengan outlined. Teks kontrol varian filled memang digeser 24px ke bawah, tapi
+    // saat istirahat kontrolnya kosong — label di titik tengah kotak, bukan di baris teks yang belum ada.
     .wui-form-field--filled:has(.wui-input:focus),
     .wui-form-field--filled:has(.wui-input:not(:placeholder-shown)) {
         --wui-field-label-top: var(--wui-field-label-float-filled, #{a.$wui-field-label-float-filled});
@@ -63,10 +62,15 @@
         z-index: 1;
         color: color-mix(in srgb, var(--wui-color-on-surface) 70%, transparent);
         transform: translateY(-50%) scale(var(--wui-field-label-scale));
+        padding-inline: var(--wui-field-label-padding);
 
         // `transform-origin` tidak punya bentuk logical — RTL perlu override tersendiri (utang).
         transform-origin: left center;
-        transition: top var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), transform var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
+        transition: 
+            top var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), 
+            transform var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), 
+            color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard),
+            padding-inline var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
     }
 
     .wui-form-field--outlined:has(.wui-input:focus) .wui-form-field__label,
@@ -96,10 +100,17 @@
         // filled tidak akan pernah ikut berubah saat hover/fokus/invalid.
         --wui-field-border-color: var(--wui-color-outline);
 
+        // Ketebalan border diimbangi dari sisi padding lewat variabel ini — BUKAN dengan menimpa
+        // `--wui-field-padding-inline` di elemen yang membacanya. Menimpa variabel yang sedang dibaca
+        // elemen yang sama menghasilkan siklus: nilainya jadi invalid dan `var()` jatuh ke fallback,
+        // sehingga pengurangannya tidak pernah terjadi (terukur: `getComputedStyle` mengembalikan
+        // string kosong, dan anak yang mewarisinya ikut kosong).
+        --wui-field-padding-offset: 0px;
+
         box-sizing: border-box;
         width: 100%;
         height: var(--wui-field-height, #{a.$wui-field-height});
-        padding-inline: var(--wui-field-padding-inline, #{a.$wui-field-padding-inline});
+        padding-inline: calc(var(--wui-field-padding-inline, #{a.$wui-field-padding-inline}) - var(--wui-field-padding-offset, 0px));
 
         // Teks kontrol di tengah kotak: label mengapung ke garis ATAS, jadi tidak perlu ruang
         // tambahan di atas teks (padding cadangan hanya dipakai varian filled, lihat di bawah).
@@ -108,8 +119,14 @@
         border-radius: var(--wui-field-radius, #{a.$wui-field-radius});
         background-color: transparent;
         color: var(--wui-color-on-surface);
+        outline: none;
         font: inherit;
-        // transition: border-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), background-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
+        transition: 
+            // border-width var(--wui-motion-duration-fast) var(--wui-motion-easing-standard),
+            border-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), 
+            background-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
+            // padding-inline var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), 
+            // padding-block var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
 
         // Placeholder baru muncul setelah label mengapung. Kalau selalu tampil, ia bertumpuk dengan
         // label saat kontrol masih kosong (perilaku yang sama dengan Material).
@@ -130,8 +147,9 @@
             --wui-field-border-color: color-mix(in srgb, var(--wui-color-on-surface) 45%, transparent);
         }
 
-        &:focus-visible {
+        &:focus, &:focus-visible {
             --wui-field-border-color: var(--wui-color-primary);
+            --wui-field-border-width: var(--wui-field-focused-border-width, #{a.$wui-field-focused-border-width});
         }
 
         &:disabled {
@@ -155,6 +173,20 @@
         padding-block: 0;
     }
 
+    // Varian outlined: keadaan istirahatnya tidak butuh penyesuaian — yang perlu diurus hanya saat
+    // fokus, karena border menebal 1px → 2px dan `box-sizing: border-box` membuat kolom teks ikut
+    // bergeser. Kompensasinya lewat `--wui-field-padding-offset` (dideklarasikan di `.wui-input`),
+    // jadi kolom teks = border + padding tetap **17px** di kedua keadaan: saat diklik teksnya tidak
+    // "melompat". Padding ikut ditransisikan (lihat `transition` di `.wui-input`) supaya bergeraknya
+    // seirama dengan border — kalau tidak, ada kedipan 1px di tengah animasi.
+    .wui-form-field--outlined {
+        .wui-input {
+            &:focus, &:focus-visible {
+                --wui-field-padding-offset: 1px;
+            }
+        }
+    }
+
     // ── Varian filled ───────────────────────────────────────────────────────
     // Latar terisi + garis bawah saja. Labelnya mengapung di dalam kotak (lihat aturan di atas),
     // jadi teks kontrol turun untuk memberi ruang label.
@@ -173,5 +205,16 @@
         padding-block: var(--wui-space-3) var(--wui-space-2);
         min-height: var(--wui-field-textarea-min-height, #{a.$wui-field-textarea-min-height});
         resize: vertical;
+    }
+
+    // Textarea varian outlined: arah vertikalnya juga perlu dikompensasi karena padding-block-nya
+    // tidak nol (16px/8px). Input satu baris tidak butuh ini — padding-block-nya 0, jadi titik tengah
+    // teksnya tetap walau border atas & bawah masing-masing menebal 1px.
+    .wui-form-field--outlined {
+        textarea.wui-input {
+            &:focus, &:focus-visible {
+                padding-block: calc(var(--wui-space-3) - var(--wui-field-padding-offset, 0px)) calc(var(--wui-space-2) - var(--wui-field-padding-offset, 0px));
+            }
+        }
     }
 }

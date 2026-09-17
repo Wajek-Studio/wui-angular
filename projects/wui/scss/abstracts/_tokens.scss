@@ -292,17 +292,23 @@ $wui-field-padding-inline: 16px !default;
 $wui-field-border-width: 1px !default;
 $wui-field-textarea-min-height: 96px !default;
 
+$wui-field-focused-border-width: 2px !default;
+
 // Geometri label mengapung. `space` = ruang di atas teks kontrol untuk varian filled (labelnya
 // mengapung DI DALAM kotak); varian outlined tidak butuh ruang karena labelnya naik ke garis atas.
+// Nilai `float-*` adalah **titik tengah** label (label memakai `translateY(-50%)`), bukan tepi atasnya:
+// outlined 0px = duduk di garis border atas; filled 16px = di dalam kotak, dengan tinggi label
+// mengapung 18px (24px × 0.75) tepi bawahnya mendarat di 25px — berimpit dengan awal kolom teks
+// kontrol (padding atas 24px). Sebelumnya 8px: titik tengah, jadi separuh label keluar dari kotak.
 $wui-field-label-space: 24px !default;
 $wui-field-label-float-outlined: 0 !default;
-$wui-field-label-float-filled: 8px !default;
+$wui-field-label-float-filled: 16px !default;
 
-// Posisi label saat istirahat. Outlined: **titik tengah** kontrol — teks input juga di tengah kotak,
-// jadi label duduk tepat di baris teksnya (56px / 2). Filled: teks kontrol turun 24px, jadi labelnya
-// sejajar baris teks itu (24px + setengah baris 24px).
+// Posisi label saat istirahat = **titik tengah** kotak kontrol (56px / 2), sama untuk kedua varian.
+// Label istirahat hanya ada saat kontrol kosong, jadi tidak ada baris teks yang perlu ditemani — dan
+// titik tengah kotak itulah yang terbaca "pas" oleh mata. (Filled dulu 36px supaya sejajar baris
+// teksnya, padahal teks varian itu memang digeser 24px ke bawah — hasilnya label terlihat turun.)
 $wui-field-label-rest: 28px !default;
-$wui-field-label-rest-filled: 36px !default;
 
 // Mengikuti `$wui-radius-md`; ditulis terpisah supaya field bisa berubah tanpa mengubah radius global.
 $wui-field-radius: 8px !default;

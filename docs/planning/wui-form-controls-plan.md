@@ -12,6 +12,20 @@
 > **Revisi API (17 Sep 2026):** input `label` dihapus. Label ditulis aplikasi sebagai elemen asli
 > yang diproyeksi (`<label wuiLabel>`), sejajar dengan pola directive `[wuiButton]`/`[wuiInput]`.
 > Geometri label varian `outlined` sudah diukur ulang (§8).
+>
+> **Revisi geometri label `filled` (17 Sep 2026):** istirahat **36px → 28px** (titik tengah kotak,
+> sama dengan `outlined`) dan mengapung **8px → 16px** (masuk ke dalam kotak). Token
+> `$wui-field-label-rest-filled` **dihapus** karena nilainya kini sama dengan `$wui-field-label-rest`.
+> Terukur ulang di `http://wui.local/form` (§8).
+>
+> **Revisi varian `outlined` (17 Sep 2026):** border yang menebal 1px → 2px saat fokus dikompensasi
+> dari padding lewat variabel baru `--wui-field-padding-offset` (default `0px`, jadi `1px` saat fokus)
+> → kolom teks (border + padding) tetap **17px** di kedua keadaan: teks tidak bergeser saat diklik.
+> Berlaku untuk `padding-inline` (input) dan `padding-block` (textarea). Sekaligus diperbaiki typo
+> `--wui-motion-duratio-fast` → `--wui-motion-duration-fast` pada `transition` `.wui-input`; typo itu
+> membuat **seluruh** deklarasi `transition` gugur (terukur: `transition-property: none`), jadi
+> sebelumnya tidak ada animasi border sama sekali. Token `$wui-field-focused-border-width` masih
+> belum di-emit ke `:root` (dipakai lewat fallback `2px`) — utang.
 
 ---
 
@@ -280,12 +294,17 @@ field pada saat istirahat maupun mengapung.
 | --- | --- | --- | --- |
 | Outlined istirahat | **28px** = titik tengah kotak kontrol 56px | 1 (16px) | label menggantikan fungsi placeholder |
 | Outlined mengapung | **0** (duduk di garis border atas) | 0.75 (12px) | latar `surface` menutup garis border → efek "terpotong" (notch) |
-| Filled istirahat | **36px** (sejajar baris teks kontrol) | 1 (16px) | kontol varian ini teksnya turun, bukan di tengah |
-| Filled mengapung | **8px** (di dalam kotak) | 0.75 | tidak perlu memotong garis |
+| Filled istirahat | **28px** = titik tengah kotak (sama dengan `outlined`) | 1 (16px) | label istirahat hanya ada saat kontrol kosong, jadi tidak ada baris teks yang perlu ditemani |
+| Filled mengapung | **16px** (di dalam kotak; tepi label 7–25px) | 0.75 | tidak perlu memotong garis |
 
 Jadi di varian `outlined` label istirahat **tepat di tengah** kotak (28px dari 56px) dan label
 mengapung **tepat di garis atas** (0) — kontrol `outlined` memakai `padding-block: 0` (teks di
 tengah), sedangkan padding cadangan (`--wui-field-label-space`) hanya dipakai varian `filled`.
+Varian `filled` memakai **28px yang sama** saat istirahat: teks kontrolnya memang digeser 24px ke
+bawah, tapi label istirahat hanya muncul saat kontrol masih kosong — tidak ada baris teks yang
+perlu ditemani, dan titik tengah kotak itulah yang terbaca "pas" oleh mata (nilai lama 36px membuat
+label terlihat turun). Saat mengapung label `filled` masuk **ke dalam** kotak (16px), bukan ke luar
+seperti `outlined`.
 Textarea `outlined` memakai `padding-block: var(--wui-space-3) var(--wui-space-2)` supaya titik
 tengah baris pertamanya juga di 28px.
 
@@ -311,14 +330,17 @@ bertumpuk (perilaku yang sama dengan Material).
 | Validasi form | Simpan dengan form kosong → `Wajib diisi.` + status `form belum valid`; `"ab"` → `Minimal 3 karakter.`; email salah → `Format email tidak valid.`; semua valid → status berisi JSON nilainya |
 | Fokus — `outlined` | Border `rgb(50, 0, 149)` = `--wui-color-primary` di **keempat** sisi (input & textarea) |
 | Fokus — `filled` | Hanya `border-bottom` yang jadi `primary`; `border-top` terbaca `rgb(26, 26, 26)` = `currentColor` warisan karena `border: 0` (bukan bug) |
+| Kolom teks — `outlined` | Istirahat: border 1px + padding 16px = **17px**; fokus: border 2px + padding 15px = **17px** → teks tidak bergeser (sebelumnya 18px → 18px lewat `padding-inline: calc(… + 1px)`); kolom teks `filled` 16px (border samping 0) di kedua keadaan |
+| Inset vertikal textarea — `outlined` | Istirahat 16px/8px padding + 1px border = **17px / 9px**; fokus 15px/7px padding + 2px border = **17px / 9px** → baris pertama tidak bergeser saat diklik |
+| `transition` — `.wui-input` | Terukur `border-width, border-color, background-color, padding-inline, padding-block / 0.24s` — sebelumnya `transition-property: none` karena typo nama variabel (lihat jebakan di bawah) |
 | Hover tanpa fokus | Kedua varian → `color(srgb 0.102 0.102 0.102 / 0.45)` (`color-mix(on-surface 45%, transparent)`) |
 | Invalid + fokus | `danger` (`rgb(179, 38, 30)`) menang atas hover & fokus di kedua varian — blok keadaan ditulis terakhir |
 | Label — istirahat (outlined) | Titik tengah label **28px** — persis setengah kotak 56px; kiri **16px**; skala 1 / font 16px; latar transparan; placeholder browser tidak terlihat |
 | Label — outlined mengapung | Titik tengah **0px** (duduk di garis border atas); kiri **16px** (tidak bergeser); skala 0.75 / 12px; latar `surface` sehingga garisnya terpotong |
-| Label — filled | Istirahat **36px**, mengapung **8px** di dalam kotak, skala 0.75; input memakai latar `surface-container` dan hanya garis bawah (`border-top: 0px`) |
+| Label — filled | Istirahat **28px** (titik tengah kotak 56px, sama dengan outlined), mengapung **16px** — tepi label 7–25px sehingga seluruh kotak label **di dalam** field (tidak ada bagian yang keluar dari tepi atas); skala 0.75; input memakai latar `surface-container` dan hanya garis bawah (`border-top: 0px`) |
 | Label — klik mouse | Klik label memfokuskan kontrolnya (perilaku bawaan `<label for>`) sekaligus mengapungkan label — diuji dengan klik mouse sungguhan, bukan `label.click()` |
 | Nilai programatik | `input.value = 'x'` **tanpa event** tetap membuat label mengapung (bukti deteksi murni CSS) |
-| Textarea | Aturan mengapung sama; istirahat 28px, mengapung 0px (outlined) / 8px (filled); titik tengah baris pertama 28px |
+| Textarea | Aturan mengapung sama; istirahat 28px, mengapung 0px (outlined) / 16px (filled); titik tengah baris pertama 28px |
 
 ### ⚠️ Jebakan yang ditemukan (jangan diulang)
 
@@ -329,3 +351,5 @@ bertumpuk (perilaku yang sama dengan Material).
 | Komentar `//` tepat setelah blok variabel/`@include` | `scss/double-slash-comment-empty-line-before` + `declaration-empty-line-before` menolak | Sisipkan baris kosong, atau pindahkan komentar ke akhir blok| `:has(:focus)` diuji di halaman preview yang **tidak aktif** | `document.hasFocus()` `false` → pseudo-class `:focus` **tidak cocok** sama sekali, jadi label tidak pernah mengapung walau `document.activeElement` sudah `INPUT`. Sempat terbaca seperti bug CSS padahal bukan | Panggil `page.bringToFront()` dulu, lalu pastikan `document.hasFocus()` `true`; atau uji cabang "terisi" (`fill()` nilai lalu kosongkan) yang tidak butuh fokus |
 | Selector keadaan dan selector varian sama-sama **2 kelas**, varian ditulis belakangan | `.wui-form-field--filled .wui-input` menulis ulang `border-bottom-color` (specificity 0,2,0, **muncul setelah** `.wui-input:focus-visible` yang juga 0,2,0) → garis bawah varian `filled` **tidak pernah** ikut berubah saat hover/fokus/invalid. Bug ini tersamarkan selama `@include a.focus-ring;` masih aktif (cincin `outline` menutupi gejala). Terukur di CSS build: `.wui-input:focus-visible` di byte 25300, `.wui-form-field--filled .wui-input` di byte 25639 | Jangan menaruh warna yang dipakai bersama di banyak selector; pakai indirection satu variabel (`--wui-field-border-color`) sehingga state mengubah *variabel*, bukan properti. Kalau tetap ingin mengandalkan urutan, blok varian harus ditulis **sebelum** blok keadaan |
 | Mengukur `border-color` tepat setelah `el.focus()` di dalam satu `evaluate` | `getComputedStyle` mengembalikan nilai **lama** (state belum di-recalc / halaman tidak ter-render) → seolah-olah fokus tidak mengubah warna. Terbukti salah: setelah klik mouse nyata + jeda, semua varian benar | Lakukan fokus dan pembacaan di **dua `evaluate` terpisah** dengan jeda, atau pakai interaksi nyata (klik/Tab); nilai variabel (`getPropertyValue('--wui-field-border-color')`) lebih dulu berubah daripada `border-color` yang bertransisi |
+| **Self-reference** custom property: `--x: calc(var(--x, 16px) - 1px)` di elemen yang juga membacanya | Deklarasinya **invalid**, bukan dihitung jadi `15px` — browser memperlakukannya sebagai siklus. Terukur di Chromium: `getComputedStyle(el).getPropertyValue('--x')` → `""` (string kosong), dan elemen **anak** yang mewarisinya ikut `""`. Akibatnya `var(--x, 16px)` jatuh ke **fallback**, jadi pengurangan padding 1px "hilang" tanpa error apa pun | Untuk menyesuaikan nilai per-state, pakai variabel **kedua** yang dibaca komponen (`--wui-field-padding-offset`, default `0px`) lalu ubah variabel itu di blok `:focus`; jangan menimpa variabel yang sedang dibaca elemen yang sama |
+| Typo nama variabel di dalam shorthand `transition` (`var(--wui-motion-duratio-fast)`) | `var()` tanpa fallback → **seluruh** deklarasi `transition` invalid at computed-value time, jadi semua properti di daftar itu kehilangan animasinya. Terukur: `transition-property: none`, `transition-duration: 0s` (border berubah instan, bukan bertransisi 0.24s) | Setiap `var()` di dalam `transition` harus memakai nama yang benar; verifikasi dengan membaca `transitionProperty`/`transitionDuration` di browser, jangan cukup dari kode |
