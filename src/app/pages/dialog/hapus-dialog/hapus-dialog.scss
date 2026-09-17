@@ -1,0 +1,24 @@
+// Isi dialog contoh. Style komponen tetap berlaku walau dialognya dirender ke `document.body`
+// — yang dipindahkan adalah template komponen ini, jadi atribut enkapsulasi ikut terbawa.
+// Permukaan dialog (latar, radius, padding, elevasi) datang dari `.wui-dialog` di style layer.
+.demo-title {
+  margin: 0 0 0.5rem;
+}
+
+.demo-text {
+  margin: 0 0 1.5rem;
+  color: rgb(125 125 125 / 90%);
+
+  code {
+    background: rgb(125 125 125 / 15%);
+    padding: 0.1rem 0.3rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+}
+
+.demo-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

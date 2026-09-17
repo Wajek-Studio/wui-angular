@@ -1,0 +1,13 @@
+<h2 class="wui-title-medium demo-title" id="hapus-dialog-title">
+  Hapus {{ data.nama }}?
+</h2>
+
+<p class="wui-body-medium demo-text">
+  Tindakan ini tidak bisa dibatalkan. Dialog ini dibuat dari <strong>komponen</strong>: datanya
+  dibaca lewat <code>injectDialogData()</code>, hasilnya dikirim lewat <code>ref.close(true)</code>.
+</p>
+
+<div class="demo-actions">
+  <button wuiButton variant="text" (click)="batal()">Batal</button>
+  <button wuiButton color="danger" (click)="hapus()">Hapus</button>
+</div>

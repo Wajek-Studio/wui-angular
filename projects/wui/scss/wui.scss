@@ -42,6 +42,7 @@
 @include themes.palette(themes.$wui-palette);
 @include components.app;
 @include components.button;
+@include components.dialog;
 @include components.page;
 @include components.sidenav;
 @include components.topbar;

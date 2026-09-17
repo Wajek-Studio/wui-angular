@@ -7,6 +7,10 @@ export * from './app/app';
 export * from './button/button';
 export * from './button/button.options';
 
+export * from './dialog/dialog.options';
+export * from './dialog/dialog.ref';
+export * from './dialog/dialog.service';
+
 export * from './page/page.component';
 export * from './page/page.options';
 export * from './page/page.ref';
