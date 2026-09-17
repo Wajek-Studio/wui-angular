@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import {
   WuiButton,
   WuiIcon,
+  WuiLoading,
   WuiPage,
   WuiPageService,
   WuiPagination,
@@ -30,6 +31,7 @@ export interface SampleUser {
     WuiButton,
     WuiIcon,
     WuiPagination,
+    WuiLoading,
   ],
   templateUrl: './table.page.html',
   styleUrl: './table.page.scss',

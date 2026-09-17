@@ -96,17 +96,25 @@
           </thead>
 
           <tbody>
-            @for (item of data(); track item.id) {
+            @if (isLoading()) {
               <tr>
-                <td>{{ item.name }}</td>
-                <td>{{ item.group }}</td>
-                <td class="text-end">{{ item.amount | number }}</td>
-                <td class="action-col">
-                  <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
-                    <wui-icon icon="dots-vertical"></wui-icon>
-                  </button>
+                <td colspan="4" style="text-align: center; padding: 2.5rem 1rem;">
+                  <wui-loading mode="circular" [style.display]="'inline-block'"></wui-loading>
                 </td>
               </tr>
+            } @else {
+              @for (item of data(); track item.id) {
+                <tr>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.group }}</td>
+                  <td class="text-end">{{ item.amount | number }}</td>
+                  <td class="action-col">
+                    <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
+                      <wui-icon icon="dots-vertical"></wui-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
             }
           </tbody>
 
@@ -253,6 +261,21 @@
             <td><code>[loading]</code></td>
             <td><code>boolean</code></td>
             <td>Menampilkan teks 'Memuat...' dan menonaktifkan tombol sementara saat mengambil data dari server.</td>
+          </tr>
+          <tr>
+            <td><code>wui-loading</code></td>
+            <td>Component</td>
+            <td>Indikator pemuatan Material WUI. Mendukung mode circular, indeterminate, dan linear.</td>
+          </tr>
+          <tr>
+            <td><code>mode</code> (pada <code>wui-loading</code>)</td>
+            <td><code>'circular' | 'indeterminate' | 'linear'</code></td>
+            <td>Mode tampilan indikator (default <code>'circular'</code>).</td>
+          </tr>
+          <tr>
+            <td><code>size</code> (pada <code>wui-loading</code>)</td>
+            <td><code>number</code></td>
+            <td>Diameter lingkaran spinner dalam pixel untuk mode circular (default 32).</td>
           </tr>
         </tbody>
       </table>
