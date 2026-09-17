@@ -1,13 +1,18 @@
-// Style khusus halaman demo — mengikuti pola `button.page.scss`.
-// Permukaan dialognya sendiri tidak di-style di sini: latar, radius, padding, dan elevasi
-// datang dari `.wui-dialog` di style layer library.
 .dialog-container {
   padding: 2rem 2.5rem;
+
+  code {
+    background: color-mix(in srgb, var(--wui-color-on-surface) 8%, transparent);
+    color: var(--wui-color-on-surface);
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
 }
 
 .dialog-header {
   margin-bottom: 2.5rem;
-  border-bottom: 1px solid rgb(125 125 125 / 15%);
+  border-bottom: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
   padding-bottom: 1.5rem;
 }
 
@@ -28,34 +33,31 @@
   margin: 0 0 0.5rem;
   font-size: 1.75rem;
   font-weight: 700;
+  color: var(--wui-color-on-surface);
+}
+
+.dialog-subtitle,
+.page-note,
+.section-note {
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .dialog-subtitle {
   margin: 0;
-  color: rgb(125 125 125 / 80%);
   font-size: 0.95rem;
-
-  code {
-    background: rgb(125 125 125 / 10%);
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-size: 0.875rem;
-  }
 }
 
 .page-note {
   margin: 0 0 2.5rem;
   padding: 0.85rem 1rem;
   border-radius: 8px;
-  background: rgb(125 125 125 / 10%);
-  color: rgb(125 125 125 / 90%);
-  font-size: 0.9rem;
+  background: color-mix(in srgb, var(--wui-color-on-surface) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 10%, transparent);
 
-  code {
-    background: rgb(125 125 125 / 15%);
-    padding: 0.15rem 0.35rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
+  strong {
+    color: var(--wui-color-on-surface);
   }
 }
 
@@ -67,26 +69,11 @@
   margin: 0 0 0.5rem;
   font-size: 1.125rem;
   font-weight: 600;
-
-  code {
-    background: rgb(125 125 125 / 10%);
-    padding: 0.15rem 0.35rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
-  }
+  color: var(--wui-color-on-surface);
 }
 
 .section-note {
   margin: 0 0 1rem;
-  color: rgb(125 125 125 / 90%);
-  font-size: 0.9rem;
-
-  code {
-    background: rgb(125 125 125 / 12%);
-    padding: 0.1rem 0.3rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
-  }
 }
 
 .dialog-actions-demo {
@@ -98,33 +85,34 @@
 
 .hasil {
   font-size: 0.9rem;
-  color: rgb(125 125 125 / 90%);
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+
+  strong {
+    color: var(--wui-color-on-surface);
+  }
 }
 
 .dialog-status {
   margin: 3rem 0 0;
   padding-top: 1rem;
-  border-top: 1px solid rgb(125 125 125 / 15%);
+  border-top: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
   font-size: 0.9rem;
-  color: rgb(125 125 125 / 90%);
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+
+  strong {
+    color: var(--wui-color-on-surface);
+  }
 }
 
-// Isi dialog mode template. Duplikat kecil dari `hapus-dialog.scss` karena style komponen
-// ter-enkapsulasi — keduanya komponen berbeda.
+// Template dialog demo di halaman
 .demo-title {
   margin: 0 0 0.5rem;
+  color: var(--wui-color-on-surface);
 }
 
 .demo-text {
   margin: 0 0 1.5rem;
-  color: rgb(125 125 125 / 90%);
-
-  code {
-    background: rgb(125 125 125 / 15%);
-    padding: 0.1rem 0.3rem;
-    border-radius: 4px;
-    font-size: 0.85em;
-  }
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
 }
 
 .demo-actions {

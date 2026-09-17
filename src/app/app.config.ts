@@ -14,6 +14,7 @@ import {
   mdiHome,
   mdiMenu,
   mdiTable,
+  mdiWindowMaximize,
 } from '@mdi/js';
 
 export const appConfig: ApplicationConfig = {
@@ -31,7 +32,8 @@ export const appConfig: ApplicationConfig = {
       { name: 'gesture-tap-button', path: mdiGestureTapButton },
       { name: 'dock-left', path: mdiDockLeft },
       { name: 'table', path: mdiTable },
-      { name: 'dots-vertical', path: mdiDotsVertical }
+      { name: 'dots-vertical', path: mdiDotsVertical },
+      { name: 'dialog', path: mdiWindowMaximize }
     ),
   ],
 };
