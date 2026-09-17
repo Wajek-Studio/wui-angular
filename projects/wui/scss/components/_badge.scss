@@ -1,0 +1,170 @@
+// Level 4 — Style komponen & directive `WuiBadge`.
+// Badge mandiri bergaya Bootstrap/Material 3 tanpa dependensi Bootstrap:
+// - Mendukung peran warna semantik (primary, secondary, success, danger, warning, info, default)
+// - Mendukung varian visual (filled, subtle, outlined)
+// - Mendukung bentuk pill (kapsul 9999px), dot (titik status), dan overlap (notifikasi di sudut tombol)
+
+@use '../abstracts' as a;
+
+@mixin badge {
+    .wui-badge,
+    wui-badge {
+        --wui-badge-color: var(--wui-color-on-surface);
+        --wui-badge-bg: var(--wui-color-surface-container, color-mix(in srgb, var(--wui-color-on-surface) 15%, var(--wui-color-surface)));
+        --wui-badge-text: var(--wui-color-on-surface);
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.25rem;
+        font-weight: 600;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 4px;
+        box-sizing: border-box;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+        // ── Ukuran ──────────────────────────────────────────────────────────────
+        font-size: 0.75rem;
+        padding: 0.25rem 0.55rem;
+        min-width: 1.35rem;
+
+        &.wui-badge--sm {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            min-width: 1.125rem;
+        }
+
+        &.wui-badge--lg {
+            font-size: 0.875rem;
+            padding: 0.35rem 0.75rem;
+            min-width: 1.65rem;
+        }
+
+        // ── Bentuk Kapsul (Pill) ─────────────────────────────────────────────────
+        &.wui-badge--pill {
+            border-radius: 9999px;
+            padding-inline: 0.65rem;
+
+            &.wui-badge--sm {
+                padding-inline: 0.5rem;
+            }
+
+            &.wui-badge--lg {
+                padding-inline: 0.85rem;
+            }
+        }
+
+        // ── Bentuk Titik Status (Dot) ───────────────────────────────────────────
+        &.wui-badge--dot {
+            width: 0.5rem;
+            height: 0.5rem;
+            min-width: 0.5rem;
+            padding: 0;
+            border-radius: 9999px;
+
+            &.wui-badge--sm {
+                width: 0.375rem;
+                height: 0.375rem;
+                min-width: 0.375rem;
+            }
+
+            &.wui-badge--lg {
+                width: 0.625rem;
+                height: 0.625rem;
+                min-width: 0.625rem;
+            }
+        }
+
+        // ── Posisi Overlap (Notifikasi Sudut) ────────────────────────────────────
+        &.wui-badge--overlap {
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(50%, -50%);
+            z-index: 2;
+        }
+
+        // ── Pemetaan Peran Warna ────────────────────────────────────────────────
+        &.wui-badge--primary {
+            --wui-badge-color: var(--wui-color-primary);
+            --wui-badge-bg: var(--wui-color-primary);
+            --wui-badge-text: var(--wui-color-on-primary, #ffffff);
+        }
+
+        &.wui-badge--secondary {
+            --wui-badge-color: var(--wui-color-secondary);
+            --wui-badge-bg: var(--wui-color-secondary);
+            --wui-badge-text: var(--wui-color-on-secondary, #ffffff);
+        }
+
+        &.wui-badge--danger {
+            --wui-badge-color: var(--wui-color-danger);
+            --wui-badge-bg: var(--wui-color-danger);
+            --wui-badge-text: var(--wui-color-on-danger, #ffffff);
+        }
+
+        &.wui-badge--success {
+            --wui-badge-color: #137333;
+            --wui-badge-bg: #137333;
+            --wui-badge-text: #ffffff;
+        }
+
+        &.wui-badge--warning {
+            --wui-badge-color: #b06000;
+            --wui-badge-bg: #b06000;
+            --wui-badge-text: #ffffff;
+        }
+
+        &.wui-badge--info {
+            --wui-badge-color: #1a73e8;
+            --wui-badge-bg: #1a73e8;
+            --wui-badge-text: #ffffff;
+        }
+
+        // ── Gaya Varian (Filled, Subtle, Outlined) ──────────────────────────────
+        // 1. Filled (Solid / Default)
+        border: 1px solid transparent;
+        background-color: var(--wui-badge-bg);
+        color: var(--wui-badge-text);
+
+        // 2. Subtle (Tonal / Soft)
+        &.wui-badge--subtle {
+            background-color: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
+            color: var(--wui-badge-color);
+            border-color: color-mix(in srgb, var(--wui-badge-color) 22%, transparent);
+        }
+
+        // 3. Outlined
+        &.wui-badge--outlined {
+            background-color: transparent;
+            color: var(--wui-badge-color);
+            border-color: var(--wui-badge-color);
+        }
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .wui-badge,
+        wui-badge {
+            &.wui-badge--success {
+                --wui-badge-color: #81c995;
+                --wui-badge-bg: #81c995;
+                --wui-badge-text: #052814;
+            }
+
+            &.wui-badge--warning {
+                --wui-badge-color: #fdd663;
+                --wui-badge-bg: #fdd663;
+                --wui-badge-text: #2b1700;
+            }
+
+            &.wui-badge--info {
+                --wui-badge-color: #8ab4f8;
+                --wui-badge-bg: #8ab4f8;
+                --wui-badge-text: #041e49;
+            }
+        }
+    }
+}

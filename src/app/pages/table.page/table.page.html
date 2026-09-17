@@ -100,13 +100,6 @@
               <tr>
                 <td colspan="4" style="text-align: center; padding: 2.5rem 1rem;">
                   <wui-loading mode="circular" [style.display]="'inline-block'"></wui-loading>
-                <td>{{ item.name }}</td>
-                <td>{{ item.group }}</td>
-                <td class="text-end">{{ item.amount | number }}</td>
-                <td class="wui-table-col--action">
-                  <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
-                    <wui-icon icon="dots-vertical"></wui-icon>
-                  </button>
                 </td>
               </tr>
             } @else {
@@ -115,7 +108,7 @@
                   <td>{{ item.name }}</td>
                   <td>{{ item.group }}</td>
                   <td class="text-end">{{ item.amount | number }}</td>
-                  <td class="action-col">
+                  <td class="wui-table-col--action">
                     <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
                       <wui-icon icon="dots-vertical"></wui-icon>
                     </button>
@@ -175,13 +168,31 @@
                 </td>
                 <td>{{ item.group }}</td>
                 <td>
-                  <span class="status-chip">{{ item.status }}</span>
+                  @if (item.status === 'Aktif') {
+                    <span wuiBadge color="success" variant="subtle" pill>
+                      <span wuiBadge dot color="success"></span>
+                      Aktif
+                    </span>
+                  } @else if (item.status === 'Tertunda') {
+                    <span wuiBadge color="warning" variant="subtle" pill>
+                      <span wuiBadge dot color="warning"></span>
+                      Tertunda
+                    </span>
+                  } @else {
+                    <span wuiBadge color="info" variant="subtle" pill>
+                      <span wuiBadge dot color="info"></span>
+                      Selesai
+                    </span>
+                  }
                 </td>
                 <td>Jawa Timur, Indonesia</td>
                 <td class="text-end">Rp {{ item.amount | number }}</td>
                 <td class="wui-table-col--action wui-table-col--sticky-right">
-                  <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
+                  <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi" style="position: relative;">
                     <wui-icon icon="dots-vertical"></wui-icon>
+                    @if (item.id === 1) {
+                      <span wuiBadge color="danger" pill overlap size="sm">New</span>
+                    }
                   </button>
                 </td>
               </tr>
@@ -191,9 +202,78 @@
       </div>
     </section>
 
-    <!-- 3. API Reference -->
+    <!-- 3. WuiBadge Showcase (Pengganti Bootstrap Badge Native WUI) -->
     <section class="doc-section">
-      <h2 class="section-title">3. Referensi Directive & Utility</h2>
+      <h2 class="section-title">3. WuiBadge (Pengganti Bootstrap Badge Native WUI)</h2>
+      <p class="section-note">
+        Komponen badge native WUI yang dirancang menggantikan Bootstrap badge tanpa dependensi eksternal.
+        Mendukung 3 varian (<code>filled</code>, <code>subtle</code>, <code>outlined</code>), 7 tema warna semantik,
+        bentuk kapsul (<code>pill</code>), status dot (<code>dot</code>), serta notifikasi melayang (<code>overlap</code>).
+      </p>
+
+      <div class="table-preview-card" style="padding: 1.5rem;">
+        <div class="badge-demo-label">Varian Subtle (Rekomendasi Label Status & Tabel)</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="default" variant="subtle">Default</span>
+          <span wuiBadge color="primary" variant="subtle">Primary</span>
+          <span wuiBadge color="secondary" variant="subtle">Secondary</span>
+          <span wuiBadge color="success" variant="subtle">Success</span>
+          <span wuiBadge color="danger" variant="subtle">Danger</span>
+          <span wuiBadge color="warning" variant="subtle">Warning</span>
+          <span wuiBadge color="info" variant="subtle">Info</span>
+        </div>
+
+        <div class="badge-demo-label">Varian Filled (Solid High-Contrast)</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="default">Default</span>
+          <span wuiBadge color="primary">Primary</span>
+          <span wuiBadge color="secondary">Secondary</span>
+          <span wuiBadge color="success">Success</span>
+          <span wuiBadge color="danger">Danger</span>
+          <span wuiBadge color="warning">Warning</span>
+          <span wuiBadge color="info">Info</span>
+        </div>
+
+        <div class="badge-demo-label">Varian Outlined & Pill (Bentuk Kapsul Bundar)</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="primary" variant="outlined" pill>Outlined Primary</span>
+          <span wuiBadge color="success" variant="outlined" pill>Outlined Success</span>
+          <span wuiBadge color="danger" variant="outlined" pill>Outlined Danger</span>
+          <span wuiBadge color="primary" variant="subtle" pill>Subtle Pill</span>
+          <span wuiBadge color="success" pill>Filled Pill</span>
+        </div>
+
+        <div class="badge-demo-label">Status Dot & Notification Overlap pada Tombol</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="success" variant="subtle" pill>
+            <span wuiBadge dot color="success"></span>
+            Online
+          </span>
+          <span wuiBadge color="danger" variant="subtle" pill>
+            <span wuiBadge dot color="danger"></span>
+            Offline
+          </span>
+          <span wuiBadge color="warning" variant="subtle" pill>
+            <span wuiBadge dot color="warning"></span>
+            Dalam Antrean
+          </span>
+
+          <button wuiButton variant="filled" size="sm" style="position: relative; margin-left: 1rem;">
+            Notifikasi
+            <span wuiBadge color="danger" pill overlap size="sm">5+</span>
+          </button>
+
+          <button wuiButton iconOnly variant="outlined" size="sm" style="position: relative;">
+            <wui-icon icon="dots-vertical"></wui-icon>
+            <span wuiBadge dot color="danger" overlap></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. API Reference -->
+    <section class="doc-section">
+      <h2 class="section-title">4. Referensi Directive & Utility</h2>
 
       <table class="doc-table">
         <thead>
@@ -204,6 +284,41 @@
           </tr>
         </thead>
         <tbody>
+          <tr>
+            <td><code>wuiBadge</code> / <code>wui-badge</code></td>
+            <td>Directive / Component</td>
+            <td>Badge indikator / label status. Dapat digunakan sebagai tag <code>&lt;wui-badge&gt;</code> atau attribute <code>&lt;span wuiBadge&gt;</code>.</td>
+          </tr>
+          <tr>
+            <td><code>[color]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'</code></td>
+            <td>Warna semantik badge (default: <code>'default'</code>). Terintegrasi dengan token WUI dan dark theme.</td>
+          </tr>
+          <tr>
+            <td><code>[variant]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>'filled' | 'subtle' | 'outlined'</code></td>
+            <td>Varian tampilan visual (default: <code>'filled'</code>). <code>'subtle'</code> menghasilkan latar pastel lembut.</td>
+          </tr>
+          <tr>
+            <td><code>[size]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>'sm' | 'md' | 'lg'</code></td>
+            <td>Ukuran badge (default: <code>'md'</code>).</td>
+          </tr>
+          <tr>
+            <td><code>[pill]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>boolean</code></td>
+            <td>Mengubah radius sudut menjadi bentuk bulat kapsul (999px).</td>
+          </tr>
+          <tr>
+            <td><code>[dot]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>boolean</code></td>
+            <td>Mengubah badge menjadi titik bulat status tanpa teks.</td>
+          </tr>
+          <tr>
+            <td><code>[overlap]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>boolean</code></td>
+            <td>Menempatkan badge melayang di sudut kanan atas elemen induk (posisi absolut). Induk harus <code>position: relative</code>.</td>
+          </tr>
           <tr>
             <td><code>wuiTable</code> / <code>.wui-table</code></td>
             <td>Directive / CSS Class</td>
@@ -288,16 +403,18 @@
       </table>
     </section>
 
-    <!-- 4. Contoh Kode Penggunaan -->
+    <!-- 5. Contoh Kode Penggunaan -->
     <section class="doc-section">
-      <h2 class="section-title">4. Contoh Penggunaan</h2>
+      <h2 class="section-title">5. Contoh Penggunaan</h2>
       <div class="code-preview">
-        <pre><code>&lt;div wuiTableResponsive&gt;
+        <pre><code>&lt;!-- Tabel dengan Status Badge & Kolom Sticky --&gt;
+&lt;div wuiTableResponsive&gt;
   &lt;table wuiTable hover&gt;
     &lt;thead&gt;
       &lt;tr&gt;
         &lt;th class="wui-table-col--sticky-left"&gt;Nama&lt;/th&gt;
         &lt;th&gt;Grup&lt;/th&gt;
+        &lt;th&gt;Status&lt;/th&gt;
         &lt;th class="text-end"&gt;Jumlah&lt;/th&gt;
         &lt;th class="wui-table-col--action wui-table-col--sticky-right"&gt;&lt;/th&gt;
       &lt;/tr&gt;
@@ -306,10 +423,17 @@
       &lt;tr&gt;
         &lt;td class="wui-table-col--sticky-left"&gt;Moch. Rizal Rachmadani&lt;/td&gt;
         &lt;td&gt;Investor&lt;/td&gt;
+        &lt;td&gt;
+          &lt;span wuiBadge color="success" variant="subtle" pill&gt;
+            &lt;span wuiBadge dot color="success"&gt;&lt;/span&gt;
+            Aktif
+          &lt;/span&gt;
+        &lt;/td&gt;
         &lt;td class="text-end"&gt;500,000&lt;/td&gt;
         &lt;td class="wui-table-col--action wui-table-col--sticky-right"&gt;
-          &lt;button wuiButton iconOnly variant="text" size="sm"&gt;
+          &lt;button wuiButton iconOnly variant="text" size="sm" style="position: relative;"&gt;
             &lt;wui-icon icon="dots-vertical"&gt;&lt;/wui-icon&gt;
+            &lt;span wuiBadge color="danger" pill overlap size="sm"&gt;3&lt;/span&gt;
           &lt;/button&gt;
         &lt;/td&gt;
       &lt;/tr&gt;
@@ -317,6 +441,7 @@
     &lt;tfoot&gt;
       &lt;tr&gt;
         &lt;th&gt;Total&lt;/th&gt;
+        &lt;th&gt;&lt;/th&gt;
         &lt;th&gt;&lt;/th&gt;
         &lt;th class="text-end"&gt;500,000&lt;/th&gt;
         &lt;th&gt;&lt;/th&gt;

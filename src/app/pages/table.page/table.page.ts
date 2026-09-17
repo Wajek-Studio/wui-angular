@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, computed, inject, signal, viewChild } f
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
+  WuiBadge,
   WuiButton,
   WuiIcon,
   WuiLoading,
@@ -32,6 +33,7 @@ export interface SampleUser {
     WuiIcon,
     WuiPagination,
     WuiLoading,
+    WuiBadge,
   ],
   templateUrl: './table.page.html',
   styleUrl: './table.page.scss',

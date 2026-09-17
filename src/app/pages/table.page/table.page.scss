@@ -185,3 +185,21 @@
     background: transparent;
   }
 }
+
+.badge-demo-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.badge-demo-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 60%, transparent);
+  margin-bottom: 0.5rem;
+}
+
