@@ -28,3 +28,5 @@ export * from './icon/icon';
 export * from './icon/icon.provider';
 export * from './icon/icon.service';
 export * from './icon/icon.model';
+
+export * from './table/table';

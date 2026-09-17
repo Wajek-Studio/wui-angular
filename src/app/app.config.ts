@@ -8,10 +8,12 @@ import {
   mdiAccountCircle,
   mdiCog,
   mdiDockLeft,
+  mdiDotsVertical,
   mdiFormatFont,
   mdiGestureTapButton,
   mdiHome,
   mdiMenu,
+  mdiTable,
 } from '@mdi/js';
 
 export const appConfig: ApplicationConfig = {
@@ -27,7 +29,9 @@ export const appConfig: ApplicationConfig = {
       { name: 'account-circle', path: mdiAccountCircle },
       { name: 'format-font', path: mdiFormatFont },
       { name: 'gesture-tap-button', path: mdiGestureTapButton },
-      { name: 'dock-left', path: mdiDockLeft }
+      { name: 'dock-left', path: mdiDockLeft },
+      { name: 'table', path: mdiTable },
+      { name: 'dots-vertical', path: mdiDotsVertical }
     ),
   ],
 };

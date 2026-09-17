@@ -1,0 +1,142 @@
+// Level 4 — Style komponen `WuiTable`.
+// Menjaga tampilan visual persis seperti tabel wui-angular-17.x:
+// - Tinggi baris standar 3.5rem (56px)
+// - Padding tepi kiri/kanan 1.5rem (turun ke 1rem pada layar <= 768px)
+// - Garis pemisah baris dan kontras thead/tfoot yang adaptif di tema terang dan gelap
+// - Efek hover baris, kolom aksi pas lebar tombol, dan kolom lengket (sticky)
+
+@use '../abstracts' as a;
+
+@mixin table {
+
+    .wui-table,
+    table[wuiTable],
+    table[wui-table] {
+        --wui-table-row-height: 3.5rem;
+        --wui-table-cell-padding-y: 0.5rem;
+        --wui-table-cell-padding-x: 1rem;
+        --wui-table-edge-padding: 1.5rem;
+
+        width: 100%;
+        border-collapse: collapse;
+        color: var(--wui-color-on-surface);
+
+        tr {
+            border-bottom: 1px solid color-mix(in srgb, var(--wui-color-outline) 40%, transparent);
+
+            th,
+            td {
+                vertical-align: middle;
+                padding: var(--wui-table-cell-padding-y) var(--wui-table-cell-padding-x);
+                height: var(--wui-table-row-height);
+                text-align: left;
+                box-sizing: border-box;
+
+                &:first-child {
+                    padding-left: var(--wui-table-edge-padding);
+                }
+
+                &:last-child {
+                    padding-right: var(--wui-table-edge-padding);
+                }
+
+                &.action-col {
+                    width: 0.0001%;
+                    white-space: nowrap;
+                }
+
+                &.sticky-right {
+                    position: sticky;
+                    right: 0;
+                    z-index: 1;
+                    background-color: var(--wui-color-surface);
+                }
+
+                &.sticky-left {
+                    position: sticky;
+                    left: 0;
+                    z-index: 1;
+                    background-color: var(--wui-color-surface);
+                }
+            }
+
+            &.no-border,
+            &.wui-table-row--no-border {
+                border: none;
+                border-bottom: none;
+            }
+        }
+
+        th {
+            font-weight: 600;
+            color: var(--wui-color-on-surface);
+        }
+
+        thead {
+            tr {
+                border-bottom: 1px solid color-mix(in srgb, var(--wui-color-outline) 65%, transparent);
+            }
+        }
+
+        tbody {
+            tr:last-child {
+                border-bottom: none;
+            }
+        }
+
+        tfoot {
+            tr:first-child {
+                border-top: 1px solid color-mix(in srgb, var(--wui-color-outline) 65%, transparent);
+                border-bottom: none;
+            }
+        }
+
+        &.wui-table-hover,
+        &.is-hoverable {
+            tbody tr:hover {
+                background-color: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent);
+
+                > .sticky-right,
+                > .sticky-left {
+                    background-color: color-mix(in srgb, var(--wui-color-on-surface) 4%, var(--wui-color-surface));
+                }
+            }
+        }
+
+        &.wui-table--dense,
+        &.is-dense {
+            --wui-table-row-height: 2.75rem;
+            --wui-table-cell-padding-y: 0.25rem;
+        }
+    }
+
+    .wui-table-responsive,
+    [wuiTableResponsive],
+    [wui-table-responsive] {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    @media screen and (max-width: 768px) {
+        .wui-table,
+        table[wuiTable],
+        table[wui-table] {
+            --wui-table-edge-padding: 1rem;
+
+            tr {
+                th,
+                td {
+                    &:first-child {
+                        padding-left: 1rem;
+                    }
+
+                    &:last-child {
+                        padding-right: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}
