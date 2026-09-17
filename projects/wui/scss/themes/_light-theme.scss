@@ -27,6 +27,7 @@
     // Z-index
     --wui-z-base: #{a.$wui-z-base};
     --wui-z-overlay: #{a.$wui-z-overlay};
+    --wui-z-dialog: #{a.$wui-z-dialog};
 
     // Motion
     --wui-motion-duration-fast: #{a.$wui-motion-duration-fast};
@@ -35,6 +36,13 @@
 
     // Overlay
     --wui-overlay-color: #{a.$wui-overlay-color};
+
+    // Dialog
+    --wui-dialog-radius: #{a.$wui-dialog-radius};
+    --wui-dialog-max-width: #{a.$wui-dialog-max-width};
+    --wui-dialog-min-width: #{a.$wui-dialog-min-width};
+    --wui-dialog-padding: #{a.$wui-dialog-padding};
+    --wui-dialog-elevation: #{a.$wui-dialog-elevation};
 
     // Disabled — diturunkan dari `on-surface`, jadi satu definisi berlaku untuk dua mode.
     --wui-color-disabled-container: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-container-opacity * 100}%, transparent);

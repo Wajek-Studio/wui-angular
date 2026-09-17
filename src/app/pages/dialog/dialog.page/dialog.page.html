@@ -1,0 +1,116 @@
+<ng-template #page>
+  <wui-page>
+    <div class="wui-page-content dialog-container">
+      <header class="dialog-header">
+        <a routerLink="/home" class="dialog-back-btn">← Kembali ke Beranda</a>
+        <h1 class="dialog-title">WUI Dialog</h1>
+        <p class="dialog-subtitle">
+          Dialog modal dari <code>WuiDialogService</code>. Mesinnya <code>@angular/cdk</code>, tapi
+          yang dipakai aplikasi hanya <code>WuiDialogRef</code>, <code>WuiDialogOptions</code>, dan
+          <code>WUI_DIALOG_DATA</code> — tipe CDK tidak perlu diimpor. Isi dialog dirender ke
+          <code>document.body</code>, terpisah dari page stack yang tinggal di dalam
+          <code>&lt;wui-app&gt;</code>.
+        </p>
+      </header>
+
+      <p class="page-note">
+        Yang datang gratis dari CDK: <strong>focus trap</strong>, <strong>ESC</strong> menutup,
+        <strong>klik backdrop</strong> menutup, <strong>scroll halaman diblokir</strong>, fokus
+        kembali ke tombol pemicu, dan <code>role="dialog"</code> +
+        <code>aria-modal="true"</code>. Yang ditambahkan wui: permukaan
+        <code>.wui-dialog</code>, backdrop dari token <code>--wui-overlay-color</code>, dan urutan
+        lapisan lewat <code>--wui-z-dialog</code> (selalu di atas page stack).
+      </p>
+
+      <!-- 1. DARI KOMPONEN -->
+      <section class="dialog-section">
+        <h2 class="section-title">1. Dari komponen — <code>open()</code></h2>
+        <p class="section-note">
+          Hasilnya bertipe: <code>open&lt;boolean&gt;(HapusDialog, &#123; data &#125;)</code> →
+          <code>await ref.result</code> bernilai <code>boolean</code>, atau
+          <code>undefined</code> kalau ditutup lewat ESC/backdrop. Komponen dialog mengambil
+          datanya lewat <code>injectDialogData()</code> dan menutup dirinya lewat
+          <code>inject(WuiDialogRef)</code>.
+        </p>
+
+        <div class="dialog-actions-demo">
+          <button wuiButton (click)="bukaKomponen()">Buka dialog konfirmasi</button>
+          <span class="hasil">Hasil: <strong>{{ hasilKomponen() }}</strong></span>
+        </div>
+      </section>
+
+      <!-- 2. DARI TEMPLATE -->
+      <section class="dialog-section">
+        <h2 class="section-title">2. Dari <code>&lt;ng-template&gt;</code> — <code>openTemplate()</code></h2>
+        <p class="section-note">
+          Konteks template memakai kontrak CDK: <code>let-data</code> berisi
+          <code>options.data</code>. Karena tidak ada komponen pemilik, ref-nya dipegang halaman
+          (<code>openTemplate()</code> tetap mengembalikan <code>WuiDialogRef</code>).
+        </p>
+
+        <div class="dialog-actions-demo">
+          <button wuiButton variant="outlined" (click)="bukaTemplate()">Buka dialog template</button>
+          <span class="hasil">Hasil: <strong>{{ hasilTemplate() }}</strong></span>
+        </div>
+      </section>
+
+      <!-- 3. ALERT -->
+      <section class="dialog-section">
+        <h2 class="section-title">3. Alert — <code>role="alertdialog"</code> + <code>disableClose</code></h2>
+        <p class="section-note">
+          ESC dan klik backdrop dimatikan, jadi hanya tombol di dalam dialog yang bisa
+          menutupnya — perilaku yang diharapkan untuk dialog sistem. Penampilan alert khusus
+          (ikon, warna, tata letak) belum ada; di v1 ini baru peran ARIA-nya.
+        </p>
+
+        <button wuiButton color="danger" variant="outlined" (click)="bukaAlert()">Buka alert</button>
+      </section>
+
+      <!-- 4. DIALOG SISTEM -->
+      <section class="dialog-section">
+        <h2 class="section-title">4. Dialog sistem — <code>alert()</code></h2>
+        <p class="section-note">
+          Untuk pesan yang tidak punya tata letak sendiri (error API, konfirmasi singkat). Isinya
+          datang sebagai <strong>data</strong> — tidak ada komponen atau
+          <code>&lt;ng-template&gt;</code> baru di sisi aplikasi. Hasilnya index tombol
+          (<code>0 … n-1</code>), atau <code>null</code> kalau ditutup tanpa memilih.
+        </p>
+
+        <div class="dialog-actions-demo">
+          <button wuiButton (click)="alertError()">Error API — 1 tombol</button>
+          <button wuiButton variant="outlined" (click)="alertRetry()">Error API + Coba lagi</button>
+          <button wuiButton variant="outlined" color="danger" (click)="alertWajib()">
+            Wajib dipilih
+          </button>
+        </div>
+
+        <p class="hasil">Hasil: <strong>{{ hasilAlert() }}</strong></p>
+      </section>
+
+      <p class="dialog-status">
+        Dialog yang sedang terbuka (<code>dialogs.count()</code>):
+        <strong>{{ dialogs.count() }}</strong>
+      </p>
+    </div>
+  </wui-page>
+</ng-template>
+
+<!--
+  Isi dialog mode template. `let-data` disediakan CDK dari `options.data`.
+  Tombolnya memanggil method halaman karena ref dialog dipegang halaman (`openTemplate()`).
+  Kalau perlu `dialogRef` langsung di dalam template, kontrak CDK juga menyediakan
+  `let-dialogRef="dialogRef"` — tapi yang diterima adalah `DialogRef` milik CDK, bukan wui.
+-->
+<ng-template #tplDialog let-data>
+  <h2 class="wui-title-medium demo-title" id="demo-template-title">Hapus {{ data.nama }}?</h2>
+
+  <p class="wui-body-medium demo-text">
+    Dialog ini dirender dari <code>&lt;ng-template&gt;</code> milik halaman. Tidak ada komponen
+    pemilik, jadi hasilnya dikirim lewat <code>WuiDialogRef</code> yang dipegang halaman.
+  </p>
+
+  <div class="demo-actions">
+    <button wuiButton variant="text" (click)="tutupTemplate('batal')">Batal</button>
+    <button wuiButton color="danger" (click)="tutupTemplate('hapus')">Hapus</button>
+  </div>
+</ng-template>

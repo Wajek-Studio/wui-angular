@@ -261,6 +261,9 @@ $wui-page-radius: 12px !default;
 $wui-z-base: 0 !default;
 $wui-z-overlay: 1000 !default;
 
+// Dialog selalu di atas page stack — lihat `docs/planning/wui-dialog-plan.md` §4.
+$wui-z-dialog: 1100 !default;
+
 // ── Motion ──────────────────────────────────────────────────────────────────
 // Animasi yang memakainya wajib menghormati `prefers-reduced-motion`.
 $wui-motion-duration-fast: 240ms !default;
@@ -269,6 +272,18 @@ $wui-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1) !default;
 
 // ── Overlay ─────────────────────────────────────────────────────────────────
 $wui-overlay-color: rgb(0 0 0 / 40%) !default;
+
+// ── Dialog ──────────────────────────────────────────────────────────────────
+// Permukaan dialog — `scss/components/_dialog.scss` menerjemahkannya jadi `--wui-dialog-*`.
+// Radius masih placeholder: Material 3 memakai 28px, menunggu angka desainer.
+$wui-dialog-radius: 12px !default;
+$wui-dialog-max-width: 560px !default;
+$wui-dialog-padding: 24px !default;
+
+// Minimum lebar dialog. Tanpa ini dialog berisi teks pendek menyusut mengikuti isinya — terukur
+// 238px pada `WuiDialogService.alert()`, sedangkan Material 3 memakai 280px sebagai minimum.
+$wui-dialog-min-width: 280px !default;
+$wui-dialog-elevation: 0 1px 3px 0 rgb(0 0 0 / 30%), 0 4px 8px 3px rgb(0 0 0 / 15%) !default;
 
 // ── Tipografi: Bobot Font ───────────────────────────────────────────────────
 $wui-font-weight-regular: 400 !default;

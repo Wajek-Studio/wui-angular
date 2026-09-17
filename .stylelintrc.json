@@ -5,9 +5,9 @@
       "files": ["projects/wui/scss/**/*.scss"],
       "rules": {
         "selector-class-pattern": [
-          "^(wui-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?|is-[a-z0-9]+(-[a-z0-9]+)*)$",
+          "^(wui-[a-z0-9]+(-[a-z0-9]+)*(__[a-z0-9]+(-[a-z0-9]+)*)?(--[a-z0-9]+(-[a-z0-9]+)*)?|is-[a-z0-9]+(-[a-z0-9]+)*|cdk-[a-z0-9]+(-[a-z0-9]+)*)$",
           {
-            "message": "Class harus pakai prefix `wui-` (BEM ringan) atau state `.is-*`."
+            "message": "Class harus pakai prefix `wui-` (BEM ringan), state `.is-*`, atau class struktural `cdk-*` milik CDK (dirujuk `components/_dialog.scss` untuk urutan lapisan)."
           }
         ],
         "custom-property-pattern": [
