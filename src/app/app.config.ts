@@ -10,6 +10,7 @@ import {
   mdiDockLeft,
   mdiDotsVertical,
   mdiFormatFont,
+  mdiFormTextbox,
   mdiGestureTapButton,
   mdiHome,
   mdiMenu,
@@ -33,7 +34,8 @@ export const appConfig: ApplicationConfig = {
       { name: 'dock-left', path: mdiDockLeft },
       { name: 'table', path: mdiTable },
       { name: 'dots-vertical', path: mdiDotsVertical },
-      { name: 'dialog', path: mdiWindowMaximize }
+      { name: 'dialog', path: mdiWindowMaximize },
+      { name: 'form', path: mdiFormTextbox }
     ),
   ],
 };

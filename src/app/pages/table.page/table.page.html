@@ -1,4 +1,4 @@
-<ng-template #page>
+<ng-template #pageTpl>
   <wui-page>
     <div class="wui-page-content table-doc-container">
     <header class="doc-header">
@@ -20,7 +20,7 @@
     <section class="doc-section">
       <h2 class="section-title">1. Interactive Playground</h2>
       <p class="section-note">
-        Uji efek visual <code>hover</code> dan mode <code>dense</code> secara langsung.
+        Uji efek visual <code>hover</code>, baris selang-seling <code>alternate</code>, dan mode <code>dense</code> secara langsung.
         Perhatikan bahwa baris header, baris data, dan baris footer memiliki pembatas yang rapi serta
         kolom aksi mengecil pas selebar tombol.
       </p>
@@ -44,6 +44,25 @@
           >
             Dense: {{ isDense() ? 'ON' : 'OFF' }}
           </button>
+
+          <button
+            wuiButton
+            size="sm"
+            [variant]="isAlternate() ? 'filled' : 'outlined'"
+            (click)="toggleAlternate()"
+          >
+            Alternate: {{ isAlternate() ? 'ON' : 'OFF' }}
+          </button>
+
+          <button
+            wuiButton
+            size="sm"
+            variant="outlined"
+            (click)="refreshData()"
+            [disabled]="isLoading()"
+          >
+            Refresh Data
+          </button>
         </div>
 
         <div class="state-badges">
@@ -53,11 +72,20 @@
           <span class="state-badge" [class.is-active]="isDense()">
             dense: <strong>{{ isDense() }}</strong>
           </span>
+          <span class="state-badge" [class.is-active]="isAlternate()">
+            alternate: <strong>{{ isAlternate() }}</strong>
+          </span>
+          <span class="state-badge" [class.is-active]="isLoading()">
+            loading: <strong>{{ isLoading() }}</strong>
+          </span>
+          <span class="state-badge" [class.is-active]="page() > 1">
+            page: <strong>{{ page() }}</strong>
+          </span>
         </div>
       </div>
 
       <div class="table-preview-card" wuiTableResponsive>
-        <table wuiTable [hover]="isHover()" [dense]="isDense()">
+        <table wuiTable [hover]="isHover()" [dense]="isDense()" [alternate]="isAlternate()">
           <thead>
             <tr>
               <th>Nama</th>
@@ -68,7 +96,7 @@
           </thead>
 
           <tbody>
-            @for (item of sampleData; track item.id) {
+            @for (item of data(); track item.id) {
               <tr>
                 <td>{{ item.name }}</td>
                 <td>{{ item.group }}</td>
@@ -84,7 +112,7 @@
 
           <tfoot>
             <tr>
-              <th>Total</th>
+              <th>Total (Semua Data)</th>
               <th></th>
               <th class="text-end">{{ totalAmount | number }}</th>
               <th class="action-col"></th>
@@ -92,6 +120,14 @@
           </tfoot>
         </table>
       </div>
+
+      <wui-pagination
+        [(page)]="page"
+        [count]="count()"
+        [limit]="limit()"
+        [loading]="isLoading()"
+        (pageChange)="refreshData()"
+      />
     </section>
 
     <!-- 2. Sticky Columns & Responsive Scrolling -->
@@ -169,6 +205,11 @@
             <td>Mengurangi tinggi baris dan padding untuk menampilkan data lebih padat.</td>
           </tr>
           <tr>
+            <td><code>[alternate]</code> / <code>.wui-table--alternate</code></td>
+            <td><code>boolean</code></td>
+            <td>Mengaktifkan latar belang-belang tipis (zebra-striping) pada baris genap.</td>
+          </tr>
+          <tr>
             <td><code>wuiTableResponsive</code></td>
             <td>Directive / Container</td>
             <td>Kontainer pembungkus tabel yang mengizinkan scroll horizontal saat melebihi lebar layar.</td>
@@ -187,6 +228,31 @@
             <td><code>.no-border</code></td>
             <td>CSS Class (pada <code>tr</code>)</td>
             <td>Menghilangkan garis bawah pemisah pada baris tertentu.</td>
+          </tr>
+          <tr>
+            <td><code>wui-pagination</code></td>
+            <td>Component</td>
+            <td>Komponen pagination mandiri untuk navigasi tabel. Menggunakan tombol <code>wuiButton size="sm" iconOnly variant="text"</code>.</td>
+          </tr>
+          <tr>
+            <td><code>[(page)]</code></td>
+            <td><code>model&lt;number&gt;</code></td>
+            <td>Halaman aktif (1-indexed). Mendukung two-way data binding.</td>
+          </tr>
+          <tr>
+            <td><code>[count]</code></td>
+            <td><code>number</code></td>
+            <td>Total seluruh baris data.</td>
+          </tr>
+          <tr>
+            <td><code>[limit]</code></td>
+            <td><code>number</code></td>
+            <td>Jumlah baris data per halaman (default 10).</td>
+          </tr>
+          <tr>
+            <td><code>[loading]</code></td>
+            <td><code>boolean</code></td>
+            <td>Menampilkan teks 'Memuat...' dan menonaktifkan tombol sementara saat mengambil data dari server.</td>
           </tr>
         </tbody>
       </table>
@@ -227,7 +293,16 @@
       &lt;/tr&gt;
     &lt;/tfoot&gt;
   &lt;/table&gt;
-&lt;/div&gt;</code></pre>
+&lt;/div&gt;
+
+&lt;!-- Komponen Pagination Mandiri --&gt;
+&lt;wui-pagination
+  [(page)]="currentPage"
+  [count]="totalItems()"
+  [limit]="pageSize()"
+  [loading]="isLoading()"
+  (pageChange)="fetchData()"
+/&gt;</code></pre>
       </div>
     </section>
     </div>

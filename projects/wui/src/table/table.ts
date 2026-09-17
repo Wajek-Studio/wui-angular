@@ -24,6 +24,7 @@ import { Directive, booleanAttribute, input } from '@angular/core';
     class: 'wui-table',
     '[class.wui-table-hover]': 'hover()',
     '[class.wui-table--dense]': 'dense()',
+    '[class.wui-table--alternate]': 'alternate()',
   },
 })
 export class WuiTable {
@@ -32,6 +33,9 @@ export class WuiTable {
 
   /** Mode baris padat / kompak dengan tinggi baris lebih ringkas. */
   readonly dense = input(false, { transform: booleanAttribute });
+
+  /** Mode baris belang-belang ganjil/genap (zebra-striping) dengan warna latar tipis. */
+  readonly alternate = input(false, { transform: booleanAttribute });
 }
 
 /**

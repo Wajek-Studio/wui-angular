@@ -91,6 +91,19 @@
             }
         }
 
+        &.wui-table--alternate,
+        &.wui-table-alternate,
+        &.is-alternate {
+            > tbody > tr:nth-child(even) {
+                background-color: color-mix(in srgb, var(--wui-color-on-surface) 2%, transparent);
+
+                > .sticky-right,
+                > .sticky-left {
+                    background-color: color-mix(in srgb, var(--wui-color-on-surface) 2%, var(--wui-color-surface));
+                }
+            }
+        }
+
         &.wui-table-hover,
         &.is-hoverable {
             tbody tr:hover {

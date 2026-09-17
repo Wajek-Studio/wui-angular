@@ -34,3 +34,5 @@ export * from './icon/icon.service';
 export * from './icon/icon.model';
 
 export * from './table/table';
+export * from './pagination/pagination';
+export * from './pagination/pagination.options';
