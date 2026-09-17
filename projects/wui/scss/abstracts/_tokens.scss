@@ -283,6 +283,29 @@ $wui-dialog-padding: 24px !default;
 // Minimum lebar dialog. Tanpa ini dialog berisi teks pendek menyusut mengikuti isinya — terukur
 // 238px pada `WuiDialogService.alert()`, sedangkan Material 3 memakai 280px sebagai minimum.
 $wui-dialog-min-width: 280px !default;
+
+// ── Form field ──────────────────────────────────────────────────────────────
+// Angka-angka di bawah ini **placeholder** — menunggu nilai desainer (plan
+// `wui-form-controls-plan.md`). Strukturnya sudah token, jadi memperbaruinya cukup di sini.
+$wui-field-height: 56px !default;
+$wui-field-padding-inline: 16px !default;
+$wui-field-border-width: 1px !default;
+$wui-field-textarea-min-height: 96px !default;
+
+// Geometri label mengapung. `space` = ruang di atas teks kontrol untuk varian filled (labelnya
+// mengapung DI DALAM kotak); varian outlined tidak butuh ruang karena labelnya naik ke garis atas.
+$wui-field-label-space: 24px !default;
+$wui-field-label-float-outlined: 0 !default;
+$wui-field-label-float-filled: 8px !default;
+
+// Posisi label saat istirahat. Outlined: **titik tengah** kontrol — teks input juga di tengah kotak,
+// jadi label duduk tepat di baris teksnya (56px / 2). Filled: teks kontrol turun 24px, jadi labelnya
+// sejajar baris teks itu (24px + setengah baris 24px).
+$wui-field-label-rest: 28px !default;
+$wui-field-label-rest-filled: 36px !default;
+
+// Mengikuti `$wui-radius-md`; ditulis terpisah supaya field bisa berubah tanpa mengubah radius global.
+$wui-field-radius: 8px !default;
 $wui-dialog-elevation: 0 1px 3px 0 rgb(0 0 0 / 30%), 0 4px 8px 3px rgb(0 0 0 / 15%) !default;
 
 // ── Tipografi: Bobot Font ───────────────────────────────────────────────────

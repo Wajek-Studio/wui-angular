@@ -318,7 +318,73 @@ ikut ter-load. Ini perlu ditulis jelas di README.
 
 ---
 
-## 6. Perilaku yang harus didefinisikan
+## 6. Fokus & a11y — keputusan dan hasil (17 Sep 2026)
+
+**Keputusan (persetujuan user): Opsi 1** — tambahkan a11y CDK ke stack yang ada. Page **tidak**
+ dikonversi ke `cdk/overlay` maupun `cdk/dialog`.
+
+Alasan utama: `OverlayConfig` di CDK 20.2 **tidak punya `zIndex`** (semua overlay berada di
+`@layer cdk-overlay { z-index: 1000 }`), sehingga memindahkan page ke CDK berarti urutan lapisan
+berpindah dari "urutan DOM = urutan tumpukan" ke mekanisme CDK, `--wui-z-overlay` kehilangan arti,
+dan `WuiApp` tak lagi jadi wadah page — diff besar untuk keuntungan yang sudah didapat dari a11y.
+
+### Temuan CDK yang menentukan desain
+
+| # | Temuan | Akibat |
+| --- | --- | --- |
+| 1 | `@angular/cdk/a11y` punya `ConfigurableFocusTrap` + `FocusTrapManager` yang **otomatis** hanya mengaktifkan trap teratas | Terlihat pas, tapi… |
+| 2 | `cdk/dialog` **dan** `cdkTrapFocus` memakai `FocusTrapFactory` **dasar** (anchor, tanpa manager) | …kalau kita memakai yang ber-manager, `EventListenerFocusTrapInertStrategy` memasang listener `focus` di seluruh dokumen dan akan **merebut fokus kembali** ke page saat dialog dibuka di atasnya (dialog dirender ke `document.body`, di luar elemen page) |
+| 3 | `FocusTrap.enabled` cukup untuk menyalakan/mematikan anchor trap | Aturan "hanya page teratas" kita kelola sendiri di `#sync()` — memakai jenis trap yang sama dengan dialog, jadi tidak ada rebutan |
+| 4 | `_executeOnStable()` memakai `afterNextRender()`, bukan `zone.onStable` | `focusInitialElementWhenReady()` aman di aplikasi **zoneless** |
+
+### Perilaku yang diterapkan
+
+1. Setiap page membuat `FocusTrap` dari elemen layer (node akar pertama). `#sync()` menyetel
+   `trap.enabled = (posisi === teratas)` → hanya page teratas yang memiliki anchor aktif.
+2. Saat page dibuat: `focusInitialElementWhenReady()` — fokus masuk ke page baru.
+3. Saat page teratas ditutup: fokus dikembalikan ke elemen pemicu, dengan tiga penjaga — pemicu
+   masih `isConnected`, fokus memang berada di page yang ditutup (atau hilang), dan pemicu tidak
+   berada di dalam subtree `aria-hidden`.
+4. Layer yang bukan teratas + isi shell aplikasi (topbar, sidenav, konten router) diberi
+   `aria-hidden="true"`, dikembalikan apa adanya saat tumpukan mengecil. Sengaja **bukan** `inert`:
+   urutan tab sudah ditahan focus trap, dan klik sudah tertahan layer teratas.
+5. `focus trap` dilepas (`destroy()`) sebelum view dihancurkan, termasuk saat view dihancurkan
+   Angular tanpa `close()` (jalur `#prune()`).
+
+### Dua bug yang tertangkap saat pengujian (jangan diulang)
+
+| Bug | Gejala | Sebab |
+| --- | --- | --- |
+| `#hostElement()` membandingkan `ElementRef` dengan `HTMLElement` | `aria-hidden` tidak pernah terpasang | `ViewContainerRef.element` adalah `ElementRef`; elemennya di `.nativeElement` |
+| Walk shell ikut menyembunyikan layer page | Page teratas bisa ikut disembunyikan | `ViewContainerRef` `WuiApp` **ber-anchor di `.wui-app__overlay-host`**, sehingga layer page (dan anchor trap CDK) adalah **saudara** host itu, bukan anaknya → walk wajib melewati elemen milik stack |
+
+### Hasil verifikasi di `http://wui.local`
+
+| Yang diuji | Hasil |
+| --- | --- |
+| Page terbuka | Fokus masuk ke page; `wui-topbar`, `wui-sidenav`, konten router, `router-outlet` = `aria-hidden="true"`; host overlay & layer page **tidak** disembunyikan |
+| Tab 12× | Fokus berputar di dalam page (`Demo Tipografi → … → Open Nested →` kembali) — **tidak pernah** keluar ke topbar/sidenav |
+| Tumpukan 2 layer | Layer bawah `aria-hidden="true"`, layer teratas terlihat, fokus pindah ke page baru |
+| Tab 6× di layer teratas | Tetap di dalam layer teratas |
+| Tombol back | Layer turun 2 → 1, `aria-hidden` layer bawah dilepas, **fokus kembali ke tombol pemicu** (`Open Nested`) |
+| Dialog di atas page | Fokus masuk ke dialog dan **tetap** di sana saat Tab 5×; `app-root` di-`aria-hidden` CDK saat dialog terbuka dan dikembalikan setelah ESC; setelah ESC fokus kembali ke tombol di dalam page |
+| Build | `ng build wui` + `ng build` (termasuk prerender) hijau; a11y dilewati saat bukan browser (`isPlatformBrowser`) |
+
+**Belum terverifikasi:** keadaan tumpukan **kosong** (semua page tertutup) hanya terjadi sesaat karena
+setiap rute memakai `replace()` (close + create dalam satu blok sinkron), jadi pengembalian
+`aria-hidden` shell saat tumpukan kosong belum bisa diamati terpisah di playground ini.
+
+### Catatan struktural yang perlu diputuskan
+
+`ViewContainerRef` dari `WuiApp` ber-anchor di `.wui-app__overlay-host`, sehingga layer page dirender
+sebagai **saudara** host itu di dalam `.wui-layout-content`. Akibatnya page varian `full` **tidak**
+menutupi topbar/sidenav aplikasi (hanya area konten) — padahal dokumen `WuiPageVariant` menyebut
+`full` = "menutup penuh layar". Perlu diputuskan: pindahkan anchor host ke level `wui-app` (page
+benar-benar full-screen) atau perjelas definisinya.
+
+---
+
+## 7. Perilaku yang harus didefinisikan
 
 | Aspek | Rencana | Catatan |
 | --- | --- | --- |
@@ -334,7 +400,7 @@ ikut ter-load. Ini perlu ditulis jelas di README.
 
 ---
 
-## 7. Roadmap fase
+## 8. Roadmap fase
 
 ### Fase A — Inti stack ✅ **implementasi selesai** (verifikasi runtime pending)
 
@@ -370,14 +436,17 @@ browser. Cara memverifikasi di mesin yang ada browser (`npm start`):
 
 ### Fase C — Interaksi & a11y (1–2 hari)
 
-- [ ] Fokus pindah ke page teratas saat push; kembali ke elemen pemicu saat `close()`
-- [ ] ESC & klik backdrop (untuk `modal`)
-- [ ] `role="dialog"` + `aria-modal`, konten belakang `inert`
+- [x] Fokus pindah ke page teratas saat push; kembali ke elemen pemicu saat `close()`
+- [x] Focus trap per layer — hanya page teratas yang aktif (`FocusTrap.enabled`)
+- [x] Layer bawah + isi shell aplikasi disembunyikan dari screen reader (`aria-hidden`)
+- [ ] ESC & klik backdrop (untuk `modal`) — **menunggu varian `modal`**
+- [ ] `role="dialog"` + `aria-modal` (khusus varian `modal`)
 - [ ] Scroll-lock (kalau diputuskan ya)
 - [x] ~~Integrasi tombol back~~ → tertangani otomatis lewat lifecycle (keputusan 3). Sisa: uji bahwa
-      perpindahan route / back benar-benar menutup page
+      perpindahan route / back benar-benar menutup page — **terverifikasi** (uji back 17 Sep 2026)
 
-**DoD:** seluruh alur bisa dilalui hanya dengan keyboard.
+**DoD:** seluruh alur bisa dilalui hanya dengan keyboard — ✅ untuk tumpukan 1–2 layer; varian
+`modal` menyusul.
 
 ### Fase D — Lanjutan (opsional)
 
@@ -393,7 +462,7 @@ browser. Cara memverifikasi di mesin yang ada browser (`npm start`):
 
 ---
 
-## 8. Testing & verifikasi
+## 9. Testing & verifikasi
 
 1. **Unit — stack logic**: push/pop/popTo/clear, urutan, `top`, `depth`. Tanpa DOM, cepat, paling bernilai.
 2. **Unit — `PageService`**: `push()`/`replace()`/`pop()` benar-benar membuat & menghancurkan view,
@@ -405,7 +474,7 @@ browser. Cara memverifikasi di mesin yang ada browser (`npm start`):
 
 ---
 
-## 9. Risiko & mitigasi
+## 10. Risiko & mitigasi
 
 | Risiko | Dampak | Mitigasi |
 | --- | --- | --- |
@@ -414,7 +483,7 @@ browser. Cara memverifikasi di mesin yang ada browser (`npm start`):
 | Embedded view dari `<ng-template>` + `ChangeDetectionStrategy.OnPush` di komponen pemilik | Isi page bisa tidak ikut ter-update | Komponen page sebaiknya pakai CD default; kalau OnPush, panggil `markForCheck()`. Tulis di README |
 | Gaya komponen `WuiApp` tidak menembus konten page (view encapsulation) | Aturan `.wui-page-layer` dari component SCSS tidak berefek | Aturan layer page **wajib** ditaruh di style layer global (`scss/components/`), bukan di component SCSS |
 | `push()` dipanggil sebelum `WuiApp` menyerahkan host (mis. di constructor root component) | Page tidak muncul, penyebabnya sulit dilacak | `attachHost` menandai kesiapan; kalau `push()` datang lebih dulu, beri error yang jelas — jangan diabaikan diam-diam |
-| Konten aplikasi di belakang masih bisa di-scroll | Page terasa tidak solid | Scroll-lock / `overflow: hidden` saat ada page aktif (§6) |
+| Konten aplikasi di belakang masih bisa di-scroll | Page terasa tidak solid | Scroll-lock / `overflow: hidden` saat ada page aktif (§7) |
 | Z-index bertabrakan dengan komponen lain | Overlay "tenggelam" | Semua z-index lewat token `--wui-z-*`, tidak ada angka mati di komponen |
 | Fokus tidak dikembalikan setelah pop | Pengguna keyboard tersesat | Simpan elemen pemicu, restore di `pop` (Fase C, bukan nanti) |
 | `WuiApp` didaftarkan dua kali | Overlay ganda, push masuk ke host yang salah | Guard satu instance + error message yang jelas |
@@ -425,7 +494,7 @@ browser. Cara memverifikasi di mesin yang ada browser (`npm start`):
 
 ---
 
-## 10. Yang perlu Anda putuskan
+## 11. Yang perlu Anda putuskan
 
 Sudah terjawab (keputusan 2026-09-16):
 
@@ -450,7 +519,7 @@ Sisa yang masih terbuka:
 
 ---
 
-## 11. Deliverable akhir
+## 12. Deliverable akhir
 
 1. `WuiPageService` + `WuiPageRef`: tumpukan berbasis `<ng-template>` yang dikendalikan komponen
    (`push` / `replace` / `close`), `close` idempoten, tanpa `WuiApp` ikut campur soal alur.

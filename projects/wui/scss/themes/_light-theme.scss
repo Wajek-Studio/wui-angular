@@ -44,6 +44,18 @@
     --wui-dialog-padding: #{a.$wui-dialog-padding};
     --wui-dialog-elevation: #{a.$wui-dialog-elevation};
 
+    // Form field
+    --wui-field-height: #{a.$wui-field-height};
+    --wui-field-padding-inline: #{a.$wui-field-padding-inline};
+    --wui-field-radius: #{a.$wui-field-radius};
+    --wui-field-border-width: #{a.$wui-field-border-width};
+    --wui-field-textarea-min-height: #{a.$wui-field-textarea-min-height};
+    --wui-field-label-space: #{a.$wui-field-label-space};
+    --wui-field-label-rest: #{a.$wui-field-label-rest};
+    --wui-field-label-rest-filled: #{a.$wui-field-label-rest-filled};
+    --wui-field-label-float-outlined: #{a.$wui-field-label-float-outlined};
+    --wui-field-label-float-filled: #{a.$wui-field-label-float-filled};
+
     // Disabled — diturunkan dari `on-surface`, jadi satu definisi berlaku untuk dua mode.
     --wui-color-disabled-container: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-container-opacity * 100}%, transparent);
     --wui-color-disabled-content: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-content-opacity * 100}%, transparent);

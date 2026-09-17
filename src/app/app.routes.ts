@@ -20,6 +20,8 @@ export const routes: Routes = [{
 }, {
     path: 'dialog', loadComponent: () => import('./pages/dialog/dialog.page/dialog.page').then(m => m.DialogPage)
 }, {
+    path: 'form', loadComponent: () => import('./pages/form/form.page/form.page').then(m => m.FormPage)
+}, {
     path: 'sidenav', loadComponent: () => import('./pages/sidenaav.page/sidenaav.page').then(m => m.SidenaavPage)
 }, {
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
