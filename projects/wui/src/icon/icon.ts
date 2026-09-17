@@ -11,8 +11,8 @@ import { ICON_SIZE_MAP, IconSize } from './icon.model';
       viewBox="0 0 24 24"
       aria-hidden="true"
       focusable="false"
-      [style.width]="computedSize()"
-      [style.height]="computedSize()"
+      [style.width]="inlineSize()"
+      [style.height]="inlineSize()"
       [style.color]="color() || null">
       @if (pathData()) {
         <path [attr.d]="pathData()" />
@@ -35,8 +35,12 @@ export class WuiIcon {
   /** Path `d` mentah untuk ikon sekali pakai. Bila diisi, `icon`/`name` diabaikan. */
   readonly path = input<string | undefined>(undefined);
 
-  /** Preset ukuran (`xs` | `sm` | `md` | `lg` | `xl`) atau nilai CSS bertata ukuran (`1.25rem`). */
-  readonly size = input<IconSize>('md');
+  /**
+   * Preset ukuran (`xs` | `sm` | `md` | `lg` | `xl`) atau nilai CSS bertata ukuran (`1.25rem`).
+   * Bila tidak diisi, ikon mengikuti `--wui-icon-size` dari elemen induknya (dipakai tombol),
+   * dengan 24px sebagai fallback terakhir.
+   */
+  readonly size = input<IconSize | undefined>(undefined);
 
   /** Warna ikon. Bila kosong, ikon mengikuti `color` elemen induknya. */
   readonly color = input<string | undefined>(undefined);
@@ -54,6 +58,16 @@ export class WuiIcon {
     return iconName ? this.registry.getIcon(iconName) : undefined;
   });
 
-  /** Ukuran siap pakai: preset diubah ke px, nilai CSS lain diteruskan apa adanya. */
-  protected readonly computedSize = computed(() => ICON_SIZE_MAP[this.size()] || this.size() || '24px');
+  /**
+   * Ukuran inline — hanya diisi bila `size` ditulis eksplisit.
+   *
+   * Bila kosong, ukuran datang dari CSS (`width: var(--wui-icon-size, 24px)` di `icon.scss`),
+   * sehingga container seperti tombol bisa mengatur ukuran ikon lewat `--wui-icon-size`
+   * tanpa ditimpa inline style.
+   */
+  protected readonly inlineSize = computed(() => {
+    const size = this.size();
+
+    return size ? ICON_SIZE_MAP[size] || size : null;
+  });
 }

@@ -92,31 +92,48 @@
 /// Menempelkan state layer standar pada elemen interaktif: hover `0.08`, pressed `0.10`,
 /// dragged `0.16`. Hover dibungkus `@media (hover: hover)` supaya tidak "lengket" di layar sentuh.
 /// @param {String} $wui-role - `'primary'` (default), atau `'on-primary'` bila elemen
-///   berada di atas permukaan primary.
+///   berada di atas permukaan primary. Diabaikan bila `$wui-color-var` diisi.
 /// @param {String|null} $wui-surface - Warna dasar elemen. Bila diisi, lapisan dicampur ke
 ///   permukaan itu sehingga warna dasarnya tidak tertimpa (dipakai tombol `filled`).
-@mixin interactive-state($wui-role: 'primary', $wui-surface: null) {
+/// @param {String|null} $wui-color-var - Nama CSS variable warna lapisan (tanpa `var()`), mis.
+///   `--wui-button-content`. Dipakai komponen yang warnanya bisa ditukar dari CSS: satu aturan
+///   melayani semua warna, tanpa token state layer baru per warna.
+@mixin interactive-state($wui-role: 'primary', $wui-surface: null, $wui-color-var: null) {
+  $wui-08: null;
+  $wui-10: null;
+  $wui-16: null;
+
+  @if $wui-color-var {
+    $wui-08: functions.state-layer-color($wui-color-var, '08', $wui-surface);
+    $wui-10: functions.state-layer-color($wui-color-var, '10', $wui-surface);
+    $wui-16: functions.state-layer-color($wui-color-var, '16', $wui-surface);
+  } @else {
+    $wui-08: functions.state-layer($wui-role, '08', $wui-surface);
+    $wui-10: functions.state-layer($wui-role, '10', $wui-surface);
+    $wui-16: functions.state-layer($wui-role, '16', $wui-surface);
+  }
+
   @media (hover: hover) {
     &:hover {
-      background-color: functions.state-layer($wui-role, '08', $wui-surface);
+      background-color: $wui-08;
     }
   }
 
   &:active {
-    background-color: functions.state-layer($wui-role, '10', $wui-surface);
+    background-color: $wui-10;
   }
 
   &.is-dragged {
-    background-color: functions.state-layer($wui-role, '16', $wui-surface);
+    background-color: $wui-16;
   }
 
   // Class bantu untuk MEMAKSA state — dipakai halaman demo, screenshot, dan pengujian visual
   // tanpa perlu hover/klik sungguhan. Tidak dipakai oleh komponen di produksi.
   &.is-hover {
-    background-color: functions.state-layer($wui-role, '08', $wui-surface);
+    background-color: $wui-08;
   }
 
   &.is-pressed {
-    background-color: functions.state-layer($wui-role, '10', $wui-surface);
+    background-color: $wui-10;
   }
 }

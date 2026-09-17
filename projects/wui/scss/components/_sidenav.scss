@@ -22,8 +22,8 @@
 
         // Lebar default = state `is-open`.
         width: var(--wui-sidenav-width, 16rem);
-        background-color: var(--wui-color-background);
-        color: var(--wui-color-text);
+        background-color: var(--wui-color-surface);
+        color: var(--wui-color-on-surface);
         transition: 
             width var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
             opacity calc(var(--wui-motion-duration-base) * 0.8) var(--wui-motion-easing-standard);

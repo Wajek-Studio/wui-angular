@@ -11,7 +11,23 @@
         flex-direction: row;
         align-items: center;
 
-        @include a.space(px, 4);
+        @include a.space(px, 2);
+    }
+
+    .wui-topbar {
+        &-leading {
+            flex: 0 0 auto;
+        }
+
+        &-content {
+            @include a.space(px, 3);
+
+            flex: 1 1 auto;
+        }
+
+        &-trailing {
+            flex: 0 0 auto;
+        }
     }
 
 }

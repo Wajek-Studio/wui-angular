@@ -1,4 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Palet dipilih lewat konfigurasi modul — tidak perlu `@include` lagi.
+// Konfigurasi library: palet yang skalanya di-emit + peran warna (`$wui-roles`).
+// Semua opsional — tanpa konfigurasi pun library memakai nilai bawaan.
 @use '@wajek/wui/scss/wui.scss' with ($wui-palette: 'purple');
+
+// Contoh mengganti peran warna dari sini (nonaktif — pindahkan ke `@use` di atas untuk mencoba):
+//
+// @use '@wajek/wui/scss/wui.scss' with (
+//   $wui-palette: 'purple',
+//   $wui-roles: (
+//     'light': (
+//       'primary': ('purple', 500),   // (palet, tone) → diambil dari data palet
+//       'on-primary': #fff,           // warna langsung
+//       'danger': ('red', 600),       // tone palet bawaan
+//       'secondary': ('magenta', 500),
+//       'surface': #fff,
+//       'on-surface': #111,
+//       'outline': #ccc,
+//     ),
+//     'dark': (
+//       'primary': ('purple', 500),   // tone 500 palet sudah bernilai mode gelap
+//       'on-primary': #05000f,
+//       'danger': ('red', 500),
+//       'surface': #14121a,
+//       'on-surface': #f5f5f5,
+//       'outline': #484553,
+//     ),
+//   ),
+// );

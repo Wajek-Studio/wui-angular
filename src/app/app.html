@@ -1,6 +1,22 @@
 <wui-app>
   <wui-topbar>
-    App Topbar
+    <div class="wui-topbar-leading">
+      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenav()">
+        <wui-icon icon="menu"></wui-icon>
+      </button>
+    </div>
+
+    <div class="wui-topbar-content">
+      <span class="wui-title-medium">
+        Wajek UI &mdash; WUI
+      </span>
+    </div>
+
+    <div class="wui-topbar-trailing">
+      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenav()">
+        <wui-icon icon="account-circle"></wui-icon>
+      </button>
+    </div>
   </wui-topbar>
 
   <wui-sidenav id="app-sidenav">

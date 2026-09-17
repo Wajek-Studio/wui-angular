@@ -17,11 +17,26 @@
         <div class="wui-page-content">
             <h2>Halaman Demo</h2>
 
-            <button wuiButton variant="filled" size="xl" routerLink="nested" class="wui-me-2">Open Nested</button>
-            <button wuiButton variant="outlined" size="sm" routerLink="/tipografi" class="wui-me-2">Demo Tipografi (Display)</button>
-            <button wuiButton variant="text" size="sm" routerLink="/button" class="wui-me-2">Demo Button (M3)</button>
-            <button wuiButton variant="outlined" size="sm" (click)="toggleSidenav()" class="wui-me-2">Toggle Sidenav</button>
-            <button wuiButton variant="outlined" size="sm" (click)="toggleSidenavMini()">Toggle Sidenav Mini</button>
+            <button wuiButton variant="filled" color="danger" routerLink="nested" class="wui-me-2">
+                <wui-icon icon="home"></wui-icon>
+                Open Nested
+            </button>
+            <button wuiButton variant="outlined" size="sm" routerLink="/tipografi" class="wui-me-2">
+                <wui-icon icon="home"></wui-icon>
+                Demo Tipografi (Display)
+            </button>
+            <button wuiButton variant="text" size="md" routerLink="/button" class="wui-me-2">
+                <wui-icon icon="home"></wui-icon>
+                Demo Button (M3)
+            </button>
+            <button wuiButton variant="outlined" size="lg" (click)="toggleSidenav()" class="wui-me-2">
+                <wui-icon icon="home"></wui-icon>
+                Toggle Sidenav
+            </button>
+            <button wuiButton variant="outlined" size="xl" (click)="toggleSidenavMini()">
+                <wui-icon icon="home"></wui-icon>
+                Toggle Sidenav Mini
+            </button>
 
             <wui-icon icon="home"></wui-icon>
             

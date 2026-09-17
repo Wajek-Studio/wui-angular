@@ -30,6 +30,48 @@ Tanpa langkah lain: tanpa entri di `angular.json → styles[]`, tanpa `stylePrep
 **Aturan pemuatan:** entry yang emit CSS saling eksklusif — pakai `wui.scss` **atau** kombinasi granular,
 jangan dua-duanya (CSS jadi dobel). File `components/*.scss` murni mixin, jadi aman digabung dengan entry apa pun.
 
+### Token warna: palet vs peran
+
+Ada dua lapisan yang sengaja dipisah:
+
+| Lapisan | Isi | Contoh token |
+| --- | --- | --- |
+| **Palet** — data intensitas | Satu skala tone `50…950` per mode, tanpa kunci peran | `--wui-color-purple-500`, `--wui-color-red-dark-950` |
+| **Peran** — token semantik | Yang dibaca komponen; nilainya diambil dari palet atau ditulis langsung | `--wui-color-primary`, `--wui-color-on-primary`, `--wui-color-danger`, `--wui-color-surface`, `--wui-color-on-surface`, `--wui-color-surface-container`, `--wui-color-outline` |
+
+Palet bawaan: `purple` (brand), `red` (dipakai `danger`), `magenta` (dipakai `secondary`), dan
+`neutral` — skala gray yang jadi acuan peran netral (`surface`, `on-surface`, `outline`). Di skala
+`neutral` tone besar = makin gelap **di kedua mode**, sehingga `surface` memakai tone `50` di mode
+terang dan tone `950` di mode gelap. Palet `red` & `magenta` masih placeholder.
+
+Peran bawaan: `primary`, `on-primary`, `secondary`, `on-secondary`, `danger`, `on-danger`, `surface`,
+`on-surface`, `surface-container`, `on-surface-container`, `outline` — semuanya mode-aware
+(`prefers-color-scheme`) dan sudah punya state layer `--wui-color-state-layer-<peran>-opacity-08/10/16`
+untuk peran interaktif.
+
+```scss
+// src/styles.scss — konfigurasi opsional dari sisi aplikasi
+@use '@wajek/wui/scss/wui.scss' with (
+  $wui-palette: 'purple',        // palet yang skalanya di-emit
+  $wui-roles: (
+    'light': (
+      'primary': ('brand', 500), // (palet, tone) → diambil dari data palet
+      'on-primary': #fff,        // atau warna langsung
+      'danger': ('red', 500),
+      'surface': #fdf8ff,
+      'on-surface': #1a1a1a,
+      'outline': #cac4d5,
+    ),
+    'dark': ( /* bentuk sama; boleh dikosongkan → ikut nilai 'light' */ ),
+  ),
+);
+```
+
+Aturan nilai sebuah peran: `(palet, tone)` · warna (`#rrggbb`) · string CSS apa adanya (mis.
+`color-mix(…)` untuk nilai turunan) · `false` untuk tidak meng-emit peran itu.
+Palet tambahan disuntik lewat `$wui-palettes-extra`. Peran yang tidak ada di `$wui-roles` tetapi
+terdaftar di `$wui-state-layer-roles` akan **menggagalkan build** dengan pesan yang jelas.
+
 ### Konvensi yang dibekukan
 
 - Nama folder `scss/` dan file `wui.scss` adalah **public API** — mengubahnya = *breaking change*.

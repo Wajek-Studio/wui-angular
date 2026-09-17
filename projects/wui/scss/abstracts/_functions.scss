@@ -83,6 +83,17 @@
   @return color-mix(in srgb, var(--wui-color-#{$role}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface});
 }
 
+/// Sama seperti `state-layer()`, tetapi warnanya diambil dari CSS variable bebas (bukan nama peran).
+/// Dipakai komponen yang warnanya bisa ditukar dari CSS — mis. tombol `color="danger"` memakai
+/// `--wui-button-content`, sehingga satu aturan CSS melayani semua warna tanpa token state layer baru.
+/// Contoh: `state-layer-color('--wui-button-content', '08')`
+///   → `color-mix(in srgb, var(--wui-button-content) 8%, transparent)`
+@function state-layer-color($wui-color-var, $opacity, $surface: null) {
+  $wui-step: state-layer-step($opacity);
+
+  @return color-mix(in srgb, var(#{$wui-color-var}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface or transparent});
+}
+
 /// Memvalidasi kunci opacity state layer sekaligus mengembalikannya.
 @function state-layer-step($opacity) {
   @if not map.has-key(tokens.$wui-state-layer-opacities, $opacity) {

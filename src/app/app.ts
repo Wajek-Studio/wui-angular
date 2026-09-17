@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { WuiApp, WuiSidenav, WuiSidenavService, WuiTopbar } from '@wajek/wui';
+import { WuiApp, WuiButton, WuiIcon, WuiSidenav, WuiSidenavService, WuiTopbar } from '@wajek/wui';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [WuiApp, RouterOutlet, WuiSidenav, WuiTopbar],
+  imports: [WuiApp, RouterOutlet, WuiSidenav, WuiTopbar, WuiIcon, WuiButton],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

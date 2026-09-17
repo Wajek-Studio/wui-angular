@@ -2,10 +2,9 @@
 // Aktif OTOMATIS mengikuti preferensi OS/browser pengguna (`prefers-color-scheme`).
 // Tidak ada atribut atau class yang perlu dipasang.
 // Nama CSS variable-nya sama dengan tema terang — yang berbeda hanya nilainya, sehingga
-// komponen cukup menulis `var(--wui-color-background)` sekali dan tidak perlu tahu ada dua mode.
-@use '../abstracts' as a;
+// komponen cukup menulis `var(--wui-color-surface)` sekali dan tidak perlu tahu ada dua mode.
 
-/// Tema gelap — override warna saat sistem memilih dark.
+/// Tema gelap — override saat sistem memilih dark.
 @mixin dark-theme {
   @media (prefers-color-scheme: dark) {
     :root {
@@ -13,11 +12,9 @@
       // ikut menyesuaikan. Tanpa ini, bagian tersebut tetap terang di mode gelap.
       color-scheme: dark;
 
-      // `--wui-color-primary` sengaja tidak di-override di sini: token palet yang dipakai
-      // (`--wui-color-<palet>-<tone>`) sudah otomatis bernilai tone mode gelap.
-      --wui-color-background: #{a.$wui-dark-background};
-      --wui-color-text: #{a.$wui-dark-text};
-      --wui-color-outline: #{a.$wui-dark-outline};
+      // Warna peran (`--wui-color-surface`, `-on-surface`, `-primary`, `-danger`, …) di-emit
+      // `themes/_roles.scss`, karena tiap peran punya nilai sendiri per mode. Berkas ini hanya
+      // mengurus hal yang bukan warna.
     }
   }
 }

@@ -7,7 +7,9 @@
 Status: **Draft untuk direview** — belum ada file yang dibuat/diubah.
 Sumber spesifikasi: `m3.material.io/components/buttons/specs` (dibaca langsung) + baseline M3.
 Dokumen terkait: `docs/planning/scss-structure-plan.md` (5 level), `docs/planning/scss-color-palette-plan.md`
-(palet, peran semantik, state layer — sudah selesai F1–F3), `docs/planning/scss-wui-plan.md` (distribusi).
+(palet, peran semantik, state layer — sudah selesai F1–F3), `docs/planning/scss-wui-plan.md` (distribusi),
+`docs/planning/wui-button-icon-plan.md` (**G3** — ikon: `iconPos` di tombol, posisi lewat CSS `order`,
+`WuiButtonIcon` dihapus).
 
 ---
 
@@ -261,9 +263,10 @@ Diekspor dari `public-api.ts`. Contoh pemakaian:
 | --- | --- | --- | --- |
 | **G1** | ✅ **selesai** — token `$wui-button-sizes`/radius/disabled/elevasi, `interactive-state($surface)` + hover dalam `@media (hover: hover)`, `components/_button.scss` (3 varian × 4 ukuran × 5 state) | Tombol bisa dipakai lewat class `.wui-button--*` | ✅ |
 | **G2** | ✅ **directive selesai** — `WuiButton` (`[wuiButton]`, input `variant` & `size`, host class binding) + `button.options.ts` + ekspor `public-api`; ✅ class QA `.is-hover`/`.is-pressed`. **Belum**: rute & halaman demo | Tombol dipakai dengan `<button wuiButton …>`; penilaian visual menyusul | 🟡 sebagian |
-| **G3** | Dukungan ikon (leading/trailing, padding asimetris 12/16 ala M3, ikon-saja dengan target 48dp) | Tombol ikon & tombol ikon-saja | ⬜ belum |
+| **G3** | ✅ **selesai** — dipindah ke `docs/planning/wui-button-icon-plan.md`: input `iconPos` (start/end) di tombol, sisi ikon diatur CSS `order` pada `> wui-icon`, padding asimetris, `WuiButtonIcon` dihapus | Tombol berikon (ikon-saja ditunda) | ✅ |
 | **G4** | Shape `square` + morph saat pressed (`8/8/12/16`), varian `elevated`/`tonal` bila diperlukan | Kelengkapan M3 | ⬜ belum |
 | **G5** | Dokumentasi README + catatan keputusan di dokumen ini | Panduan konsumen | ⬜ belum |
+| **G6** | ✅ **selesai** — peran warna tombol `color="default\|primary\|danger"`; plan terpisah `docs/planning/wui-button-color-plan.md` | 3 warna × 3 varian (12 kombinasi dengan ukuran) | ✅ |
 
 **Catatan hasil G1** — terverifikasi: lint hijau, `ng build wui` + `ng build --configuration development` sukses.
 

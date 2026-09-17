@@ -1,13 +1,13 @@
 @mixin icon {
-
+    // Ikon TIDAK menyetel warnanya sendiri: ia mengikuti `color` elemen induknya. Ini yang
+    // membuat ikon di dalam tombol `filled` ikut `--wui-color-on-primary` — sebelumnya warna
+    // dipatok ke `--wui-color-on-surface`, sehingga ikon di tombol ungu tetap berwarna gelap.
+    // Untuk ikon lepas, warna default tetap benar karena `body` sudah memakai
+    // `--wui-color-on-surface` (lihat `base/_typography.scss`).
+    // Jarak ikon juga bukan tanggung jawab ikon: di dalam tombol diatur `gap` tombol,
+    // di luar tombol pakai utilitas spacing (mis. `wui-me-1`).
     wui-icon {
-        color: var(--wui-color-text);
-
-        svg {
-            path {
-                fill: currentColor;
-            }
-        }
+        color: inherit;
     }
 
 }

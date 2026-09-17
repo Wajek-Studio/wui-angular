@@ -11,6 +11,12 @@
 
 svg {
   display: block;
+
+  // Ukuran default bisa ditimpa container lewat `--wui-icon-size` (mis. tombol menyetelnya
+  // dari `--wui-button-icon-size`). Bila input `size` diisi, inline style dari `icon.ts`
+  // yang menang.
+  width: var(--wui-icon-size, 24px);
+  height: var(--wui-icon-size, 24px);
   fill: currentColor;
   transition: width 0.15s ease, height 0.15s ease, color 0.15s ease;
 }

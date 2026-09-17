@@ -6,14 +6,20 @@
 @use 'sass:map';
 
 // ── Palet Warna (Figma wui/color) ───────────────────────────────────────────
+// Palet = **data intensitas saja**: satu skala tone `50…950` per mode. Tidak ada kunci peran di
+// sini — peran semantik (`primary`, `on-primary`, `danger`, `surface`, …) punya lapisan sendiri di
+// `themes/_roles.scss`, dan boleh menunjuk tone mana pun dari palet mana pun.
 // `$wui-palettes-builtin` = palet bawaan library, `$wui-palettes-extra` = palet milik
 // aplikasi. Keduanya digabung jadi `$wui-palettes` — satu-satunya map yang dibaca fungsi
 // & mixin lain. `extra` di-merge paling akhir, jadi aplikasi juga boleh meretur tone bawaan.
+// ⚠️ `red` & `magenta` masih **placeholder** (menunggu angka final dari desainer); menggantinya
+// cukup menimpa tone di sini, tidak ada berkas lain yang perlu diubah.
+// `neutral` = skala gray dari paling terang ke paling gelap, **acuan peran netral**
+// (`surface`, `on-surface`, `surface-container`, `outline`) — lihat `themes/_roles.scss`.
+// Di skala neutral, tone besar = makin gelap di kedua mode (beda dengan palet brand).
 $wui-palettes-builtin: (
   'purple': (
-    // `'on-primary'` bukan tone, tapi peran: warna teks/ikon di atas primary.
     'light': (
-      'on-primary': #fff,
       50: #844cf6,
       100: #7331f6,
       200: #6115f9,
@@ -27,7 +33,6 @@ $wui-palettes-builtin: (
       950: #000,
     ),
     'dark': (
-      'on-primary': #05000f,
       50: #fff,
       100: #fff,
       200: #fff,
@@ -41,6 +46,95 @@ $wui-palettes-builtin: (
       950: #3b0aff,
     ),
   ),
+  // Dipakai peran `danger`/`on-danger` (lihat `themes/_roles.scss`).
+  'red': (
+    'light': (
+      50: #fff5f4,
+      100: #ffe3e0,
+      200: #ffc9c4,
+      300: #ffa39c,
+      400: #e8554b,
+      500: #b3261e,
+      600: #9a201a,
+      700: #7c1a15,
+      800: #5c1310,
+      900: #3c0c0a,
+      950: #260705,
+    ),
+    'dark': (
+      50: #fff5f4,
+      100: #ffe9e6,
+      200: #ffd5d0,
+      300: #ffb4ac,
+      400: #f79a93,
+      500: #f2b8b5,
+      600: #e58e88,
+      700: #d3706a,
+      800: #a8534e,
+      900: #7a3a36,
+      950: #601410,
+    ),
+  ),
+  // Dipakai peran `secondary`/`on-secondary` (lihat `themes/_roles.scss`).
+  'magenta': (
+    'light': (
+      50: #fff5fc,
+      100: #ffe2f7,
+      200: #ffc6ef,
+      300: #ffa0e3,
+      400: #f26bd0,
+      500: #a61e9e,
+      600: #8c1986,
+      700: #73146e,
+      800: #571050,
+      900: #3a0b36,
+      950: #250720,
+    ),
+    'dark': (
+      50: #fff5fc,
+      100: #ffeaf9,
+      200: #ffd6f2,
+      300: #ffb2e7,
+      400: #f79bdf,
+      500: #f5b0ec,
+      600: #e68fdd,
+      700: #d06fc5,
+      800: #a854a0,
+      900: #7a3b74,
+      950: #5a1e56,
+    ),
+  ),
+  // Acuan peran netral: `surface`, `on-surface`, `outline`, `surface-container`.
+  // Tone besar = makin gelap **di kedua mode** (beda dari palet brand yang nilainya berbalik),
+  // jadi `surface` memakai tone 50 di mode terang dan tone 950 di mode gelap — lihat `$wui-roles`.
+  'neutral': (
+    'light': (
+      50: #FDF8FF,
+      100: #f7f2fa,
+      200: #ede7f2,
+      300: #ded8e4,
+      400: #CAC4D5,
+      500: #9e97ac,
+      600: #736d80,
+      700: #514b5b,
+      800: #332f3c,
+      900: #1a1a1a,
+      950: #0f0d12,
+    ),
+    'dark': (
+      50: #f5f5f5,
+      100: #edeaf1,
+      200: #dad5e0,
+      300: #beb8c6,
+      400: #9a93a8,
+      500: #75707f,
+      600: #5a5563,
+      700: #484553,
+      800: #2f2c37,
+      900: #211f29,
+      950: #14121A,
+    ),
+  ),
 ) !default;
 
 // Palet milik aplikasi — disuntik lewat `@use … with ($wui-palettes-extra: (…))`.
@@ -50,39 +144,53 @@ $wui-palettes: map.merge($wui-palettes-builtin, $wui-palettes-extra) !default;
 // Tone yang wajib ada di setiap palet (kedua mode) karena dipakai peran semantik.
 $wui-palette-required-tones: (500,) !default;
 
-// ── Warna: mode terang ──────────────────────────────────────────────────────
-// Hanya warna netral. Warna brand (`--wui-color-primary`) TIDAK di sini karena
-// nilainya mengikuti palet yang dipilih aplikasi — lihat `themes/_palette.scss`.
-$wui-light-background: #FDF8FF !default;
-$wui-light-text: #1a1a1a !default;
-$wui-light-outline: #CAC4D5 !default;
-
-// ── Warna: mode gelap ───────────────────────────────────────────────────────
-$wui-dark-background: #14121A !default;
-$wui-dark-text: #f5f5f5 !default;
-$wui-dark-outline: #484553 !default;
+// ── Warna netral: sekarang dari palet ───────────────────────────────────────
+// Nilai `surface`/`on-surface`/`outline` TIDAK lagi disimpan sebagai variabel di sini —
+// semuanya tone dari palet `neutral` di atas, dipetakan di `themes/_roles.scss`.
 
 // ── State layer ─────────────────────────────────────────────────────────────
-// Nilainya diturunkan di CSS dari warna perannya (lihat `themes/_palette.scss`),
+// Nilainya diturunkan di CSS dari warna perannya (lihat `themes/_roles.scss`),
 // jadi tidak ada hex tambahan yang perlu diisi.
 // Kunci opacity WAJIB string: angka `08` dibaca Sass sebagai `8`, sehingga nama
 // token-nya jadi `opacity-8` — bukan `opacity-08`.
-$wui-state-layer-roles: ('primary', 'on-primary') !default;
+// Daftar peran di sini harus ada di `$wui-roles` (`themes/_roles.scss`), kalau tidak → `@error`.
+$wui-state-layer-roles: ('primary', 'on-primary', 'secondary', 'on-secondary', 'danger', 'on-danger') !default;
 $wui-state-layer-opacities: (
   '08': 0.08,
   '10': 0.10,
   '16': 0.16,
 ) !default;
 
+// `surface-container` dan `default` tidak disimpan sebagai warna baru: keduanya diturunkan dari
+// `surface` + `on-surface` di `themes/_roles.scss`, jadi otomatis ikut kalau `surface` diganti
+// aplikasi. Mengubah angka di sini = mengubah seberapa kuat tint netralnya.
+$wui-surface-container-tint: (
+  'light': 0.05,
+  'dark': 0.08,
+) !default;
+
+// Container netral untuk elemen interaktif (mis. tombol `color="default"`). Tint-nya lebih kuat
+// dari `surface-container` sehingga latar tombol tetap terbaca — kira-kira setara tone `neutral.200`
+// (mode terang) dan `neutral.800` (mode gelap).
+$wui-default-container-tint: (
+  'light': 0.08,
+  'dark': 0.14,
+) !default;
+
 // ── Button (Material 3) ─────────────────────────────────────────────────────
 // Satu sumber kebenaran ukuran tombol — `components/_button.scss` menerjemahkannya jadi CSS
 // variable, jadi mengubah satu angka cukup di sini.
-// `padding` = padding inline varian filled/outlined, `padding-text` = varian text (tanpa border).
+// `padding`      = padding inline varian filled/outlined (kiri = kanan, simetris)
+// `padding-text` = varian text (tanpa border, lebih rapat; juga simetris)
+// `icon`         = ukuran ikon (dibaca tombol lewat `--wui-button-icon-size`)
+// `line-height`  = tinggi baris label. Sengaja sama dengan `icon` di tiap tingkatan supaya kotak
+//                  teks dan kotak ikon kongruen, jadi keduanya sejajar sempurna lewat
+//                  `align-items: center` (mengalahkan `line-height` peran tipografi).
 $wui-button-sizes: (
-  'sm': ('height': 2rem,   'padding': 1rem,    'padding-text': 0.5rem,  'icon': 1rem,     'label-role': 'label', 'label-size': 'medium'),
-  'md': ('height': 2.5rem, 'padding': 1.5rem,  'padding-text': 0.75rem, 'icon': 1.125rem, 'label-role': 'label', 'label-size': 'large'),
-  'lg': ('height': 3rem,   'padding': 1.75rem, 'padding-text': 1rem,    'icon': 1.25rem,  'label-role': 'label', 'label-size': 'large'),
-  'xl': ('height': 3.5rem, 'padding': 2rem,    'padding-text': 1.25rem, 'icon': 1.5rem,   'label-role': 'title', 'label-size': 'medium'),
+  'sm': ('height': 2rem,   'padding': 1rem,    'padding-text': 0.5rem,  'icon': 1.25rem, 'line-height': 1.25rem, 'label-role': 'label', 'label-size': 'medium'),
+  'md': ('height': 2.5rem, 'padding': 1.5rem,  'padding-text': 0.75rem, 'icon': 1.5rem,  'line-height': 1.5rem,  'label-role': 'label', 'label-size': 'large'),
+  'lg': ('height': 3rem,   'padding': 1.75rem, 'padding-text': 1rem,    'icon': 1.75rem, 'line-height': 1.75rem, 'label-role': 'label', 'label-size': 'large'),
+  'xl': ('height': 3.5rem, 'padding': 2rem,    'padding-text': 1.25rem, 'icon': 2rem,    'line-height': 2rem,    'label-role': 'title', 'label-size': 'medium'),
 ) !default;
 
 // Radius penuh (bentuk pil) sesuai shape `round` default M3.
