@@ -40,19 +40,19 @@
                     padding-right: var(--wui-table-edge-padding);
                 }
 
-                &.action-col {
+                &.wui-table-col--action {
                     width: 0.0001%;
                     white-space: nowrap;
                 }
 
-                &.sticky-right {
+                &.wui-table-col--sticky-right {
                     position: sticky;
                     right: 0;
                     z-index: 1;
                     background-color: var(--wui-color-surface);
                 }
 
-                &.sticky-left {
+                &.wui-table-col--sticky-left {
                     position: sticky;
                     left: 0;
                     z-index: 1;
@@ -60,7 +60,6 @@
                 }
             }
 
-            &.no-border,
             &.wui-table-row--no-border {
                 border: none;
                 border-bottom: none;
@@ -97,8 +96,8 @@
             > tbody > tr:nth-child(even) {
                 background-color: color-mix(in srgb, var(--wui-color-on-surface) 2%, transparent);
 
-                > .sticky-right,
-                > .sticky-left {
+                > .wui-table-col--sticky-right,
+                > .wui-table-col--sticky-left {
                     background-color: color-mix(in srgb, var(--wui-color-on-surface) 2%, var(--wui-color-surface));
                 }
             }
@@ -109,8 +108,8 @@
             tbody tr:hover {
                 background-color: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent);
 
-                > .sticky-right,
-                > .sticky-left {
+                > .wui-table-col--sticky-right,
+                > .wui-table-col--sticky-left {
                     background-color: color-mix(in srgb, var(--wui-color-on-surface) 4%, var(--wui-color-surface));
                 }
             }
@@ -132,24 +131,15 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    @media screen and (max-width: 768px) {
+    // Layar sempit: tepi tabel turun dari 1.5rem ke 1rem. Cukup mengubah variabelnya — aturan
+    // `:first-child`/`:last-child` di atas sudah membaca variabel itu. Dulu blok ini menulis ulang
+    // `padding-left`/`padding-right` di dalam `tr > th, td`, yang membuat nesting-nya terlalu dalam
+    // (dan hasilnya sama saja).
+    @media screen and (width <= 768px) {
         .wui-table,
         table[wuiTable],
         table[wui-table] {
             --wui-table-edge-padding: 1rem;
-
-            tr {
-                th,
-                td {
-                    &:first-child {
-                        padding-left: 1rem;
-                    }
-
-                    &:last-child {
-                        padding-right: 1rem;
-                    }
-                }
-            }
         }
     }
 }

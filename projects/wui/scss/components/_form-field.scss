@@ -121,12 +121,14 @@
         color: var(--wui-color-on-surface);
         outline: none;
         font: inherit;
-        transition: 
-            // border-width var(--wui-motion-duration-fast) var(--wui-motion-easing-standard),
-            border-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), 
+
+        // Hanya WARNA yang dianimasikan. `border-width` (1px → 2px saat fokus) dan padding
+        // kompensasinya sengaja tidak ikut bertransisi: keduanya harus bergerak bersamaan, dan
+        // menganimasikan salah satu saja membuat kolom teks berkedip 1px di tengah animasi.
+        // Karena keduanya berubah seketika, kolom teks tetap 17px setiap saat.
+        transition:
+            border-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard),
             background-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
-            // padding-inline var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), 
-            // padding-block var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
 
         // Placeholder baru muncul setelah label mengapung. Kalau selalu tampil, ia bertumpuk dengan
         // label saat kontrol masih kosong (perilaku yang sama dengan Material).
@@ -177,8 +179,7 @@
     // fokus, karena border menebal 1px → 2px dan `box-sizing: border-box` membuat kolom teks ikut
     // bergeser. Kompensasinya lewat `--wui-field-padding-offset` (dideklarasikan di `.wui-input`),
     // jadi kolom teks = border + padding tetap **17px** di kedua keadaan: saat diklik teksnya tidak
-    // "melompat". Padding ikut ditransisikan (lihat `transition` di `.wui-input`) supaya bergeraknya
-    // seirama dengan border — kalau tidak, ada kedipan 1px di tengah animasi.
+    // "melompat". Offset ini berubah seketika (tidak masuk `transition`), sama seperti `border-width`.
     .wui-form-field--outlined {
         .wui-input {
             &:focus, &:focus-visible {

@@ -292,6 +292,8 @@ $wui-field-padding-inline: 16px !default;
 $wui-field-border-width: 1px !default;
 $wui-field-textarea-min-height: 96px !default;
 
+// Lebar border saat kontrol difokus (Material memakai 2px). Selisihnya dikompensasi dari padding
+// lewat `--wui-field-padding-offset` supaya kolom teks tidak bergeser — lihat `components/_form-field.scss`.
 $wui-field-focused-border-width: 2px !default;
 
 // Geometri label mengapung. `space` = ruang di atas teks kontrol untuk varian filled (labelnya
