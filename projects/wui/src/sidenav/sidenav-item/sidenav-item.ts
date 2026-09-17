@@ -1,26 +1,6 @@
 import { Directive } from '@angular/core';
 
 /**
- * Wadah menu navigasi di dalam sidenav.
- *
- * ```html
- * <nav wuiSidenavMenu>
- *   <a wuiButton variant="text" size="lg" routerLink="/home" wuiSidenavItem>
- *     <wui-icon icon="home"></wui-icon>
- *     Beranda
- *   </a>
- * </nav>
- * ```
- */
-@Directive({
-  selector: '[wuiSidenavInner]',
-  host: {
-    class: 'wui-sidenav-inner',
-  },
-})
-export class WuiSidenavInner {}
-
-/**
  * Item tombol navigasi di dalam sidenav.
  *
  * Mengubah tombol menjadi berlebar penuh (100%), tanpa radius sudut,
@@ -38,8 +18,13 @@ export class WuiSidenavItem {}
 /**
  * Wadah konten navigasi khusus mode mini (rail) di dalam sidenav.
  *
+ * Isinya dibagi dua area: `[wuiSidenavBody]` (menggulir) dan `[wuiSidenavFooter]` (ujung bawah).
+ *
  * ```html
- * <nav wuiSidenavInner wuiSidenavMini>...</nav>
+ * <nav wuiSidenavMini>
+ *   <div wuiSidenavBody>…</div>
+ *   <div wuiSidenavFooter>…</div>
+ * </nav>
  * ```
  */
 @Directive({
@@ -53,8 +38,13 @@ export class WuiSidenavMini {}
 /**
  * Wadah konten navigasi lengkap (mode open) di dalam sidenav.
  *
+ * Isinya dibagi dua area: `[wuiSidenavBody]` (menggulir) dan `[wuiSidenavFooter]` (ujung bawah).
+ *
  * ```html
- * <nav wuiSidenavInner wuiSidenavFull>...</nav>
+ * <nav wuiSidenavFull>
+ *   <div wuiSidenavBody>…</div>
+ *   <div wuiSidenavFooter>…</div>
+ * </nav>
  * ```
  */
 @Directive({

@@ -13,10 +13,13 @@
       </header>
 
       <p class="doc-note">
-        Sidenav didesain fleksibel: ia tidak memaksakan struktur menu internal, namun menyediakan kumpulan
-        <em>attribute directive</em> resmi (<code>wuiSidenavInner</code>, <code>wuiSidenavMini</code>, <code>wuiSidenavFull</code>,
-        <code>wuiSidenavItem</code>, <code>wuiSidenavDivider</code>, <code>wuiSidenavSubheader</code>) untuk membangun panel navigasi
-        Material 3 yang siap pakai.
+        Sidenav didesain fleksibel: ia tidak memaksakan isi menu, namun menyediakan kumpulan
+        <em>attribute directive</em> resmi — <code>wuiSidenavMini</code>, <code>wuiSidenavFull</code>,
+        <code>wuiSidenavBody</code>, <code>wuiSidenavFooter</code>, <code>wuiSidenavItem</code>,
+        <code>wuiSidenavDivider</code>, <code>wuiSidenavSubheader</code> — untuk membangun panel navigasi
+        Material 3 yang siap pakai. Setiap mode (<code>mini</code> maupun <code>full</code>) terbagi dua area:
+        <code>wuiSidenavBody</code> mengisi tinggi yang tersisa dan menggulir sendiri, sedangkan
+        <code>wuiSidenavFooter</code> selalu menempel di ujung bawah.
       </p>
 
       <!-- 1. LIVE PLAYGROUND -->
@@ -67,42 +70,51 @@
         <div class="playground-viewport">
           <wui-sidenav [id]="demoId" initialState="open" class="demo-sidenav-instance">
             <!-- Mode Mini -->
-            <nav wuiSidenavInner wuiSidenavMini>
-              <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Beranda">
-                <wui-icon icon="home"></wui-icon>
-              </a>
-              <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Tipografi">
-                <wui-icon icon="format-font"></wui-icon>
-              </a>
-              <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Button">
-                <wui-icon icon="gesture-tap-button"></wui-icon>
-              </a>
-              <hr wuiSidenavDivider />
-              <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Pengaturan">
-                <wui-icon icon="settings"></wui-icon>
-              </a>
+            <nav wuiSidenavMini>
+              <div wuiSidenavBody>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Beranda">
+                  <wui-icon icon="home"></wui-icon>
+                </a>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Tipografi">
+                  <wui-icon icon="format-font"></wui-icon>
+                </a>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Button">
+                  <wui-icon icon="gesture-tap-button"></wui-icon>
+                </a>
+              </div>
+
+              <div wuiSidenavFooter>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem aria-label="Pengaturan">
+                  <wui-icon icon="settings"></wui-icon>
+                </a>
+              </div>
             </nav>
 
             <!-- Mode Penuh -->
-            <nav wuiSidenavInner wuiSidenavFull>
-              <a wuiButton variant="text" size="lg" wuiSidenavItem class="is-active">
-                <wui-icon icon="home"></wui-icon>
-                Beranda (Aktif)
-              </a>
-              <a wuiButton variant="text" size="lg" wuiSidenavItem>
-                <wui-icon icon="format-font"></wui-icon>
-                Tipografi
-              </a>
-              <a wuiButton variant="text" size="lg" wuiSidenavItem>
-                <wui-icon icon="gesture-tap-button"></wui-icon>
-                Button
-              </a>
-              <hr wuiSidenavDivider />
-              <div wuiSidenavSubheader>PENGATURAN</div>
-              <a wuiButton variant="text" size="lg" wuiSidenavItem>
-                <wui-icon icon="settings"></wui-icon>
-                Pengaturan
-              </a>
+            <nav wuiSidenavFull>
+              <div wuiSidenavBody>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem class="is-active">
+                  <wui-icon icon="home"></wui-icon>
+                  Beranda (Aktif)
+                </a>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem>
+                  <wui-icon icon="format-font"></wui-icon>
+                  Tipografi
+                </a>
+                <hr wuiSidenavDivider />
+                <div wuiSidenavSubheader>KOMPONEN</div>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem>
+                  <wui-icon icon="gesture-tap-button"></wui-icon>
+                  Button
+                </a>
+              </div>
+
+              <div wuiSidenavFooter>
+                <a wuiButton variant="text" size="lg" wuiSidenavItem>
+                  <wui-icon icon="settings"></wui-icon>
+                  Pengaturan
+                </a>
+              </div>
             </nav>
           </wui-sidenav>
 
@@ -144,10 +156,16 @@
               <td>Kontainer induk sidenav. Mengelola state via <code>WuiSidenavService</code>.</td>
             </tr>
             <tr>
-              <td><code>[wuiSidenavInner]</code></td>
-              <td><code>.wui-sidenav-inner</code></td>
-              <td><code>&lt;nav&gt;</code> / <code>&lt;div&gt;</code></td>
-              <td>Wadah kolom vertikal (<code>display: flex; flex-direction: column</code>).</td>
+              <td><code>[wuiSidenavBody]</code></td>
+              <td><code>.wui-sidenav-body</code></td>
+              <td><code>&lt;div&gt;</code> / <code>&lt;nav&gt;</code></td>
+              <td>Area isi: mengisi tinggi yang tersisa dan menggulir sendiri (<code>overflow-y: auto</code>). Ditaruh di dalam blok mini/full.</td>
+            </tr>
+            <tr>
+              <td><code>[wuiSidenavFooter]</code></td>
+              <td><code>.wui-sidenav-footer</code></td>
+              <td><code>&lt;div&gt;</code></td>
+              <td>Area bawah: selalu menempel di ujung bawah sidenav, tidak ikut tergulir. Garis pemisah di atasnya digambar style layer, jadi tidak perlu <code>&lt;hr wuiSidenavDivider&gt;</code> sebelum item terakhir.</td>
             </tr>
             <tr>
               <td><code>[wuiSidenavFull]</code></td>
@@ -258,28 +276,36 @@
         <div class="code-preview">
           <pre><code>&lt;wui-sidenav id="app-sidenav"&gt;
   &lt;!-- Mode Mini: Hanya Ikon --&gt;
-  &lt;nav wuiSidenavInner wuiSidenavMini&gt;
-    &lt;a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem aria-label="Beranda"&gt;
-      &lt;wui-icon icon="home"&gt;&lt;/wui-icon&gt;
-    &lt;/a&gt;
-    &lt;hr wuiSidenavDivider /&gt;
-    &lt;a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem aria-label="Pengaturan"&gt;
-      &lt;wui-icon icon="settings"&gt;&lt;/wui-icon&gt;
-    &lt;/a&gt;
+  &lt;nav wuiSidenavMini&gt;
+    &lt;div wuiSidenavBody&gt;
+      &lt;a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem aria-label="Beranda"&gt;
+        &lt;wui-icon icon="home"&gt;&lt;/wui-icon&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;div wuiSidenavFooter&gt;
+      &lt;a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem aria-label="Pengaturan"&gt;
+        &lt;wui-icon icon="settings"&gt;&lt;/wui-icon&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
   &lt;/nav&gt;
 
   &lt;!-- Mode Penuh: Ikon + Label Teks --&gt;
-  &lt;nav wuiSidenavInner wuiSidenavFull&gt;
-    &lt;a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem&gt;
-      &lt;wui-icon icon="home"&gt;&lt;/wui-icon&gt;
-      Beranda
-    &lt;/a&gt;
-    &lt;hr wuiSidenavDivider /&gt;
-    &lt;div wuiSidenavSubheader&gt;PENGATURAN&lt;/div&gt;
-    &lt;a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem&gt;
-      &lt;wui-icon icon="settings"&gt;&lt;/wui-icon&gt;
-      Pengaturan
-    &lt;/a&gt;
+  &lt;nav wuiSidenavFull&gt;
+    &lt;div wuiSidenavBody&gt;
+      &lt;a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem&gt;
+        &lt;wui-icon icon="home"&gt;&lt;/wui-icon&gt;
+        Beranda
+      &lt;/a&gt;
+      &lt;div wuiSidenavSubheader&gt;PENGATURAN&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div wuiSidenavFooter&gt;
+      &lt;a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem&gt;
+        &lt;wui-icon icon="settings"&gt;&lt;/wui-icon&gt;
+        Pengaturan
+      &lt;/a&gt;
+    &lt;/div&gt;
   &lt;/nav&gt;
 &lt;/wui-sidenav&gt;</code></pre>
         </div>
