@@ -24,8 +24,11 @@
 > Berlaku untuk `padding-inline` (input) dan `padding-block` (textarea). Sekaligus diperbaiki typo
 > `--wui-motion-duratio-fast` → `--wui-motion-duration-fast` pada `transition` `.wui-input`; typo itu
 > membuat **seluruh** deklarasi `transition` gugur (terukur: `transition-property: none`), jadi
-> sebelumnya tidak ada animasi border sama sekali. Token `$wui-field-focused-border-width` masih
-> belum di-emit ke `:root` (dipakai lewat fallback `2px`) — utang.
+> sebelumnya tidak ada animasi border sama sekali. Yang dianimasikan **hanya warna**
+> (`border-color`, `background-color`): `border-width` dan padding kompensasinya harus bergerak
+> bersamaan, dan menganimasikan salah satu saja membuat kolom teks berkedip 1px di tengah animasi.
+> `$wui-field-focused-border-width` kini **di-emit** ke `:root` (sebelumnya hanya fallback `2px`,
+> yang berarti nilai desain hidup di dua tempat).
 
 ---
 
@@ -332,7 +335,7 @@ bertumpuk (perilaku yang sama dengan Material).
 | Fokus — `filled` | Hanya `border-bottom` yang jadi `primary`; `border-top` terbaca `rgb(26, 26, 26)` = `currentColor` warisan karena `border: 0` (bukan bug) |
 | Kolom teks — `outlined` | Istirahat: border 1px + padding 16px = **17px**; fokus: border 2px + padding 15px = **17px** → teks tidak bergeser (sebelumnya 18px → 18px lewat `padding-inline: calc(… + 1px)`); kolom teks `filled` 16px (border samping 0) di kedua keadaan |
 | Inset vertikal textarea — `outlined` | Istirahat 16px/8px padding + 1px border = **17px / 9px**; fokus 15px/7px padding + 2px border = **17px / 9px** → baris pertama tidak bergeser saat diklik |
-| `transition` — `.wui-input` | Terukur `border-width, border-color, background-color, padding-inline, padding-block / 0.24s` — sebelumnya `transition-property: none` karena typo nama variabel (lihat jebakan di bawah) |
+| `transition` — `.wui-input` | Terukur `border-color, background-color / 0.24s` (hanya warna; `border-width` & padding sengaja tidak dianimasikan agar kolom teks tidak berkedip) — sebelumnya `transition-property: none` karena typo nama variabel (lihat jebakan di bawah) |
 | Hover tanpa fokus | Kedua varian → `color(srgb 0.102 0.102 0.102 / 0.45)` (`color-mix(on-surface 45%, transparent)`) |
 | Invalid + fokus | `danger` (`rgb(179, 38, 30)`) menang atas hover & fokus di kedua varian — blok keadaan ditulis terakhir |
 | Label — istirahat (outlined) | Titik tengah label **28px** — persis setengah kotak 56px; kiri **16px**; skala 1 / font 16px; latar transparan; placeholder browser tidak terlihat |

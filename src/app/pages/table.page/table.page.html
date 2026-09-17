@@ -91,7 +91,7 @@
               <th>Nama</th>
               <th>Grup</th>
               <th class="text-end">Jumlah</th>
-              <th class="action-col">Aksi</th>
+              <th class="wui-table-col--action">Aksi</th>
             </tr>
           </thead>
 
@@ -100,6 +100,13 @@
               <tr>
                 <td colspan="4" style="text-align: center; padding: 2.5rem 1rem;">
                   <wui-loading mode="circular" [style.display]="'inline-block'"></wui-loading>
+                <td>{{ item.name }}</td>
+                <td>{{ item.group }}</td>
+                <td class="text-end">{{ item.amount | number }}</td>
+                <td class="wui-table-col--action">
+                  <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
+                    <wui-icon icon="dots-vertical"></wui-icon>
+                  </button>
                 </td>
               </tr>
             } @else {
@@ -123,7 +130,7 @@
               <th>Total (Semua Data)</th>
               <th></th>
               <th class="text-end">{{ totalAmount | number }}</th>
-              <th class="action-col"></th>
+              <th class="wui-table-col--action"></th>
             </tr>
           </tfoot>
         </table>
@@ -142,7 +149,7 @@
     <section class="doc-section">
       <h2 class="section-title">2. Sticky Columns & Scrolling Responsif</h2>
       <p class="section-note">
-        Gunakan <code>.sticky-left</code> dan <code>.sticky-right</code> di dalam kontainer
+        Gunakan <code>.wui-table-col--sticky-left</code> dan <code>.wui-table-col--sticky-right</code> di dalam kontainer
         <code>wuiTableResponsive</code> untuk menjaga kolom identitas dan kolom aksi tetap terlihat
         saat pengguna menggeser tabel ke samping.
       </p>
@@ -151,19 +158,19 @@
         <table wuiTable hover style="min-width: 900px">
           <thead>
             <tr>
-              <th class="sticky-left">Nama Mitra</th>
+              <th class="wui-table-col--sticky-left">Nama Mitra</th>
               <th>Kategori</th>
               <th>Status</th>
               <th>Wilayah Operasional</th>
               <th class="text-end">Alokasi Dana</th>
-              <th class="action-col sticky-right">Aksi</th>
+              <th class="wui-table-col--action wui-table-col--sticky-right">Aksi</th>
             </tr>
           </thead>
 
           <tbody>
             @for (item of sampleData; track item.id) {
               <tr>
-                <td class="sticky-left">
+                <td class="wui-table-col--sticky-left">
                   <strong>{{ item.name }}</strong>
                 </td>
                 <td>{{ item.group }}</td>
@@ -172,7 +179,7 @@
                 </td>
                 <td>Jawa Timur, Indonesia</td>
                 <td class="text-end">Rp {{ item.amount | number }}</td>
-                <td class="action-col sticky-right">
+                <td class="wui-table-col--action wui-table-col--sticky-right">
                   <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
                     <wui-icon icon="dots-vertical"></wui-icon>
                   </button>
@@ -223,17 +230,17 @@
             <td>Kontainer pembungkus tabel yang mengizinkan scroll horizontal saat melebihi lebar layar.</td>
           </tr>
           <tr>
-            <td><code>.action-col</code></td>
+            <td><code>.wui-table-col--action</code></td>
             <td>CSS Class (pada <code>th</code> / <code>td</code>)</td>
             <td>Menyetel lebar sel ke ukuran minimum agar pas membungkus tombol aksi atau ikon saja.</td>
           </tr>
           <tr>
-            <td><code>.sticky-left</code> / <code>.sticky-right</code></td>
+            <td><code>.wui-table-col--sticky-left</code> / <code>.wui-table-col--sticky-right</code></td>
             <td>CSS Class (pada <code>th</code> / <code>td</code>)</td>
             <td>Mengunci kolom di sisi kiri atau kanan saat tabel digeser horizontal. Otomatis memakai warna surface.</td>
           </tr>
           <tr>
-            <td><code>.no-border</code></td>
+            <td><code>.wui-table-row--no-border</code></td>
             <td>CSS Class (pada <code>tr</code>)</td>
             <td>Menghilangkan garis bawah pemisah pada baris tertentu.</td>
           </tr>
@@ -289,18 +296,18 @@
   &lt;table wuiTable hover&gt;
     &lt;thead&gt;
       &lt;tr&gt;
-        &lt;th class="sticky-left"&gt;Nama&lt;/th&gt;
+        &lt;th class="wui-table-col--sticky-left"&gt;Nama&lt;/th&gt;
         &lt;th&gt;Grup&lt;/th&gt;
         &lt;th class="text-end"&gt;Jumlah&lt;/th&gt;
-        &lt;th class="action-col sticky-right"&gt;&lt;/th&gt;
+        &lt;th class="wui-table-col--action wui-table-col--sticky-right"&gt;&lt;/th&gt;
       &lt;/tr&gt;
     &lt;/thead&gt;
     &lt;tbody&gt;
       &lt;tr&gt;
-        &lt;td class="sticky-left"&gt;Moch. Rizal Rachmadani&lt;/td&gt;
+        &lt;td class="wui-table-col--sticky-left"&gt;Moch. Rizal Rachmadani&lt;/td&gt;
         &lt;td&gt;Investor&lt;/td&gt;
         &lt;td class="text-end"&gt;500,000&lt;/td&gt;
-        &lt;td class="action-col sticky-right"&gt;
+        &lt;td class="wui-table-col--action wui-table-col--sticky-right"&gt;
           &lt;button wuiButton iconOnly variant="text" size="sm"&gt;
             &lt;wui-icon icon="dots-vertical"&gt;&lt;/wui-icon&gt;
           &lt;/button&gt;

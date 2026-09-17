@@ -15,7 +15,9 @@
         color: var(--wui-color-on-surface);
         box-sizing: border-box;
 
-        &.inside-container {
+        // Modifier untuk pemakaian di dalam container ber-padding: menarik pagination ke kiri/kanan
+        // supaya tepinya sejajar. Belum dipakai komponen mana pun — hanya disiapkan.
+        &.wui-pagination--inside-container {
             margin-left: -0.5rem;
             margin-right: -0.5rem;
         }

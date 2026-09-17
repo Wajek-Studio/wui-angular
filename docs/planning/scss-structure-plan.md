@@ -467,6 +467,14 @@ karena semua blok CSS di `www/styles.css` bisa ditelusuri ke layer lain.
 - [x] `_reset.scss` → `@mixin reset`: hanya `box-sizing: border-box` + `body { margin: 0 }`
 - [x] `_typography.scss` → `@mixin typography`: font dasar di `:root`, warna tema di `body`
 
+> **Revisi 17 Sep 2026 — ukuran teks bawaan dokumen.** `body` kini menerapkan peran **body/medium**
+> (`--wui-font-size-body-medium`, `0.875rem` = 14px pada root 16px). Ditaruh di `body`, bukan di
+> `:root`, karena `font-size` di `:root` mengubah arti `rem` untuk seluruh dokumen sehingga semua
+> token spacing & skala tipografi ikut menyusut 12,5% — yang diinginkan hanya ukuran teks bawaan.
+> Konsekuensi yang terukur: elemen yang **mewarisi** ukuran (mis. `.wui-input` yang memakai
+> `font: inherit`) sekarang 14px/21px, sedangkan yang memakai token peran (label field 16px, tombol
+> 14px, hint 12px, judul 28px) tidak berubah. `html` tetap 16px sehingga `1rem` tetap 16px.
+
 > Keputusan §10 no. 2 diambil: **minimal dulu**. Kalau nanti ingin lebih agresif (normalize penuh),
 > cukup ganti isi `@mixin reset` — `wui.scss` tidak perlu diubah.
 

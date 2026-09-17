@@ -16,6 +16,15 @@
   body {
     background-color: var(--wui-color-surface);
     color: var(--wui-color-on-surface);
+
+    // Ukuran teks bawaan dokumen = peran **body/medium** (0.875rem = 14px pada root 16px). Nilainya
+    // dibaca dari token peran itu, bukan angka lepas, supaya ikut berubah kalau skala tipografi
+    // direvisi desainer; fallback-nya sengaja ditulis dalam rem yang sama, jadi teks tetap 14px
+    // walau konsumen mematikan layer `themes`.
+    // Ditaruh di `body`, BUKAN `:root`: font-size di `:root` mengubah arti `rem` untuk seluruh
+    // dokumen — semua token spacing & skala tipografi (yang satuannya rem) ikut menyusut 12,5%.
+    // Yang diinginkan di sini hanya ukuran teks bawaan, bukan perubahan skala global.
+    font-size: var(--wui-font-size-body-medium, 0.875rem);
   }
 
   // ── Kelas Tipografi WUI (Display, Headline, Title, Body, Label) ───────────

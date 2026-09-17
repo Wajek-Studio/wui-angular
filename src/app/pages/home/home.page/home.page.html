@@ -1,18 +1,12 @@
 <ng-template #page>
     <wui-page>
         <wui-topbar>
-            Page Topbar
+            <div class="wui-topbar-leading">
+                <button wuiButton wuiToggleSidenav="" iconOnly="true" variant="text" size="lg">
+                    <wui-icon icon="menu"></wui-icon>
+                </button>
+            </div>
         </wui-topbar>
-
-        <wui-sidenav id="home-sidenav">
-            <div class="wui-sidenav-mini-content">
-                <p>Mini</p>
-            </div>
-
-            <div class="wui-sidenav-full-content">
-                <p>Full Sidenav</p>
-            </div>
-        </wui-sidenav>
 
         <div class="wui-page-content">
             <h2>Halaman Demo</h2>
