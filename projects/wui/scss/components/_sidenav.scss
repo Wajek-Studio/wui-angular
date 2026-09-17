@@ -82,6 +82,15 @@
     .wui-sidenav-mini-content {
         transform: translateX(-100%);
         opacity: 0;
+
+        .wui-sidenav-item {
+            justify-content: center;
+            padding-inline: 0;
+
+            > wui-icon {
+                width: auto;
+            }
+        }
     }
 
     // Mode mini: konten penuh keluar ke kiri sambil memudar,
@@ -100,6 +109,62 @@
     .wui-sidenav:not(.is-mini) .wui-sidenav-mini-content,
     .wui-sidenav.is-mini .wui-sidenav-full-content {
         pointer-events: none;
+    }
+
+    // Menu navigasi vertikal di dalam sidenav
+    .wui-sidenav-inner {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    // Item tombol navigasi sidenav (selaras dengan topbar)
+    .wui-sidenav-item {
+        width: 100%;
+        border-radius: 0;
+        justify-content: flex-start;
+        padding-inline-start: var(--wui-space-2);
+        padding-inline-end: var(--wui-space-4);
+        gap: var(--wui-space-3);
+
+        > wui-icon {
+            width: var(--wui-button-height, 3rem);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        &.is-active {
+            background-color: var(--wui-color-default);
+            color: var(--wui-color-primary);
+            font-weight: var(--wui-font-weight-medium);
+
+            wui-icon {
+                color: var(--wui-color-primary);
+            }
+        }
+    }
+
+    // Garis horizontal pemisah grup menu
+    .wui-sidenav-divider {
+        border: 0;
+        border-top: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
+        margin: var(--wui-space-2) 0;
+        width: 100%;
+    }
+
+    // Subheader / judul kategori menu (rata kiri lurus dengan posisi ikon di 18px)
+    .wui-sidenav-subheader {
+        padding-block: var(--wui-space-3) var(--wui-space-1);
+        padding-inline-start: calc(var(--wui-space-2) + (var(--wui-button-height, 3rem) - var(--wui-button-icon-size, 1.75rem)) / 2);
+        padding-inline-end: var(--wui-space-4);
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--wui-color-on-surface) 70%, transparent);
+        user-select: none;
     }
 
     @media (prefers-reduced-motion: reduce) {

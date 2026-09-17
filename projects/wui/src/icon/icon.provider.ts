@@ -1,7 +1,6 @@
 // icon.provider.ts
 import { EnvironmentProviders, InjectionToken, makeEnvironmentProviders } from '@angular/core';
 import { IconDefinition } from './icon.model';
-import { IconService } from './icon.service';
 
 // Token internal untuk menampung koleksi ikon dari provider
 export const ICON_SET = new InjectionToken<IconDefinition[][]>('ICON_SET');

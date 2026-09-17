@@ -18,5 +18,7 @@ export const routes: Routes = [{
 }, {
     path: 'button', loadComponent: () => import('./pages/button/button.page/button.page').then(m => m.ButtonPage)
 }, {
+    path: 'sidenav', loadComponent: () => import('./pages/sidenaav.page/sidenaav.page').then(m => m.SidenaavPage)
+}, {
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

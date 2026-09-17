@@ -1,12 +1,40 @@
 import { Component, inject } from '@angular/core';
-import { WuiApp, WuiButton, WuiIcon, WuiSidenav, WuiSidenavService, WuiTopbar } from '@wajek/wui';
-import { RouterOutlet } from '@angular/router';
+import {
+  WuiApp,
+  WuiButton,
+  WuiIcon,
+  WuiSidenav,
+  WuiSidenavDivider,
+  WuiSidenavFull,
+  WuiSidenavInner,
+  WuiSidenavItem,
+  WuiSidenavMini,
+  WuiSidenavService,
+  WuiSidenavSubheader,
+  WuiTopbar,
+} from '@wajek/wui';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [WuiApp, RouterOutlet, WuiSidenav, WuiTopbar, WuiIcon, WuiButton],
+  imports: [
+    WuiApp,
+    RouterOutlet,
+    WuiSidenav,
+    WuiSidenavInner,
+    WuiSidenavMini,
+    WuiSidenavFull,
+    WuiSidenavItem,
+    WuiSidenavDivider,
+    WuiSidenavSubheader,
+    WuiTopbar,
+    WuiIcon,
+    WuiButton,
+    RouterLink,
+    RouterLinkActive,
+  ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class App {
 
@@ -17,6 +45,10 @@ export class App {
 
   toggleSidenav() {
     this.sidenavService.toggle(this.sidenavId);
+  }
+
+  toggleSidenavMini() {
+    this.sidenavService.toggleMini(this.sidenavId);
   }
 
 }

@@ -1,7 +1,7 @@
 <wui-app>
   <wui-topbar>
     <div class="wui-topbar-leading">
-      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenav()">
+      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMini()">
         <wui-icon icon="menu"></wui-icon>
       </button>
     </div>
@@ -20,8 +20,62 @@
   </wui-topbar>
 
   <wui-sidenav id="app-sidenav">
-    <p>This is app sidenav</p>
-    <button type="button" (click)="toggleSidenav()">Toggle Sidenav</button>
+    <!-- Konten Mini: khusus mode mini (hanya ikon) -->
+    <nav wuiSidenavInner wuiSidenavMini>
+      <a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem aria-label="Beranda">
+        <wui-icon icon="home"></wui-icon>
+      </a>
+
+      <a wuiButton variant="text" size="lg" routerLink="/tipografi" routerLinkActive="is-active" wuiSidenavItem aria-label="Tipografi">
+        <wui-icon icon="format-font"></wui-icon>
+      </a>
+
+      <a wuiButton variant="text" size="lg" routerLink="/button" routerLinkActive="is-active" wuiSidenavItem aria-label="Button">
+        <wui-icon icon="gesture-tap-button"></wui-icon>
+      </a>
+
+      <a wuiButton variant="text" size="lg" routerLink="/sidenav" routerLinkActive="is-active" wuiSidenavItem aria-label="Sidenav">
+        <wui-icon icon="dock-left"></wui-icon>
+      </a>
+
+      <hr wuiSidenavDivider />
+
+      <a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem aria-label="Pengaturan">
+        <wui-icon icon="settings"></wui-icon>
+      </a>
+    </nav>
+
+    <!-- Konten Penuh: mode open (ikon + teks label) -->
+    <nav wuiSidenavInner wuiSidenavFull>
+      <a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem>
+        <wui-icon icon="home"></wui-icon>
+        Beranda
+      </a>
+
+      <a wuiButton variant="text" size="lg" routerLink="/tipografi" routerLinkActive="is-active" wuiSidenavItem>
+        <wui-icon icon="format-font"></wui-icon>
+        Tipografi
+      </a>
+
+      <a wuiButton variant="text" size="lg" routerLink="/button" routerLinkActive="is-active" wuiSidenavItem>
+        <wui-icon icon="gesture-tap-button"></wui-icon>
+        Button
+      </a>
+
+      <a wuiButton variant="text" size="lg" routerLink="/sidenav" routerLinkActive="is-active" wuiSidenavItem>
+        <wui-icon icon="dock-left"></wui-icon>
+        Sidenav
+      </a>
+
+      <hr wuiSidenavDivider />
+
+      <div wuiSidenavSubheader>PENGATURAN</div>
+
+      <a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem>
+        <wui-icon icon="settings"></wui-icon>
+        Pengaturan
+      </a>
+    </nav>
   </wui-sidenav>
 
   <router-outlet/>

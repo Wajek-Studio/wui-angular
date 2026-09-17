@@ -3,7 +3,16 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideIcons } from '@wajek/wui';
-import { mdiAccount, mdiAccountCircle, mdiCog, mdiHome, mdiMenu } from '@mdi/js';
+import {
+  mdiAccount,
+  mdiAccountCircle,
+  mdiCog,
+  mdiDockLeft,
+  mdiFormatFont,
+  mdiGestureTapButton,
+  mdiHome,
+  mdiMenu,
+} from '@mdi/js';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,7 +24,10 @@ export const appConfig: ApplicationConfig = {
       { name: 'account', path: mdiAccount },
       { name: 'settings', path: mdiCog },
       { name: 'menu', path: mdiMenu },
-      { name: 'account-circle', path: mdiAccountCircle }
-    )
-  ]
+      { name: 'account-circle', path: mdiAccountCircle },
+      { name: 'format-font', path: mdiFormatFont },
+      { name: 'gesture-tap-button', path: mdiGestureTapButton },
+      { name: 'dock-left', path: mdiDockLeft }
+    ),
+  ],
 };
