@@ -6,6 +6,7 @@ import { provideIcons } from '@wajek/wui';
 import {
   mdiAccount,
   mdiAccountCircle,
+  mdiButtonCursor,
   mdiCog,
   mdiDockLeft,
   mdiDotsVertical,
@@ -30,7 +31,7 @@ export const appConfig: ApplicationConfig = {
       { name: 'menu', path: mdiMenu },
       { name: 'account-circle', path: mdiAccountCircle },
       { name: 'format-font', path: mdiFormatFont },
-      { name: 'gesture-tap-button', path: mdiGestureTapButton },
+      { name: 'button', path: mdiButtonCursor },
       { name: 'dock-left', path: mdiDockLeft },
       { name: 'table', path: mdiTable },
       { name: 'dots-vertical', path: mdiDotsVertical },

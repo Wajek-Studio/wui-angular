@@ -116,24 +116,25 @@
         display: flex;
         flex-direction: column;
         width: 100%;
+        padding: var(--wui-space-2);
     }
 
     // Item tombol navigasi sidenav (selaras dengan topbar)
     .wui-sidenav-item {
         width: 100%;
-        border-radius: 0;
+        border-radius: var(--wui-sidenav-item-radius);
         justify-content: flex-start;
-        padding-inline-start: var(--wui-space-2);
-        padding-inline-end: var(--wui-space-4);
-        gap: var(--wui-space-3);
+        padding-inline: .625rem;
+        gap: 1.5rem;
+        height: 2.5rem;
 
-        > wui-icon {
-            width: var(--wui-button-height, 3rem);
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-        }
+        // > wui-icon {
+        //     width: var(--wui-button-height, 3rem);
+        //     display: inline-flex;
+        //     justify-content: center;
+        //     align-items: center;
+        //     flex-shrink: 0;
+        // }
 
         &.is-active {
             background-color: var(--wui-color-default);
@@ -156,8 +157,8 @@
 
     // Subheader / judul kategori menu (rata kiri lurus dengan posisi ikon di 18px)
     .wui-sidenav-subheader {
-        padding-block: var(--wui-space-3) var(--wui-space-1);
-        padding-inline-start: calc(var(--wui-space-2) + (var(--wui-button-height, 3rem) - var(--wui-button-icon-size, 1.75rem)) / 2);
+        padding-block: var(--wui-space-3) var(--wui-space-2);
+        padding-inline-start: calc(var(--wui-space-2) + .125rem);
         padding-inline-end: var(--wui-space-4);
         font-size: 0.6875rem;
         font-weight: 700;

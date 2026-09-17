@@ -1,5 +1,5 @@
 <wui-app>
-  <wui-topbar>
+  <!-- <wui-topbar>
     <div class="wui-topbar-leading">
       <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMini()">
         <wui-icon icon="menu"></wui-icon>
@@ -17,7 +17,7 @@
         <wui-icon icon="account-circle"></wui-icon>
       </button>
     </div>
-  </wui-topbar>
+  </wui-topbar> -->
 
   <wui-sidenav id="app-sidenav">
     <!-- Konten Mini: khusus mode mini (hanya ikon) -->
@@ -59,6 +59,8 @@
 
     <!-- Konten Penuh: mode open (ikon + teks label) -->
     <nav wuiSidenavInner wuiSidenavFull>
+      <div class="wui-px-3 wui-py-4 wui-title-medium--em">WUI - Wajek UI</div>
+
       <a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem>
         <wui-icon icon="home"></wui-icon>
         Beranda
@@ -69,8 +71,10 @@
         Tipografi
       </a>
 
+      <div wuiSidenavSubheader>Components</div>
+
       <a wuiButton variant="text" size="lg" routerLink="/button" routerLinkActive="is-active" wuiSidenavItem>
-        <wui-icon icon="gesture-tap-button"></wui-icon>
+        <wui-icon icon="button"></wui-icon>
         Button
       </a>
 
@@ -92,15 +96,6 @@
       <a wuiButton variant="text" size="lg" routerLink="/table" routerLinkActive="is-active" wuiSidenavItem>
         <wui-icon icon="table"></wui-icon>
         Table
-      </a>
-
-      <hr wuiSidenavDivider />
-
-      <div wuiSidenavSubheader>PENGATURAN</div>
-
-      <a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem>
-        <wui-icon icon="settings"></wui-icon>
-        Pengaturan
       </a>
     </nav>
   </wui-sidenav>

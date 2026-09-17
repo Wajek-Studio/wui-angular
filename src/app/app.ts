@@ -11,7 +11,6 @@ import {
   WuiSidenavMini,
   WuiSidenavService,
   WuiSidenavSubheader,
-  WuiTopbar,
 } from '@wajek/wui';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
@@ -27,7 +26,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     WuiSidenavItem,
     WuiSidenavDivider,
     WuiSidenavSubheader,
-    WuiTopbar,
     WuiIcon,
     WuiButton,
     RouterLink,
