@@ -1,163 +1,452 @@
 <ng-template #page>
     <wui-page>
-        <wui-topbar>
-            <div class="wui-topbar-leading">
-                <button wuiButton wuiToggleSidenav="" iconOnly="true" variant="text" size="lg">
-                    <wui-icon icon="menu"></wui-icon>
-                </button>
+        <div class="wui-page-content">
+
+            <div class="wui-container wui-py-5">
+
+                <h1 class="wui-display-medium wui-mb-2">Memulai</h1>
+                <p class="wui-body-large wui-mb-3">
+                    Dari nol sampai layout aplikasi berjalan: memasang paket, memuat style layer, lalu menyusun shell
+                    <code>wui-app</code> &mdash; topbar, sidenav, dan <code>wui-page</code>.
+                </p>
+                <p class="wui-mb-5">
+                    Nama paket yang direncanakan: <code>&#64;wajek/wui&#64;20.0</code> &mdash; nomor mayor mengikuti
+                    Angular 20. Paketnya <strong>satu</strong>: komponen Angular dan style layer dikirim bersama
+                    (SCSS-nya didaftarkan sebagai asset di <code>ng-package.json</code>), jadi tidak ada paket CSS
+                    terpisah yang versinya harus dijaga sendiri.
+                </p>
+
+                <h2 class="wui-headline-small wui-mb-2">1. Instalasi</h2>
+                <p class="wui-mb-3">
+                    Satu perintah. <code>&#64;angular/cdk</code> ditulis eksplisit karena statusnya
+                    <strong>peer dependency</strong>: npm 7+ sebenarnya memasangnya otomatis, tapi menuliskannya
+                    membuat versi yang benar-benar dipakai aplikasi jadi terlihat.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>npm install &#64;wajek/wui&#64;20.0 &#64;angular/cdk&#64;^20.2.0</code></pre>
+
+                <div wuiTableResponsive class="wui-mb-3">
+                    <table wuiTable dense="true">
+                        <thead>
+                            <tr>
+                                <th>Paket</th>
+                                <th>Versi</th>
+                                <th>Kenapa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>&#64;wajek/wui</code></td>
+                                <td>20.0</td>
+                                <td>Komponen Angular + style layer — satu paket.</td>
+                            </tr>
+                            <tr>
+                                <td><code>&#64;angular/cdk</code></td>
+                                <td>^20.2.0</td>
+                                <td>Dipakai dialog (overlay) dan <code>wui-page</code> (focus trap). Wajib dipasang
+                                    sendiri, bukan dependensi transitif.</td>
+                            </tr>
+                            <tr>
+                                <td><code>&#64;angular/core</code>, <code>common</code>,
+                                    <code>platform-browser</code></td>
+                                <td>^20.3.0</td>
+                                <td>Peer wajib — di aplikasi Angular 20.3 sudah ada.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="wui-mb-5">
+                    Tidak ada langkah build tambahan, CLI, atau skematik. Semua API diekspor dari akar paket:
+                    <code>import &#123; WuiApp, WuiTopbar, WuiSidenav, WuiPage &#125; from '&#64;wajek/wui';</code>
+                </p>
+
+                <h2 class="wui-headline-small wui-mb-2">2. Include style</h2>
+                <p class="wui-mb-3">
+                    Style layer dimuat <strong>manual</strong> dari <code>styles.scss</code>: satu baris, tanpa import
+                    CSS terpisah dan tanpa auto-inject. Karena aplikasi yang menentukan kapan memuatnya, urutan style
+                    aplikasi tetap bisa diatur.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>// src/styles.scss
+&#64;use '&#64;wajek/wui/scss/wui.scss' with ($wui-palette: 'purple');</code></pre>
+
+                <p class="wui-mb-3">
+                    Konfigurasi di dalam <code>with (...)</code> bersifat <strong>opsional</strong> &mdash; tanpa itu
+                    library memakai nilai bawaan. Semuanya dibaca saat <em>compile</em>, jadi mengubahnya butuh
+                    rebuild; nilai yang perlu berubah saat runtime diatur lewat CSS variable (lihat di bawah).
+                </p>
+
+                <div wuiTableResponsive class="wui-mb-5">
+                    <table wuiTable class="is-dense">
+                        <thead>
+                            <tr>
+                                <th>Opsi</th>
+                                <th>Isi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>$wui-palette</code></td>
+                                <td>Palet yang skalanya di-emit. Bawaan <code>'purple'</code>; pilihan bawaan lain
+                                    <code>red</code>, <code>magenta</code>, <code>neutral</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>$wui-palettes-extra</code></td>
+                                <td>Palet milik aplikasi. Ditulis <strong>lengkap</strong> (semua tone 50&ndash;950
+                                    &times; dua mode) — library memvalidasi kelengkapan, bukan menambal tone yang
+                                    kurang.</td>
+                            </tr>
+                            <tr>
+                                <td><code>$wui-roles</code></td>
+                                <td>Peran warna per mode: <code>primary</code>, <code>on-primary</code>,
+                                    <code>surface</code>, <code>danger</code>, &hellip; Nilainya boleh
+                                    <code>(palet, tone)</code>, warna langsung, atau CSS apa pun.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="wui-title-medium wui-mb-2">Urutan level di dalam <code>wui.scss</code></h3>
+                <p class="wui-mb-3">
+                    Satu hal yang perlu diingat dari struktur SCSS-nya: urutannya <strong>disengaja</strong>. Itulah
+                    cara utilitas menang atas komponen tanpa <code>!important</code>.
+                </p>
+
+                <ol class="wui-mb-5">
+                    <li><code>abstracts</code> &mdash; token, fungsi, mixin. Tidak menghasilkan CSS.</li>
+                    <li><code>base</code> &mdash; reset, tipografi, layout dasar.</li>
+                    <li><code>themes</code> &mdash; palet &amp; peran warna ke CSS variable (<code>:root</code>, mode
+                        gelap).</li>
+                    <li><code>components</code> &mdash; tombol, sidenav, dialog, tabel, form, &hellip;</li>
+                    <li><code>layout</code> &mdash; container &amp; grid.</li>
+                    <li><code>utilities</code> &mdash; spacing, gap, flex. <strong>Paling akhir</strong>, jadi bisa
+                        menimpa apa pun di atasnya.</li>
+                </ol>
+
+                <h3 class="wui-title-medium wui-mb-2">Menyetel nilai tanpa rebuild</h3>
+                <p class="wui-mb-3">
+                    Angka desain yang berguna keluar sebagai CSS variable, jadi aplikasi bisa menimpanya langsung di
+                    <code>:root</code>-nya sendiri &mdash; tanpa menyentuh paket dan tanpa build ulang.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-5"><code>// src/styles.scss, setelah baris &#64;use di atas
+:root &#123;
+  --wui-color-primary: #4b2ea8;    // peran warna
+  --wui-space-4: 1.25rem;          // skala spasi
+  --wui-sidenav-width: 18rem;      // ukuran komponen
+&#125;</code></pre>
+
+                <!-- 3. LAYOUT APLIKASI -->
+                <h2 class="wui-headline-small wui-mb-2">3. Layout aplikasi</h2>
+                <p class="wui-mb-3">
+                    Susunannya cuma satu komponen: <code>&lt;wui-app&gt;</code> dipasang <strong>sekali</strong> di
+                    root, lalu isinya diproyeksikan ke tempat yang tepat. Topbar ke baris atas, sidenav ke kolom kiri,
+                    sisanya (termasuk <code>&lt;router-outlet&gt;</code>) ke area konten yang menggulir.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>&lt;!-- src/app/app.html --&gt;
+&lt;wui-app&gt;
+  &lt;wui-topbar&gt;&hellip;&lt;/wui-topbar&gt;
+  &lt;wui-sidenav id="app-sidenav"&gt;&hellip;&lt;/wui-sidenav&gt;
+  &lt;router-outlet /&gt;
+&lt;/wui-app&gt;</code></pre>
+
+                <div wuiTableResponsive class="wui-mb-5">
+                    <table wuiTable class="is-dense">
+                        <thead>
+                            <tr>
+                                <th>Yang ditulis di dalamnya</th>
+                                <th>Ditempatkan di</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>&lt;wui-topbar&gt;</code></td>
+                                <td>Baris atas, tinggi tetap 4rem, lebar penuh.</td>
+                            </tr>
+                            <tr>
+                                <td><code>&lt;wui-sidenav&gt;</code></td>
+                                <td>Kolom kiri di dalam <code>.wui-layout</code>.</td>
+                            </tr>
+                            <tr>
+                                <td>apa pun selain keduanya</td>
+                                <td>Area konten (<code>.wui-layout-content</code>) — biasanya
+                                    <code>&lt;router-outlet /&gt;</code>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="wui-title-medium wui-mb-2">3.1 Topbar</h3>
+                <p class="wui-mb-3">
+                    Topbar tidak punya API: ia baris flex dengan tiga slot class, dan isinya ditentukan aplikasi. Jadi
+                    tombol menu di kiri dan aksi akun di kanan tidak perlu "dipinjamkan" dari library.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>&lt;wui-topbar&gt;
+  &lt;div class="wui-topbar-leading"&gt;
+    &lt;button wuiButton iconOnly variant="text" (click)="toggleMini()"&gt;
+      &lt;wui-icon icon="menu" /&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class="wui-topbar-content"&gt;Nama aplikasi&lt;/div&gt;
+
+  &lt;div class="wui-topbar-trailing"&gt;
+    &lt;button wuiButton iconOnly variant="text"&gt;
+      &lt;wui-icon icon="account-circle" /&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/wui-topbar&gt;</code></pre>
+
+                <div wuiTableResponsive class="wui-mb-3">
+                    <table wuiTable class="is-dense">
+                        <thead>
+                            <tr>
+                                <th>Slot</th>
+                                <th>Perilakunya</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>.wui-topbar-leading</code></td>
+                                <td>Menempel kiri, tidak melebar (<code>flex: 0 0 auto</code>).</td>
+                            </tr>
+                            <tr>
+                                <td><code>.wui-topbar-content</code></td>
+                                <td>Mengisi sisa lebar + padding kiri-kanan 12px — tempat judul halaman.</td>
+                            </tr>
+                            <tr>
+                                <td><code>.wui-topbar-trailing</code></td>
+                                <td>Menempel kanan, tidak melebar.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="wui-mb-5">
+                    <code>&lt;wui-icon&gt;</code> tidak membawa data ikonnya sendiri. Daftarkan dulu sekali di provider
+                    aplikasi: <code>provideIcons(&#123; name: 'menu', path: mdiMenu &#125;)</code>
+                    (<code>@mdi/js</code>), lalu pakai lewat <code>icon="menu"</code>.
+                </p>
+
+                <h3 class="wui-title-medium wui-mb-2">3.2 Sidenav</h3>
+                <p class="wui-mb-3">
+                    Sidenav selalu punya markup untuk <strong>dua mode</strong> sekaligus: mode ringkas
+                    (<code>wuiSidenavMini</code>) dan mode penuh (<code>wuiSidenavFull</code>). Yang tampil mengikuti
+                    state-nya, jadi lebar panel bisa berubah tanpa memindahkan DOM.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>&lt;wui-sidenav id="app-sidenav" initialState="open"&gt;
+  &lt;!-- Mode ringkas: rail, biasanya hanya ikon --&gt;
+  &lt;nav wuiSidenavMini&gt;
+    &lt;div wuiSidenavBody&gt;
+      &lt;a wuiSidenavItem routerLink="/home" routerLinkActive="is-active"&gt;
+        &lt;wui-icon icon="home" /&gt;
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div wuiSidenavFooter&gt;
+      &lt;a wuiSidenavItem routerLink="/setting"&gt;&lt;wui-icon icon="settings" /&gt;&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+
+  &lt;!-- Mode penuh: ikon + label --&gt;
+  &lt;nav wuiSidenavFull&gt;
+    &lt;div wuiSidenavBody&gt;
+      &lt;a wuiSidenavItem routerLink="/home" routerLinkActive="is-active"&gt;
+        &lt;wui-icon icon="home" /&gt; Beranda
+      &lt;/a&gt;
+
+      &lt;div wuiSidenavSubheader&gt;Pengaturan&lt;/div&gt;
+
+      &lt;a wuiSidenavItem routerLink="/setting"&gt;
+        &lt;wui-icon icon="settings" /&gt; Preferensi
+      &lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div wuiSidenavFooter&gt;
+      &lt;a wuiSidenavItem routerLink="/about"&gt;Tentang&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+&lt;/wui-sidenav&gt;</code></pre>
+
+                <div wuiTableResponsive class="wui-mb-3">
+                    <table wuiTable class="is-dense">
+                        <thead>
+                            <tr>
+                                <th>Directive</th>
+                                <th>Untuk apa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>[wuiSidenavMini]</code> / <code>[wuiSidenavFull]</code></td>
+                                <td>Blok markup per mode. Salah satu akan terlihat sesuai state sidenav.</td>
+                            </tr>
+                            <tr>
+                                <td><code>[wuiSidenavBody]</code></td>
+                                <td>Area isi: setinggi sisa panel dan <strong>menggulir sendiri</strong> kalau daftarnya
+                                    panjang.</td>
+                            </tr>
+                            <tr>
+                                <td><code>[wuiSidenavFooter]</code></td>
+                                <td>Area bawah: selalu menempel di ujung bawah, tidak ikut tergulir. Garis pemisahnya
+                                    sudah digambar oleh style-nya.</td>
+                            </tr>
+                            <tr>
+                                <td><code>[wuiSidenavItem]</code></td>
+                                <td>Mengubah tombol/tautan jadi item navigasi: lebar penuh, sudut rata, rata kiri, dan
+                                    mendukung state aktif <code>.is-active</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><code>[wuiSidenavSubheader]</code></td>
+                                <td>Judul kategori menu di dalam daftar.</td>
+                            </tr>
+                            <tr>
+                                <td><code>[wuiSidenavDivider]</code></td>
+                                <td>Garis pemisah antar grup menu (opsional — footer sudah punya garis sendiri).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="wui-mb-3">
+                    <code>id</code> itu <strong>wajib</strong> dan jadi kunci state di
+                    <code>WuiSidenavService</code>. Artinya siapa pun boleh mengubah sidenav dari luar — tombol di
+                    topbar maupun halaman aktif — dan tidak ada state yang perlu diteruskan manual:
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>private readonly sidenav = inject(WuiSidenavService);
+
+toggle()     &#123; this.sidenav.toggle('app-sidenav');     &#125;  // open &harr; close
+toggleMini() &#123; this.sidenav.toggleMini('app-sidenav'); &#125;  // open &harr; mini
+
+// Reaktif kalau perlu ditampilkan/di-baca di template:
+readonly state = this.sidenav.state('app-sidenav');      // Signal&lt;WuiSidenavState&gt;</code></pre>
+
+                <div wuiTableResponsive class="wui-mb-5">
+                    <table wuiTable class="is-dense">
+                        <thead>
+                            <tr>
+                                <th>State</th>
+                                <th>Tampilan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>open</code> (bawaan)</td>
+                                <td>Panel penuh, 16rem.</td>
+                            </tr>
+                            <tr>
+                                <td><code>mini</code></td>
+                                <td>Rail ringkas, 4rem — biasanya hanya ikon.</td>
+                            </tr>
+                            <tr>
+                                <td><code>close</code></td>
+                                <td>Menyusut ke 0; aria &amp; fokus aman karena elemennya tetap ada di DOM.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="wui-title-medium wui-mb-2">3.3 Halaman: <code>wui-page</code></h3>
+                <p class="wui-mb-3">
+                    Halaman tidak ditulis langsung sebagai isi router-outlet, tapi di dalam
+                    <code>&lt;wui-page&gt;</code>. Komponen ini yang menyediakan area konten yang menggulir, dan hanya
+                    bagian itulah yang <code>overflow-y: auto</code> &mdash; topbar dan sidenav tetap diam.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>&lt;!-- template halaman --&gt;
+&lt;wui-page&gt;
+  &lt;div class="wui-page-content"&gt;
+    &lt;h1&gt;Judul halaman&lt;/h1&gt;
+    &hellip;isi halaman&hellip;
+  &lt;/div&gt;
+&lt;/wui-page&gt;</code></pre>
+
+                <p class="wui-mb-5">
+                    Kalau satu halaman perlu topbar atau sidenav-nya sendiri, cukup ditulis di dalam
+                    <code>&lt;wui-page&gt;</code> sebelum <code>.wui-page-content</code> &mdash; komponen itu juga
+                    memproyeksikan <code>&lt;wui-topbar&gt;</code> dan <code>&lt;wui-sidenav&gt;</code>.
+                </p>
+
+                <h3 class="wui-title-medium wui-mb-2">3.4 Memasang halaman dari kode</h3>
+                <p class="wui-mb-3">
+                    Halaman ditumpuk oleh <code>WuiPageService</code> ke overlay milik <code>&lt;wui-app&gt;</code>.
+                    Polanya: kirim template halaman saat komponennya dibuat.
+                </p>
+
+                <pre class="wui-p-3 wui-mb-3"><code>&#64;Component(&#123; selector: 'app-setting.page', imports: [WuiPage] &#125;)
+export class SettingPage implements OnInit &#123;
+  private readonly pages = inject(WuiPageService);
+  private readonly page = viewChild.required&lt;TemplateRef&lt;unknown&gt;&gt;('page');
+
+  ngOnInit(): void &#123;
+    this.pages.replace(this.page(), &#123; variant: 'full' &#125;);
+  &#125;
+&#125;</code></pre>
+
+                <div wuiTableResponsive class="wui-mb-3">
+                    <table wuiTable class="is-dense">
+                        <thead>
+                            <tr>
+                                <th>API</th>
+                                <th>Kapan dipakai</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>replace(tpl, opsi)</code></td>
+                                <td>Halaman yang menggantikan tampilan sekarang (kasus paling umum, termasuk di
+                                    halaman ini) &mdash; kedalaman tumpukan tidak bertambah.</td>
+                            </tr>
+                            <tr>
+                                <td><code>push(tpl, opsi)</code></td>
+                                <td>Halaman baru <em>di atas</em> yang sekarang &mdash; mis. form detail dari daftar,
+                                    lalu pengguna menutupnya dan kembali.</td>
+                            </tr>
+                            <tr>
+                                <td><code>close(ref)</code> / <code>closeTop()</code> / <code>closeAll()</code></td>
+                                <td>Menutup halaman. Idempoten, jadi aman dipanggil berkali-kali.</td>
+                            </tr>
+                            <tr>
+                                <td><code>variant: 'full' | 'modal'</code></td>
+                                <td><code>full</code> menutup penuh area; <code>modal</code> transparan + backdrop dan
+                                    bisa ditutup lewat ESC/backdrop.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="wui-mb-5">
+                    Yang sudah ditangani otomatis begitu halaman berjalan lewat service: hanya page teratas yang
+                    menerima fokus dan klik, isi di bawahnya diberi <code>aria-hidden</code>, dan fokus kembali ke
+                    elemen pemicu saat halaman ditutup.
+                </p>
+
+                <!-- 4. URUTAN PEMASANGAN -->
+                <h2 class="wui-headline-small wui-mb-2">4. Urutan pemasangan</h2>
+                <p class="wui-mb-3">Ringkasan kelima langkahnya, dari nol sampai aplikasi punya shell dan halaman.</p>
+
+                <ol class="wui-mb-4">
+                    <li>Pasang paket: <code>npm install &#64;wajek/wui&#64;20.0 &#64;angular/cdk&#64;^20.2.0</code></li>
+                    <li>Muat style layer: <code>&#64;use '&#64;wajek/wui/scss/wui.scss' with (&hellip;);</code> di
+                        <code>src/styles.scss</code>.</li>
+                    <li>Daftarkan ikon sekali di provider: <code>provideIcons(&hellip;)</code> — wajib kalau memakai
+                        <code>&lt;wui-icon&gt;</code>.</li>
+                    <li>Susun shell di <code>app.html</code>: <code>&lt;wui-app&gt;</code> + topbar + sidenav +
+                        <code>&lt;router-outlet /&gt;</code>.</li>
+                    <li>Bungkus tiap halaman dengan <code>&lt;wui-page&gt;</code> + <code>.wui-page-content</code>,
+                        lalu pasang lewat <code>WuiPageService.replace()</code>.</li>
+                </ol>
+
+                <p>
+                    Halaman lain di menu samping mendokumentasikan tiap bagian lebih dalam: <em>Tipografi</em> untuk
+                    teks &amp; peran ukuran, lalu halaman per komponen (button, dialog, form, sidenav, table, layout).
+                </p>
+
             </div>
-        </wui-topbar>
-
-        <div class="wui-page-content doc-container">
-            <h2>Halaman Demo</h2>
-
-            <button wuiButton variant="filled" color="danger" routerLink="nested" class="wui-me-2">
-                <wui-icon icon="home"></wui-icon>
-                Open Nested
-            </button>
-            <button wuiButton variant="outlined" size="sm" routerLink="/tipografi" class="wui-me-2">
-                <wui-icon icon="home"></wui-icon>
-                Demo Tipografi (Display)
-            </button>
-            <button wuiButton variant="text" size="md" routerLink="/button" class="wui-me-2">
-                <wui-icon icon="home"></wui-icon>
-                Demo Button (M3)
-            </button>
-            <button wuiButton variant="outlined" size="md" routerLink="/dialog" class="wui-me-2">
-                <wui-icon icon="home"></wui-icon>
-                Demo Dialog
-            </button>
-            <button wuiButton variant="text" size="md" routerLink="/form" class="wui-me-2">
-                <wui-icon icon="home"></wui-icon>
-                Demo Form Field
-            </button>
-            <button wuiButton variant="outlined" size="lg" (click)="toggleSidenav()" class="wui-me-2">
-                <wui-icon icon="home"></wui-icon>
-                Toggle Sidenav
-            </button>
-            <button wuiButton variant="outlined" size="xl" (click)="toggleSidenavMini()">
-                <wui-icon icon="home"></wui-icon>
-                Toggle Sidenav Mini
-            </button>
-
-            <wui-icon icon="home"></wui-icon>
             
-            <div id="lipsum">
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus luctus porta sem, non dictum diam
-                    rhoncus in. Etiam enim tortor, malesuada eu ipsum sed, feugiat dictum lorem. Curabitur non lectus
-                    ultrices, tincidunt diam vel, accumsan leo. Nulla dictum in tellus at consequat. Curabitur sollicitudin
-                    lectus eget velit convallis molestie. Maecenas vitae porttitor ipsum, convallis porta turpis. Integer
-                    aliquet nulla eu nisl vehicula, dignissim mollis ante consectetur. Sed convallis mi a orci iaculis, ac
-                    mollis erat interdum. Morbi viverra justo ac magna molestie, vel condimentum nunc vulputate. Mauris a
-                    dolor in sapien ultricies sollicitudin. In ipsum ante, elementum ac nibh nec, congue tristique lectus.
-                </p>
-                <p>
-                    Pellentesque sollicitudin viverra elit, et viverra lacus viverra vel. Proin luctus accumsan odio, nec
-                    consectetur odio auctor non. Duis ullamcorper eros ut rutrum pharetra. Nam tempus semper tortor
-                    tincidunt dictum. Aenean vitae leo lacus. Nunc laoreet mattis dui. Ut vel ex ac dui laoreet accumsan a
-                    ac leo. Suspendisse sodales metus tellus, ac cursus diam dignissim non. Suspendisse in neque eu tortor
-                    porta consequat et eu elit. Curabitur sit amet lorem id nisi volutpat imperdiet a non turpis. Aliquam
-                    blandit ac nulla id lobortis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-                    inceptos himenaeos. Quisque tempor mollis fringilla. Maecenas ultricies auctor metus sed consequat.
-                </p>
-                <p>
-                    In at volutpat diam. Suspendisse iaculis neque ac cursus volutpat. Vivamus pretium sed erat a vehicula.
-                    Aenean ipsum magna, lobortis vel ante id, venenatis mollis sapien. Pellentesque euismod molestie
-                    dapibus. Proin tempor lobortis quam a pellentesque. In venenatis consectetur diam vitae malesuada.
-                    Curabitur diam eros, convallis vitae nisi vel, lobortis congue erat. Integer laoreet turpis vel purus
-                    molestie, ut gravida risus pretium. Duis fringilla magna a commodo feugiat. Aliquam a lacinia sapien, ut
-                    ornare orci. Maecenas at blandit leo.
-                </p>
-                <p>
-                    Sed ac egestas arcu. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus nec lacinia
-                    mi. Sed sit amet ultrices erat, non scelerisque augue. Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Praesent vitae orci eu metus pulvinar cursus. Vestibulum aliquam felis laoreet laoreet
-                    gravida. Integer a dictum neque, eu cursus sem. Sed sed sem neque. Integer vel congue magna, non viverra
-                    leo. In nec ante laoreet, iaculis risus eu, tempus mi. Cras non justo eu leo bibendum tincidunt id vitae
-                    magna. Pellentesque lacinia tortor et ipsum consectetur porttitor.
-                </p>
-                <p>
-                    Vestibulum sed orci eu quam sagittis maximus. Duis sagittis mauris nisi, non aliquet est commodo et.
-                    Nullam dapibus maximus purus eu consectetur. Cras nisl sapien, viverra in nisl eu, consequat dictum
-                    neque. Nunc eget risus et ex tristique tincidunt. Maecenas et enim et nibh laoreet porta vitae sit amet
-                    mauris. Morbi ultrices placerat tellus, quis viverra felis rutrum vitae.
-                </p>
-                <p>
-                    Phasellus interdum lorem a porta venenatis. Duis egestas dictum tristique. Mauris pellentesque, quam a
-                    hendrerit viverra, augue libero volutpat enim, quis tristique orci lorem in orci. In congue sapien sit
-                    amet massa volutpat pulvinar. Proin venenatis eu ipsum a porttitor. Quisque fringilla placerat felis sed
-                    placerat. Maecenas sollicitudin dictum mollis. Vestibulum ullamcorper massa ac feugiat fringilla. Donec
-                    mauris lorem, facilisis nec auctor ac, congue ac dolor.
-                </p>
-                <p>
-                    Donec sed pretium est. Vestibulum blandit orci eu massa efficitur maximus. Phasellus ipsum massa,
-                    pulvinar at eleifend vel, fringilla non odio. Sed eget orci quam. Suspendisse lobortis vestibulum
-                    tortor, ac volutpat tellus fermentum ut. Proin auctor feugiat quam ut egestas. Ut volutpat eros est.
-                    Duis ut sodales risus. Proin eu pharetra leo. Vestibulum imperdiet vel dui eget fermentum.
-                </p>
-                <p>
-                    Curabitur quam justo, commodo et auctor lacinia, dapibus vitae tellus. Pellentesque varius ligula sed
-                    molestie facilisis. Vestibulum congue convallis rhoncus. Integer nec feugiat sapien. Praesent tempus
-                    varius rhoncus. Sed ut lacus nibh. Suspendisse imperdiet eu ex nec mollis. Suspendisse dapibus purus
-                    enim. Curabitur quis risus ultricies, efficitur dolor ut, vulputate ante. Mauris efficitur, dui vel
-                    placerat facilisis, nulla enim vulputate mauris, at laoreet dolor risus at diam. Vestibulum ornare sed
-                    risus at condimentum. Cras eros metus, volutpat ullamcorper ante id, pretium cursus ante.
-                </p>
-                <p>
-                    Quisque vehicula dui ante, et dignissim libero posuere et. Fusce hendrerit purus nec risus placerat
-                    porta. Etiam in lectus nisi. Nullam a elementum sem. Pellentesque habitant morbi tristique senectus et
-                    netus et malesuada fames ac turpis egestas. Duis iaculis ornare bibendum. Nullam et mi id nulla tempor
-                    feugiat hendrerit ut arcu. Etiam efficitur vel arcu eget pharetra. Nunc in erat neque. Proin imperdiet
-                    felis massa, eget ultricies sem ultrices ac. Phasellus mi eros, tempor ac auctor in, finibus hendrerit
-                    risus. Donec a nibh in urna hendrerit dapibus fringilla nec erat. Nullam quis quam eu magna consequat
-                    dapibus.
-                </p>
-                <p>
-                    Mauris venenatis ac leo sed tempus. Sed dignissim ante magna, eget condimentum neque dapibus ac. Morbi
-                    faucibus mattis purus in tristique. Praesent at elit in risus interdum ornare ut et quam. Suspendisse
-                    fringilla, nisl venenatis mattis aliquam, felis sem dapibus neque, sit amet vehicula justo ipsum vitae
-                    turpis. Proin sed bibendum neque. Nunc et ligula vehicula, dictum velit ut, tempus felis. Vestibulum
-                    venenatis at arcu eget dignissim. Morbi ultrices tincidunt elit tempus accumsan. Proin velit metus,
-                    vulputate eget euismod vel, semper ac massa.
-                </p>
-
-                <p>
-                    Quisque vehicula dui ante, et dignissim libero posuere et. Fusce hendrerit purus nec risus placerat
-                    porta. Etiam in lectus nisi. Nullam a elementum sem. Pellentesque habitant morbi tristique senectus et
-                    netus et malesuada fames ac turpis egestas. Duis iaculis ornare bibendum. Nullam et mi id nulla tempor
-                    feugiat hendrerit ut arcu. Etiam efficitur vel arcu eget pharetra. Nunc in erat neque. Proin imperdiet
-                    felis massa, eget ultricies sem ultrices ac. Phasellus mi eros, tempor ac auctor in, finibus hendrerit
-                    risus. Donec a nibh in urna hendrerit dapibus fringilla nec erat. Nullam quis quam eu magna consequat
-                    dapibus.
-                </p>
-                <p>
-                    Mauris venenatis ac leo sed tempus. Sed dignissim ante magna, eget condimentum neque dapibus ac. Morbi
-                    faucibus mattis purus in tristique. Praesent at elit in risus interdum ornare ut et quam. Suspendisse
-                    fringilla, nisl venenatis mattis aliquam, felis sem dapibus neque, sit amet vehicula justo ipsum vitae
-                    turpis. Proin sed bibendum neque. Nunc et ligula vehicula, dictum velit ut, tempus felis. Vestibulum
-                    venenatis at arcu eget dignissim. Morbi ultrices tincidunt elit tempus accumsan. Proin velit metus,
-                    vulputate eget euismod vel, semper ac massa.
-                </p>
-
-                <p>
-                    Quisque vehicula dui ante, et dignissim libero posuere et. Fusce hendrerit purus nec risus placerat
-                    porta. Etiam in lectus nisi. Nullam a elementum sem. Pellentesque habitant morbi tristique senectus et
-                    netus et malesuada fames ac turpis egestas. Duis iaculis ornare bibendum. Nullam et mi id nulla tempor
-                    feugiat hendrerit ut arcu. Etiam efficitur vel arcu eget pharetra. Nunc in erat neque. Proin imperdiet
-                    felis massa, eget ultricies sem ultrices ac. Phasellus mi eros, tempor ac auctor in, finibus hendrerit
-                    risus. Donec a nibh in urna hendrerit dapibus fringilla nec erat. Nullam quis quam eu magna consequat
-                    dapibus.
-                </p>
-                <p>
-                    Mauris venenatis ac leo sed tempus. Sed dignissim ante magna, eget condimentum neque dapibus ac. Morbi
-                    faucibus mattis purus in tristique. Praesent at elit in risus interdum ornare ut et quam. Suspendisse
-                    fringilla, nisl venenatis mattis aliquam, felis sem dapibus neque, sit amet vehicula justo ipsum vitae
-                    turpis. Proin sed bibendum neque. Nunc et ligula vehicula, dictum velit ut, tempus felis. Vestibulum
-                    venenatis at arcu eget dignissim. Morbi ultrices tincidunt elit tempus accumsan. Proin velit metus,
-                    vulputate eget euismod vel, semper ac massa.
-                </p>
-            </div>
         </div>        
     </wui-page>
 </ng-template>

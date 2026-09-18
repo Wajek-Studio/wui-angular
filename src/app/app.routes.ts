@@ -25,6 +25,8 @@ export const routes: Routes = [{
     path: 'sidenav', loadComponent: () => import('./pages/sidenaav.page/sidenaav.page').then(m => m.SidenaavPage)
 }, {
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
+}, {
+    path: 'layout', loadComponent: () => import('./pages/layout.page/layout.page').then(m => m.LayoutPage)
 },{
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

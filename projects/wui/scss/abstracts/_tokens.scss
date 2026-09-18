@@ -356,5 +356,37 @@ $wui-sidenav-width: 16rem !default;
 $wui-sidenav-mini-width: 4rem !default;
 $wui-sidenav-item-radius: .75rem !default;
 
+// ── Breakpoint & Container ──────────────────────────────────────────────────
+// Titik henti responsif. Angka di bawah **placeholder** — mengikuti Bootstrap 5 sebagai titik
+// awal sampai desainer memutuskan (alternatifnya window size class Material 3: 600/840/1200/1600).
+// Dipakai `abstracts/_mixins.scss` (`media-up`) dan `layout/_container.scss`.
+$wui-breakpoints: (
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+  'xxl': 1400px,
+) !default;
+
+// Container: lebar **penuh** di bawah `md`, lalu selalu menyisakan **batas kiri-kanan tetap**
+// sejak `md`, dan berhenti melebar di `max-width`. Urutannya: 100% → (100% − 2 × margin) → 1200px.
+$wui-container-max-widths: (
+  'sm': 100%,
+  'md': 100%,
+  'lg': 892px,
+  'xl': 1024px,
+  'xxl': 1120px
+) !default;
+$wui-container-margin-inline: 3rem !default;
+
+// Gutter horizontal (padding dalam container). Padding kiri/kanan = **setengah** nilai ini
+// (Bootstrap 5 memakai 1.5rem → 12px tiap sisi); baris grid nanti memakai acuan yang sama.
+// Jadi jarak konten dari tepi layar sejak `md` = `margin-inline` + setengah gutter = 3.75rem.
+$wui-container-gutter-x: 1.5rem !default;
+
+// Jumlah kolom grid (`layout/_grid.scss`). Angka ini adalah satu-satunya sumbernya: class
+// `.wui-col-1…N` dihasilkan loop compile-time, jadi mengubahnya ikut menambah/mengurangi class.
+$wui-grid-columns: 12 !default;
+
 // ── Outline ─────────────────────────────────────────────────────────────────
  

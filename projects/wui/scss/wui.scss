@@ -23,6 +23,7 @@
 @forward 'themes';
 @use 'base';
 @use 'components';
+@use 'layout';
 @use 'themes';
 @use 'utilities';
 
@@ -53,5 +54,12 @@
 @include components.loading;
 @include components.badge;
 
+// Primitif layout (container, grid) dipanggil setelah komponen supaya boleh menimpa style komponen
+// tanpa `!important`, tapi sebelum utilitas.
+@include layout.container;
+@include layout.grid;
+
 // Utilitas dipanggil TERAKHIR supaya bisa menimpa style komponen tanpa perlu `!important`.
 @include utilities.spacing;
+@include utilities.gap;
+@include utilities.flex;

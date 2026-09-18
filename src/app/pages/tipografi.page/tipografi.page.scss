@@ -58,12 +58,9 @@
   }
 }
 
-.specimen-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-  gap: 2.5rem;
-}
-
+// Susunan kolom kini memakai grid dari library (`.wui-row` + `.wui-col-12 .wui-col-md-6`),
+// jadi tidak ada lagi grid lokal di sini — dulu `.specimen-grid` (`auto-fit minmax(360px, 1fr)`)
+// yang berhenti sejajar saat lebar kontainer mengecil.
 .specimen-column {
   display: flex;
   flex-direction: column;

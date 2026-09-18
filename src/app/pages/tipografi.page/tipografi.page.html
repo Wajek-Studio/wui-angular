@@ -1,25 +1,21 @@
 <ng-template #page>
   <wui-page>
-    <div class="wui-page-content tipografi-container">
-      <header class="tipografi-header">
-        <div>
-          <a routerLink="/home" class="tipografi-back-btn">← Kembali ke Beranda</a>
-          <h1 class="tipografi-title">WUI Typography Specimen</h1>
-          <p class="tipografi-subtitle">
-            Koleksi gaya tipografi <code>@wajek/wui</code> sesuai spesifikasi Figma (Display, Headline, Title, Body, dan Label scales).
-          </p>
-        </div>
-      </header>
+    <div class="wui-page-content">
+
+      <div class="wui-container wui-py-5">
+        <h1 class="wui-display-medium">Typography</h1>
+
+        <p>Koleksi gaya typography yang disesuaikan dengan material design, ada 5 yang akan dijelaskan sebagai berikut:</p>
 
       <!-- SEKSI 1: DISPLAY SCALE -->
       <section class="scale-section">
-        <h2 class="scale-title">1. Display Scale (<code>wui/display</code>)</h2>
-        <main class="specimen-grid">
+        <h2 class="wui-headline-large">Display</h2>
+        <main class="wui-row wui-gap-4">
           <!-- Kolom Kiri: Regular (400) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Regular (400)</h3>
-              <span class="column-badge">Default Class</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Regular (400)</h3>
+              <span wuiBadge pill class="">Default Class</span>
             </div>
 
             <article class="specimen-card">
@@ -48,10 +44,10 @@
           </section>
 
           <!-- Kolom Kanan: Emphasis (500) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Emphasis (500)</h3>
-              <span class="column-badge column-badge--em">Modifier --em</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Emphasis (500)</h3>
+              <span wuiBadge pill color="primary">Modifier --em</span>
             </div>
 
             <article class="specimen-card">
@@ -83,13 +79,13 @@
 
       <!-- SEKSI 2: HEADLINE SCALE -->
       <section class="scale-section">
-        <h2 class="scale-title">2. Headline Scale (<code>wui/headline</code>)</h2>
-        <main class="specimen-grid">
+        <h2 class="wui-headline-large">Headline</h2>
+        <main class="wui-row wui-gap-4">
           <!-- Kolom Kiri: Regular (400) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Regular (400)</h3>
-              <span class="column-badge">Default Class</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Regular (400)</h3>
+              <span wuiBadge pill>Default Class</span>
             </div>
 
             <article class="specimen-card">
@@ -118,10 +114,10 @@
           </section>
 
           <!-- Kolom Kanan: Emphasis (500) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Emphasis (500)</h3>
-              <span class="column-badge column-badge--em">Modifier --em</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Emphasis (500)</h3>
+              <span wuiBadge pill color="primary">Modifier --em</span>
             </div>
 
             <article class="specimen-card">
@@ -153,13 +149,13 @@
 
       <!-- SEKSI 3: BODY SCALE -->
       <section class="scale-section">
-        <h2 class="scale-title">3. Body Scale (<code>wui/body</code>)</h2>
-        <main class="specimen-grid">
+        <h2 class="wui-headline-large">Body</h2>
+        <main class="wui-row wui-gap-4">
           <!-- Kolom Kiri: Regular (400) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Regular (400)</h3>
-              <span class="column-badge">Default Class</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Regular (400)</h3>
+              <span wuiBadge pill>Default Class</span>
             </div>
 
             <article class="specimen-card">
@@ -188,10 +184,10 @@
           </section>
 
           <!-- Kolom Kanan: Emphasis (500) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Emphasis (500)</h3>
-              <span class="column-badge column-badge--em">Modifier --em</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Emphasis (500)</h3>
+              <span wuiBadge pill color="primary">Modifier --em</span>
             </div>
 
             <article class="specimen-card">
@@ -223,13 +219,13 @@
 
       <!-- SEKSI 4: LABEL SCALE -->
       <section class="scale-section">
-        <h2 class="scale-title">4. Label Scale (<code>wui/label</code>)</h2>
-        <main class="specimen-grid">
+        <h2 class="wui-headline-large">Label</h2>
+        <main class="wui-row wui-gap-4">
           <!-- Kolom Kiri: Medium (500) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Medium (500)</h3>
-              <span class="column-badge">Default Class</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Medium (500)</h3>
+              <span wuiBadge pill>Default Class</span>
             </div>
 
             <article class="specimen-card">
@@ -258,10 +254,10 @@
           </section>
 
           <!-- Kolom Kanan: Emphasis (600) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Emphasis (600)</h3>
-              <span class="column-badge column-badge--em">Modifier --em</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Emphasis (600)</h3>
+              <span wuiBadge pill color="primary">Modifier --em</span>
             </div>
 
             <article class="specimen-card">
@@ -293,13 +289,13 @@
 
       <!-- SEKSI 5: TITLE SCALE -->
       <section class="scale-section">
-        <h2 class="scale-title">5. Title Scale (<code>wui/title</code>)</h2>
-        <main class="specimen-grid">
+        <h2 class="wui-headline-large">Title</h2>
+        <main class="wui-row wui-gap-4">
           <!-- Kolom Kiri: Base Default -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Regular / Medium</h3>
-              <span class="column-badge">Default Class</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Regular / Medium</h3>
+              <span wuiBadge pill>Default Class</span>
             </div>
 
             <article class="specimen-card">
@@ -328,10 +324,10 @@
           </section>
 
           <!-- Kolom Kanan: Emphasis (500 / 600) -->
-          <section class="specimen-column">
-            <div class="column-header">
-              <h3>Emphasis (500 / 600)</h3>
-              <span class="column-badge column-badge--em">Modifier --em</span>
+          <section class="specimen-column wui-col-12 wui-col-md-6">
+            <div class="wui-d-flex wui-align-items-center">
+              <h3 class="wui-m-0 wui-title-medium wui-flex-grow-1">Emphasis (500 / 600)</h3>
+              <span wuiBadge pill color="primary">Modifier --em</span>
             </div>
 
             <article class="specimen-card">
@@ -360,6 +356,7 @@
           </section>
         </main>
       </section>
+      </div>
     </div>
   </wui-page>
 </ng-template>

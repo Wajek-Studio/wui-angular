@@ -82,7 +82,6 @@
         inset: 0;
         display: flex;
         flex-direction: column;
-        padding: var(--wui-space-2);
         transition:
             transform var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
             opacity var(--wui-motion-duration-base) var(--wui-motion-easing-standard);
@@ -111,7 +110,7 @@
         flex-direction: column;
         margin-top: var(--wui-space-2);
         padding-top: var(--wui-space-2);
-        border-top: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
+        padding-block: var(--wui-space-3);
     }
 
     // Mode mini: scrollbar disembunyikan. Rail-nya hanya selebar 64px, sedangkan scrollbar klasik
@@ -124,6 +123,10 @@
         &::-webkit-scrollbar {
             width: 0;
         }
+    }
+
+    .wui-sidenav-body {
+        padding-block: var(--wui-space-3);
     }
 
     // Mode penuh (open / closed): konten penuh di tempatnya, konten ringkas menunggu di kiri.
@@ -170,7 +173,8 @@
         // Tanpa ini `.wui-sidenav-body` tidak pernah menggulir — itemnya hanya jadi gepeng.
         flex: 0 0 auto;
         width: 100%;
-        border-radius: var(--wui-sidenav-item-radius);
+        border-radius: 0;
+        padding-inline: 1.125rem;
         justify-content: flex-start;
         gap: var(--wui-space-4);
         height: 2.5rem;
@@ -197,7 +201,7 @@
     // Subheader / judul kategori menu (rata kiri lurus dengan posisi ikon di 18px)
     .wui-sidenav-subheader {
         padding-block: var(--wui-space-3) var(--wui-space-2);
-        padding-inline: calc(var(--wui-space-2) + .125rem) var(--wui-space-4);
+        padding-inline: 1.125rem;
         font-size: 0.6875rem;
         font-weight: 700;
         letter-spacing: 0.08em;

@@ -4,8 +4,10 @@
 @use 'tokens';
 
 /// Media query dari lebar tertentu ke atas.
+/// Notasi **range** (`width >= …`), bukan `min-width: …` — itulah yang diminta stylelint repo
+/// (`media-feature-range-notation`), dan sudah didukung semua browser target.
 @mixin media-up($min-width) {
-  @media (min-width: $min-width) {
+  @media (width >= #{$min-width}) {
     @content;
   }
 }

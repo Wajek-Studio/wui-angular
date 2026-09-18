@@ -15,7 +15,9 @@ import {
   mdiGestureTapButton,
   mdiHome,
   mdiMenu,
+  mdiPlayCircle,
   mdiTable,
+  mdiViewDashboardOutline,
   mdiWindowMaximize,
 } from '@mdi/js';
 
@@ -34,9 +36,11 @@ export const appConfig: ApplicationConfig = {
       { name: 'button', path: mdiButtonCursor },
       { name: 'dock-left', path: mdiDockLeft },
       { name: 'table', path: mdiTable },
+      { name: 'layout', path: mdiViewDashboardOutline },
       { name: 'dots-vertical', path: mdiDotsVertical },
       { name: 'dialog', path: mdiWindowMaximize },
-      { name: 'form', path: mdiFormTextbox }
+      { name: 'form', path: mdiFormTextbox },
+      { name: 'play', path: mdiPlayCircle }
     ),
   ],
 };

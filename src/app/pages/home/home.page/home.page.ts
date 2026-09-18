@@ -1,10 +1,16 @@
 import { Component, inject, TemplateRef, viewChild } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiSidenavService, WuiTopbar } from '@wajek/wui';
+import { RouterOutlet } from '@angular/router';
+import {
+  WuiPage,
+  WuiPageService,
+  WuiSidenavService,
+  WuiTable,
+  WuiTableResponsive,
+} from '@wajek/wui';
 
 @Component({
   selector: 'app-home.page',
-  imports: [WuiPage, RouterOutlet, RouterLink, WuiTopbar, WuiButton, WuiIcon],
+  imports: [WuiPage, RouterOutlet, WuiTable, WuiTableResponsive],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })

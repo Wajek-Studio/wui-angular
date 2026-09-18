@@ -1,4 +1,5 @@
-// Level 5 — utilitas spacing (margin & padding).
+// Level 6 — utilitas spacing (margin & padding).
+// Dipanggil paling akhir (setelah `layout/`), jadi bisa menimpa class mana pun tanpa `!important`.
 // Class di bawah hanya pembungkus tipis dari mixin `space()` di `abstracts/`,
 // jadi daftar arah, properti, dan varian `auto` tidak mungkin berbeda dengan
 // yang dipakai di dalam komponen.

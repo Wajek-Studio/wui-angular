@@ -12,8 +12,7 @@
     .wui-table,
     table[wuiTable],
     table[wui-table] {
-        --wui-table-row-height: 3.5rem;
-        --wui-table-cell-padding-y: 0.5rem;
+        --wui-table-cell-padding-y: 1rem;
         --wui-table-cell-padding-x: 1rem;
         --wui-table-edge-padding: 1.5rem;
 
@@ -28,7 +27,6 @@
             td {
                 vertical-align: middle;
                 padding: var(--wui-table-cell-padding-y) var(--wui-table-cell-padding-x);
-                height: var(--wui-table-row-height);
                 text-align: left;
                 box-sizing: border-box;
 
@@ -117,8 +115,7 @@
 
         &.wui-table--dense,
         &.is-dense {
-            --wui-table-row-height: 2.75rem;
-            --wui-table-cell-padding-y: 0.25rem;
+            --wui-table-cell-padding-y: 0.75rem;
         }
     }
 

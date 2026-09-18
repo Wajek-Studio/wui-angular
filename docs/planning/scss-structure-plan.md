@@ -79,12 +79,28 @@ projects/wui/
 │   │   ├── _app-shell.scss
 │   │   └── _index.scss
 │   │
+│   ├── layout/          // Level 5: Primitif layout (class murni, tanpa komponen Angular)
+│   │   ├── _container.scss
+│   │   └── _index.scss
+│   │
+│   ├── utilities/       // Level 6: Class bantu (dipanggil paling akhir)
+│   │   ├── _spacing.scss
+│   │   └── _index.scss
+│   │
 │   └── wui.scss        // Entry point yang meng-@forward semua layer
 ```
 
-> **Catatan (keputusan S6):** level `layout/` dan `utilities/` **tidak dipakai**. Kalau nanti dibutuhkan
-> (mis. container/stack/grid atau utility spacing), tambahkan sebagai level 5 & 6 **setelah** `components/`
-> dan daftarkan `@forward`-nya di `wui.scss`. Bentuknya sengaja belum diputuskan sekarang.
+> **Catatan (keputusan S6):** level `layout/` dan `utilities/` awalnya **tidak dipakai**. Keduanya
+> ditambahkan **setelah** `components/` sesuai catatan ini: `utilities/` (level 6, spacing — dipanggil
+> paling akhir supaya menang tanpa `!important`) dan `layout/` (level 5, primitif layout).
+>
+> **`layout/_container.scss` (17 Sep 2026)** — container ala Bootstrap 5, diminta user sebagai titik
+> awal (`container`, `container-fluid`, `container-{sm…xxl}`). Token baru di `abstracts/_tokens.scss`:
+> `$wui-breakpoints` (576/768/992/1200/1400), `$wui-container-max-widths` (540/720/960/1140/1320),
+> `$wui-container-gutter-x` (1.5rem → padding 12px tiap sisi). Lebar maksimum & gutter dibaca dari
+> CSS variable (bisa ditimpa runtime); breakpoint tetap compile-time karena media query tidak bisa
+> memakai `var()`. `a.media-up()` diubah ke notasi **range** (`width >= …`) agar lolos
+> `media-feature-range-notation` — bundler menormalkannya kembali ke `min-width` di output app.
 
 ---
 
