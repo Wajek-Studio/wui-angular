@@ -5,9 +5,15 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:wui": "ng build wui",
+    "publish:wui": "npm run build:wui && cd dist/@wajek/wui && npm publish",
     "watch": "ng build --watch --configuration development",
     "lint:styles": "stylelint \"projects/wui/scss/**/*.scss\"",
-    "test": "ng test"
+    "test": "ng test",
+    "version:bump": "node scripts/bump-version.mjs",
+    "release:patch": "node scripts/bump-version.mjs patch",
+    "release:minor": "node scripts/bump-version.mjs minor",
+    "release:major": "node scripts/bump-version.mjs major"
   },
   "prettier": {
     "printWidth": 100,

@@ -353,8 +353,9 @@ $wui-typography-scales: (
 
 // ── Sidenav ─────────────────────────────────────────────────────────────────
 $wui-sidenav-width: 16rem !default;
-$wui-sidenav-mini-width: 4rem !default;
+$wui-sidenav-mini-width: 4.5rem !default;
 $wui-sidenav-item-radius: .75rem !default;
+$wui-sidenav-item-padding-inline: 1.5rem !default;
 
 // ── Breakpoint & Container ──────────────────────────────────────────────────
 // Titik henti responsif. Angka di bawah **placeholder** — mengikuti Bootstrap 5 sebagai titik
@@ -388,5 +389,5 @@ $wui-container-gutter-x: 1.5rem !default;
 // `.wui-col-1…N` dihasilkan loop compile-time, jadi mengubahnya ikut menambah/mengurangi class.
 $wui-grid-columns: 12 !default;
 
-// ── Outline ─────────────────────────────────────────────────────────────────
- 
+// ── Topbar ─────────────────────────────────────────────────────────────────
+$wui-topbar-padding-inline: 0.875rem !default;
