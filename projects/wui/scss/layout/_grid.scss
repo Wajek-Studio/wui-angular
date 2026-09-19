@@ -1,0 +1,75 @@
+// Level 5 — primitif layout: grid kolom (pasangan `_container.scss`).
+// Sengaja memakai `display: grid`, bukan flex + margin negatif ala Bootstrap, karena gap-nya
+// native: `row-gap`/`column-gap` bisa diisi langsung dari skala spacing, tanpa trik gutter.
+// Seperti file lain di level ini, isinya murni class — tidak ada komponen Angular.
+
+@use '../abstracts' as a;
+
+/// Grid kolom: `.wui-row` sebagai wadah, `.wui-col-<n>` sebagai selnya.
+///
+/// ```html
+/// <div class="wui-row wui-gap-3">
+///   <div class="wui-col-4">…</div>   <!-- 4 dari 12 kolom -->
+///   <div class="wui-col-8">…</div>   <!-- 8 dari 12 kolom -->
+/// </div>
+/// ```
+///
+/// Lebarnya dibagi 12 jalur, jadi maksimal 12 item bisa berjejer horizontal — dua belas kali
+/// `.wui-col-1` (atau `.wui-col` yang setara satu kolom). Item ke-13 otomatis turun ke baris
+/// berikutnya karena grid-nya `wrap` secara bawaan.
+///
+/// **Responsif.** Setiap breakpoint di `$wui-breakpoints` punya varian `.wui-col-<bp>-<n>` yang
+/// berlaku **dari breakpoint itu ke atas** (mobile-first, sama seperti Bootstrap). Jadi polanya:
+/// `.wui-col-<n>` untuk keadaan dasar (di bawah breakpoint terkecil), lalu ditimpa bertahap.
+///
+/// ```html
+/// <div class="wui-col-12 wui-col-md-6 wui-col-xl-4">…</div>
+/// <!-- penuh di bawah 768px, setengah mulai 768px, sepertiga mulai 1200px -->
+///
+/// <div class="wui-col-md wui-col-lg-3">…</div>
+/// <!-- 1/12 dari 768px, lalu 3/12 dari 992px -->
+/// ```
+///
+/// Jarak antar sel **bukan** bagian file ini: pakai utilitas `.wui-gap-*` / `.wui-row-gap-*` /
+/// `.wui-column-gap-*` (`utilities/_gap.scss`) yang nilainya dari skala spacing (`--wui-space-*`).
+/// Jadi satu grid bisa punya jarak horizontal dan vertikal berbeda, mis.
+/// `<div class="wui-row wui-column-gap-3 wui-row-gap-1">`.
+///
+/// `minmax(0, 1fr)` dipakai sebagai jalur supaya isi yang panjang (teks tanpa spasi, gambar,
+/// `<pre>`) tidak melebarkan jalurnya — tanpa itu `1fr` setara `min-content` dan grid bisa bocor.
+@mixin grid {
+    .wui-row {
+        display: grid;
+        grid-template-columns: repeat(#{a.$wui-grid-columns}, minmax(0, 1fr));
+    }
+
+    // Tanpa angka: satu kolom (pembagian rata), sama seperti `.wui-col-1`.
+    .wui-col {
+        grid-column: span 1;
+    }
+
+    // `.wui-col-1` … `.wui-col-<jumlah kolom>`; jumlahnya dari `$wui-grid-columns` supaya daftar
+    // class tidak pernah berbeda dengan jumlah jalur grid-nya.
+    @for $wui-i from 1 through a.$wui-grid-columns {
+        .wui-col-#{$wui-i} {
+            grid-column: span #{$wui-i};
+        }
+    }
+
+    // Varian responsif: `.wui-col-<bp>-<n>` (dan `.wui-col-<bp>` = satu kolom) berlaku sejak
+    // breakpoint itu ke atas. Daftar breakpoint-nya dari `$wui-breakpoints`, jadi menambah atau
+    // menggeser breakpoint tidak perlu menyentuh class mana pun.
+    @each $wui-key, $wui-min in a.$wui-breakpoints {
+        @include a.media-up($wui-min) {
+            .wui-col-#{$wui-key} {
+                grid-column: span 1;
+            }
+
+            @for $wui-i from 1 through a.$wui-grid-columns {
+                .wui-col-#{$wui-key}-#{$wui-i} {
+                    grid-column: span #{$wui-i};
+                }
+            }
+        }
+    }
+}

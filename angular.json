@@ -3,195 +3,130 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "wajek-ui": {
-      "root": "",
-      "sourceRoot": "src",
+    "wui-angular": {
       "projectType": "application",
-      "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss",
-          "standalone": false
+          "skipTests": true
         }
       },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
-            "allowedCommonJsDependencies": [],
-            "outputPath": "www",
-            "deleteOutputPath": false,
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["dist"]
+            },
+            "outputPath": {
+              "base": "./www",
+              "browser": ""
+            },
             "assets": [
-              "src/.htaccess",
-              "src/favicon.ico",
-              "src/assets",
-              "src/docs"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
-              "src/prism/styles/prism-one-dark.css",
               "src/styles.scss"
-            ],
-            "scripts": [
-              "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/components/prism-bash.min.js",
-              "node_modules/prismjs/components/prism-css.min.js",
-              "node_modules/prismjs/components/prism-markup.min.js",
-              "node_modules/prismjs/components/prism-javascript.min.js",
-              "node_modules/prismjs/components/prism-typescript.min.js",
-              "node_modules/prismjs/components/prism-scss.min.js",
-              "node_modules/prismjs/components/prism-json.min.js"
-            ],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "wui-angular:build:production"
+            },
+            "development": {
+              "buildTarget": "wui-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "wajek-ui:build"
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "wajek-ui:build:production"
-            }
-          }
-        },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "wajek-ui:build"
-          }
+          "builder": "@angular/build:extract-i18n"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              
-              "src/styles.scss"
-            ],
-            "scripts": [
-              
-            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "stylePreprocessorOptions": {
+              "includePaths": ["dist"]
+            },
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "styles": [
+              "src/styles.scss"
             ]
           }
         }
       }
     },
-    "wajek-ui-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "wajek-ui:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "wajek-ui:serve:production"
-            }
-          }
-        }
-      }
-    },
     "wui": {
-      "root": "projects/wui",
-      "sourceRoot": "projects/wui/src",
       "projectType": "library",
-      "prefix": "wui",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "path": "projects/wui/src",
+          "style": "scss",
+          "skipTests": true
         }
       },
+      "root": "projects/wui",
+      "sourceRoot": "projects/wui/src",
+      "prefix": "wui",
       "architect": {
-        "build": {  
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/wui/tsconfig.lib.json",
-            "project": "projects/wui/ng-package.json"
-          },
+        "build": {
+          "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
               "tsConfig": "projects/wui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/wui/tsconfig.lib.json"
             }
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/wui/src/test.ts",
-            "tsConfig": "projects/wui/tsconfig.spec.json",
-            "karmaConfig": "projects/wui/karma.conf.js"
-          }
-        }
-      }
-    },
-    "focus": {
-      "projectType": "library",
-      "root": "projects/focus",
-      "sourceRoot": "projects/focus/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "tsConfig": "projects/focus/tsconfig.lib.json",
-            "project": "projects/focus/ng-package.json"
           },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/focus/tsconfig.lib.prod.json"
-            }
-          }
+          "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
-            "main": "projects/focus/src/test.ts",
-            "tsConfig": "projects/focus/tsconfig.spec.json",
-            "karmaConfig": "projects/focus/karma.conf.js"
+            "tsConfig": "projects/wui/tsconfig.spec.json"
           }
         }
       }

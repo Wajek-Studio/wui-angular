@@ -1,0 +1,135 @@
+<ng-template #page>
+  <wui-page>
+    <div class="wui-page-content form-container">
+      <header class="form-header">
+        <a routerLink="/home" class="form-back-btn">← Kembali ke Beranda</a>
+        <h1 class="form-title">WUI Form Field</h1>
+        <p class="form-subtitle">
+          <code>&lt;wui-form-field&gt;</code> menyusun label, kontrol, dan pesan hint/error.
+          Kontrolnya tetap elemen <strong>native</strong> — <code>&lt;input&gt;</code> atau
+          <code>&lt;textarea&gt;</code> dengan directive <code>wuiInput</code> — jadi
+          <code>type</code>, <code>autocomplete</code>, validasi bawaan, dan
+          <code>formControlName</code> tetap milik browser/Angular.
+        </p>
+      </header>
+
+      <p class="page-note">
+        Label adalah elemen <code>&lt;label&gt;</code> asli yang <strong>mengapung</strong> saat kontrol
+        difokus atau sudah berisi — tanpa JS yang menyalin posisi. Tiap field punya varian
+        <code>variant="outlined"</code> (default) atau <code>variant="filled"</code>.
+        Yang diurus field: <code>for</code> label selalu cocok dengan id kontrol (id dibuat otomatis
+        kalau aplikasi tidak menulisnya), pesan ditautkan lewat <code>aria-describedby</code>, dan
+        begitu <code>[error]</code> terisi, pesannya <strong>menggantikan</strong> hint serta kontrol
+        ditandai <code>aria-invalid="true"</code>.
+      </p>
+
+      <!-- 1. OUTLINED -->
+      <section class="form-section">
+        <h2 class="section-title">1. Outlined (default)</h2>
+        <p class="section-note">
+          Klik labelnya: fokus pindah ke kontrol (perilaku bawaan <code>&lt;label for&gt;</code>) dan
+          labelnya naik. Saat kosong dan tidak difokus, label duduk <strong>tepat di tengah</strong>
+          kontrol — jadi tidak perlu placeholder tambahan untuk menjelaskan isinya. Di contoh ini
+          aplikasi menulis <code>for</code>/<code>id</code> sendiri; kalau tidak ditulis, field yang
+          mengisi.
+        </p>
+
+        <wui-form-field hint="Sesuai kartu identitas.">
+            <label wuiLabel for="name">Nama Lengkap</label>
+            <input wuiInput type="text" id="name" autocomplete="name" placeholder="Masukkan nama lengkap anda"/>
+        </wui-form-field>
+      </section>
+
+      <!-- 2. FILLED -->
+      <section class="form-section">
+        <h2 class="section-title">2. Varian filled</h2>
+        <p class="section-note">
+          Latar terisi + garis bawah; label mengapung <strong>di dalam</strong> kotak, bukan di garis
+          atasnya. Placeholder bawaan browser baru muncul setelah label mengapung supaya keduanya
+          tidak bertumpuk.
+        </p>
+
+        <wui-form-field variant="filled" hint="Kami tidak mengirim spam.">
+          <label wuiLabel>Email</label>
+          <input wuiInput type="email" placeholder="nama@contoh.com" autocomplete="email" />
+        </wui-form-field>
+      </section>
+
+      <!-- 3. ERROR DI KEDUA VARIAN -->
+      <section class="form-section">
+        <h2 class="section-title">3. Pesan error di kedua varian</h2>
+        <p class="section-note">
+          <code>[error]</code> terisi berarti kontrol ditandai <code>aria-invalid="true"</code>,
+          pesannya menggantikan <code>hint</code>, dan warnanya memakai peran <code>danger</code> —
+          termasuk saat hover &amp; fokus (urutan keadaan: hover → fokus → invalid).
+        </p>
+
+        <div class="form-row">
+          <wui-form-field error="Format email tidak valid.">
+            <label wuiLabel>Email</label>
+            <input wuiInput type="email" value="bukan-email" />
+          </wui-form-field>
+
+          <wui-form-field variant="filled" error="Format email tidak valid.">
+            <label wuiLabel>Email</label>
+            <input wuiInput type="email" value="bukan-email" />
+          </wui-form-field>
+        </div>
+      </section>
+
+      <!-- 4. TEXTAREA -->
+      <section class="form-section">
+        <h2 class="section-title">4. Textarea multiline</h2>
+        <p class="section-note">
+          Tingginya mengikuti <code>rows</code> dan masih bisa ditarik ke bawah
+          (<code>resize: vertical</code>). Label mengapung dengan aturan yang sama seperti input.
+        </p>
+
+        <div class="form-row">
+          <wui-form-field hint="Maksimal 200 karakter.">
+            <label wuiLabel>Catatan</label>
+            <textarea wuiInput rows="3"></textarea>
+          </wui-form-field>
+
+          <wui-form-field variant="filled" hint="Varian filled.">
+            <label wuiLabel>Catatan</label>
+            <textarea wuiInput rows="3"></textarea>
+          </wui-form-field>
+        </div>
+      </section>
+
+      <!-- 4. VALIDASI DARI FORM -->
+      <section class="form-section">
+        <h2 class="section-title">5. Validasi dari Reactive Forms</h2>
+        <p class="section-note">
+          Pesan error datang dari state form milik aplikasi
+          (<code>[error]="pesan('nama')"</code>). Error hanya muncul setelah kontrol disentuh atau
+          tombol Simpan ditekan — bukan sejak halaman dibuka. Tekan <strong>Simpan</strong> dengan
+          kolom kosong untuk mencobanya.
+        </p>
+
+        <form class="form-grid" [formGroup]="form" (ngSubmit)="simpan()">
+          <wui-form-field hint="Minimal 3 karakter." [error]="pesan('nama')">
+            <label wuiLabel>Nama</label>
+            <input wuiInput type="text" formControlName="nama" autocomplete="name" />
+          </wui-form-field>
+
+          <wui-form-field hint="Boleh dikosongkan." [error]="pesan('email')">
+            <label wuiLabel>Email</label>
+            <input wuiInput type="email" formControlName="email" autocomplete="email" />
+          </wui-form-field>
+
+          <wui-form-field hint="Tidak divalidasi.">
+            <label wuiLabel>Catatan</label>
+            <textarea wuiInput rows="3" formControlName="catatan"></textarea>
+          </wui-form-field>
+
+          <div class="form-actions">
+            <button wuiButton type="submit">Simpan</button>
+            <span class="hasil">Status: <strong>{{ status() }}</strong></span>
+          </div>
+        </form>
+      </section>
+    </div>
+  </wui-page>
+</ng-template>

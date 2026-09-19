@@ -1,0 +1,29 @@
+// Level 4 — style shell aplikasi (`WuiApp`) dan layer page.
+// Ini salah satu komponen dalam pola `scss/components/`: file ini berisi MIXIN, dan
+// `wui.scss` yang memanggilnya.
+// Catatan: aturan di sini harus ter-emit secara global (bukan lewat component SCSS) karena
+// `.wui-page-layer` menempel pada konten yang datang dari komponen lain — component style
+// milik `WuiApp` tidak menembus view encapsulation.
+
+/// Style wadah overlay `WuiApp` beserta layer page di dalamnya.
+@mixin app {
+  // Wadah tumpukan page di dalam `WuiApp`.
+  .wui-app__overlay-host {
+    position: fixed;
+    inset: 0;
+    z-index: var(--wui-z-overlay, 1000);
+
+    // Wadah tidak boleh memblokir aplikasi di belakangnya.
+    // `WuiPageService` juga men-set `pointer-events: auto` langsung di node akar page
+    // sebagai jaring pengaman kalau style layer ini belum dimuat aplikasi.
+    pointer-events: none;
+  }
+
+  wui-app {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+}

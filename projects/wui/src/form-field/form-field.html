@@ -1,0 +1,13 @@
+<ng-content select="[wuiLabel]"></ng-content>
+<ng-content />
+
+@if (message(); as pesan) {
+  <div
+    class="wui-form-field__message"
+    [class.wui-form-field__message--error]="invalid()"
+    [attr.id]="messageId()"
+    aria-live="polite"
+  >
+    {{ pesan }}
+  </div>
+}

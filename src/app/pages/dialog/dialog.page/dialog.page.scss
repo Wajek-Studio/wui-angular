@@ -1,0 +1,122 @@
+.dialog-container {
+  padding: 2rem 2.5rem;
+
+  code {
+    background: color-mix(in srgb, var(--wui-color-on-surface) 8%, transparent);
+    color: var(--wui-color-on-surface);
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+}
+
+.dialog-header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
+  padding-bottom: 1.5rem;
+}
+
+.dialog-back-btn {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--wui-color-primary);
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.dialog-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--wui-color-on-surface);
+}
+
+.dialog-subtitle,
+.page-note,
+.section-note {
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.dialog-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.page-note {
+  margin: 0 0 2.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--wui-color-on-surface) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 10%, transparent);
+
+  strong {
+    color: var(--wui-color-on-surface);
+  }
+}
+
+.dialog-section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--wui-color-on-surface);
+}
+
+.section-note {
+  margin: 0 0 1rem;
+}
+
+.dialog-actions-demo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hasil {
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+
+  strong {
+    color: var(--wui-color-on-surface);
+  }
+}
+
+.dialog-status {
+  margin: 3rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+
+  strong {
+    color: var(--wui-color-on-surface);
+  }
+}
+
+// Template dialog demo di halaman
+.demo-title {
+  margin: 0 0 0.5rem;
+  color: var(--wui-color-on-surface);
+}
+
+.demo-text {
+  margin: 0 0 1.5rem;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+}
+
+.demo-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

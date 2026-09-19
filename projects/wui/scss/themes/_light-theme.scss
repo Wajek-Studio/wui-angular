@@ -1,0 +1,98 @@
+// Level 3 — tema terang.
+// Dipasang TANPA media query supaya jadi nilai default aplikasi.
+// Token yang tidak bergantung mode (z-index, motion, radius, overlay) juga di-emit di sini
+// karena blok ini adalah `:root` dasar.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+/// Tema terang + token yang tidak bergantung mode.
+@mixin light-theme {
+  :root {
+    color-scheme: light;
+
+    // Warna TIDAK ditulis di sini: semua token `--wui-color-*` (surface, on-surface, outline,
+    // primary, …) di-emit `themes/_roles.scss` — satu tempat untuk kedua mode.
+
+    // Spasi & radius
+    --wui-space-0: #{a.$wui-space-0};
+    --wui-space-1: #{a.$wui-space-1};
+    --wui-space-2: #{a.$wui-space-2};
+    --wui-space-3: #{a.$wui-space-3};
+    --wui-space-4: #{a.$wui-space-4};
+    --wui-space-5: #{a.$wui-space-5};
+    --wui-radius-md: #{a.$wui-radius-md};
+    --wui-radius-lg: #{a.$wui-radius-lg};
+    --wui-page-radius: #{a.$wui-page-radius};
+
+    // Z-index
+    --wui-z-base: #{a.$wui-z-base};
+    --wui-z-overlay: #{a.$wui-z-overlay};
+    --wui-z-dialog: #{a.$wui-z-dialog};
+
+    // Motion
+    --wui-motion-duration-fast: #{a.$wui-motion-duration-fast};
+    --wui-motion-duration-base: #{a.$wui-motion-duration-base};
+    --wui-motion-easing-standard: #{a.$wui-motion-easing-standard};
+
+    // Overlay
+    --wui-overlay-color: #{a.$wui-overlay-color};
+
+    // Dialog
+    --wui-dialog-radius: #{a.$wui-dialog-radius};
+    --wui-dialog-max-width: #{a.$wui-dialog-max-width};
+    --wui-dialog-min-width: #{a.$wui-dialog-min-width};
+    --wui-dialog-padding: #{a.$wui-dialog-padding};
+    --wui-dialog-elevation: #{a.$wui-dialog-elevation};
+
+    // Form field
+    --wui-field-height: #{a.$wui-field-height};
+    --wui-field-padding-inline: #{a.$wui-field-padding-inline};
+    --wui-field-radius: #{a.$wui-field-radius};
+    --wui-field-border-width: #{a.$wui-field-border-width};
+    --wui-field-focused-border-width: #{a.$wui-field-focused-border-width};
+    --wui-field-textarea-min-height: #{a.$wui-field-textarea-min-height};
+    --wui-field-label-space: #{a.$wui-field-label-space};
+    --wui-field-label-rest: #{a.$wui-field-label-rest};
+    --wui-field-label-float-outlined: #{a.$wui-field-label-float-outlined};
+    --wui-field-label-float-filled: #{a.$wui-field-label-float-filled};
+
+    // Layout: container. Breakpoint-nya compile-time (media query tidak bisa pakai `var()`),
+    // tapi lebar maksimum, batas kiri-kanan, dan gutter bisa ditimpa aplikasi saat runtime.
+    // --wui-container-max-width: #{a.$wui-container-max-width};
+    --wui-container-margin-inline: #{a.$wui-container-margin-inline};
+    --wui-container-gutter-x: #{a.$wui-container-gutter-x};
+
+    // Disabled — diturunkan dari `on-surface`, jadi satu definisi berlaku untuk dua mode.
+    --wui-color-disabled-container: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-container-opacity * 100}%, transparent);
+    --wui-color-disabled-content: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-content-opacity * 100}%, transparent);
+
+    // Elevasi
+    --wui-elevation-1: #{a.$wui-elevation-1};
+
+    // Tipografi: Bobot Font
+    --wui-font-weight-regular: #{a.$wui-font-weight-regular};
+    --wui-font-weight-medium: #{a.$wui-font-weight-medium};
+    --wui-font-weight-semibold: #{a.$wui-font-weight-semibold};
+    --wui-font-weight-bold: #{a.$wui-font-weight-bold};
+
+    // Tipografi: Custom Properties (Display, Headline, Title, Body, Label)
+    @each $role, $sizes in a.$wui-typography-scales {
+      @each $size, $props in $sizes {
+        --wui-font-size-#{$role}-#{$size}: #{map.get($props, 'size')};
+        --wui-line-height-#{$role}-#{$size}: #{map.get($props, 'line-height')};
+        --wui-letter-spacing-#{$role}-#{$size}: #{map.get($props, 'letter-spacing')};
+        --wui-font-weight-#{$role}-#{$size}: #{map.get($props, 'weight')};
+        --wui-font-weight-#{$role}-#{$size}-em: #{map.get($props, 'weight-em')};
+      }
+    }
+
+    // Sidenav
+    --wui-sidenav-width: #{a.$wui-sidenav-width};
+    --wui-sidenav-item-radius: #{a.$wui-sidenav-item-radius};
+    --wui-sidenav-mini-width: #{a.$wui-sidenav-mini-width};
+    --wui-sidenav-item-padding-inline: #{a.$wui-sidenav-item-padding-inline};
+
+    // Topbar
+    --wui-topbar-padding-inline: #{a.$wui-topbar-padding-inline};
+  }
+}

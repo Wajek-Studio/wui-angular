@@ -1,0 +1,19 @@
+<h2 class="wui-dialog__title" [attr.id]="data.titleId">{{ data.title }}</h2>
+
+@if (data.content) {
+  <div class="wui-dialog__content" [attr.id]="data.contentId" [innerHTML]="data.content"></div>
+}
+
+<div class="wui-dialog__actions">
+  @for (tombol of data.buttons; track $index) {
+    <button
+      wuiButton
+      type="button"
+      [variant]="tombol.variant ?? 'text'"
+      [color]="tombol.color ?? 'default'"
+      (click)="pilih($index)"
+    >
+      {{ tombol.label }}
+    </button>
+  }
+</div>

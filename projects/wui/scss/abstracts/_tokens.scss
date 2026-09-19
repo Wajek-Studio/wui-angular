@@ -1,0 +1,393 @@
+// =============================================================================
+// Design token @wajek/wui — sumber kebenaran nilai (compile-time).
+// File ini TIDAK boleh menghasilkan CSS. Emisinya ada di `themes/`.
+// Konsumen mengganti nilai lewat CSS variable, bukan lewat file ini.
+// =============================================================================
+@use 'sass:map';
+
+// ── Palet Warna (Figma wui/color) ───────────────────────────────────────────
+// Palet = **data intensitas saja**: satu skala tone `50…950` per mode. Tidak ada kunci peran di
+// sini — peran semantik (`primary`, `on-primary`, `danger`, `surface`, …) punya lapisan sendiri di
+// `themes/_roles.scss`, dan boleh menunjuk tone mana pun dari palet mana pun.
+// `$wui-palettes-builtin` = palet bawaan library, `$wui-palettes-extra` = palet milik
+// aplikasi. Keduanya digabung jadi `$wui-palettes` — satu-satunya map yang dibaca fungsi
+// & mixin lain. `extra` di-merge paling akhir, jadi aplikasi juga boleh meretur tone bawaan.
+// ⚠️ `red` & `magenta` masih **placeholder** (menunggu angka final dari desainer); menggantinya
+// cukup menimpa tone di sini, tidak ada berkas lain yang perlu diubah.
+// `neutral` = skala gray dari paling terang ke paling gelap, **acuan peran netral**
+// (`surface`, `on-surface`, `surface-container`, `outline`) — lihat `themes/_roles.scss`.
+// Di skala neutral, tone besar = makin gelap di kedua mode (beda dengan palet brand).
+$wui-palettes-builtin: (
+  'purple': (
+    'light': (
+      50: #844cf6,
+      100: #7331f6,
+      200: #6115f9,
+      300: #4a02d9,
+      400: #3800a8,
+      500: #320095,
+      600: #30008f,
+      700: #270075,
+      800: #160042,
+      900: #05000f,
+      950: #000,
+    ),
+    'dark': (
+      50: #fff,
+      100: #fff,
+      200: #fff,
+      300: #fff,
+      400: #ded6ff,
+      500: #d9d0ff,
+      600: #cabdff,
+      700: #b6a3ff,
+      800: #8d70ff,
+      900: #643dff,
+      950: #3b0aff,
+    ),
+  ),
+  // Dipakai peran `danger`/`on-danger` (lihat `themes/_roles.scss`).
+  'red': (
+    'light': (
+      50: #fff5f4,
+      100: #ffe3e0,
+      200: #ffc9c4,
+      300: #ffa39c,
+      400: #e8554b,
+      500: #b3261e,
+      600: #9a201a,
+      700: #7c1a15,
+      800: #5c1310,
+      900: #3c0c0a,
+      950: #260705,
+    ),
+    'dark': (
+      50: #fff5f4,
+      100: #ffe9e6,
+      200: #ffd5d0,
+      300: #ffb4ac,
+      400: #f79a93,
+      500: #f2b8b5,
+      600: #e58e88,
+      700: #d3706a,
+      800: #a8534e,
+      900: #7a3a36,
+      950: #601410,
+    ),
+  ),
+  // Dipakai peran `secondary`/`on-secondary` (lihat `themes/_roles.scss`).
+  'magenta': (
+    'light': (
+      50: #fff5fc,
+      100: #ffe2f7,
+      200: #ffc6ef,
+      300: #ffa0e3,
+      400: #f26bd0,
+      500: #a61e9e,
+      600: #8c1986,
+      700: #73146e,
+      800: #571050,
+      900: #3a0b36,
+      950: #250720,
+    ),
+    'dark': (
+      50: #fff5fc,
+      100: #ffeaf9,
+      200: #ffd6f2,
+      300: #ffb2e7,
+      400: #f79bdf,
+      500: #f5b0ec,
+      600: #e68fdd,
+      700: #d06fc5,
+      800: #a854a0,
+      900: #7a3b74,
+      950: #5a1e56,
+    ),
+  ),
+  // Acuan peran netral: `surface`, `on-surface`, `outline`, `surface-container`.
+  // Tone besar = makin gelap **di kedua mode** (beda dari palet brand yang nilainya berbalik),
+  // jadi `surface` memakai tone 50 di mode terang dan tone 950 di mode gelap — lihat `$wui-roles`.
+  'neutral': (
+    'light': (
+      50: #FDF8FF,
+      100: #f7f2fa,
+      200: #ede7f2,
+      300: #ded8e4,
+      400: #CAC4D5,
+      500: #9e97ac,
+      600: #736d80,
+      700: #514b5b,
+      800: #332f3c,
+      900: #1a1a1a,
+      950: #0f0d12,
+    ),
+    'dark': (
+      50: #f5f5f5,
+      100: #edeaf1,
+      200: #dad5e0,
+      300: #beb8c6,
+      400: #9a93a8,
+      500: #75707f,
+      600: #5a5563,
+      700: #484553,
+      800: #2f2c37,
+      900: #211f29,
+      950: #14121A,
+    ),
+  ),
+) !default;
+
+// Palet milik aplikasi — disuntik lewat `@use … with ($wui-palettes-extra: (…))`.
+$wui-palettes-extra: () !default;
+$wui-palettes: map.merge($wui-palettes-builtin, $wui-palettes-extra) !default;
+
+// Tone yang wajib ada di setiap palet (kedua mode) karena dipakai peran semantik.
+$wui-palette-required-tones: (500,) !default;
+
+// ── Warna netral: sekarang dari palet ───────────────────────────────────────
+// Nilai `surface`/`on-surface`/`outline` TIDAK lagi disimpan sebagai variabel di sini —
+// semuanya tone dari palet `neutral` di atas, dipetakan di `themes/_roles.scss`.
+
+// ── State layer ─────────────────────────────────────────────────────────────
+// Nilainya diturunkan di CSS dari warna perannya (lihat `themes/_roles.scss`),
+// jadi tidak ada hex tambahan yang perlu diisi.
+// Kunci opacity WAJIB string: angka `08` dibaca Sass sebagai `8`, sehingga nama
+// token-nya jadi `opacity-8` — bukan `opacity-08`.
+// Daftar peran di sini harus ada di `$wui-roles` (`themes/_roles.scss`), kalau tidak → `@error`.
+$wui-state-layer-roles: ('primary', 'on-primary', 'secondary', 'on-secondary', 'danger', 'on-danger') !default;
+$wui-state-layer-opacities: (
+  '08': 0.08,
+  '10': 0.10,
+  '16': 0.16,
+) !default;
+
+// `surface-container` dan `default` tidak disimpan sebagai warna baru: keduanya diturunkan dari
+// `surface` + `on-surface` di `themes/_roles.scss`, jadi otomatis ikut kalau `surface` diganti
+// aplikasi. Mengubah angka di sini = mengubah seberapa kuat tint netralnya.
+$wui-surface-container-tint: (
+  'light': 0.05,
+  'dark': 0.08,
+) !default;
+
+// Container netral untuk elemen interaktif (mis. tombol `color="default"`). Tint-nya lebih kuat
+// dari `surface-container` sehingga latar tombol tetap terbaca — kira-kira setara tone `neutral.200`
+// (mode terang) dan `neutral.800` (mode gelap).
+$wui-default-container-tint: (
+  'light': 0.08,
+  'dark': 0.14,
+) !default;
+
+// ── Button (Material 3) ─────────────────────────────────────────────────────
+// Satu sumber kebenaran ukuran tombol — `components/_button.scss` menerjemahkannya jadi CSS
+// variable, jadi mengubah satu angka cukup di sini.
+// `padding`      = padding inline varian filled/outlined (kiri = kanan, simetris)
+// `padding-text` = varian text (tanpa border, lebih rapat; juga simetris)
+// `icon`         = ukuran ikon (dibaca tombol lewat `--wui-button-icon-size`)
+// `line-height`  = tinggi baris label. Sengaja sama dengan `icon` di tiap tingkatan supaya kotak
+//                  teks dan kotak ikon kongruen, jadi keduanya sejajar sempurna lewat
+//                  `align-items: center` (mengalahkan `line-height` peran tipografi).
+$wui-button-sizes: (
+  'sm': ('height': 2rem,   'padding': 1rem,    'padding-text': 0.5rem,  'icon': 1.25rem, 'line-height': 1.25rem, 'label-role': 'label', 'label-size': 'medium'),
+  'md': ('height': 2.5rem, 'padding': 1.5rem,  'padding-text': 0.75rem, 'icon': 1.5rem,  'line-height': 1.5rem,  'label-role': 'label', 'label-size': 'large'),
+  'lg': ('height': 3rem,   'padding': 1.75rem, 'padding-text': 1rem,    'icon': 1.75rem, 'line-height': 1.75rem, 'label-role': 'label', 'label-size': 'large'),
+  'xl': ('height': 3.5rem, 'padding': 2rem,    'padding-text': 1.25rem, 'icon': 2rem,    'line-height': 2rem,    'label-role': 'title', 'label-size': 'medium'),
+) !default;
+
+// Radius penuh (bentuk pil) sesuai shape `round` default M3.
+$wui-button-radius: 9999px !default;
+
+// Disabled M3: container 12%, isi (label/border) 38% dari warna `on-surface`.
+$wui-disabled-container-opacity: 0.12 !default;
+$wui-disabled-content-opacity: 0.38 !default;
+
+// Elevasi level 1 M3 — dipakai tombol filled saat hover.
+$wui-elevation-1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%) !default;
+
+// ── Spasi ───────────────────────────────────────────────────────────────────
+// Metrik Bootstrap: 0 · 0.25rem · 0.5rem · 1rem · 1.5rem · 3rem
+// `$wui-spacers` adalah sumber kebenarannya — dipakai utilitas `.wui-m-*` / `.wui-p-*`
+// dan fungsi `spacing()`.
+$wui-spacer: 1rem !default;
+$wui-spacers: (
+    0: 0,
+    1: $wui-spacer * 0.25,
+    2: $wui-spacer * 0.5,
+    3: $wui-spacer,
+    4: $wui-spacer * 1.5,
+    5: $wui-spacer * 3,
+) !default;
+
+// Turunan dari map di atas — dipakai `themes/` untuk meng-emit `--wui-space-*`.
+$wui-space-0: map.get($wui-spacers, 0) !default;
+$wui-space-1: map.get($wui-spacers, 1) !default;
+$wui-space-2: map.get($wui-spacers, 2) !default;
+$wui-space-3: map.get($wui-spacers, 3) !default;
+$wui-space-4: map.get($wui-spacers, 4) !default;
+$wui-space-5: map.get($wui-spacers, 5) !default;
+
+// Peta arah spasi → properti CSS yang harus ditulis. Dua peta di bawah adalah
+// sumber kebenaran bersama untuk mixin `space()` (dipakai di dalam komponen)
+// dan utilitas `.wui-*` (dipakai di template), jadi keduanya tidak mungkin beda.
+// Sumbu `x`/`y` dan sisi `s`/`e` memakai logical property supaya RTL ikut benar:
+// pada dokumen LTR, `px` = padding-left + padding-right.
+$wui-margin-dirs: (
+    m: (margin),
+    mt: (margin-top),
+    mb: (margin-bottom),
+    ms: (margin-inline-start),
+    me: (margin-inline-end),
+    mx: (margin-inline),
+    my: (margin-block),
+) !default;
+
+// Padding tidak mengenal nilai `auto`.
+$wui-padding-dirs: (
+    p: (padding),
+    pt: (padding-top),
+    pb: (padding-bottom),
+    ps: (padding-inline-start),
+    pe: (padding-inline-end),
+    px: (padding-inline),
+    py: (padding-block),
+) !default;
+
+// ── Radius ──────────────────────────────────────────────────────────────────
+$wui-radius-md: 8px !default;
+$wui-radius-lg: 12px !default;
+$wui-page-radius: 12px !default;
+
+// ── Z-index ─────────────────────────────────────────────────────────────────
+// Wajib dipakai semua komponen — dilarang menulis z-index mentah.
+$wui-z-base: 0 !default;
+$wui-z-overlay: 1000 !default;
+
+// Dialog selalu di atas page stack — lihat `docs/planning/wui-dialog-plan.md` §4.
+$wui-z-dialog: 1100 !default;
+
+// ── Motion ──────────────────────────────────────────────────────────────────
+// Animasi yang memakainya wajib menghormati `prefers-reduced-motion`.
+$wui-motion-duration-fast: 240ms !default;
+$wui-motion-duration-base: 400ms !default;
+$wui-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1) !default;
+
+// ── Overlay ─────────────────────────────────────────────────────────────────
+$wui-overlay-color: rgb(0 0 0 / 40%) !default;
+
+// ── Dialog ──────────────────────────────────────────────────────────────────
+// Permukaan dialog — `scss/components/_dialog.scss` menerjemahkannya jadi `--wui-dialog-*`.
+// Radius masih placeholder: Material 3 memakai 28px, menunggu angka desainer.
+$wui-dialog-radius: 12px !default;
+$wui-dialog-max-width: 560px !default;
+$wui-dialog-padding: 24px !default;
+
+// Minimum lebar dialog. Tanpa ini dialog berisi teks pendek menyusut mengikuti isinya — terukur
+// 238px pada `WuiDialogService.alert()`, sedangkan Material 3 memakai 280px sebagai minimum.
+$wui-dialog-min-width: 280px !default;
+
+// ── Form field ──────────────────────────────────────────────────────────────
+// Angka-angka di bawah ini **placeholder** — menunggu nilai desainer (plan
+// `wui-form-controls-plan.md`). Strukturnya sudah token, jadi memperbaruinya cukup di sini.
+$wui-field-height: 56px !default;
+$wui-field-padding-inline: 16px !default;
+$wui-field-border-width: 1px !default;
+$wui-field-textarea-min-height: 96px !default;
+
+// Lebar border saat kontrol difokus (Material memakai 2px). Selisihnya dikompensasi dari padding
+// lewat `--wui-field-padding-offset` supaya kolom teks tidak bergeser — lihat `components/_form-field.scss`.
+$wui-field-focused-border-width: 2px !default;
+
+// Geometri label mengapung. `space` = ruang di atas teks kontrol untuk varian filled (labelnya
+// mengapung DI DALAM kotak); varian outlined tidak butuh ruang karena labelnya naik ke garis atas.
+// Nilai `float-*` adalah **titik tengah** label (label memakai `translateY(-50%)`), bukan tepi atasnya:
+// outlined 0px = duduk di garis border atas; filled 16px = di dalam kotak, dengan tinggi label
+// mengapung 18px (24px × 0.75) tepi bawahnya mendarat di 25px — berimpit dengan awal kolom teks
+// kontrol (padding atas 24px). Sebelumnya 8px: titik tengah, jadi separuh label keluar dari kotak.
+$wui-field-label-space: 24px !default;
+$wui-field-label-float-outlined: 0 !default;
+$wui-field-label-float-filled: 16px !default;
+
+// Posisi label saat istirahat = **titik tengah** kotak kontrol (56px / 2), sama untuk kedua varian.
+// Label istirahat hanya ada saat kontrol kosong, jadi tidak ada baris teks yang perlu ditemani — dan
+// titik tengah kotak itulah yang terbaca "pas" oleh mata. (Filled dulu 36px supaya sejajar baris
+// teksnya, padahal teks varian itu memang digeser 24px ke bawah — hasilnya label terlihat turun.)
+$wui-field-label-rest: 28px !default;
+
+// Mengikuti `$wui-radius-md`; ditulis terpisah supaya field bisa berubah tanpa mengubah radius global.
+$wui-field-radius: 8px !default;
+$wui-dialog-elevation: 0 1px 3px 0 rgb(0 0 0 / 30%), 0 4px 8px 3px rgb(0 0 0 / 15%) !default;
+
+// ── Tipografi: Bobot Font ───────────────────────────────────────────────────
+$wui-font-weight-regular: 400 !default;
+$wui-font-weight-medium: 500 !default;
+$wui-font-weight-semibold: 600 !default;
+$wui-font-weight-bold: 700 !default;
+
+// ── Tipografi: Master Map Skala Tipografi (Figma wui/*) ──────────────────────
+$wui-typography-scales: (
+  'display': (
+    'large':  ('size': 3.5625rem, 'line-height': 4rem,    'letter-spacing': -0.25px, 'weight': 400, 'weight-em': 500),
+    'medium': ('size': 2.8125rem, 'line-height': 3.25rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
+    'small':  ('size': 2.25rem,   'line-height': 2.75rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
+  ),
+  'headline': (
+    'large':  ('size': 2rem,      'line-height': 2.5rem,  'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
+    'medium': ('size': 1.75rem,   'line-height': 2.25rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
+    'small':  ('size': 1.5rem,    'line-height': 2rem,    'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
+  ),
+  'title': (
+    'large':  ('size': 1.375rem,  'line-height': 1.75rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
+    'medium': ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.15px, 'weight': 500, 'weight-em': 600),
+    'small':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,  'weight': 500, 'weight-em': 600),
+  ),
+  'body': (
+    'large':  ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.5px,  'weight': 400, 'weight-em': 500),
+    'medium': ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.25px, 'weight': 400, 'weight-em': 500),
+    'small':  ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.4px,  'weight': 400, 'weight-em': 500),
+  ),
+  'label': (
+    'large':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,  'weight': 500, 'weight-em': 600),
+    'medium': ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.5px,  'weight': 500, 'weight-em': 600),
+    'small':  ('size': 0.6875rem, 'line-height': 1rem,    'letter-spacing': 0.5px,  'weight': 500, 'weight-em': 600),
+  ),
+) !default;
+
+// ── Sidenav ─────────────────────────────────────────────────────────────────
+$wui-sidenav-width: 16rem !default;
+$wui-sidenav-mini-width: 4.5rem !default;
+$wui-sidenav-item-radius: .75rem !default;
+$wui-sidenav-item-padding-inline: 1.5rem !default;
+
+// ── Breakpoint & Container ──────────────────────────────────────────────────
+// Titik henti responsif. Angka di bawah **placeholder** — mengikuti Bootstrap 5 sebagai titik
+// awal sampai desainer memutuskan (alternatifnya window size class Material 3: 600/840/1200/1600).
+// Dipakai `abstracts/_mixins.scss` (`media-up`) dan `layout/_container.scss`.
+$wui-breakpoints: (
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+  'xxl': 1400px,
+) !default;
+
+// Container: lebar **penuh** di bawah `md`, lalu selalu menyisakan **batas kiri-kanan tetap**
+// sejak `md`, dan berhenti melebar di `max-width`. Urutannya: 100% → (100% − 2 × margin) → 1200px.
+$wui-container-max-widths: (
+  'sm': 100%,
+  'md': 100%,
+  'lg': 892px,
+  'xl': 1024px,
+  'xxl': 1120px
+) !default;
+$wui-container-margin-inline: 3rem !default;
+
+// Gutter horizontal (padding dalam container). Padding kiri/kanan = **setengah** nilai ini
+// (Bootstrap 5 memakai 1.5rem → 12px tiap sisi); baris grid nanti memakai acuan yang sama.
+// Jadi jarak konten dari tepi layar sejak `md` = `margin-inline` + setengah gutter = 3.75rem.
+$wui-container-gutter-x: 1.5rem !default;
+
+// Jumlah kolom grid (`layout/_grid.scss`). Angka ini adalah satu-satunya sumbernya: class
+// `.wui-col-1…N` dihasilkan loop compile-time, jadi mengubahnya ikut menambah/mengurangi class.
+$wui-grid-columns: 12 !default;
+
+// ── Topbar ─────────────────────────────────────────────────────────────────
+$wui-topbar-padding-inline: 0.875rem !default;

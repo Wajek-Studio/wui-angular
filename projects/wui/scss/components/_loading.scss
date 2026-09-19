@@ -1,0 +1,170 @@
+// Level 4 — Style komponen `WuiLoading`.
+// Mengadopsi animasi spinner lingkaran presisi dari wui-angular-17.x:
+// - Animasi ganda: rotasi 360 derajat + dash memanjang/memendek
+// - Warna berbasis token semantik --wui-color-primary (adaptif tema terang & gelap)
+// - Mendukung mode circular, indeterminate, dan linear
+
+@use '../abstracts' as a;
+
+@mixin loading {
+    wui-loading,
+    .wui-loading {
+        --wui-loading-size: 32px;
+        --wui-loading-color: var(--wui-color-primary);
+
+        display: inline-block;
+        vertical-align: middle;
+        box-sizing: border-box;
+
+        &.mode-circular,
+        &.wui-loading--circular {
+            display: inline-block;
+
+            .showbox {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .loader {
+                position: relative;
+                margin: 0 auto;
+                width: var(--wui-loading-size);
+                height: var(--wui-loading-size);
+                overflow: hidden;
+
+                &::before {
+                    content: '';
+                    display: block;
+                    padding-top: 100%;
+                }
+            }
+
+            .circle {
+                animation: wui-loading-rotate 2s linear infinite;
+                height: 100%;
+                transform-origin: center center;
+                width: 100%;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: auto;
+            }
+
+            .path {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+                stroke: var(--wui-loading-color);
+                animation: wui-loading-dash 1.5s ease-in-out infinite;
+                stroke-linecap: round;
+            }
+        }
+
+        &.mode-indeterminate,
+        &.wui-loading--indeterminate {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 0.25rem;
+            background-color: color-mix(in srgb, var(--wui-loading-color) 20%, transparent);
+
+            .indeterminate {
+                position: relative;
+                width: 100%;
+                height: 100%;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    height: 100%;
+                    background-color: var(--wui-loading-color);
+                    animation: wui-loading-indeterminate-first 1.5s infinite ease-out;
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    height: 100%;
+                    background-color: color-mix(in srgb, var(--wui-loading-color) 60%, transparent);
+                    animation: wui-loading-indeterminate-second 1.5s infinite ease-in;
+                }
+            }
+        }
+
+        &.mode-linear,
+        &.wui-loading--linear {
+            display: block;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 0.25rem;
+            background-color: color-mix(in srgb, var(--wui-loading-color) 20%, transparent);
+
+            .linear {
+                position: relative;
+                width: 100%;
+                height: 100%;
+
+                .pos {
+                    position: absolute;
+                    display: block;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    background-color: var(--wui-loading-color);
+                    transition: width 0.2s ease-in-out;
+                }
+            }
+        }
+    }
+
+    @keyframes wui-loading-rotate {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes wui-loading-dash {
+        0% {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+        }
+
+        50% {
+            stroke-dasharray: 89, 200;
+            stroke-dashoffset: -35px;
+        }
+
+        100% {
+            stroke-dasharray: 89, 200;
+            stroke-dashoffset: -124px;
+        }
+    }
+
+    @keyframes wui-loading-indeterminate-first {
+        0% {
+            left: -100%;
+            width: 100%;
+        }
+
+        100% {
+            left: 100%;
+            width: 10%;
+        }
+    }
+
+    @keyframes wui-loading-indeterminate-second {
+        0% {
+            left: -150%;
+            width: 100%;
+        }
+
+        100% {
+            left: 100%;
+            width: 10%;
+        }
+    }
+}

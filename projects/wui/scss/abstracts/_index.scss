@@ -1,0 +1,8 @@
+// Level 1 — fondasi. Tidak boleh menghasilkan CSS sama sekali.
+// `tokens` WAJIB di-forward paling awal: konfigurasi dari aplikasi (mis. `$wui-palettes-extra`)
+// hanya bisa masuk saat modul dimuat pertama kali, sedangkan `functions`/`mixins` memuat
+// `tokens` lewat `@use`. Kalau urutannya terbalik, build gagal:
+// "This module was already loaded, so it can't be configured using with()".
+@forward 'tokens';
+@forward 'functions';
+@forward 'mixins';

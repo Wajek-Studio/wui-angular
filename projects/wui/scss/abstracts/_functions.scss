@@ -1,0 +1,104 @@
+// Fungsi SCSS kustom. TIDAK menghasilkan CSS.
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'tokens';
+
+/// Jarak dari skala spasi. Contoh: `spacing(3)` → `1rem`.
+/// Ukuran yang tersedia: 0, 1, 2, 3, 4, 5 (metrik Bootstrap).
+@function spacing($step) {
+  @if not map.has-key(tokens.$wui-spacers, $step) {
+    @error 'wui: spacing(#{$step}) tidak ada. Ukuran yang tersedia: 0, 1, 2, 3, 4, 5.';
+  }
+
+  @return map.get(tokens.$wui-spacers, $step);
+}
+
+/// Nilai spasi siap pakai yang membaca CSS variable, dengan nilai dari map
+/// sebagai fallback: `spacing-var(3)` → `var(--wui-space-3, 1rem)`.
+/// Dipakai mixin `space()` dan utilitas `.wui-*` supaya ukuran spasi bisa
+/// diubah aplikasi lewat `--wui-space-*` tanpa rebuild.
+@function spacing-var($step) {
+  @return var(--wui-space-#{$step}, #{spacing($step)});
+}
+
+/// Mengubah tingkat transparansi sebuah warna. Contoh: `alpha(#0057ff, 0.2)`.
+@function alpha($color, $amount) {
+  @return color.change($color, $alpha: $amount);
+}
+
+/// Mengembalikan CSS Variable warna.
+/// Contoh: `color('purple', 500)` → `var(--wui-color-purple-500)`
+/// Contoh: `color('purple', 500, 'light')` → `var(--wui-color-purple-light-500)`
+@function color($name, $tone: 500, $mode: null) {
+  @if $mode {
+    @return var(--wui-color-#{$name}-#{$mode}-#{$tone});
+  }
+
+  @return var(--wui-color-#{$name}-#{$tone});
+}
+
+/// Mengambil nilai HEX mentah warna dari palet (compile-time).
+/// Contoh: `color-raw('purple', 'light', 500)` → `#320095`
+@function color-raw($name, $mode, $tone) {
+  $wui-palette: map.get(tokens.$wui-palettes, $name);
+
+  @if not $wui-palette {
+    @error 'wui: palet #{$name} tidak ada. Palet yang tersedia: #{map.keys(tokens.$wui-palettes)}.';
+  }
+
+  $wui-tones: map.get($wui-palette, $mode);
+
+  @if not $wui-tones {
+    @error "Mode '#{$mode}' tidak ditemukan pada palet '#{$name}'.";
+  }
+
+  $wui-hex: map.get($wui-tones, $tone);
+
+  @if not $wui-hex {
+    @error 'wui: tone #{$tone} tidak ada di palet #{$name} (#{$mode}).';
+  }
+
+  @return $wui-hex;
+}
+
+/// Mengembalikan CSS variable state layer satu peran — dipakai komponen lewat mixin
+/// `interactive-state()`, supaya nama token-nya tidak ditulis manual.
+/// Contoh: `state-layer('primary', '08')` → `var(--wui-color-state-layer-primary-opacity-08)`
+/// @param {String|null} $surface - Warna dasar elemen. Bila diisi, lapisan dicampur ke permukaan
+///   itu lewat `color-mix()` sehingga warna dasarnya tidak tertimpa (dipakai tombol `filled`).
+@function state-layer($role, $opacity, $surface: null) {
+  @if not list.index(tokens.$wui-state-layer-roles, $role) {
+    @error 'wui: state-layer(#{$role}, …) tidak ada. Peran yang tersedia: #{tokens.$wui-state-layer-roles}.';
+  }
+
+  $wui-step: state-layer-step($opacity);
+
+  @if not $surface {
+    @return var(--wui-color-state-layer-#{$role}-opacity-#{$wui-step});
+  }
+
+  // `* 100%` (bukan `#{}%`) supaya hasilnya `8%` tanpa spasi — spasi antara angka dan `%`
+  // membuat deklarasinya tidak valid dan dibuang browser.
+  @return color-mix(in srgb, var(--wui-color-#{$role}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface});
+}
+
+/// Sama seperti `state-layer()`, tetapi warnanya diambil dari CSS variable bebas (bukan nama peran).
+/// Dipakai komponen yang warnanya bisa ditukar dari CSS — mis. tombol `color="danger"` memakai
+/// `--wui-button-content`, sehingga satu aturan CSS melayani semua warna tanpa token state layer baru.
+/// Contoh: `state-layer-color('--wui-button-content', '08')`
+///   → `color-mix(in srgb, var(--wui-button-content) 8%, transparent)`
+@function state-layer-color($wui-color-var, $opacity, $surface: null) {
+  $wui-step: state-layer-step($opacity);
+
+  @return color-mix(in srgb, var(#{$wui-color-var}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface or transparent});
+}
+
+/// Memvalidasi kunci opacity state layer sekaligus mengembalikannya.
+@function state-layer-step($opacity) {
+  @if not map.has-key(tokens.$wui-state-layer-opacities, $opacity) {
+    @error 'wui: opacity state layer #{$opacity} tidak ada. Nilai yang tersedia: #{map.keys(tokens.$wui-state-layer-opacities)}.';
+  }
+
+  @return $opacity;
+}

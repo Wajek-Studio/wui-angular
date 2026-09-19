@@ -1,0 +1,222 @@
+// Level 4 — style komponen `WuiSidenav`.
+// Class state (`is-open` / `is-mini` / `is-closed`) di-bind ke host element dari
+// `WuiSidenavService` — lihat `host` di `projects/wui/src/sidenav/sidenav.ts`.
+// Karena `.wui-sidenav` menempel di host, cukup satu selector untuk semuanya.
+
+@mixin sidenav {
+
+    .wui-sidenav {
+        // Flex item di dalam `.wui-layout` / `.wui-page-container`.
+        flex: 0 0 auto;
+        display: block;
+        height: 100%;
+        overflow: hidden;
+        opacity: 1;
+
+        // Garis pemisah digambar dengan inset box-shadow, bukan `border-right`.
+        // Border biasa selalu tergambar minimal setebal border-nya walau `width: 0` — browser
+        // tidak bisa mengecilkan border di bawah ketebalannya — sehingga garisnya tetap terlihat
+        // saat sidenav tertutup. Inset shadow digambar DI DALAM kotak elemen, jadi ikut terpotong
+        // habis begitu lebar menyusut ke 0, dan menyusut mulus selama transisi.
+        box-shadow: inset -1px 0 0 var(--wui-color-outline);
+
+        // Lebar default = state `is-open`.
+        width: var(--wui-sidenav-width, 16rem);
+        background-color: var(--wui-color-surface);
+        color: var(--wui-color-on-surface);
+        transition: 
+            width var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
+            opacity calc(var(--wui-motion-duration-base) * 0.8) var(--wui-motion-easing-standard);
+        will-change: width, opacity;
+
+        // `&-inner` menghasilkan selector `.wui-sidenav-inner` (bukan descendant), karena
+        // elemennya punya class sendiri di template komponen.
+        &-inner {
+            // Panel tempat blok mini & full bertumpuk → jadi acuan posisi untuk keduanya.
+            // `width: 100%` (bukan lebar tetap): saat mode mini/tertutup host menyusut, dan panel
+            // ikut menyusut — kalau lebarnya dipatok 16rem, konten mini yang di-center akan
+            // tergeser keluar dari area yang terlihat.
+            // Padding/flex di sini hanya berlaku untuk konten yang diproyeksi TANPA blok
+            // mini/full (blok itu `position: absolute` + `inset: 0`, jadi tidak terpengaruh).
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: var(--wui-space-2);
+            transform: translateX(0);
+            opacity: 1;
+            transition:
+                transform var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
+                opacity var(--wui-motion-duration-base) var(--wui-motion-easing-standard);
+            will-change: transform, opacity;
+        }
+
+        // Bentuk ringkas — hanya ikon.
+        &.is-mini {
+            width: var(--wui-sidenav-mini-width, 4rem);
+        }
+
+        // Tertutup: panel menyusut sampai nol, dan isinya bergeser ke kiri sambil memudar.
+        &.is-closed {
+            width: 0;
+            pointer-events: none;
+
+            .wui-sidenav-inner {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+        }
+    }
+
+    // Konten mini & full sengaja bertumpuk di area yang sama supaya bisa saling silang
+    // (cross-fade) saat mode berubah. Dipakai `position: absolute` agar elemen lain yang
+    // ikut ter-proyeksi tidak terganggu.
+    // Tiap blok adalah **kolom flex dengan dua area** — polanya sama untuk mini maupun full:
+    //   1. `.wui-sidenav-body`   → mengisi seluruh tinggi yang tersisa, isinya boleh digulir;
+    //   2. `.wui-sidenav-footer` → menempel di ujung bawah, tidak ikut tergulir.
+    // Padding tinggal di sini (bukan di `-inner`) supaya tiap blok mengatur inset-nya sendiri.
+    .wui-sidenav-mini-content,
+    .wui-sidenav-full-content {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        transition:
+            transform var(--wui-motion-duration-base) var(--wui-motion-easing-standard),
+            opacity var(--wui-motion-duration-base) var(--wui-motion-easing-standard);
+    }
+
+    // Area isi: satu-satunya bagian sidenav yang menggulir.
+    // `min-height: 0` wajib — tanpa itu flex item menolak menyusut di bawah tinggi kontennya,
+    // sehingga daftar panjang menonjol keluar panel (terpotong oleh `overflow: hidden` di host)
+    // alih-alih bisa digulir, dan footernya terdorong keluar layar.
+    .wui-sidenav-body {
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+
+        // Gulirannya berhenti di sini, tidak merembet ke halaman di belakangnya.
+        overscroll-behavior: contain;
+    }
+
+    // Area bawah: selalu di ujung bawah sidenav, tidak ikut tergulir. Garis pemisahnya digambar
+    // di sini, jadi tidak perlu lagi `<hr wuiSidenavDivider />` sebelum item terakhir.
+    .wui-sidenav-footer {
+        flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        margin-top: var(--wui-space-2);
+        padding-top: var(--wui-space-2);
+        padding-block: var(--wui-space-3);
+    }
+
+    // Mode mini: scrollbar disembunyikan. Rail-nya hanya selebar 64px, sedangkan scrollbar klasik
+    // ±15px — bukan hanya memakan seperempat lebar, tapi juga MENGgeser ikon ke kiri karena item
+    // di-center terhadap area yang tersisa, bukan terhadap rail. Isinya tetap bisa digulir
+    // (roda mouse, sentuh, dan keyboard saat fokus ada di dalam daftar).
+    .wui-sidenav-mini-content .wui-sidenav-body {
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+    }
+
+    .wui-sidenav-body {
+        padding-block: var(--wui-space-3);
+    }
+
+    // Mode penuh (open / closed): konten penuh di tempatnya, konten ringkas menunggu di kiri.
+    .wui-sidenav-full-content {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    .wui-sidenav-mini-content {
+        transform: translateX(-100%);
+        opacity: 0;
+
+        .wui-sidenav-item {
+            justify-content: center;
+            padding-inline: 0;
+
+            > wui-icon {
+                width: auto;
+            }
+        }
+    }
+
+    // Mode mini: konten penuh keluar ke kiri sambil memudar,
+    // konten ringkas masuk dari kiri bergerak ke kanan sambil muncul.
+    .wui-sidenav.is-mini .wui-sidenav-full-content {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    .wui-sidenav.is-mini .wui-sidenav-mini-content {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    // Konten yang sedang tak terlihat tidak boleh menangkap klik.
+    .wui-sidenav:not(.is-mini) .wui-sidenav-mini-content,
+    .wui-sidenav.is-mini .wui-sidenav-full-content {
+        pointer-events: none;
+    }
+
+    // Item tombol navigasi sidenav (selaras dengan topbar)
+    .wui-sidenav-item {
+        // `flex: 0 0 auto` wajib: item tidak boleh menyusut saat daftar lebih tinggi dari panel.
+        // Tanpa ini `.wui-sidenav-body` tidak pernah menggulir — itemnya hanya jadi gepeng.
+        flex: 0 0 auto;
+        width: 100%;
+        border-radius: 0;
+        padding-inline: var(--wui-sidenav-item-padding-inline);
+        justify-content: flex-start;
+        gap: var(--wui-space-4);
+        height: 2.5rem;
+
+        &.is-active {
+            background-color: var(--wui-color-default);
+            color: var(--wui-color-primary);
+            font-weight: var(--wui-font-weight-medium);
+
+            wui-icon {
+                color: var(--wui-color-primary);
+            }
+        }
+    }
+
+    // Garis horizontal pemisah grup menu
+    .wui-sidenav-divider {
+        border: 0;
+        border-top: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
+        margin: var(--wui-space-2) 0;
+        width: 100%;
+    }
+
+    // Subheader / judul kategori menu (rata kiri lurus dengan posisi ikon di 18px)
+    .wui-sidenav-subheader {
+        padding-block: var(--wui-space-3) var(--wui-space-2);
+        padding-inline: 1.125rem;
+        font-size: 0.6875rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: color-mix(in srgb, var(--wui-color-on-surface) 70%, transparent);
+        user-select: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .wui-sidenav,
+        .wui-sidenav-inner,
+        .wui-sidenav-mini-content,
+        .wui-sidenav-full-content {
+            transition: none;
+        }
+    }
+
+}

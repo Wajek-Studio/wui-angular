@@ -1,0 +1,65 @@
+// Level 4 — Style komponen `WuiPagination`.
+// Mengadopsi tata letak presisi dari wui-angular / ujian-yasmin:
+// - Susunan tombol first, prev, label rentang, next, last dalam satu kelompok inline di sisi kiri (tidak full)
+// - Tombol wuiButton size="sm" iconOnly variant="text" (32px x 32px)
+// - Mendukung mode fullWidth opsional jika diinginkan memenuhi lebar layar
+
+@use '../abstracts' as a;
+
+@mixin pagination {
+    .wui-pagination {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding-top: 1rem;
+        color: var(--wui-color-on-surface);
+        box-sizing: border-box;
+
+        // Modifier untuk pemakaian di dalam container ber-padding: menarik pagination ke kiri/kanan
+        // supaya tepinya sejajar. Belum dipakai komponen mana pun — hanya disiapkan.
+        &.wui-pagination--inside-container {
+            margin-left: -0.5rem;
+            margin-right: -0.5rem;
+        }
+
+        .wui-pagination-label {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1.25rem;
+            font-size: 0.875rem;
+            color: var(--wui-color-on-surface);
+            white-space: nowrap;
+        }
+
+        &.wui-pagination--full,
+        &.is-full {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+            .wui-pagination-label {
+                flex: 1 1 auto;
+            }
+        }
+    }
+
+    wui-pagination {
+        display: block;
+
+        &[fullWidth],
+        &.wui-pagination--full {
+            width: 100%;
+
+            .wui-pagination {
+                display: flex;
+                width: 100%;
+                justify-content: space-between;
+
+                .wui-pagination-label {
+                    flex: 1 1 auto;
+                }
+            }
+        }
+    }
+}

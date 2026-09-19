@@ -1,0 +1,33 @@
+@mixin page {
+    .wui-page {
+        &-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: auto;
+            width: 100%;
+            height: 100%;
+        }
+
+        &-container {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: row;
+            min-height: 0;
+            min-width: 0;
+        }
+
+        &-content {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            min-height: 0;
+            min-width: 0;
+        }
+    }
+
+    wui-page {
+        background-color: var(--wui-color-surface);
+        display: flex;
+        flex-direction: column;
+    }
+
+}

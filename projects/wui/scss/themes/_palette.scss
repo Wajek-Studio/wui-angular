@@ -1,0 +1,142 @@
+// Level 3 — Palet warna (data intensitas).
+// Tugasnya tinggal satu: meng-emit skala tone jadi `--wui-color-<palet>-<tone>` (mode-aware
+// + salinan `-light-`/`-dark-`). Peran semantik (`primary`, `on-primary`, `danger`, `surface`, …)
+// ada di `themes/_roles.scss`, karena peran bukan bagian dari data palet.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../abstracts' as a;
+
+/// Palet yang **skalanya** di-emit (`--wui-color-<palet>-<tone>`).
+/// Diubah dari sisi aplikasi lewat konfigurasi modul:
+///     `@use '@wajek/wui/scss/wui.scss' with ($wui-palette: 'brand');`
+/// Warna peran (`--wui-color-primary`, `-danger`, …) TIDAK diatur di sini — lihat `$wui-roles`.
+/// Nilai `false` = tidak ada skala palet yang di-emit otomatis.
+/// (Catatan: `null` **tidak bisa** dipakai untuk ini — flag `!default` memperlakukan `null`
+/// sebagai "belum diisi", sehingga nilainya jatuh kembali ke default.)
+$wui-palette: 'purple' !default;
+
+/// Nama yang dilarang dipakai sebagai nama palet karena bentrok dengan token semantik
+/// (peran warna dari `themes/_roles.scss`) atau token non-palet lainnya.
+$wui-palette-reserved: ('primary', 'on-primary', 'secondary', 'on-secondary', 'danger', 'on-danger', 'surface', 'on-surface', 'surface-container', 'on-surface-container', 'outline', 'overlay', 'state-layer') !default;
+
+/// Menormalkan nama palet (menerima `purple` maupun `'purple'`) dan menolak nama terlarang.
+@function palette-key($wui-name) {
+  @if not $wui-name {
+    @error 'wui: nama palet tidak boleh kosong. Pakai string, mis. `purple`.';
+  }
+
+  $wui-key: string.quote($wui-name);
+
+  @if list.index($wui-palette-reserved, string.unquote($wui-key)) {
+    @error 'wui: `#{$wui-key}` tidak boleh jadi nama palet karena bentrok dengan token semantik. Nama yang dilarang: #{$wui-palette-reserved}.';
+  }
+
+  @return $wui-key;
+}
+
+/// Memvalidasi satu mode sebuah palet: bagiannya ada, dan tone yang dipakai peran semantik tersedia.
+/// @param {String} $wui-key - Nama palet.
+/// @param {String} $wui-mode - `'light'` atau `'dark'`.
+/// @param {Map} $wui-palette - Peta palet berbentuk `('light': (…), 'dark': (…))`.
+/// @return {Map} Peta tone milik mode tersebut.
+@function palette-mode-tones($wui-key, $wui-mode, $wui-palette) {
+  @if not map.has-key($wui-palette, $wui-mode) {
+    @error 'wui: palet #{$wui-key} tidak punya bagian mode `#{$wui-mode}`. Palet wajib lengkap: light & dark.';
+  }
+
+  $wui-mode-tones: map.get($wui-palette, $wui-mode);
+
+  @each $wui-tone in a.$wui-palette-required-tones {
+    @if not map.has-key($wui-mode-tones, $wui-tone) {
+      @error 'wui: palet #{$wui-key} (#{$wui-mode}) tidak punya tone #{$wui-tone} yang dipakai peran semantik.';
+    }
+  }
+
+  @return $wui-mode-tones;
+}
+
+/// Menyaring peta tone satu mode agar hanya tone numerik yang lolos ke skala CSS variable.
+/// Kunci non-numerik disaring supaya palet lama yang masih memuat kunci peran (mis. `'on-primary'`)
+/// tidak menghasilkan `--wui-color-<palet>-on-primary`, dan tidak menggagalkan build.
+@function palette-scale($wui-mode-tones) {
+  $wui-scale: ();
+
+  @each $wui-tone, $wui-color in $wui-mode-tones {
+    @if meta.type-of($wui-tone) == 'number' {
+      $wui-scale: map.set($wui-scale, $wui-tone, $wui-color);
+    }
+  }
+
+  @return $wui-scale;
+}
+
+/// Mengambil + memvalidasi peta palet: dari data bawaan, atau dari peta yang diberikan aplikasi.
+/// @param {String} $wui-key - Nama palet hasil `palette-key()`.
+/// @param {Map|null} $wui-given - Peta palet dari aplikasi; `null` = ambil data bawaan.
+/// @return {Map} Peta yang sudah dipastikan punya mode `light` & `dark` beserta tone wajibnya.
+@function palette-tones($wui-key, $wui-given: null) {
+  $wui-palette: $wui-given;
+
+  @if not $wui-palette {
+    @if not map.has-key(a.$wui-palettes, $wui-key) {
+      @error 'wui: palet #{$wui-key} tidak ada. Palet yang tersedia: #{map.keys(a.$wui-palettes)}.';
+    }
+
+    $wui-palette: map.get(a.$wui-palettes, $wui-key);
+  }
+
+  $wui-checked: ();
+
+  @each $wui-mode in ('light', 'dark') {
+    $wui-checked: map.set($wui-checked, $wui-mode, palette-mode-tones($wui-key, $wui-mode, $wui-palette));
+  }
+
+  @return $wui-checked;
+}
+
+/// Meng-emit skala tone satu palet: `--wui-color-<palet>-<tone>` (mode-aware), plus salinan
+/// eksplisit `-light-` / `-dark-` supaya tone mode lain tetap bisa dipakai di mode ini.
+/// @param {String|Boolean} $wui-name - Nama palet. `false` = mixin tidak melakukan apa pun.
+/// @param {Map|null} $wui-tones - Peta palet milik aplikasi. `null` = pakai data bawaan.
+@mixin palette($wui-name, $wui-tones: null) {
+  @if $wui-name {
+    $wui-key: palette-key($wui-name);
+    $wui-tones: palette-tones($wui-key, $wui-tones);
+    $wui-light: map.get($wui-tones, 'light');
+    $wui-dark: map.get($wui-tones, 'dark');
+    $wui-light-scale: palette-scale($wui-light);
+    $wui-dark-scale: palette-scale($wui-dark);
+
+    :root {
+      // Tone mode-aware — nilainya ditimpa di mode gelap oleh blok `@media` di bawah,
+      // jadi satu nama token sudah cukup untuk kedua mode.
+      @each $wui-tone, $wui-color in $wui-light-scale {
+        --wui-color-#{$wui-key}-#{$wui-tone}: #{$wui-color};
+        --wui-color-#{$wui-key}-light-#{$wui-tone}: #{$wui-color};
+      }
+
+      // Salinan eksplisit mode gelap, supaya tone gelap tetap bisa dipakai di mode terang.
+      @each $wui-tone, $wui-color in $wui-dark-scale {
+        --wui-color-#{$wui-key}-dark-#{$wui-tone}: #{$wui-color};
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        @each $wui-tone, $wui-color in $wui-dark-scale {
+          --wui-color-#{$wui-key}-#{$wui-tone}: #{$wui-color};
+        }
+      }
+    }
+  }
+}
+
+/// Meng-emit skala SEMUA palet — alat manual untuk keperluan khusus
+/// (mis. eksperimen ganti skala lewat CSS).
+@mixin all-palettes {
+  @each $wui-name in map.keys(a.$wui-palettes) {
+    @include palette($wui-name);
+  }
+}

@@ -1,0 +1,253 @@
+<ng-template #page>
+  <wui-page>
+    <div class="wui-page-content layout-doc-container">
+      <!-- HEADER -->
+      <header class="doc-header">
+        <a routerLink="/home" class="doc-back-btn">← Kembali ke Beranda</a>
+        <h1 class="doc-title">Layout — Container</h1>
+        <p class="doc-subtitle">
+          Primitif layout pertama di <code>@wajek/wui</code>: elemen pembungkus konten yang lebarnya
+          dibatasi dan dipusatkan di tengah halaman. Variannya sengaja dibuat sama dengan
+          <strong>Bootstrap 5</strong>, jadi kebiasaan yang sudah ada bisa langsung dipakai — hanya
+          prefix class-nya <code>wui-</code>.
+        </p>
+      </header>
+
+      <p class="doc-note">
+        Container datang dari level baru <code>layout/</code> — class murni tanpa komponen Angular,
+        dipanggil <strong>setelah</strong> <code>components/</code> dan <strong>sebelum</strong>
+        <code>utilities/</code>. Lebar maksimum &amp; gutter dibaca dari CSS variable, jadi bisa
+        ditimpa saat runtime; hanya <em>breakpoint</em>-nya yang compile-time, karena media query
+        tidak bisa memakai <code>var()</code>.
+      </p>
+
+      <!-- 1. KONTEKS NYATA -->
+      <section class="doc-section">
+        <h2 class="section-title">1. Konteks nyata</h2>
+        <p class="section-note">
+          Ini container yang sesungguhnya, dipasang langsung di halaman ini. Karena halaman ini hidup
+          di dalam app shell (topbar + sidenav + padding halaman), area kontennya hampir selalu
+          <strong>lebih sempit</strong> dari batas container — jadi di sini lebarnya 100%, bukan
+          dipatok. Status di bawah menunjukkan <em>batas</em> yang sedang aktif menurut lebar jendela
+          Anda.
+        </p>
+
+        <div class="playground-status">
+          <span class="status-label">Aturan yang sedang berlaku:</span>
+          <span class="readout"></span>
+          <span class="breakpoint-chips">
+            <span class="bp-chip bp-chip--md">batas sejak md (≥768) aktif</span>
+          </span>
+        </div>
+
+        <div class="playground-viewport">
+          <div class="wui-container playground-container">
+            <div class="playground-box">
+              <strong>.wui-container</strong>
+              <span>lebar: 100% di bawah 576px, lalu dipatok naik bertingkat</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="section-note section-note--after">
+          Artinya: <code>max-width</code> bekerja terhadap <strong>lebar jendela</strong>, bukan
+          terhadap lebar area konten. Pada aplikasi ber-app-shell seperti ini, batasnya baru
+          “menggigit” kalau area konten lebih lebar dari batasnya (mis. sidenav ditutup di jendela
+          lebar). Bagian 2 mensimulasikan halaman yang lebih lebar supaya efeknya tetap terlihat.
+        </p>
+      </section>
+
+      <!-- 2. SIMULASI LEBAR HALAMAN -->
+      <section class="doc-section">
+        <h2 class="section-title">2. Simulasi lebar halaman</h2>
+        <p class="section-note">
+          Supaya perbedaannya kelihatan, baris di bawah adalah <strong>halaman simulasi</strong>
+          dengan lebar tetap yang diperkecil memakai <code>zoom</code> — tata letaknya tetap dihitung
+          pada lebar itu, hanya tampilannya yang mengecil. Kotak berwarna di dalamnya adalah container
+          asli dari library, bukan tiruan.
+        </p>
+
+        <div class="sim-row">
+          <div class="sim-label">
+            <code>halaman 1000px · .wui-container</code>
+            <span>Sejak <code>md</code>: batas kiri-kanan tetap — lebar container tidak mengikuti layar.</span>
+          </div>
+          <div class="sim-scroll">
+            <div class="sim-page sim-page--1000">
+              <div class="wui-container sim-container">
+                <div class="sim-box"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-row">
+          <div class="sim-label">
+            <code>halaman 1400px · .wui-container</code>
+            <span>Sudah melewati cap → berhenti di <strong>1200px</strong>, sisa ruang jadi margin.</span>
+          </div>
+          <div class="sim-scroll">
+            <div class="sim-page">
+              <div class="wui-container sim-container">
+                <div class="sim-box"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sim-row">
+          <div class="sim-label">
+            <code>halaman 1400px · .wui-container-fluid</code>
+            <span>Selalu 100% — tidak pernah dibatasi, tanpa cap.</span>
+          </div>
+          <div class="sim-scroll">
+            <div class="sim-page">
+              <div class="wui-container-fluid sim-container">
+                <div class="sim-box"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="section-note section-note--after">
+          Semua kotak di atas memakai container yang sama dengan yang dipakai aplikasi — hanya
+          halaman pembungkusnya yang disimulasikan. Yang berubah karena lebar jendela hanyalah
+          <em>tahap 2</em> (batas kiri-kanan sejak <code>md</code>): di bawah 768px container kembali
+          mengisi 100%.
+        </p>
+      </section>
+
+      <!-- 3. ATURAN LEBAR -->
+      <section class="doc-section">
+        <h2 class="section-title">3. Aturan lebar</h2>
+        <p class="section-note">
+          Tiga tahap, semuanya hidup di satu tempat: <code>abstracts/_tokens.scss</code>. Angka
+          bawaannya masih bisa berubah (menunggu desainer), tapi titik mulai batas mengikuti
+          <code>md</code> di <code>$wui-breakpoints</code>.
+        </p>
+
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Kondisi</th>
+              <th>Lebar <code>.wui-container</code></th>
+              <th>Catatan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>di bawah <code>md</code> (768px)</td>
+              <td><strong>100%</strong></td>
+              <td>Konten tetap dijauhkan dari tepi oleh gutter: 12px tiap sisi.</td>
+            </tr>
+            <tr>
+              <td><code>md</code> dan ke atas</td>
+              <td><code>100% − 6rem</code></td>
+              <td>Batas kiri-kanan <strong>tetap 3rem</strong> — tidak ikut melebar saat layar bertambah lebar.</td>
+            </tr>
+            <tr>
+              <td>setelah cap tercapai</td>
+              <td><strong>1200px</strong></td>
+              <td>Berhenti melebar, sisa ruang jadi margin. Tercapai di jendela ±1296px (1200px + 2 × 3rem).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p class="section-note section-note--after">
+          Karena titik mulainya diambil dari <code>$wui-breakpoints</code>, menggesernya cukup mengubah
+          map itu (mis. window size class Material 3: medium 600, expanded 840, large 1200,
+          extra-large 1600) — class-nya tidak perlu ditulis ulang.
+        </p>
+      </section>
+
+      <!-- 4. PEMAKAIAN -->
+      <section class="doc-section">
+        <h2 class="section-title">4. Pemakaian</h2>
+
+        <div class="code-preview">
+          <pre><code>&lt;div class="wui-container"&gt;
+  &lt;h1&gt;Judul halaman&lt;/h1&gt;
+  &lt;p&gt;Penuh di layar kecil, berbatas 3rem sejak md, berhenti di 1200px.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Selalu penuh, tanpa batas maupun cap? --&gt;
+&lt;div class="wui-container-fluid"&gt;…&lt;/div&gt;</code></pre>
+        </div>
+
+        <h3 class="sub-title">Menyetel nilai</h3>
+        <p class="section-note">
+          Ganti nilai globalnya lewat SCSS (compile-time) atau timpa saat runtime lewat CSS variable
+          — perilaku <code>.wui-container</code> mengikuti keduanya tanpa perlu rebuild.
+        </p>
+
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Token / Variable</th>
+              <th>Default</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>$wui-breakpoints</code></td>
+              <td><code>md</code> = 768px</td>
+              <td>Compile-time. Container hanya memakai <code>md</code> sebagai titik mulai batas.</td>
+            </tr>
+            <tr>
+              <td><code>$wui-container-max-width</code></td>
+              <td><code>1200px</code></td>
+              <td>Cap — lebar berhenti di sini. Bisa ditimpa runtime.</td>
+            </tr>
+            <tr>
+              <td><code>$wui-container-margin-inline</code></td>
+              <td><code>3rem</code></td>
+              <td>Batas kiri-kanan sejak <code>md</code>. Bisa ditimpa runtime.</td>
+            </tr>
+            <tr>
+              <td><code>$wui-container-gutter-x</code></td>
+              <td><code>1.5rem</code></td>
+              <td>Gutter: padding tiap sisi = <strong>setengahnya</strong> (12px).</td>
+            </tr>
+          </tbody>
+        </table>
+
+        
+      </section>
+
+      <!-- 5. CATATAN -->
+      <section class="doc-section">
+        <h2 class="section-title">5. Catatan &amp; lanjutan</h2>
+
+        <ul class="note-list">
+          <li>
+            Container <strong>tidak punya komponen Angular</strong> — cukup class, sama seperti
+            utilitas spacing. Tidak ada state, tidak ada directive.
+          </li>
+          <li>
+            Urutan layer penting: <code>layout/</code> dipanggil setelah <code>components/</code>
+            supaya boleh menimpa style komponen tanpa <code>!important</code> (lint melarangnya),
+            tapi masih kalah oleh <code>utilities/</code>.
+          </li>
+          <li>
+            Gutter dipakai bersama: padding container = setengah gutter, sehingga
+            <code>layout/_grid.scss</code> nanti bisa memakai acuan negatif yang sama
+            (<code>margin-inline: calc(var(--wui-container-gutter-x) * -0.5)</code>).
+          </li>
+          <li>
+            Karena batasnya berbasis <strong>lebar jendela</strong> (sama seperti Bootstrap),
+            container tidak menyesuaikan diri terhadap area konten app shell. Kalau nanti diinginkan
+            batas yang mengikuti area konten, jalurnya adalah <em>container query</em>
+            (<code>@container</code> + <code>container-type: inline-size</code>) — keputusan
+            tersendiri, belum diambil.
+          </li>
+          <li>
+            <strong>Belum ada</strong>: <code>.wui-stack</code> (jarak antar anak) dan
+            <code>.wui-row</code> / <code>.wui-col-*</code>. Keduanya rencananya ikut di level
+            <code>layout/</code>.
+          </li>
+        </ul>
+      </section>
+    </div>
+  </wui-page>
+</ng-template>

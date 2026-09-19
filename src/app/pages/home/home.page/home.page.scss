@@ -1,0 +1,19 @@
+// Halaman ini disusun dari class yang sudah ada di @wajek/wui:
+// `wui-container` (lebar + gutter), utilitas `wui-*` spacing untuk jarak antar blok, peran
+// tipografi (`wui-display-*`, `wui-headline-*`, `wui-title-*`, `wui-body-*`) untuk judul dan teks,
+// serta komponen tabel (`wuiTable` + `wuiTableResponsive`).
+//
+// Satu-satunya yang belum disediakan library: tampilan blok kode `<pre>`. Jadi cukup satu aturan
+// elemen di bawah — tanpa class baru.
+pre {
+  // Padding & jarak datang dari utilitas (`wui-p-3`, `wui-mb-*`), bukan dari sini.
+  background: var(--wui-color-surface-container);
+  border-radius: var(--wui-radius-md);
+  overflow-x: auto;
+
+  code {
+    background: none;
+    font-size: inherit;
+  }
+}
+

@@ -1,2 +1,65 @@
-@import '@angular/cdk/overlay-prebuilt.css';
-@import "screen/core.scss";
+// =============================================================================
+// @wajek/wui — Entry point style layer
+// -----------------------------------------------------------------------------
+// Konsumsi di real app (dipasang manual di src/styles.scss):
+//     @use '@wajek/wui/scss/wui.scss';
+// Struktur 5 level: abstracts → base → themes → components → utilities
+//   abstracts/   token, fungsi, mixin — tanpa output
+//   base/        reset, tipografi, layout dasar
+//   themes/      --wui-* untuk mode terang & gelap (prefers-color-scheme)
+//   components/  style per komponen
+//   utilities/   class bantu (spacing)
+// File ini hanya MEMANGGIL mixin tiap layer — tidak ada style yang ditulis di sini.
+// Mencopot sesuatu = menghapus satu baris `@include` di bawah.
+// Urutan wajib: themes sebelum components (komponen membaca var(--wui-*) dari tema).
+// =============================================================================
+
+// `@forward` wajib SEBELUM `@use` modul yang sama. Konfigurasi dari aplikasi
+// (`@use '@wajek/wui/scss/wui.scss' with (…)` — mis. `$wui-roles`, `$wui-palette`, `$wui-palettes-extra`)
+// hanya mengalir lewat `@forward`; urutan terbalik membuat build gagal: "This module was already loaded…".
+// `abstracts` di-forward juga supaya aplikasi bisa memakai fungsi/mixin-nya langsung,
+// mis. `@use '@wajek/wui/scss/wui.scss' as wui;` lalu `@include wui.space(mt, 3);`.
+@forward 'abstracts';
+@forward 'themes';
+@use 'base';
+@use 'components';
+@use 'layout';
+@use 'themes';
+@use 'utilities';
+
+// Salakan layer — hapus barisnya kalau tidak ingin dipakai.
+@include base.reset;
+@include base.typography;
+@include base.layout;
+@include themes.light-theme;
+@include themes.dark-theme;
+
+// Peran warna: `--wui-color-primary`, `-on-primary`, `-secondary`, `-danger`, `-surface`, …
+// untuk mode terang & gelap. Dikonfigurasi aplikasi lewat `with ($wui-roles: (…))`.
+@include themes.roles;
+
+// Skala palet: `--wui-color-<palet>-<tone>`.
+// Kalau aplikasi menyetel `$wui-palette: false`, baris ini tidak melakukan apa pun.
+@include themes.palette(themes.$wui-palette);
+@include components.app;
+@include components.button;
+@include components.dialog;
+@include components.form-field;
+@include components.page;
+@include components.sidenav;
+@include components.topbar;
+@include components.icon;
+@include components.table;
+@include components.pagination;
+@include components.loading;
+@include components.badge;
+
+// Primitif layout (container, grid) dipanggil setelah komponen supaya boleh menimpa style komponen
+// tanpa `!important`, tapi sebelum utilitas.
+@include layout.container;
+@include layout.grid;
+
+// Utilitas dipanggil TERAKHIR supaya bisa menimpa style komponen tanpa perlu `!important`.
+@include utilities.spacing;
+@include utilities.gap;
+@include utilities.flex;

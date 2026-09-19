@@ -1,0 +1,465 @@
+<ng-template #pageTpl>
+  <wui-page>
+    <div class="wui-page-content table-doc-container">
+    <header class="doc-header">
+      <a routerLink="/" class="doc-back-btn">&larr; Kembali ke Beranda</a>
+      <h1 class="doc-title">Table — WuiTable</h1>
+      <p class="doc-subtitle">
+        Komponen dan directive tabel native bergaya Material 3. Mengadopsi visual presisi dari
+        <code>wui-angular-17.x</code> dengan sistem token adaptif untuk tema terang dan gelap.
+      </p>
+    </header>
+
+    <div class="doc-note">
+      <strong>Filosofi Native:</strong> Directive <code>wuiTable</code> dipasang langsung pada elemen
+      <code>&lt;table&gt;</code> standar HTML tanpa mengganti tag elemen, sehingga aksesibilitas
+      (caption, header scope, navigating cell) dan fleksibilitas markup tetap 100% utuh.
+    </div>
+
+    <!-- 1. Interactive Playground -->
+    <section class="doc-section">
+      <h2 class="section-title">1. Interactive Playground</h2>
+      <p class="section-note">
+        Uji efek visual <code>hover</code>, baris selang-seling <code>alternate</code>, dan mode <code>dense</code> secara langsung.
+        Perhatikan bahwa baris header, baris data, dan baris footer memiliki pembatas yang rapi serta
+        kolom aksi mengecil pas selebar tombol.
+      </p>
+
+      <div class="playground-toolbar">
+        <div class="toolbar-actions">
+          <button
+            wuiButton
+            size="sm"
+            [variant]="isHover() ? 'filled' : 'outlined'"
+            (click)="toggleHover()"
+          >
+            Hover: {{ isHover() ? 'ON' : 'OFF' }}
+          </button>
+
+          <button
+            wuiButton
+            size="sm"
+            [variant]="isDense() ? 'filled' : 'outlined'"
+            (click)="toggleDense()"
+          >
+            Dense: {{ isDense() ? 'ON' : 'OFF' }}
+          </button>
+
+          <button
+            wuiButton
+            size="sm"
+            [variant]="isAlternate() ? 'filled' : 'outlined'"
+            (click)="toggleAlternate()"
+          >
+            Alternate: {{ isAlternate() ? 'ON' : 'OFF' }}
+          </button>
+
+          <button
+            wuiButton
+            size="sm"
+            variant="outlined"
+            (click)="refreshData()"
+            [disabled]="isLoading()"
+          >
+            Refresh Data
+          </button>
+        </div>
+
+        <div class="state-badges">
+          <span class="state-badge" [class.is-active]="isHover()">
+            hover: <strong>{{ isHover() }}</strong>
+          </span>
+          <span class="state-badge" [class.is-active]="isDense()">
+            dense: <strong>{{ isDense() }}</strong>
+          </span>
+          <span class="state-badge" [class.is-active]="isAlternate()">
+            alternate: <strong>{{ isAlternate() }}</strong>
+          </span>
+          <span class="state-badge" [class.is-active]="isLoading()">
+            loading: <strong>{{ isLoading() }}</strong>
+          </span>
+          <span class="state-badge" [class.is-active]="page() > 1">
+            page: <strong>{{ page() }}</strong>
+          </span>
+        </div>
+      </div>
+
+      <div class="table-preview-card" wuiTableResponsive>
+        <table wuiTable [hover]="isHover()" [dense]="isDense()" [alternate]="isAlternate()">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Grup</th>
+              <th class="text-end">Jumlah</th>
+              <th class="wui-table-col--action">Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @if (isLoading()) {
+              <tr>
+                <td colspan="4" style="text-align: center; padding: 2.5rem 1rem;">
+                  <wui-loading mode="circular" [style.display]="'inline-block'"></wui-loading>
+                </td>
+              </tr>
+            } @else {
+              @for (item of data(); track item.id) {
+                <tr>
+                  <td>{{ item.name }}</td>
+                  <td>{{ item.group }}</td>
+                  <td class="text-end">{{ item.amount | number }}</td>
+                  <td class="wui-table-col--action">
+                    <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi">
+                      <wui-icon icon="dots-vertical"></wui-icon>
+                    </button>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+
+          <tfoot>
+            <tr>
+              <th>Total (Semua Data)</th>
+              <th></th>
+              <th class="text-end">{{ totalAmount | number }}</th>
+              <th class="wui-table-col--action"></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <wui-pagination
+        [(page)]="page"
+        [count]="count()"
+        [limit]="limit()"
+        [loading]="isLoading()"
+        (pageChange)="refreshData()"
+      />
+    </section>
+
+    <!-- 2. Sticky Columns & Responsive Scrolling -->
+    <section class="doc-section">
+      <h2 class="section-title">2. Sticky Columns & Scrolling Responsif</h2>
+      <p class="section-note">
+        Gunakan <code>.wui-table-col--sticky-left</code> dan <code>.wui-table-col--sticky-right</code> di dalam kontainer
+        <code>wuiTableResponsive</code> untuk menjaga kolom identitas dan kolom aksi tetap terlihat
+        saat pengguna menggeser tabel ke samping.
+      </p>
+
+      <div class="table-preview-card" wuiTableResponsive>
+        <table wuiTable hover style="min-width: 900px">
+          <thead>
+            <tr>
+              <th class="wui-table-col--sticky-left">Nama Mitra</th>
+              <th>Kategori</th>
+              <th>Status</th>
+              <th>Wilayah Operasional</th>
+              <th class="text-end">Alokasi Dana</th>
+              <th class="wui-table-col--action wui-table-col--sticky-right">Aksi</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (item of sampleData; track item.id) {
+              <tr>
+                <td class="wui-table-col--sticky-left">
+                  <strong>{{ item.name }}</strong>
+                </td>
+                <td>{{ item.group }}</td>
+                <td>
+                  @if (item.status === 'Aktif') {
+                    <span wuiBadge color="success" variant="subtle" pill>
+                      <span wuiBadge dot color="success"></span>
+                      Aktif
+                    </span>
+                  } @else if (item.status === 'Tertunda') {
+                    <span wuiBadge color="warning" variant="subtle" pill>
+                      <span wuiBadge dot color="warning"></span>
+                      Tertunda
+                    </span>
+                  } @else {
+                    <span wuiBadge color="info" variant="subtle" pill>
+                      <span wuiBadge dot color="info"></span>
+                      Selesai
+                    </span>
+                  }
+                </td>
+                <td>Jawa Timur, Indonesia</td>
+                <td class="text-end">Rp {{ item.amount | number }}</td>
+                <td class="wui-table-col--action wui-table-col--sticky-right">
+                  <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi" style="position: relative;">
+                    <wui-icon icon="dots-vertical"></wui-icon>
+                    @if (item.id === 1) {
+                      <span wuiBadge color="danger" pill overlap size="sm">New</span>
+                    }
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 3. WuiBadge Showcase (Pengganti Bootstrap Badge Native WUI) -->
+    <section class="doc-section">
+      <h2 class="section-title">3. WuiBadge (Pengganti Bootstrap Badge Native WUI)</h2>
+      <p class="section-note">
+        Komponen badge native WUI yang dirancang menggantikan Bootstrap badge tanpa dependensi eksternal.
+        Mendukung 3 varian (<code>filled</code>, <code>subtle</code>, <code>outlined</code>), 7 tema warna semantik,
+        bentuk kapsul (<code>pill</code>), status dot (<code>dot</code>), serta notifikasi melayang (<code>overlap</code>).
+      </p>
+
+      <div class="table-preview-card" style="padding: 1.5rem;">
+        <div class="badge-demo-label">Varian Subtle (Rekomendasi Label Status & Tabel)</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="default" variant="subtle">Default</span>
+          <span wuiBadge color="primary" variant="subtle">Primary</span>
+          <span wuiBadge color="secondary" variant="subtle">Secondary</span>
+          <span wuiBadge color="success" variant="subtle">Success</span>
+          <span wuiBadge color="danger" variant="subtle">Danger</span>
+          <span wuiBadge color="warning" variant="subtle">Warning</span>
+          <span wuiBadge color="info" variant="subtle">Info</span>
+        </div>
+
+        <div class="badge-demo-label">Varian Filled (Solid High-Contrast)</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="default">Default</span>
+          <span wuiBadge color="primary">Primary</span>
+          <span wuiBadge color="secondary">Secondary</span>
+          <span wuiBadge color="success">Success</span>
+          <span wuiBadge color="danger">Danger</span>
+          <span wuiBadge color="warning">Warning</span>
+          <span wuiBadge color="info">Info</span>
+        </div>
+
+        <div class="badge-demo-label">Varian Outlined & Pill (Bentuk Kapsul Bundar)</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="primary" variant="outlined" pill>Outlined Primary</span>
+          <span wuiBadge color="success" variant="outlined" pill>Outlined Success</span>
+          <span wuiBadge color="danger" variant="outlined" pill>Outlined Danger</span>
+          <span wuiBadge color="primary" variant="subtle" pill>Subtle Pill</span>
+          <span wuiBadge color="success" pill>Filled Pill</span>
+        </div>
+
+        <div class="badge-demo-label">Status Dot & Notification Overlap pada Tombol</div>
+        <div class="badge-demo-group">
+          <span wuiBadge color="success" variant="subtle" pill>
+            <span wuiBadge dot color="success"></span>
+            Online
+          </span>
+          <span wuiBadge color="danger" variant="subtle" pill>
+            <span wuiBadge dot color="danger"></span>
+            Offline
+          </span>
+          <span wuiBadge color="warning" variant="subtle" pill>
+            <span wuiBadge dot color="warning"></span>
+            Dalam Antrean
+          </span>
+
+          <button wuiButton variant="filled" size="sm" style="position: relative; margin-left: 1rem;">
+            Notifikasi
+            <span wuiBadge color="danger" pill overlap size="sm">5+</span>
+          </button>
+
+          <button wuiButton iconOnly variant="outlined" size="sm" style="position: relative;">
+            <wui-icon icon="dots-vertical"></wui-icon>
+            <span wuiBadge dot color="danger" overlap></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. API Reference -->
+    <section class="doc-section">
+      <h2 class="section-title">4. Referensi Directive & Utility</h2>
+
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>Directive / Class</th>
+            <th>Tipe / Nilai</th>
+            <th>Keterangan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>wuiBadge</code> / <code>wui-badge</code></td>
+            <td>Directive / Component</td>
+            <td>Badge indikator / label status. Dapat digunakan sebagai tag <code>&lt;wui-badge&gt;</code> atau attribute <code>&lt;span wuiBadge&gt;</code>.</td>
+          </tr>
+          <tr>
+            <td><code>[color]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'</code></td>
+            <td>Warna semantik badge (default: <code>'default'</code>). Terintegrasi dengan token WUI dan dark theme.</td>
+          </tr>
+          <tr>
+            <td><code>[variant]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>'filled' | 'subtle' | 'outlined'</code></td>
+            <td>Varian tampilan visual (default: <code>'filled'</code>). <code>'subtle'</code> menghasilkan latar pastel lembut.</td>
+          </tr>
+          <tr>
+            <td><code>[size]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>'sm' | 'md' | 'lg'</code></td>
+            <td>Ukuran badge (default: <code>'md'</code>).</td>
+          </tr>
+          <tr>
+            <td><code>[pill]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>boolean</code></td>
+            <td>Mengubah radius sudut menjadi bentuk bulat kapsul (999px).</td>
+          </tr>
+          <tr>
+            <td><code>[dot]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>boolean</code></td>
+            <td>Mengubah badge menjadi titik bulat status tanpa teks.</td>
+          </tr>
+          <tr>
+            <td><code>[overlap]</code> (pada <code>wuiBadge</code>)</td>
+            <td><code>boolean</code></td>
+            <td>Menempatkan badge melayang di sudut kanan atas elemen induk (posisi absolut). Induk harus <code>position: relative</code>.</td>
+          </tr>
+          <tr>
+            <td><code>wuiTable</code> / <code>.wui-table</code></td>
+            <td>Directive / CSS Class</td>
+            <td>Dipasang pada tag <code>&lt;table&gt;</code> untuk menerapkan gaya dasar data table.</td>
+          </tr>
+          <tr>
+            <td><code>[hover]</code> / <code>.wui-table-hover</code></td>
+            <td><code>boolean</code></td>
+            <td>Mengaktifkan efek sorot warna halus saat kursor mengarah ke baris <code>tbody tr</code>.</td>
+          </tr>
+          <tr>
+            <td><code>[dense]</code> / <code>.wui-table--dense</code></td>
+            <td><code>boolean</code></td>
+            <td>Mengurangi tinggi baris dan padding untuk menampilkan data lebih padat.</td>
+          </tr>
+          <tr>
+            <td><code>[alternate]</code> / <code>.wui-table--alternate</code></td>
+            <td><code>boolean</code></td>
+            <td>Mengaktifkan latar belang-belang tipis (zebra-striping) pada baris genap.</td>
+          </tr>
+          <tr>
+            <td><code>wuiTableResponsive</code></td>
+            <td>Directive / Container</td>
+            <td>Kontainer pembungkus tabel yang mengizinkan scroll horizontal saat melebihi lebar layar.</td>
+          </tr>
+          <tr>
+            <td><code>.wui-table-col--action</code></td>
+            <td>CSS Class (pada <code>th</code> / <code>td</code>)</td>
+            <td>Menyetel lebar sel ke ukuran minimum agar pas membungkus tombol aksi atau ikon saja.</td>
+          </tr>
+          <tr>
+            <td><code>.wui-table-col--sticky-left</code> / <code>.wui-table-col--sticky-right</code></td>
+            <td>CSS Class (pada <code>th</code> / <code>td</code>)</td>
+            <td>Mengunci kolom di sisi kiri atau kanan saat tabel digeser horizontal. Otomatis memakai warna surface.</td>
+          </tr>
+          <tr>
+            <td><code>.wui-table-row--no-border</code></td>
+            <td>CSS Class (pada <code>tr</code>)</td>
+            <td>Menghilangkan garis bawah pemisah pada baris tertentu.</td>
+          </tr>
+          <tr>
+            <td><code>wui-pagination</code></td>
+            <td>Component</td>
+            <td>Komponen pagination mandiri untuk navigasi tabel. Menggunakan tombol <code>wuiButton size="sm" iconOnly variant="text"</code>.</td>
+          </tr>
+          <tr>
+            <td><code>[(page)]</code></td>
+            <td><code>model&lt;number&gt;</code></td>
+            <td>Halaman aktif (1-indexed). Mendukung two-way data binding.</td>
+          </tr>
+          <tr>
+            <td><code>[count]</code></td>
+            <td><code>number</code></td>
+            <td>Total seluruh baris data.</td>
+          </tr>
+          <tr>
+            <td><code>[limit]</code></td>
+            <td><code>number</code></td>
+            <td>Jumlah baris data per halaman (default 10).</td>
+          </tr>
+          <tr>
+            <td><code>[loading]</code></td>
+            <td><code>boolean</code></td>
+            <td>Menampilkan teks 'Memuat...' dan menonaktifkan tombol sementara saat mengambil data dari server.</td>
+          </tr>
+          <tr>
+            <td><code>wui-loading</code></td>
+            <td>Component</td>
+            <td>Indikator pemuatan Material WUI. Mendukung mode circular, indeterminate, dan linear.</td>
+          </tr>
+          <tr>
+            <td><code>mode</code> (pada <code>wui-loading</code>)</td>
+            <td><code>'circular' | 'indeterminate' | 'linear'</code></td>
+            <td>Mode tampilan indikator (default <code>'circular'</code>).</td>
+          </tr>
+          <tr>
+            <td><code>size</code> (pada <code>wui-loading</code>)</td>
+            <td><code>number</code></td>
+            <td>Diameter lingkaran spinner dalam pixel untuk mode circular (default 32).</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 5. Contoh Kode Penggunaan -->
+    <section class="doc-section">
+      <h2 class="section-title">5. Contoh Penggunaan</h2>
+      <div class="code-preview">
+        <pre><code>&lt;!-- Tabel dengan Status Badge & Kolom Sticky --&gt;
+&lt;div wuiTableResponsive&gt;
+  &lt;table wuiTable hover&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th class="wui-table-col--sticky-left"&gt;Nama&lt;/th&gt;
+        &lt;th&gt;Grup&lt;/th&gt;
+        &lt;th&gt;Status&lt;/th&gt;
+        &lt;th class="text-end"&gt;Jumlah&lt;/th&gt;
+        &lt;th class="wui-table-col--action wui-table-col--sticky-right"&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td class="wui-table-col--sticky-left"&gt;Moch. Rizal Rachmadani&lt;/td&gt;
+        &lt;td&gt;Investor&lt;/td&gt;
+        &lt;td&gt;
+          &lt;span wuiBadge color="success" variant="subtle" pill&gt;
+            &lt;span wuiBadge dot color="success"&gt;&lt;/span&gt;
+            Aktif
+          &lt;/span&gt;
+        &lt;/td&gt;
+        &lt;td class="text-end"&gt;500,000&lt;/td&gt;
+        &lt;td class="wui-table-col--action wui-table-col--sticky-right"&gt;
+          &lt;button wuiButton iconOnly variant="text" size="sm" style="position: relative;"&gt;
+            &lt;wui-icon icon="dots-vertical"&gt;&lt;/wui-icon&gt;
+            &lt;span wuiBadge color="danger" pill overlap size="sm"&gt;3&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+      &lt;tr&gt;
+        &lt;th&gt;Total&lt;/th&gt;
+        &lt;th&gt;&lt;/th&gt;
+        &lt;th&gt;&lt;/th&gt;
+        &lt;th class="text-end"&gt;500,000&lt;/th&gt;
+        &lt;th&gt;&lt;/th&gt;
+      &lt;/tr&gt;
+    &lt;/tfoot&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- Komponen Pagination Mandiri --&gt;
+&lt;wui-pagination
+  [(page)]="currentPage"
+  [count]="totalItems()"
+  [limit]="pageSize()"
+  [loading]="isLoading()"
+  (pageChange)="fetchData()"
+/&gt;</code></pre>
+      </div>
+    </section>
+    </div>
+  </wui-page>
+</ng-template>

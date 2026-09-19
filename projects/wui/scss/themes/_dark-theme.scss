@@ -1,0 +1,20 @@
+// Level 3 — tema gelap.
+// Aktif OTOMATIS mengikuti preferensi OS/browser pengguna (`prefers-color-scheme`).
+// Tidak ada atribut atau class yang perlu dipasang.
+// Nama CSS variable-nya sama dengan tema terang — yang berbeda hanya nilainya, sehingga
+// komponen cukup menulis `var(--wui-color-surface)` sekali dan tidak perlu tahu ada dua mode.
+
+/// Tema gelap — override saat sistem memilih dark.
+@mixin dark-theme {
+  @media (prefers-color-scheme: dark) {
+    :root {
+      // `color-scheme` wajib supaya kontrol bawaan browser (scrollbar, input, select)
+      // ikut menyesuaikan. Tanpa ini, bagian tersebut tetap terang di mode gelap.
+      color-scheme: dark;
+
+      // Warna peran (`--wui-color-surface`, `-on-surface`, `-primary`, `-danger`, …) di-emit
+      // `themes/_roles.scss`, karena tiap peran punya nilai sendiri per mode. Berkas ini hanya
+      // mengurus hal yang bukan warna.
+    }
+  }
+}

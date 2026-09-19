@@ -1,0 +1,204 @@
+// Level 4 — tombol (Material 3).
+// Varian: filled (default M3) / outlined / text. Ukuran: sm / md / lg / xl.
+// Semua angkanya ada di `abstracts/_tokens.scss` (seksi `Button (M3)`); berkas ini hanya
+// menerjemahkannya jadi CSS variable `--wui-button-*` + aturan state — jadi aplikasi bisa
+// menyesuaikan per pemakaian, mis. `style="--wui-button-height: 3.25rem"`.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+/// Tombol Material 3 — `.wui-button` (default filled) dengan modifier
+/// `--filled` / `--outlined` / `--text` dan `--sm` / `--md` / `--lg` / `--xl`.
+@mixin button {
+    $wui-md: map.get(a.$wui-button-sizes, 'md');
+
+    // Bentuk, ukuran dasar (md), tipografi label, dan cincin fokus.
+    .wui-button {
+        --wui-button-height: #{map.get($wui-md, 'height')};
+        --wui-button-padding: #{map.get($wui-md, 'padding')};
+        --wui-button-padding-text: #{map.get($wui-md, 'padding-text')};
+        --wui-button-icon-size: #{map.get($wui-md, 'icon')};
+        --wui-button-line-height: #{map.get($wui-md, 'line-height')};
+        --wui-button-radius: #{a.$wui-button-radius};
+
+        // Reset lokal — hanya tombol ber-class ini yang terpengaruh, tombol lain di aplikasi aman.
+        appearance: none;
+        border: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--wui-space-2);
+        height: var(--wui-button-height);
+        padding-inline: var(--wui-button-padding);
+        border-radius: var(--wui-button-radius);
+        font: inherit;
+
+        // `<a wuiButton>` juga didukung: underline bawaan link dimatikan di sini (warnanya sudah
+        // diatur per varian, jadi link memakai warna tombol yang sama).
+        text-decoration: none;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background-color var(--wui-motion-duration-fast) var(--wui-motion-easing-standard), box-shadow var(--wui-motion-duration-fast) var(--wui-motion-easing-standard);
+
+        @include a.typography(map.get($wui-md, 'label-role'), map.get($wui-md, 'label-size'));
+
+        // Tinggi baris label dikunci dari map tombol (bukan dari peran tipografi di atas), supaya
+        // kotak teks setinggi ikon — lihat komentar `line-height` di `$wui-button-sizes`.
+        line-height: var(--wui-button-line-height);
+
+        @include a.focus-ring;
+
+        &:disabled,
+        &[aria-disabled='true'] {
+            cursor: default;
+        }
+
+        // `<a>` tidak mengenal `:disabled` — `aria-disabled="true"` meniru perilakunya sekaligus
+        // mematikan hover/klik. Untuk mengeluarkannya dari urutan tab, konsumen menambah `tabindex="-1"`.
+        &[aria-disabled='true'] {
+            pointer-events: none;
+        }
+    }
+
+    // ── Peran warna ─────────────────────────────────────────────────────────
+    // Empat variabel indirection: menambah warna baru cukup menambah satu blok di sini —
+    // bukan menggandakan seluruh aturan varian × state × ukuran.
+    //   --wui-button-container  latar varian `filled`
+    //   --wui-button-content    label/ikon di atas container (peran `on-*`)
+    //   --wui-button-accent     label varian `outlined`/`text` + warna state layernya
+    //   --wui-button-outline    border varian `outlined`
+    // Untuk `default` (netral) accent-nya `on-surface` supaya terbaca, sedangkan bordernya tetap
+    // `outline` yang lebih tenang; untuk warna peran lain (primary/danger) border mengikuti warna itu.
+    // `default` sendiri diturunkan dari `surface`/`on-surface` (`themes/_roles.scss`).
+    .wui-button {
+        --wui-button-container: var(--wui-color-default);
+        --wui-button-content: var(--wui-color-on-default);
+        --wui-button-accent: var(--wui-color-on-surface);
+        --wui-button-outline: var(--wui-color-outline);
+    }
+
+    .wui-button--color-primary {
+        --wui-button-container: var(--wui-color-primary);
+        --wui-button-content: var(--wui-color-on-primary);
+        --wui-button-accent: var(--wui-color-primary);
+        --wui-button-outline: var(--wui-color-primary);
+    }
+
+    .wui-button--color-danger {
+        --wui-button-container: var(--wui-color-danger);
+        --wui-button-content: var(--wui-color-on-danger);
+        --wui-button-accent: var(--wui-color-danger);
+        --wui-button-outline: var(--wui-color-danger);
+    }
+
+    // ── Varian filled (default) ─────────────────────────────────────────────
+    // Lapisan interaksinya dicampur dengan warna container (content di atas container),
+    // jadi warna dasarnya tidak tertimpa.
+    .wui-button,
+    .wui-button--filled {
+        background-color: var(--wui-button-container);
+        color: var(--wui-button-content);
+
+        @include a.interactive-state($wui-surface: var(--wui-button-container), $wui-color-var: '--wui-button-content');
+
+        // @media (hover: hover) {
+        //     &:hover {
+        //         box-shadow: var(--wui-elevation-1);
+        //     }
+        // }
+
+        // Versi paksa untuk demo/screenshot (lihat `interactive-state()`).
+        // &.is-hover {
+        //     box-shadow: var(--wui-elevation-1);
+        // }
+
+        &:disabled,
+        &[aria-disabled='true'] {
+            background-color: var(--wui-color-disabled-container);
+            box-shadow: none;
+            color: var(--wui-color-disabled-content);
+        }
+    }
+
+    // ── Varian outlined ─────────────────────────────────────────────────────
+    // `background-color: transparent` wajib: elemen tombol selalu membawa class dasar
+    // `.wui-button` (latar filled), jadi varian harus mereset latarnya sendiri.
+    .wui-button--outlined {
+        background-color: transparent;
+        border: 1px solid var(--wui-button-outline);
+        color: var(--wui-button-accent);
+
+        @include a.interactive-state($wui-color-var: '--wui-button-accent');
+
+        &:disabled,
+        &[aria-disabled='true'] {
+            background-color: transparent;
+            border-color: var(--wui-color-disabled-container);
+            color: var(--wui-color-disabled-content);
+        }
+    }
+
+    // ── Varian text ─────────────────────────────────────────────────────────
+    // Tanpa border, padding lebih rapat (nilai `padding-text` per ukuran).
+    .wui-button--text {
+        background-color: transparent;
+        padding-inline: var(--wui-button-padding-text);
+        color: var(--wui-button-accent);
+
+        @include a.interactive-state($wui-color-var: '--wui-button-accent');
+
+        &:disabled,
+        &[aria-disabled='true'] {
+            background-color: transparent;
+            color: var(--wui-color-disabled-content);
+        }
+    }
+
+    // ── Ukuran ──────────────────────────────────────────────────────────────
+    @each $wui-size, $wui-props in a.$wui-button-sizes {
+        .wui-button--#{$wui-size} {
+            --wui-button-height: #{map.get($wui-props, 'height')};
+            --wui-button-padding: #{map.get($wui-props, 'padding')};
+            --wui-button-padding-text: #{map.get($wui-props, 'padding-text')};
+            --wui-button-icon-size: #{map.get($wui-props, 'icon')};
+            --wui-button-line-height: #{map.get($wui-props, 'line-height')};
+
+            @include a.typography(map.get($wui-props, 'label-role'), map.get($wui-props, 'label-size'));
+
+            // Sama seperti blok dasar: kunci tinggi baris dari map tombol.
+            line-height: var(--wui-button-line-height);
+        }
+    }
+
+    // ── Ikon ────────────────────────────────────────────────────────────────
+    // Sisi ikon ditentukan `iconPos` (class di host), BUKAN urutan markup: ikon dan teks label
+    // sama-sama flex item, dan teks label adalah *anonymous flex item* yang selalu ber-`order: 0`
+    // (sudah diuji di browser). Jadi `order: -1` / `order: 1` cukup untuk memindahkan ikon.
+    // `order` dipilih, bukan `flex-direction: row-reverse`, supaya arah baris & gap tidak ikut
+    // terbalik.
+    .wui-button--icon-start > wui-icon { order: -1; }
+    .wui-button--icon-end > wui-icon { order: 1; }
+
+    // Ikon ikut ukuran tombol: `wui-icon` membaca `--wui-icon-size` dari elemennya sendiri
+    // (fallback 24px), jadi cukup disetel di elemen ikon.
+    .wui-button > wui-icon {
+        --wui-icon-size: var(--wui-button-icon-size);
+
+        // Baris kosong di atas wajib: `declaration-empty-line-before` menolak deklarasi biasa
+        // yang menempel di bawah custom property.
+        flex: none;
+    }
+
+    // Padding tombol SENGAJA simetris (revisi 4): sisi ikon memakai nilai yang sama dengan sisi
+    // label, jadi tidak ada aturan padding khusus ikon. Ikon hanya mengatur `order`, ukurannya,
+    // dan jarak antar-item lewat `gap` tombol.
+
+    // ── Ikon-saja ───────────────────────────────────────────────────────────
+    // `iconOnly` menandai tombol yang hanya berisi ikon — CSS tidak bisa mendeteksi "tanpa label"
+    // dengan andal (teks tidak bisa jadi patokan selektor), jadi penandanya eksplisit dari input.
+    // Tombol jadi persegi: lebar = tinggi, dan padding dihitung dari selisih tinggi tombol dengan
+    // ukuran ikon sehingga tidak ada angka baru di token (md: (40 − 24) / 2 = 8px).
+    .wui-button--icon-only {
+        width: var(--wui-button-height);
+        padding-inline: calc((var(--wui-button-height) - var(--wui-button-icon-size)) / 2);
+    }
+}

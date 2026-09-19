@@ -1,0 +1,82 @@
+// Level 4 — dialog modal (`WuiDialogService`).
+// Berkas ini HARUS ter-emit ke global: isi dialog dirender ke `document.body`, di luar komponen
+// mana pun, sehingga style milik komponen tidak bisa menjangkaunya (sama seperti `_app.scss`).
+
+// Structural CSS milik CDK **tidak** di-`@use` dari `@angular/cdk/overlay`: Sass di
+// `@angular/build` hanya me-resolve path relatif + `stylePreprocessorOptions.includePaths`, jadi
+// `@use '@angular/cdk/overlay'` gagal di build aplikasi konsumen ("Can't find stylesheet to
+// import") — dan menambahkan `node_modules` ke includePaths akan merusak kontrak "konsumen cukup
+// `@use '@wajek/wui/scss/wui.scss'`".
+
+
+// Structural CSS `.cdk-overlay-*` **tidak** disalin ke sini. CDK 20.2 menyuntikkannya sendiri saat
+// runtime lewat komponen `cdk-overlay-style-loader` (di-`load()` dari konstruktor service
+// `Overlay`, jadi selalu ada begitu dialog dipakai). Yang perlu ditulis di sini hanya penimpaan
+// milik wui — dan itu harus memperhitungkan dua hal:
+
+// 1. `z-index` CDK dibungkus `@layer cdk-overlay`, sedangkan rule di luar layer selalu menang atas
+//    rule di dalam layer → penimpaan `z-index` cukup ditulis biasa, tanpa menaikkan specificity.
+// 2. Sisanya (`position`, `max-width`, `display`, …) ada di LUAR layer dan stylesheet CDK
+//    disuntikkan SETELAH style layer kita → rule dengan specificity sama akan kalah. Karena itu
+//    aturan permukaan dialog ditulis sebagai `.cdk-overlay-pane.wui-dialog`, bukan `.wui-dialog`.
+@use '../abstracts' as a;
+
+/// Dialog modal — permukaan `.wui-dialog` beserta backdrop `.wui-dialog__backdrop`.
+@mixin dialog {
+    // Urutan lapisan: dialog selalu di atas page stack (`--wui-z-overlay`).
+    .cdk-overlay-container {
+        z-index: var(--wui-z-dialog, #{a.$wui-z-dialog});
+    }
+
+    // Kecepatan fade backdrop diselaraskan dengan token motion wui. `prefers-reduced-motion` tetap
+    // dihormati karena CDK menimpanya lewat `transition-duration: 1ms` di stylesheet-nya sendiri.
+    .cdk-overlay-backdrop {
+        transition: opacity var(--wui-motion-duration-base) var(--wui-motion-easing-standard);
+    }
+
+    // Permukaan dialog: latar, radius, elevasi, dan padding — jadi konsumen cukup menulis isinya.
+    // Selector-nya ikut menyebut `.cdk-overlay-pane` karena `max-width: 100%` bawaan CDK datang
+    // belakangan dengan specificity yang sama.
+    .cdk-overlay-pane.wui-dialog {
+        // Nilai token yang lebih besar dari viewport harus dipotong, karena itu dibungkus `min()`.
+        background-color: var(--wui-color-surface);
+        color: var(--wui-color-on-surface);
+        border-radius: var(--wui-dialog-radius, #{a.$wui-dialog-radius});
+        box-shadow: var(--wui-dialog-elevation, #{a.$wui-dialog-elevation});
+        min-width: min(var(--wui-dialog-min-width, #{a.$wui-dialog-min-width}), 100%);
+        max-width: min(var(--wui-dialog-max-width, #{a.$wui-dialog-max-width}), 100%);
+        padding: var(--wui-dialog-padding, #{a.$wui-dialog-padding});
+        overflow: auto;
+    }
+
+    // Struktur isi dialog — dipakai dialog sistem (`WuiDialogService.alert()`) dan boleh dipakai
+    // dialog buatan aplikasi supaya jarak serta tipografinya sama.
+    .wui-dialog__title {
+        @include a.typography('title', 'medium');
+
+        margin: 0 0 var(--wui-space-3);
+    }
+
+    .wui-dialog__content {
+        @include a.typography('body', 'medium');
+
+        margin: 0 0 var(--wui-space-4);
+
+        // Pesan error dari API biasanya sudah punya baris baru sendiri — jangan dirapatkan browser.
+        white-space: pre-line;
+    }
+
+    .wui-dialog__actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--wui-space-2);
+    }
+
+    // Backdrop: dim saja (belum ada blur — menunggu angka desainer). Warnanya satu sumber
+    // dengan overlay page lewat `--wui-overlay-color`.
+    .wui-dialog__backdrop {
+        background-color: var(--wui-overlay-color);
+    }
+}

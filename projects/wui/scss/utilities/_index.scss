@@ -1,0 +1,5 @@
+// Level 6 — class bantu (utilitas). Dipanggil paling akhir di `wui.scss`, setelah `layout/`.
+// Satu baris per fitur; hapus barisnya untuk mematikan class-nya.
+@forward 'flex';
+@forward 'gap';
+@forward 'spacing';

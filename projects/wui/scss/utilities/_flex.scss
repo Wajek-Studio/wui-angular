@@ -1,0 +1,94 @@
+// Level 6 — utilitas flex.
+// Nama & nilainya sengaja mengikuti Bootstrap (`.d-flex`, `.flex-row`, `.justify-content-between`,
+// …), jadi kebiasaan yang sudah ada bisa langsung dipakai — hanya prefix class-nya `wui-`, supaya
+// tidak bentrok kalau aplikasi juga memuat Bootstrap/Tailwind.
+// Tiap utilitas punya varian **responsif** `-<bp>` yang berlaku dari breakpoint itu ke atas:
+// `.wui-flex-md-column`, `.wui-justify-content-lg-between`, `.wui-order-xl-1`. Daftarnya dari
+// `$wui-breakpoints`, jadi menambah breakpoint tidak perlu menyentuh file ini.
+// Tidak ada `!important` di sini: yang menjamin utilitas menang adalah urutan layer
+// (`utilities/` dipanggil paling akhir di `wui.scss`), sama seperti utilitas spacing.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+/// Utilitas flex + varian responsifnya.
+@mixin flex {
+    // Grup yang bentuknya seragam: `<nama class> → (properti, peta nilai)`.
+    // Kunci peta selalu ditulis sebagai string — angka tanpa kutip akan dinormalisasi Sass
+    // (mis. `08` jadi `8`) dan nama class-nya ikut berubah.
+    $wui-groups: (
+        'd': (
+            'property': 'display',
+            'values': ('flex': flex, 'inline-flex': inline-flex),
+        ),
+        'flex': (
+            'property': 'flex-direction',
+            'values': ('row': row, 'row-reverse': row-reverse, 'column': column, 'column-reverse': column-reverse),
+        ),
+        'flex-wrap': (
+            'property': 'flex-wrap',
+            'values': ('wrap': wrap, 'nowrap': nowrap, 'wrap-reverse': wrap-reverse),
+        ),
+        'flex-grow': (
+            'property': 'flex-grow',
+            'values': ('0': 0, '1': 1),
+        ),
+        'flex-shrink': (
+            'property': 'flex-shrink',
+            'values': ('0': 0, '1': 1),
+        ),
+        'justify-content': (
+            'property': 'justify-content',
+            'values': ('start': flex-start, 'end': flex-end, 'center': center, 'between': space-between, 'around': space-around, 'evenly': space-evenly),
+        ),
+        'align-items': (
+            'property': 'align-items',
+            'values': ('start': flex-start, 'end': flex-end, 'center': center, 'baseline': baseline, 'stretch': stretch),
+        ),
+        'align-self': (
+            'property': 'align-self',
+            'values': ('auto': auto, 'start': flex-start, 'end': flex-end, 'center': center, 'baseline': baseline, 'stretch': stretch),
+        ),
+        'align-content': (
+            'property': 'align-content',
+            'values': ('start': flex-start, 'end': flex-end, 'center': center, 'between': space-between, 'around': space-around, 'stretch': stretch),
+        ),
+        'order': (
+            'property': 'order',
+            'values': ('0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, 'first': -1, 'last': 6),
+        ),
+    );
+
+    // Penting: SEMUA class dasar dulu, baru SEMUA varian responsif — bukan dasar lalu responsif
+    // per nilai. Kalau diacak, `.wui-flex-column` bisa keluar setelah `.wui-flex-md-row`, dan
+    // karena specificity-nya sama, versi dasar yang menang. `-<bp>` juga harus urut dari
+    // breakpoint terkecil ke terbesar, supaya `.wui-flex-lg-column` menang atas `.wui-flex-md-row`.
+    @each $wui-name, $wui-group in $wui-groups {
+        @each $wui-suffix, $wui-value in map.get($wui-group, 'values') {
+            .wui-#{$wui-name}-#{$wui-suffix} {
+                #{map.get($wui-group, 'property')}: #{$wui-value};
+            }
+        }
+    }
+
+    // `flex-fill` = `flex: 1 1 auto` (anak mengisi sisa ruang). Shorthand `flex`, jadi tidak bisa
+    // ikut pola `(properti, nilai)` di atas — nilainya bukan satu kata kunci.
+    .wui-flex-fill {
+        flex: 1 1 auto;
+    }
+
+    @each $wui-key, $wui-min in a.$wui-breakpoints {
+        @include a.media-up($wui-min) {
+            @each $wui-name, $wui-group in $wui-groups {
+                @each $wui-suffix, $wui-value in map.get($wui-group, 'values') {
+                    .wui-#{$wui-name}-#{$wui-key}-#{$wui-suffix} {
+                        #{map.get($wui-group, 'property')}: #{$wui-value};
+                    }
+                }
+            }
+
+            .wui-flex-#{$wui-key}-fill {
+                flex: 1 1 auto;
+            }
+        }
+    }
+}

@@ -1,0 +1,141 @@
+// Mixin global. TIDAK menghasilkan CSS sampai dipanggil.
+@use 'sass:map';
+@use 'functions';
+@use 'tokens';
+
+/// Media query dari lebar tertentu ke atas.
+/// Notasi **range** (`width >= …`), bukan `min-width: …` — itulah yang diminta stylelint repo
+/// (`media-feature-range-notation`), dan sudah didukung semua browser target.
+@mixin media-up($min-width) {
+  @media (width >= #{$min-width}) {
+    @content;
+  }
+}
+
+/// Cincin fokus yang konsisten — hanya muncul untuk navigasi keyboard.
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--wui-color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/// Menerapkan styling tipografi lengkap ke selector berdasarkan peran & ukuran.
+/// Contoh: `@include a.typography('title', 'large', 'semibold');`
+@mixin typography($role, $size: 'medium', $weight: null) {
+  font-size: var(--wui-font-size-#{$role}-#{$size});
+  line-height: var(--wui-line-height-#{$role}-#{$size});
+  letter-spacing: var(--wui-letter-spacing-#{$role}-#{$size});
+  font-weight: var(--wui-font-weight-#{$role}-#{$size});
+
+  @if $weight == 'em' {
+    font-weight: var(--wui-font-weight-#{$role}-#{$size}-em);
+  } @else if $weight {
+    font-weight: var(--wui-font-weight-#{$weight});
+  }
+}
+
+/// Convenience aliases untuk masing-masing peran tipografi:
+@mixin display($size: 'medium', $weight: null) {
+  @include typography('display', $size, $weight);
+}
+
+@mixin headline($size: 'medium', $weight: null) {
+  @include typography('headline', $size, $weight);
+}
+
+@mixin title($size: 'medium', $weight: null) {
+  @include typography('title', $size, $weight);
+}
+
+@mixin body($size: 'medium', $weight: null) {
+  @include typography('body', $size, $weight);
+}
+
+@mixin label($size: 'medium', $weight: null) {
+  @include typography('label', $size, $weight);
+}
+
+/// Menuliskan margin/padding untuk satu sisi atau satu sumbu tanpa mengetik
+/// properti CSS-nya manual. Contoh:
+///   `@include a.space(mt, 3);`    → `margin-top: var(--wui-space-3, 1rem)`
+///   `@include a.space(px, 4);`    → `padding-inline: var(--wui-space-4, 1.5rem)`
+///   `@include a.space(mx, auto);` → `margin-inline: auto`
+/// Arah yang tersedia: `m` `mt` `mb` `ms` `me` `mx` `my` (margin) dan
+/// `p` `pt` `pb` `ps` `pe` `px` `py` (padding). Sumbu `x`/`y` dan sisi `s`/`e`
+/// memakai logical property, jadi RTL ikut benar tanpa aturan tambahan.
+/// Nilai `auto` hanya berlaku untuk margin.
+@mixin space($dir, $step) {
+  $wui-props: map.get(tokens.$wui-margin-dirs, $dir);
+
+  @if not $wui-props {
+    $wui-props: map.get(tokens.$wui-padding-dirs, $dir);
+  }
+
+  @if not $wui-props {
+    @error 'wui: arah spasi `#{$dir}` tidak dikenal. Pakai: m, mt, mb, ms, me, mx, my, p, pt, pb, ps, pe, px, py.';
+  }
+
+  @if $step == auto and map.get(tokens.$wui-padding-dirs, $dir) {
+    @error 'wui: space(#{$dir}, auto) tidak valid — padding tidak mengenal nilai `auto`.';
+  }
+
+  $wui-value: auto;
+
+  @if $step != auto {
+    $wui-value: functions.spacing-var($step);
+  }
+
+  @each $wui-prop in $wui-props {
+    #{$wui-prop}: $wui-value;
+  }
+}
+
+/// Menempelkan state layer standar pada elemen interaktif: hover `0.08`, pressed `0.10`,
+/// dragged `0.16`. Hover dibungkus `@media (hover: hover)` supaya tidak "lengket" di layar sentuh.
+/// @param {String} $wui-role - `'primary'` (default), atau `'on-primary'` bila elemen
+///   berada di atas permukaan primary. Diabaikan bila `$wui-color-var` diisi.
+/// @param {String|null} $wui-surface - Warna dasar elemen. Bila diisi, lapisan dicampur ke
+///   permukaan itu sehingga warna dasarnya tidak tertimpa (dipakai tombol `filled`).
+/// @param {String|null} $wui-color-var - Nama CSS variable warna lapisan (tanpa `var()`), mis.
+///   `--wui-button-content`. Dipakai komponen yang warnanya bisa ditukar dari CSS: satu aturan
+///   melayani semua warna, tanpa token state layer baru per warna.
+@mixin interactive-state($wui-role: 'primary', $wui-surface: null, $wui-color-var: null) {
+  $wui-08: null;
+  $wui-10: null;
+  $wui-16: null;
+
+  @if $wui-color-var {
+    $wui-08: functions.state-layer-color($wui-color-var, '08', $wui-surface);
+    $wui-10: functions.state-layer-color($wui-color-var, '10', $wui-surface);
+    $wui-16: functions.state-layer-color($wui-color-var, '16', $wui-surface);
+  } @else {
+    $wui-08: functions.state-layer($wui-role, '08', $wui-surface);
+    $wui-10: functions.state-layer($wui-role, '10', $wui-surface);
+    $wui-16: functions.state-layer($wui-role, '16', $wui-surface);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $wui-08;
+    }
+  }
+
+  &:active {
+    background-color: $wui-10;
+  }
+
+  &.is-dragged {
+    background-color: $wui-16;
+  }
+
+  // Class bantu untuk MEMAKSA state — dipakai halaman demo, screenshot, dan pengujian visual
+  // tanpa perlu hover/klik sungguhan. Tidak dipakai oleh komponen di produksi.
+  &.is-hover {
+    background-color: $wui-08;
+  }
+
+  &.is-pressed {
+    background-color: $wui-10;
+  }
+}

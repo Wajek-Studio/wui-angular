@@ -1,0 +1,23 @@
+.demo-title {
+  margin: 0 0 0.5rem;
+  color: var(--wui-color-on-surface);
+}
+
+.demo-text {
+  margin: 0 0 1.5rem;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+
+  code {
+    background: color-mix(in srgb, var(--wui-color-on-surface) 8%, transparent);
+    color: var(--wui-color-on-surface);
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+}
+
+.demo-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

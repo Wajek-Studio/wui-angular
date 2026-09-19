@@ -1,0 +1,14 @@
+// Style yang HARUS ter-emit ke global — tidak bisa ditangani component style (view encapsulation).
+
+@forward 'app';
+@forward 'button';
+@forward 'dialog';
+@forward 'form-field';
+@forward 'page';
+@forward 'sidenav';
+@forward 'topbar';
+@forward 'icon';
+@forward 'table';
+@forward 'pagination';
+@forward 'loading';
+@forward 'badge';
