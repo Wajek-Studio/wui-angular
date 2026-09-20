@@ -351,6 +351,39 @@ $wui-typography-scales: (
   ),
 ) !default;
 
+// ── Tipografi: Ritme Heading ────────────────────────────────────────────────
+// Jarak vertikal `h1`–`h6` (`start` = di atas judul, `end` = di bawah judul). Nilainya dipakai
+// **hanya di dalam `<article>`** — di luar itu semua heading bermargin 0, lihat `base/_heading.scss`.
+
+// Nilainya ditulis dari kunci yang sama dengan skala spasi bila pas (`$wui-space-2/3/4` =
+// 8/16/24px), sisanya kelipatan `$wui-spacer` (langkah 4px: 12 = 0.75, 20 = 1.25, 28 = 1.75,
+// 32 = 2, 40 = 2.5). Skala `$wui-spacers` sendiri **tidak cukup** untuk ritme judul: setelah
+// 1.5rem ia melompat ke 3rem, padahal judul butuh langkah yang lebih rapat dan menurun teratur.
+// Jadi ini token turunan skala spacing, bukan skala baru yang terlepas: ubah `$wui-spacer`
+// → semua jarak judul ikut bergeser.
+$wui-heading-margins: (
+  1: ('start': $wui-spacer * 2.5,  'end': $wui-space-3),
+  2: ('start': $wui-spacer * 2,    'end': $wui-space-3),
+  3: ('start': $wui-spacer * 1.75, 'end': $wui-spacer * 0.75),
+  4: ('start': $wui-space-4,       'end': $wui-spacer * 0.75),
+  5: ('start': $wui-spacer * 1.25, 'end': $wui-space-2),
+  6: ('start': $wui-space-3,       'end': $wui-space-2),
+) !default;
+
+// Ukuran & bobot heading polos (`<h1>`–`<h6>` tanpa class). Cakupannya **berbeda** dari margin di
+// atas: tipografi berlaku di **mana pun**, termasuk di dalam `<article>`, karena ukuran teks adalah
+// identitas judul — `h2` harus terbaca sebagai `h2` entah ia di dokumen, di kartu, atau di dialog.
+// Nilainya menunjuk peran & ukuran di `$wui-typography-scales`; pasangan yang salah gagal saat build
+// (divalidasi fungsi `heading-type()`), bukan jadi `var()` tanpa definisi.
+$wui-heading-typography: (
+  1: ('role': 'display',  'size': 'large'),
+  2: ('role': 'display',  'size': 'medium'),
+  3: ('role': 'display',  'size': 'small'),
+  4: ('role': 'headline', 'size': 'large'),
+  5: ('role': 'headline', 'size': 'medium'),
+  6: ('role': 'headline', 'size': 'small'),
+) !default;
+
 // ── Sidenav ─────────────────────────────────────────────────────────────────
 $wui-sidenav-width: 16rem !default;
 $wui-sidenav-mini-width: 4.5rem !default;

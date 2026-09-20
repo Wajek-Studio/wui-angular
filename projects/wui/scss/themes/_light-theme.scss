@@ -86,6 +86,13 @@
       }
     }
 
+    // Tipografi: ritme heading di dalam `<article>` (`base/_heading.scss`). Satu variable per
+    // level berisi sepasang nilai `margin-block`, jadi aplikasi bisa mengatur ulang ritmenya
+    // saat runtime tanpa menyentuh margin `h1`–`h6` yang dipakai sebagai label UI.
+    @each $wui-level in map.keys(a.$wui-heading-margins) {
+      --wui-heading-margin-#{$wui-level}: #{a.heading-margin($wui-level)};
+    }
+
     // Sidenav
     --wui-sidenav-width: #{a.$wui-sidenav-width};
     --wui-sidenav-item-radius: #{a.$wui-sidenav-item-radius};

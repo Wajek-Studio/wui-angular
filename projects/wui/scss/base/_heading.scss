@@ -1,0 +1,44 @@
+// Level 2 — heading `h1`–`h6`: tipografi & ritme vertikal.
+
+// Dua hal diatur di sini, dan cakupannya **sengaja berbeda**:
+//   1. Tipografi (ukuran, line-height, letter-spacing, bobot) — berlaku **di mana pun**, termasuk di
+//      dalam `<article>`. Ukuran adalah identitas judul: `h2` harus terbaca sebagai `h2` entah ia
+//      berada di dokumen, di kartu, atau di dialog. Pemetaannya di `$wui-heading-typography`
+//      (`h1`–`h3` = display, `h4`–`h6` = headline).
+//   2. Margin vertikal — **hanya** di dalam `<article>` (`$wui-heading-margins`); di luar itu 0.
+//      Heading di aplikasi lebih sering dipakai sebagai **label UI** (judul dialog, judul kartu,
+//      header halaman, judul kolom) daripada sebagai bagian dari alur baca. Kalau tiap `h2` membawa
+//      margin bawaan browser, posisinya bergantung urutan DOM dan sulit diprediksi — jarak di
+//      konteks itu milik komponen (flex/gap) atau utilitas `wui-m*`. `<article>` adalah penanda
+//      eksplisit "ini teks yang dibaca berurutan".
+
+// Karena selektornya elemen polos, konsumen **selalu** bisa menimpanya dengan satu class
+// (mis. `.wui-mb-3` atau `.wui-dialog__title`) — class mengalahkan selektor elemen.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+/// Tipografi heading (di mana pun) + margin 0, dengan ritme baca di dalam `<article>`.
+@mixin heading {
+  @each $wui-level in map.keys(a.$wui-heading-typography) {
+    $wui-type: a.heading-type($wui-level);
+
+    h#{$wui-level} {
+      @include a.typography(map.get($wui-type, 'role'), map.get($wui-type, 'size'));
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block: 0;
+  }
+
+  @each $wui-level in map.keys(a.$wui-heading-margins) {
+    article h#{$wui-level} {
+      margin-block: var(--wui-heading-margin-#{$wui-level}, #{a.heading-margin($wui-level)});
+    }
+  }
+}

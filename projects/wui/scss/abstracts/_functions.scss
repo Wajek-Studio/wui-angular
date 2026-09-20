@@ -22,6 +22,44 @@
   @return var(--wui-space-#{$step}, #{spacing($step)});
 }
 
+/// Margin vertikal heading level `$level` (1–6) dari `$wui-heading-margins`, sebagai
+/// sepasang nilai `block-start block-end`: `heading-margin(1)` → `40px 16px`.
+/// Dipakai `base/_heading.scss` sebagai fallback `var(--wui-heading-margin-1, …)`.
+/// Sengaja **satu nilai** (bukan dipisah per sisi) supaya ritme judul diubah sebagai satu kesatuan.
+@function heading-margin($level) {
+  @if not map.has-key(tokens.$wui-heading-margins, $level) {
+    @error 'wui: heading-margin(#{$level}) tidak ada. Level yang tersedia: #{map.keys(tokens.$wui-heading-margins)}.';
+  }
+
+  $wui-margin: map.get(tokens.$wui-heading-margins, $level);
+
+  @return map.get($wui-margin, 'start') map.get($wui-margin, 'end');
+}
+
+/// Peran & ukuran tipografi untuk heading level `$level` (1–6) dari `$wui-heading-typography`.
+/// Hasilnya dipakai `base/_heading.scss`: `map.get(heading-type(1), 'role')` → `display`.
+/// Divalidasi terhadap `$wui-typography-scales` supaya salah tulis peran/ukuran gagal **saat build**,
+/// bukan diam-diam jadi `var(--wui-font-size-…)` yang tidak pernah didefinisikan.
+@function heading-type($level) {
+  @if not map.has-key(tokens.$wui-heading-typography, $level) {
+    @error 'wui: heading-type(#{$level}) tidak ada. Level yang tersedia: #{map.keys(tokens.$wui-heading-typography)}.';
+  }
+
+  $wui-type: map.get(tokens.$wui-heading-typography, $level);
+  $wui-role: map.get($wui-type, 'role');
+  $wui-size: map.get($wui-type, 'size');
+
+  @if not map.has-key(tokens.$wui-typography-scales, $wui-role) {
+    @error 'wui: peran tipografi `#{$wui-role}` (heading #{$level}) tidak ada di $wui-typography-scales.';
+  }
+
+  @if not map.has-key(map.get(tokens.$wui-typography-scales, $wui-role), $wui-size) {
+    @error 'wui: ukuran `#{$wui-size}` tidak ada di peran `#{$wui-role}` (heading #{$level}).';
+  }
+
+  @return $wui-type;
+}
+
 /// Mengubah tingkat transparansi sebuah warna. Contoh: `alpha(#0057ff, 0.2)`.
 @function alpha($color, $amount) {
   @return color.change($color, $alpha: $amount);

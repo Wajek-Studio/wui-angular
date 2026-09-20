@@ -30,6 +30,7 @@
 // Salakan layer — hapus barisnya kalau tidak ingin dipakai.
 @include base.reset;
 @include base.typography;
+@include base.heading;
 @include base.layout;
 @include themes.light-theme;
 @include themes.dark-theme;
