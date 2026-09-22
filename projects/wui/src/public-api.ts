@@ -15,6 +15,9 @@ export * from './form-field/form-field';
 export * from './form-field/input';
 export * from './form-field/label';
 
+export * from './select/select';
+export * from './select/option';
+
 export * from './page/page.component';
 export * from './page/page.options';
 export * from './page/page.ref';

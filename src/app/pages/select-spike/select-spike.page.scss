@@ -1,0 +1,66 @@
+// Spike sekali pakai — gaya lokal untuk harness F0, bukan bagian style layer library
+// (`npm run lint:styles` hanya memindai `projects/wui/scss/**`).
+//
+// Komponen pemakainya `ViewEncapsulation.None` karena pane overlay hidup di `document.body`.
+// Karena itu semua kelas di berkas ini diawali `spike-`.
+
+.spike-page {
+  max-width: 900px;
+}
+
+.spike-baris {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.spike-log {
+  max-height: 220px;
+  overflow: auto;
+  padding: 0.75rem;
+  border: 1px solid var(--wui-color-outline-variant);
+  border-radius: var(--wui-radius-md, 8px);
+  margin: 0;
+  background: var(--wui-color-surface-container-low);
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.spike-clip {
+  position: relative;
+  height: 80px;
+  padding: 0.5rem;
+  overflow: hidden;
+  border: 1px dashed var(--wui-color-outline);
+  border-radius: var(--wui-radius-md, 8px);
+}
+
+.spike-tinggi {
+  height: 60vh;
+}
+
+// Pane overlay (dipasang lewat `panelClass` di `spike-overlay.ts`).
+.spike-pane--z {
+  z-index: 1200;
+}
+
+// Isi panel — sengaja lebih tinggi dari `max-height` supaya menimbulkan scroll & cukup tinggi
+// untuk menembus kotak `overflow: hidden` di kasus 1.
+.spike-isi {
+  min-width: 200px;
+  max-height: 240px;
+  padding: 0.25rem 0;
+  overflow-y: auto;
+  border: 1px solid var(--wui-color-outline-variant);
+  border-radius: var(--wui-radius-md, 8px);
+  background: var(--wui-color-surface-container);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
+}
+
+.spike-item {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}

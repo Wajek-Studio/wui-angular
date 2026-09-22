@@ -27,6 +27,12 @@ export const routes: Routes = [{
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
 }, {
     path: 'layout', loadComponent: () => import('./pages/layout.page/layout.page').then(m => m.LayoutPage)
+}, {
+    path: 'select', loadComponent: () => import('./pages/select/select.page/select.page').then(m => m.SelectPage)
+}, {
+    // Halaman spike F0 (`wui-select-plan.md`) — kode sekali pakai, tidak ditautkan di navigasi.
+    // Hapus rute ini (beserta folder `pages/select-spike/`) setelah F0 selesai.
+    path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)
 },{
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

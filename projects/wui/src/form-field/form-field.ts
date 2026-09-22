@@ -1,4 +1,4 @@
-import { Component, Signal, computed, input, signal } from '@angular/core';
+import { Component, ElementRef, Signal, computed, inject, input, signal } from '@angular/core';
 
 /** @internal Penomoran id field. */
 let nomorUrut = 0;
@@ -46,9 +46,25 @@ export type WuiFormFieldVariant = 'outlined' | 'filled';
     class: 'wui-form-field',
     '[class.wui-form-field--outlined]': "variant() === 'outlined'",
     '[class.wui-form-field--filled]': "variant() === 'filled'",
+    // Klik label hanya otomatis memfokuskan elemen *labelable* (input/textarea/select/button).
+    // Kontrol kustom seperti `<wui-select>` bukan salah satunya, jadi jalur itu ditambahkan di sini.
+    '(click)': 'fokuskanKontrol($event)',
   },
 })
 export class WuiFormField {
+  readonly #element = inject<ElementRef<HTMLElement>>(ElementRef);
+
+  /**
+   * Elemen host field.
+   *
+   * @internal dipakai `WuiSelect` supaya lebar panelnya mengikuti lebar **field** — bukan hanya lebar
+   * kontrolnya. Keduanya sama selama kontrol mengisi field (`width: 100%`), tapi field-lah yang tetap
+   * benar kalau suatu saat ia punya padding atau kolom sendiri.
+   */
+  get host(): HTMLElement {
+    return this.#element.nativeElement;
+  }
+
   /** Varian tampilan. Default `'outlined'`. */
   readonly variant = input<WuiFormFieldVariant>('outlined');
 
@@ -103,5 +119,55 @@ export class WuiFormField {
    */
   reportControlId(id: string | null): void {
     this.#controlId.set(id);
+  }
+
+  /**
+   * Fokuskan kontrol saat labelnya diklik — **hanya** untuk kontrol yang bukan elemen labelable.
+   *
+   * `for` pada `<label>` hanya memfokuskan elemen yang dikenali HTML (`input`, `textarea`, `select`,
+   `button`, …). Elemen kustom seperti `<wui-select>` tidak termasuk, jadi klik labelnya akan
+   "diam" — padahal label itu tetap menunjuk id yang benar untuk screen reader. Karena kitalah yang
+   membuat label dan kontrolnya (K3/L7), jalur fokusnya ditambahkan di sini alih-alih meminta
+   aplikasi menulis `(click)` sendiri.
+   *
+   * Kontrol native tidak lagi dilewatkan: sejak labelnya `pointer-events: none` (supaya klik tidak
+   * tertelan label yang menutupi kontrol), method ini yang mengambil alih **semua** klik di area
+   * field yang bukan area kontrol dan bukan pesan. Jadi mengeklik label yang mengapung, atau ruang
+   * kosong di dalam kotak, tetap berakhir di kontrolnya — untuk kontrol native sekalipun.
+   * @internal dipanggil host listener, bukan kode aplikasi.
+   */
+  protected fokuskanKontrol(event: MouseEvent): void {
+    const target = event.target as HTMLElement | null;
+
+    if (!target) {
+      return;
+    }
+
+    // Pesan hint/error bukan area kontrol — jangan jadi jalan pintas untuk memfokuskan apa pun.
+    if (target.closest('.wui-form-field__message')) {
+      return;
+    }
+
+    const kontrol = this.#cariKontrol();
+
+    // Klik di dalam kontrol adalah urusan kontrolnya sendiri (fokus, pemilihan teks, buka panel).
+    if (!kontrol || kontrol === target || kontrol.contains(target)) {
+      return;
+    }
+
+    kontrol.focus();
+  }
+
+  /** Elemen di dalam field yang id-nya dipakai label — kontrolnya sendiri. */
+  #cariKontrol(): HTMLElement | null {
+    const id = this.controlId();
+
+    for (const elemen of this.#element.nativeElement.querySelectorAll<HTMLElement>('[id]')) {
+      if (elemen.id === id) {
+        return elemen;
+      }
+    }
+
+    return null;
   }
 }

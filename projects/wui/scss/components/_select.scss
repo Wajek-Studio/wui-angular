@@ -1,0 +1,135 @@
+// Level 4 — select (`<wui-select>`).
+// Kotak field-nya, label mengapung, dan varian `outlined`/`filled` tetap milik
+// `components/_form-field.scss` — kontrol ini memakai class `.wui-input` yang sama (lewat
+// `wuiInput`). Berkas ini hanya menyusun ISI-nya: teks nilai, panah, dan keadaan khusus elemen
+// kustom (placeholder, nonaktif).
+//
+// Catatan fase: gaya panel + opsi (yang dirender ke `document.body` lewat overlay) menyusul di F2 —
+// lihat `docs/planning/wui-select-plan.md` §7.
+
+@use '../abstracts' as a;
+
+/// Select kustom: kontrol non-native yang tampil sebagai field wui.
+@mixin select {
+    .wui-select {
+        // Host adalah elemen yang difokus, jadi ia juga yang harus mengatur letak isinya.
+        // `inline-flex` (bukan `flex`) supaya select mengikuti lebar kolomnya, bukan memaksa lebar
+        // satu baris penuh seperti blok.
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--wui-space-2);
+        cursor: pointer;
+        text-align: start;
+        user-select: none;
+    }
+
+    // Elemen kustom tidak mengenal `:disabled`, jadi keadaan nonaktif dibaca dari atribut ARIA
+    // yang dipasang `WuiSelect` — sama seperti keadaan invalid yang dibaca dari `aria-invalid`
+    // (lihat `_form-field.scss`).
+    .wui-select[aria-disabled='true'] {
+        background-color: var(--wui-color-disabled-container);
+        color: var(--wui-color-disabled-content);
+        cursor: not-allowed;
+    }
+
+    // Nilai terpilih: satu baris, dipotong dengan elipsis kalau panjang — supaya panahnya tidak
+    // pernah terdorong keluar kotak.
+    .wui-select__value {
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    // Placeholder baru tampil saat select **difokus** — sama seperti kontrol native, yang
+    // `::placeholder`-nya transparan sampai kontrolnya difokus (lihat aturan `.wui-input::placeholder`
+    // di `_form-field.scss`). Jadi:
+    // - kosong & tidak difokus → hanya label, duduk di tengah kotak (tidak ada dua teks bertumpuk);
+    // - kosong & difokus      → label mengapung ke garis atas + placeholder terbaca di baris teks;
+    // - ada nilai             → label mengapung + nilai terpilih (class ini tidak dipasang).
+    // Warnanya yang dibuat transparan, bukan `visibility`, supaya lebar teksnya tetap terhitung:
+    // kotak tidak berubah tinggi dan panah tidak bergeser.
+    .wui-select__value--kosong {
+        color: transparent;
+    }
+
+    .wui-select:focus .wui-select__value--kosong {
+        color: var(--wui-color-on-surface-variant);
+    }
+
+    // Panah mengikuti ukuran dari token (bisa ditimpa runtime lewat `--wui-select-arrow-size`),
+    // dan warnanya sama dengan placeholder supaya terbaca sebagai hiasan, bukan nilai.
+    .wui-select__arrow {
+        --wui-icon-size: var(--wui-select-arrow-size, #{a.$wui-select-arrow-size});
+
+        flex: 0 0 auto;
+        color: var(--wui-color-on-surface-variant);
+    }
+
+    // ── Panel ───────────────────────────────────────────────────────────────
+    // Dirender ke `document.body` lewat overlay: `panelClass` memasang `.wui-select-panel` di pane,
+    // sedangkan isinya `.wui-select__panel`. Karena tinggal di luar pohon komponen, gayanya harus
+    // ditulis di sini.
+    .wui-select__panel {
+        // `width: 100%` **wajib**: pane overlay CDK itu flex container, jadi blok seperti ini
+        // menyusut ke lebar padding-nya saja kalau tidak dipatok — terukur 48px di dalam pane 315px
+        // (lebar panel jadi tidak mengikuti lebar field walau `updateSize({ width })` sudah benar).
+        width: 100%;
+        max-height: var(--wui-select-panel-max-height, #{a.$wui-select-panel-max-height});
+        overflow-y: auto;
+        border-radius: var(--wui-radius-md);
+        background-color: var(--wui-color-surface-container);
+        box-shadow: var(--wui-elevation-1);
+
+        // Menggulir daftar opsi tidak boleh merembet ke halaman di belakangnya.
+        overscroll-behavior: contain;
+
+        // Tanpa padding samping: jarak tepi diatur tiap opsi, supaya sorotan hover-nya menyentuh
+        // tepi panel seperti daftar menu.
+        @include a.space(py, 2);
+    }
+
+    // Opsi hanya hidup di panel. Saat panel tertutup, slot projection-nya kembali menjadi anak host
+    // (begitulah cara kerja `ng-content`) — dan di situ opsinya tidak boleh terlihat.
+    .wui-select > wui-option {
+        display: none;
+    }
+
+    // ── Opsi ───────────────────────────────────────────────────────────────
+    // Ini **desain default**-nya. Isi opsi diproyeksikan aplikasi (`ng-content`), jadi teks biasa,
+    // ikon, dua baris, atau badge tetap bekerja di atas dasar ini — itu alasan `<wui-option>` dibuat
+    // komponen, bukan directive.
+    .wui-option {
+        display: flex;
+        align-items: center;
+        min-height: var(--wui-select-option-height, #{a.$wui-select-option-height});
+        cursor: pointer;
+        color: var(--wui-color-on-surface);
+
+        @include a.space(px, 4);
+        @include a.space(py, 2);
+    }
+
+    // Nonaktif dibaca dari ARIA: elemen kustom tidak mengenal `:disabled`.
+    .wui-option[aria-disabled='true'] {
+        cursor: not-allowed;
+        color: var(--wui-color-disabled-content);
+    }
+
+    // Terpilih: peran `primary`, supaya terbaca sebagai "inilah yang sedang aktif".
+    .wui-option.is-terpilih {
+        color: var(--wui-color-primary);
+    }
+
+    // Umpan balik hover — peran tema, bukan campuran persen ad-hoc.
+    .wui-option:hover:not([aria-disabled='true']) {
+        background-color: var(--wui-color-surface-container-high);
+    }
+
+    // Penunjuk opsi saat dinavigasi keyboard. Sedikit lebih tegas dari hover
+    // (`surface-container-highest`) karena inilah satu-satunya petunjuk posisi saat memakai panah.
+    .wui-option.is-active {
+        background-color: var(--wui-color-surface-container-highest);
+    }
+}

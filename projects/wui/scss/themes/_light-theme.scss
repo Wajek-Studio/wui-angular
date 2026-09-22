@@ -56,6 +56,11 @@
     --wui-field-label-float-outlined: #{a.$wui-field-label-float-outlined};
     --wui-field-label-float-filled: #{a.$wui-field-label-float-filled};
 
+    // Select
+    --wui-select-arrow-size: #{a.$wui-select-arrow-size};
+    --wui-select-option-height: #{a.$wui-select-option-height};
+    --wui-select-panel-max-height: #{a.$wui-select-panel-max-height};
+
     // Layout: container. Breakpoint-nya compile-time (media query tidak bisa pakai `var()`),
     // tapi lebar maksimum, batas kiri-kanan, dan gutter bisa ditimpa aplikasi saat runtime.
     // --wui-container-max-width: #{a.$wui-container-max-width};

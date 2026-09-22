@@ -336,6 +336,13 @@ $wui-field-label-rest: 28px !default;
 $wui-field-radius: 8px !default;
 $wui-dialog-elevation: 0 1px 3px 0 rgb(0 0 0 / 30%), 0 4px 8px 3px rgb(0 0 0 / 15%) !default;
 
+// ── Select ──────────────────────────────────────────────────────────────────
+// Kotak, radius, border, dan varian select **memakai token field di atas** lewat class `.wui-input`
+// yang sama — tidak ada salinan angka field di sini. Yang khas select hanya ini.
+$wui-select-arrow-size: 1.25rem !default;
+$wui-select-option-height: 48px !default;
+$wui-select-panel-max-height: 280px !default;
+
 // ── Tipografi: Bobot Font ───────────────────────────────────────────────────
 $wui-font-weight-regular: 400 !default;
 $wui-font-weight-medium: 500 !default;

@@ -24,11 +24,17 @@
         gap: var(--wui-space-2);
     }
 
-    // Mengapung saat kontrol difokus atau sudah berisi. `WuiInput` memasang `placeholder=" "`
-    // kalau aplikasi tidak menulisnya — tanpa atribut `placeholder`, `:placeholder-shown` tidak
-    // pernah cocok sehingga label tidak akan pernah mengapung.
+    // Mengapung saat kontrol difokus atau sudah berisi. Keadaan "terisi" dibaca dua cara, karena
+    // kontrolnya dua jenis:
+    // - native (`input`/`textarea`) → `:placeholder-shown`. Tanpa JS, jadi nilai yang di-set
+    //   programatik (`setValue`) ikut terbaca; `WuiInput` memasang `placeholder=" "` supaya
+    //   atributnya ada untuk dibaca.
+    // - kustom (`wui-select`) → atribut `data-filled` milik `WuiSelect`. Elemen kustom tidak punya
+    //   `:placeholder-shown` sama sekali, sehingga `:not(:placeholder-shown)` di sana selalu benar
+    //   dan labelnya akan mengapung terus — itu sebabnya cabang native dibatasi `input`/`textarea`.
     .wui-form-field:has(.wui-input:focus),
-    .wui-form-field:has(.wui-input:not(:placeholder-shown)) {
+    .wui-form-field:has(:is(input, textarea).wui-input:not(:placeholder-shown)),
+    .wui-form-field:has(.wui-input[data-filled]) {
         --wui-field-label-scale: 0.75;
     }
 
@@ -36,7 +42,8 @@
     // (bukan ke dalamnya), teks kontrol tidak perlu ruang tambahan — teksnya tetap di tengah
     // kotak, dan posisi istirahat label = titik tengah itu (lihat `$wui-field-label-rest`).
     .wui-form-field--outlined:has(.wui-input:focus),
-    .wui-form-field--outlined:has(.wui-input:not(:placeholder-shown)) {
+    .wui-form-field--outlined:has(:is(input, textarea).wui-input:not(:placeholder-shown)),
+    .wui-form-field--outlined:has(.wui-input[data-filled]) {
         --wui-field-label-top: var(--wui-field-label-float-outlined, #{a.$wui-field-label-float-outlined});
         --wui-field-label-padding: 4px;
     }
@@ -46,7 +53,8 @@
     // kotak) yang sama dengan outlined. Teks kontrol varian filled memang digeser 24px ke bawah, tapi
     // saat istirahat kontrolnya kosong — label di titik tengah kotak, bukan di baris teks yang belum ada.
     .wui-form-field--filled:has(.wui-input:focus),
-    .wui-form-field--filled:has(.wui-input:not(:placeholder-shown)) {
+    .wui-form-field--filled:has(:is(input, textarea).wui-input:not(:placeholder-shown)),
+    .wui-form-field--filled:has(.wui-input[data-filled]) {
         --wui-field-label-top: var(--wui-field-label-float-filled, #{a.$wui-field-label-float-filled});
     }
 
@@ -61,6 +69,14 @@
         top: var(--wui-field-label-top);
         z-index: 1;
         color: var(--wui-color-on-surface-variant);
+
+        // Label **tidak menerima klik** — satu-satunya jalan supaya klik pada kontrol benar-benar
+        // sampai ke kontrolnya. Di keadaan istirahat label duduk tepat di tengah kotak, jadi tanpa
+        // ini klik mouse ke tengah field mendarat di label: select tidak terbuka (harus dua kali),
+        // dan input hanya mendapat fokus lewat jalur khusus.
+        // Akibatnya klik yang jatuh di area field — termasuk pada label yang sudah mengapung —
+        // ditangani `WuiFormField.fokuskanKontrol()`, yang memfokuskan kontrolnya.
+        pointer-events: none;
         transform: translateY(-50%) scale(var(--wui-field-label-scale));
         padding-inline: var(--wui-field-label-padding);
 
@@ -74,7 +90,8 @@
     }
 
     .wui-form-field--outlined:has(.wui-input:focus) .wui-form-field__label,
-    .wui-form-field--outlined:has(.wui-input:not(:placeholder-shown)) .wui-form-field__label {
+    .wui-form-field--outlined:has(:is(input, textarea).wui-input:not(:placeholder-shown)) .wui-form-field__label,
+    .wui-form-field--outlined:has(.wui-input[data-filled]) .wui-form-field__label {
         background-color: var(--wui-field-label-background, var(--wui-color-surface));
     }
 

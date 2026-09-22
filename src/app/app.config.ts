@@ -12,6 +12,7 @@ import {
   mdiDotsVertical,
   mdiFormatFont,
   mdiFormTextbox,
+  mdiFormSelect,
   mdiGestureTapButton,
   mdiHome,
   mdiMenu,
@@ -40,6 +41,7 @@ export const appConfig: ApplicationConfig = {
       { name: 'dots-vertical', path: mdiDotsVertical },
       { name: 'dialog', path: mdiWindowMaximize },
       { name: 'form', path: mdiFormTextbox },
+      { name: 'form-select', path: mdiFormSelect },
       { name: 'play', path: mdiPlayCircle }
     ),
   ],

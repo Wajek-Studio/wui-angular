@@ -1,0 +1,130 @@
+<ng-template #halaman>
+  <wui-page>
+    <div class="wui-page-content wui-container wui-py-5 spike-page">
+      <h1 class="wui-display-medium wui-mb-2">Spike F0 — panel select</h1>
+      <p class="wui-body-large wui-mb-4">
+        Bukan halaman dokumentasi: ini harness pengukuran untuk rencana
+        <code>wui-select-plan.md</code> (§7 F0, hasil diisi ke §9). Panel di sini dibuat dengan
+        <code>Overlay</code> + <code>flexibleConnectedTo</code> + preset dropdown CDK — sama seperti
+        rencana komponennya. Halaman ini sendiri sudah hidup di dalam satu lapisan page.
+      </p>
+
+      <div class="spike-baris wui-mb-3">
+        <button wuiButton variant="outlined" data-spike="bersih" (click)="spike.bersihkan()">
+          Bersihkan log
+        </button>
+        <button wuiButton variant="text" data-spike="tutup-semua" (click)="spike.tutupSemua()">
+          Tutup semua panel
+        </button>
+      </div>
+
+      <pre id="spike-log" class="spike-log wui-mb-5">{{ logTeks() }}</pre>
+
+      <!-- 1. INDUK OVERFLOW: HIDDEN -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">1. Panel dari dalam induk <code>overflow: hidden</code></h2>
+        <p class="wui-body-medium wui-mb-3">
+          Kotak di bawah hanya 80px tinggi dan memotong isinya. Kalau panel dirender di dalam pohon
+          field (<code>position: absolute</code>), bagian yang keluar kotak akan hilang. Yang dicari:
+          <code>hit-bawah</code> = <code>PANEL</code> dan <code>di container CDK? true</code>.
+        </p>
+        <div class="spike-clip">
+          <button wuiButton data-spike="a" (click)="bukaDalamKotak($event)">Buka panel dari dalam kotak</button>
+        </div>
+      </section>
+
+      <!-- 2. LAPISAN PAGE + FOCUS TRAP -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">2. Lapisan page kedua (focus trap menyala)</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Tombol berikut menumpuk lapisan page baru. Trap lapisan itu menyala, dan panel hidup di
+          <code>document.body</code> — di luar subtree lapisan. Yang dicari: <code>fokus</code> tetap
+          di tombol setelah panel dibuka (juga pada <code>+300ms</code>) dan <code>hit-atas</code>
+          tetap <code>PANEL</code>.
+        </p>
+        <div class="spike-baris">
+          <button wuiButton data-spike="b-lapisan" (click)="bukaLapisan()">Tumpuk lapisan page kedua</button>
+          <button wuiButton variant="outlined" data-spike="b-tutup" (click)="tutupLapisan()">
+            Tutup lapisan
+          </button>
+        </div>
+      </section>
+
+      <!-- 3. DIALOG -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">3. Panel di dalam dialog</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Dialog memakai <code>--wui-z-dialog: 1100</code>. Di dalamnya ada dua tombol: <code>plain</code>
+          (apa adanya CDK) dan <code>z</code> (<code>z-index: 1200</code>, usul
+          <code>$wui-z-select-panel</code>). Yang dicari: nilai <code>hit-tengah</code> — kalau
+          <code>tertutup oleh &lt;div class="cdk-overlay-backdrop"&gt;</code> atau pane dialog, berarti
+          panel butuh <code>z-index</code> sendiri.
+        </p>
+        <button wuiButton data-spike="c-dialog" (click)="bukaDialog()">Buka dialog berisi panel</button>
+      </section>
+
+      <!-- 4. RUANG BAWAH TIDAK CUKUP -->
+      <section>
+        <h2 class="wui-headline-small wui-mb-2">4. Kalau ruang bawah jendela tidak cukup</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Tiga perilaku yang berbeda, satu panel yang sama. <code>plain</code> membiarkan CDK
+          menggeser/menyusutkan panel (<code>withPush</code> + dimensi fleksibel),
+          <code>flip</code> memakai preset <code>BELOW + ADJACENT</code>,
+          <code>flipAtas</code> hanya memakai <code>STANDARD_DROPDOWN_BELOW_POSITIONS</code>
+          (preset itu sudah memuat dua posisi "di atas").
+          <strong>Perkecil jendela</strong> supaya ruang bawah tinggal sedikit, lalu bandingkan
+          baris log-nya.
+        </p>
+        <div class="spike-baris">
+          <button wuiButton data-spike="d-plain" (click)="bukaFlip($event, 'plain', 'd-plain', 'D-plain')">
+            plain (BELOW+ADJACENT, push + fleksibel)
+          </button>
+          <button wuiButton data-spike="d-flip" (click)="bukaFlip($event, 'flip', 'd-flip', 'D-flip')">
+            flip (BELOW+ADJACENT, tanpa push/fleksibel)
+          </button>
+          <button wuiButton data-spike="d-atas" (click)="bukaFlip($event, 'flipAtas', 'd-atas', 'D-flipAtas')">
+            flipAtas (hanya BELOW, tanpa push/fleksibel)
+          </button>
+          <button wuiButton data-spike="d-bawah" (click)="bukaFlip($event, 'bawahFleksibel', 'd-bawah', 'D-bawahFleksibel')">
+            bawahFleksibel (hanya BELOW, push + fleksibel)
+          </button>
+          <button wuiButton data-spike="d-shrink" (click)="bukaFlip($event, 'atasShrink', 'd-shrink', 'D-atasShrink')">
+            atasShrink (hanya BELOW, fleksibel tanpa push)
+          </button>
+        </div>
+        <div class="spike-tinggi"></div>
+      </section>
+    </div>
+  </wui-page>
+</ng-template>
+
+<ng-template #lapisan>
+  <wui-page>
+    <div class="wui-page-content wui-container wui-py-5">
+      <h2 class="wui-headline-medium wui-mb-2">Lapisan page kedua</h2>
+      <p class="wui-body-large wui-mb-4">
+        Fokus dikurung di lapisan ini oleh <code>FocusTrap</code> milik page stack. Panel yang dibuka
+        dari sini dirender ke <code>document.body</code> — di luar kurungan itu.
+      </p>
+      <div class="spike-baris">
+        <button wuiButton data-spike="b-panel" (click)="bukaDalamLapisan($event)">
+          Buka panel dari lapisan ini
+        </button>
+        <button wuiButton variant="outlined" data-spike="b-panel-tutup" (click)="spike.tutup('b')">
+          Tutup panel
+        </button>
+        <button wuiButton variant="text" data-spike="b-tutup-2" (click)="tutupLapisan()">
+          Tutup lapisan
+        </button>
+      </div>
+    </div>
+  </wui-page>
+</ng-template>
+
+<ng-template #panel>
+  <div class="spike-isi">
+    @for (item of opsi; track item) {
+      <div class="spike-item">{{ item }}</div>
+    }
+  </div>
+</ng-template>

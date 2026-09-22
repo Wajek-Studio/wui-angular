@@ -1,0 +1,22 @@
+<span class="wui-select__value" [class.wui-select__value--kosong]="kosong()">
+  {{ kosong() ? placeholder() : teks() }}
+</span>
+
+<wui-icon class="wui-select__arrow" [path]="panah" />
+
+<!--
+  Panel F2a/F2b — kerangkanya sudah final, isinya kini opsi milik aplikasi. Panel tinggal di dalam
+  `<ng-template>` karena ia harus mendarat di `document.body` (bebas dari `overflow: hidden` dan
+  stacking context induknya), bukan di dalam pohon komponen ini. Klik di panel diteruskan ke
+  `WuiSelect` — satu listener untuk semua opsi, bukan satu per opsi.
+-->
+<ng-template #panel>
+  <div
+    class="wui-select__panel"
+    role="listbox"
+    [attr.id]="panelId"
+    (click)="klikPanel($event)"
+  >
+    <ng-content />
+  </div>
+</ng-template>
