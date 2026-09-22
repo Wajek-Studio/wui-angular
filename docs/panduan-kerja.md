@@ -63,10 +63,50 @@ Cara melapor yang diharapkan:
 ## 4. Konvensi repo
 
 - Jangan membuat skrip bantu di folder `tools/` — folder itu sudah dibubarkan atas permintaan user.
-- Skrip npm yang ada: `start`, `build`, `build:wui`, `watch`, `lint:styles`, `test`,
-  `version:bump`, `release:patch|minor|major`.
+- Skrip npm yang ada: `start`, `build`, `build:wui`, `theme:build`, `theme:check`, `watch`,
+  `lint:styles`, `test`, `version:bump`, `release:patch|minor|major`.
 - Dokumentasi halaman demo tinggal di `src/app/pages/**`; **jangan** menulis class/tema dokumen sendiri
   di sana — pakai class yang sudah ada di `@wajek/wui` (mis. `wui-container`, `wui-py-5`,
   `wui-body-large`, `<table wuiTable class="is-dense">`).
 - Keputusan desain per fitur dicatat di `docs/planning/<fitur>-plan.md`; kalau sebuah keputusan
   berubah, perbarui plan-nya, jangan cuma kodenya.
+
+## 5. Generator tema warna (Material Theme Builder)
+
+`projects/wui/bin/wui-theme.mjs` (Node biasa, **tanpa** dependensi) mengubah export MTB jadi berkas
+SCSS `$wui-schemes`. Bentuk, alasan, dan keputusannya ada di `docs/planning/wui-color-mtb-plan.md`.
+
+```bash
+# dari repo library ini (skrip npm sudah menunjuk berkas playground)
+npm run theme:build                       # src/theme/default.json → src/theme/_wui-schemes.scss
+npm run theme:check                       # bandingkan saja; keluar 2 bila basi/belum ada
+npm run theme:build -- ~/Downloads/x.json -o src/theme/_wui-schemes.scss
+npm run theme:build -- --unknown=warn     # lihat kunci skema yang belum dikenal, jangan langsung gagal
+
+# dari aplikasi konsumen (@wajek/wui sudah terpasang)
+npx wui-theme src/theme/material-theme.json
+```
+
+- Skripnya **ikut terbit di dalam paket**: `projects/wui/bin/**` terdaftar di `projects/wui/ng-package.json`
+  → `assets`, dan `bin` di `projects/wui/package.json` menyediakan perintah `wui-theme`. Konsumen
+  **tidak** perlu menyalin skrip apa pun.
+- Konsumen cukup menambah skrip npm sendiri:
+  `"theme:build": "wui-theme src/theme/material-theme.json"` (`node_modules/.bin` otomatis ada di `PATH`
+  saat npm script berjalan).
+- ⚠️ Field `scripts` **dibuang** ng-packagr saat build (dianggap risiko keamanan), jadi skrip npm tidak
+  bisa dititipkan dari sisi library — jalurnya `bin` seperti di atas. Field `bin` sendiri **aman**
+  (diverifikasi dengan membaca `write-package.transform.js` di `node_modules/ng-packagr`).
+- Semua path di generator dihitung dari **direktori kerja**, bukan dari lokasi skrip, supaya perintah
+  yang sama jalan di repo library maupun di aplikasi konsumen.
+
+- Berkas hasilnya **generated** — jangan diedit tangan; ubah warna di MTB lalu regenerate.
+- Yang ditulis: `$wui-schemes` (`light` + `dark`, 45 peran masing-masing) dan `$wui-palletes`
+  (skala palet mentah dari `palettes` MTB — data rujukan, **tidak** dipakai library; beda dari
+  `$wui-palettes`/`$wui-palettes-extra` milik library).
+- Kunci deprecated M3 (`background`, `onBackground`, `surfaceVariant`, `surfaceTint`) dilewati dan
+  dicatat di header berkas; kunci skema yang tak dikenal **menggagalkan** proses (pakai
+  `--unknown=warn` untuk melihat daftarnya lebih dulu).
+- Kode keluar: `0` berhasil/sinkron · `1` gagal · `2` `--check` menemukan berkas basi atau belum ada.
+- 4 skema varian kontras MTB belum dipakai (M5) — mengaktifkannya melipatgandakan CSS.
+- ⚠️ Kalau nanti repo memakai formatter (prettier dsb.), **kecualikan berkas generated** — kalau
+  tidak, `npm run theme:check` akan selalu melaporkan "basi".

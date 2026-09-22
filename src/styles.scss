@@ -1,30 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
-// Konfigurasi library: palet yang skalanya di-emit + peran warna (`$wui-roles`).
-// Semua opsional — tanpa konfigurasi pun library memakai nilai bawaan.
-@use '@wajek/wui/scss/wui.scss' with ($wui-palette: 'purple');
+// Warna: sumbernya `src/theme/default.json` (export Material Theme Builder).
+// Regenerate `src/theme/_wui-schemes.scss` dengan `npm run theme:build` — jangan diedit tangan.
+// Urutan wajib: berkas tema dimuat LEBIH DULU, karena konfigurasi `with (…)` hanya boleh memakai
+// variabel dari modul yang sudah dimuat.
+@use './theme/wui-schemes' as theme;
+@use '@wajek/wui/scss/wui.scss' with ($wui-schemes: theme.$wui-schemes);
 
-// Contoh mengganti peran warna dari sini (nonaktif — pindahkan ke `@use` di atas untuk mencoba):
-//
-// @use '@wajek/wui/scss/wui.scss' with (
-//   $wui-palette: 'purple',
-//   $wui-roles: (
-//     'light': (
-//       'primary': ('purple', 500),   // (palet, tone) → diambil dari data palet
-//       'on-primary': #fff,           // warna langsung
-//       'danger': ('red', 600),       // tone palet bawaan
-//       'secondary': ('magenta', 500),
-//       'surface': #fff,
-//       'on-surface': #111,
-//       'outline': #ccc,
-//     ),
-//     'dark': (
-//       'primary': ('purple', 500),   // tone 500 palet sudah bernilai mode gelap
-//       'on-primary': #05000f,
-//       'danger': ('red', 500),
-//       'surface': #14121a,
-//       'on-surface': #f5f5f5,
-//       'outline': #484553,
-//     ),
-//   ),
-// );
+// Catatan: `$wui-schemes` menggantikan seluruh peta (tidak digabung dengan bawaan), jadi peta yang
+// ditulis tangan wajib memuat semua peran `$wui-role-required` — praktisnya pakai generator di atas.

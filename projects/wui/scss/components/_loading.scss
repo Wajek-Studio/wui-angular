@@ -10,6 +10,10 @@
     wui-loading,
     .wui-loading {
         --wui-loading-size: 32px;
+        // Warna spinner = peran `primary`. Dua nilai turunan di bawah (20% untuk jalur/`track`,
+        // 60% untuk segmen yang menunggu) **sengaja tetap** campuran dari `--wui-loading-color`:
+        // Material 3 tidak punya peran untuk jalur spinner, dan menurunkannya dari `primary`
+        // membuatnya otomatis ikut saat warna aksen diganti.
         --wui-loading-color: var(--wui-color-primary);
 
         display: inline-block;

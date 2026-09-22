@@ -6,6 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "build:wui": "ng build wui",
+    "theme:build": "node projects/wui/bin/wui-theme.mjs src/theme/default.json",
+    "theme:check": "node projects/wui/bin/wui-theme.mjs src/theme/default.json --check",
     "publish:wui": "npm run build:wui && cd dist/@wajek/wui && npm publish",
     "watch": "ng build --watch --configuration development",
     "lint:styles": "stylelint \"projects/wui/scss/**/*.scss\"",

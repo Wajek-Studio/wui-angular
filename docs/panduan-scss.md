@@ -34,7 +34,7 @@ Konvensi & jebakan style layer. Plan per fitur ada di `docs/planning/scss-*.md`.
 
 - **Satu-satunya tempat menulis nilai desain**: `abstracts/_tokens.scss` (tidak menghasilkan CSS).
 - `themes/_light-theme.scss` meng-emit token mode-agnostik (`--wui-space-*`, radius, z-index, motion,
-  field, dialog, sidenav, topbar, skala tipografi) ke `:root`; `themes/_roles.scss` meng-emit warna
+  field, dialog, sidenav, topbar, skala tipografi) ke `:root`; `themes/_schemes.scss` meng-emit warna
   peran untuk dua mode; `themes/_dark-theme.scss` hanya `color-scheme`.
 - Karena semuanya CSS variable, aplikasi bisa menimpanya **saat runtime** tanpa rebuild (kecuali yang
   dipakai di media query, mis. breakpoint).
@@ -53,15 +53,32 @@ Konvensi & jebakan style layer. Plan per fitur ada di `docs/planning/scss-*.md`.
 
 ## 5. Warna
 
-- **Palet = intensitas saja**: `$wui-palettes-builtin` (`purple`, `red`, `magenta`, `neutral`) berisi
-  skala tone `50…950` per mode. `red`/`magenta` masih placeholder menunggu angka desainer.
-- **Peran = makna**: `themes/_roles.scss` (`$wui-roles`, `role-value()`, `roles()`, `derived-roles()`).
-  Nilai peran boleh `(palet, tone)`, warna langsung, string CSS apa pun, atau `false` (tidak di-emit).
-- Palet milik aplikasi masuk lewat `$wui-palettes-extra` (digabung jadi `$wui-palettes`), dan harus
-  **lengkap** — library hanya memvalidasi kelengkapan (`@error` menyebut palet/mode/tone yang hilang),
-  tidak menambal tone yang kurang.
+- **Sumber nilai = skema Material Theme Builder** (M9, 22 Sep 2026): `$wui-schemes` bawaan berisi 45
+  peran M3 (hex, mode terang + gelap) dari export `default.json`. Aplikasi memakai generator
+  `npx wui-theme` → `src/theme/_wui-schemes.scss`, lalu `styles.scss` cukup 2 baris
+  (`@use './theme/wui-schemes' as theme;` + `with ($wui-schemes: theme.$wui-schemes)`).
+  Plan: `docs/planning/wui-color-mtb-plan.md` (§2 = kontrak `styles.scss`-nya).
+- Definisi tiap peran (arti, pasangan wajib, larangan) → `docs/panduan-warna.md`; nilainya di
+  `themes/_schemes.scss`.
+- **Skema = peta peran per mode**: `themes/_schemes.scss` (`$wui-schemes`, `scheme-value()`,
+  `schemes-for-mode()`, `scheme-validated()`, `schemes()`, `derived-roles()`). Nilai peran boleh
+  `(palet, tone)`, warna langsung, string CSS apa pun, atau `false` (tidak di-emit).
+  Divalidasi saat build: `$wui-role-required` (peran yang dibaca komponen — 18 peran, daftarnya di
+  `abstracts/_tokens.scss`) wajib ada, dan setiap `X`/`X-container` wajib punya `on-*`-nya — kalau
+  tidak, `@error` menyebut peran yang hilang. Peta aplikasi **menggantikan** peta bawaan, tidak
+  digabung, jadi pakai generator `npx wui-theme` bila tidak mau menulisnya lengkap.
+- **Palet = data pasif**: `$wui-palettes-builtin` = 5 palet bentuk MTB (`primary`, `secondary`,
+  `tertiary`, `neutral`, `neutral-variant`) dengan tone **absolut** `0…100`, satu skala untuk kedua
+  mode. Tidak di-emit secara default (`$wui-palette: false`); gunanya data rujukan + bentuk
+  `(palet, tone)` (mis. `a.color-raw('brand', 40)`). `themes/_palette.scss` tinggal emit skala +
+  validasi peta tone.
+- Palet milik aplikasi masuk lewat `$wui-palettes-extra` (digabung jadi `$wui-palettes`), bentuk peta
+  `(tone: warna)` dengan tone numerik (konvensi MTB `0…100`) — `@error` bila bukan angka atau bukan
+  warna. Nama palet dilarang bentrok dengan nama peran (`$wui-palette-reserved`), jadi palet bawaan
+  bernama MTB itu hanya berlaku sebagai data.
 - State layer (`--wui-color-state-layer-<role>-opacity-08/10/16`) diturunkan di CSS dengan
   `color-mix(in srgb, var(--wui-color-<role>) N%, transparent)` — satu definisi untuk kedua mode.
+  Peran yang tidak ada di skema **dilewati**; yang wajib sudah dijaga `$wui-role-required`.
   ⚠️ Kunci peta opacity harus **string** (`"08"`); angka `08` menjadi `8` sehingga token jadi `opacity-8`.
 - `--wui-color-primary` dan peran lain kini **hex compile-time**, jadi tidak ikut berubah kalau token
   skala palet ditimpa saat runtime (runtime palette switching ditunda — C10 di plan warna).

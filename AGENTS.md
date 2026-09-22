@@ -40,6 +40,7 @@ User mengerjakan **pengetesan manual sendiri**. Karena itu:
 | --- | --- |
 | `docs/panduan-kerja.md` | Alur kerja, pengetesan, build/preview, versi & rilis |
 | `docs/panduan-scss.md` | Struktur layer, token, spacing/palet/heading, jebakan stylelint & Sass |
+| `docs/panduan-warna.md` | Definisi & aturan pakai tiap peran warna (primary/secondary/error/surface/outline) |
 | `docs/panduan-komponen.md` | Per komponen: perilaku + jebakan terverifikasi |
 
 Ringkasan konvensi yang paling mahal kalau dilanggar:

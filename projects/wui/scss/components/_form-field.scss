@@ -60,7 +60,7 @@
         inset-inline-start: var(--wui-field-padding-inline, #{a.$wui-field-padding-inline});
         top: var(--wui-field-label-top);
         z-index: 1;
-        color: color-mix(in srgb, var(--wui-color-on-surface) 70%, transparent);
+        color: var(--wui-color-on-surface-variant);
         transform: translateY(-50%) scale(var(--wui-field-label-scale));
         padding-inline: var(--wui-field-label-padding);
 
@@ -78,17 +78,16 @@
         background-color: var(--wui-field-label-background, var(--wui-color-surface));
     }
 
-    // Satu elemen untuk dua keadaan: hint netral, error memakai peran `danger`.
+    // Satu elemen untuk dua keadaan: hint netral, error memakai peran `error`.
     .wui-form-field__message {
         @include a.typography('body', 'small');
 
-        // Masih nilai turunan, belum peran warna — angkat jadi token (mis. `--wui-color-hint`)
-        // di `themes/_roles.scss` begitu desainer memberi angkanya.
-        color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);
+        // Teks penekanan rendah = peran `on-surface-variant` (bukan campuran persen sendiri).
+        color: var(--wui-color-on-surface-variant);
     }
 
     .wui-form-field__message--error {
-        color: var(--wui-color-danger);
+        color: var(--wui-color-error);
     }
 
     // // ── Kontrol (`[wuiInput]`) ──────────────────────────────────────────────
@@ -138,15 +137,18 @@
         }
 
         &:focus::placeholder {
-            color: color-mix(in srgb, var(--wui-color-on-surface) 50%, transparent);
+            color: var(--wui-color-on-surface-variant);
         }
 
         // Urutan tiga blok di bawah ini adalah kontraknya: hover → fokus → invalid, yang belakangan
         // menang — ketiganya berbobot 2 kelas dan mengubah variabel yang sama, jadi urutan tulisan
         // yang menentukan (bukan hitungan specificity yang rapuh). `:where()` sengaja dipakai agar
         // hover tidak diam-diam mengalahkan keduanya.
+        // `on-surface-variant` dipilih karena lebih tegas dari `outline` di mode terang **dan** mode
+        // gelap, jadi umpan balik hover konsisten dua mode. Knob-nya: `outline` (tanpa perubahan) atau
+        // `outline-variant` (lebih tenang).
         &:where(:hover):not(:disabled) {
-            --wui-field-border-color: color-mix(in srgb, var(--wui-color-on-surface) 45%, transparent);
+            --wui-field-border-color: var(--wui-color-on-surface-variant);
         }
 
         &:focus, &:focus-visible {
@@ -164,7 +166,7 @@
         // atribut itu — aplikasi tidak perlu menambah class saat validasinya gagal. Ditulis paling
         // akhir supaya menang atas hover & fokus.
         &[aria-invalid='true'] {
-            --wui-field-border-color: var(--wui-color-danger);
+            --wui-field-border-color: var(--wui-color-error);
         }
 
         // @include a.focus-ring;

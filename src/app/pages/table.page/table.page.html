@@ -191,7 +191,7 @@
                   <button wuiButton iconOnly variant="text" size="sm" aria-label="Menu Aksi" style="position: relative;">
                     <wui-icon icon="dots-vertical"></wui-icon>
                     @if (item.id === 1) {
-                      <span wuiBadge color="danger" pill overlap size="sm">New</span>
+                      <span wuiBadge color="error" pill overlap size="sm">New</span>
                     }
                   </button>
                 </td>
@@ -218,7 +218,7 @@
           <span wuiBadge color="primary" variant="subtle">Primary</span>
           <span wuiBadge color="secondary" variant="subtle">Secondary</span>
           <span wuiBadge color="success" variant="subtle">Success</span>
-          <span wuiBadge color="danger" variant="subtle">Danger</span>
+          <span wuiBadge color="error" variant="subtle">Error</span>
           <span wuiBadge color="warning" variant="subtle">Warning</span>
           <span wuiBadge color="info" variant="subtle">Info</span>
         </div>
@@ -229,7 +229,7 @@
           <span wuiBadge color="primary">Primary</span>
           <span wuiBadge color="secondary">Secondary</span>
           <span wuiBadge color="success">Success</span>
-          <span wuiBadge color="danger">Danger</span>
+          <span wuiBadge color="error">Error</span>
           <span wuiBadge color="warning">Warning</span>
           <span wuiBadge color="info">Info</span>
         </div>
@@ -238,7 +238,7 @@
         <div class="badge-demo-group">
           <span wuiBadge color="primary" variant="outlined" pill>Outlined Primary</span>
           <span wuiBadge color="success" variant="outlined" pill>Outlined Success</span>
-          <span wuiBadge color="danger" variant="outlined" pill>Outlined Danger</span>
+          <span wuiBadge color="error" variant="outlined" pill>Outlined Error</span>
           <span wuiBadge color="primary" variant="subtle" pill>Subtle Pill</span>
           <span wuiBadge color="success" pill>Filled Pill</span>
         </div>
@@ -249,8 +249,8 @@
             <span wuiBadge dot color="success"></span>
             Online
           </span>
-          <span wuiBadge color="danger" variant="subtle" pill>
-            <span wuiBadge dot color="danger"></span>
+            <span wuiBadge color="error" variant="subtle" pill>
+              <span wuiBadge dot color="error"></span>
             Offline
           </span>
           <span wuiBadge color="warning" variant="subtle" pill>
@@ -260,12 +260,12 @@
 
           <button wuiButton variant="filled" size="sm" style="position: relative; margin-left: 1rem;">
             Notifikasi
-            <span wuiBadge color="danger" pill overlap size="sm">5+</span>
+            <span wuiBadge color="error" pill overlap size="sm">5+</span>
           </button>
 
           <button wuiButton iconOnly variant="outlined" size="sm" style="position: relative;">
             <wui-icon icon="dots-vertical"></wui-icon>
-            <span wuiBadge dot color="danger" overlap></span>
+            <span wuiBadge dot color="error" overlap></span>
           </button>
         </div>
       </div>
@@ -291,7 +291,7 @@
           </tr>
           <tr>
             <td><code>[color]</code> (pada <code>wuiBadge</code>)</td>
-            <td><code>'default' | 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info'</code></td>
+            <td><code>'default' | 'primary' | 'secondary' | 'error' | 'success' | 'warning' | 'info'</code></td>
             <td>Warna semantik badge (default: <code>'default'</code>). Terintegrasi dengan token WUI dan dark theme.</td>
           </tr>
           <tr>
@@ -433,7 +433,7 @@
         &lt;td class="wui-table-col--action wui-table-col--sticky-right"&gt;
           &lt;button wuiButton iconOnly variant="text" size="sm" style="position: relative;"&gt;
             &lt;wui-icon icon="dots-vertical"&gt;&lt;/wui-icon&gt;
-            &lt;span wuiBadge color="danger" pill overlap size="sm"&gt;3&lt;/span&gt;
+            &lt;span wuiBadge color="error" pill overlap size="sm"&gt;3&lt;/span&gt;
           &lt;/button&gt;
         &lt;/td&gt;
       &lt;/tr&gt;

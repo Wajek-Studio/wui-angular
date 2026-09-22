@@ -14,7 +14,7 @@ import { WuiBadgeColor, WuiBadgeSize, WuiBadgeVariant } from './badge.options';
  * <!-- Status chip di tabel -->
  * <span wuiBadge color="success" variant="subtle" pill>Aktif</span>
  * <span wuiBadge color="warning" variant="subtle" pill>Tertunda</span>
- * <span wuiBadge color="danger" pill>Non Aktif</span>
+ * <span wuiBadge color="error" pill>Non Aktif</span>
  *
  * <!-- Tag mandiri -->
  * <wui-badge color="primary">Baru</wui-badge>
@@ -22,7 +22,7 @@ import { WuiBadgeColor, WuiBadgeSize, WuiBadgeVariant } from './badge.options';
  * <!-- Badge notifikasi di tombol -->
  * <button wuiButton iconOnly>
  *   <wui-icon icon="bell"></wui-icon>
- *   <span wuiBadge color="danger" pill overlap>5</span>
+ *   <span wuiBadge color="error" pill overlap>5</span>
  * </button>
  * ```
  */
@@ -34,7 +34,7 @@ import { WuiBadgeColor, WuiBadgeSize, WuiBadgeVariant } from './badge.options';
     '[class.wui-badge--primary]': "color() === 'primary'",
     '[class.wui-badge--secondary]': "color() === 'secondary'",
     '[class.wui-badge--success]': "color() === 'success'",
-    '[class.wui-badge--danger]': "color() === 'danger'",
+    '[class.wui-badge--error]': "color() === 'error' || color() === 'danger'",
     '[class.wui-badge--warning]': "color() === 'warning'",
     '[class.wui-badge--info]': "color() === 'info'",
     '[class.wui-badge--filled]': "variant() === 'filled'",
@@ -49,7 +49,7 @@ import { WuiBadgeColor, WuiBadgeSize, WuiBadgeVariant } from './badge.options';
   },
 })
 export class WuiBadge {
-  /** Peran warna badge (`default` | `primary` | `secondary` | `success` | `danger` | `warning` | `info`). */
+  /** Peran warna badge (`default` | `primary` | `secondary` | `error` | `success` | `danger` | `warning` | `info`). */
   readonly color = input<WuiBadgeColor>('default');
 
   /** Gaya visual (`filled` | `subtle` | `outlined`). */

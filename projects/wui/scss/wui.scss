@@ -15,7 +15,7 @@
 // =============================================================================
 
 // `@forward` wajib SEBELUM `@use` modul yang sama. Konfigurasi dari aplikasi
-// (`@use '@wajek/wui/scss/wui.scss' with (…)` — mis. `$wui-roles`, `$wui-palette`, `$wui-palettes-extra`)
+// (`@use '@wajek/wui/scss/wui.scss' with (…)` — mis. `$wui-schemes`, `$wui-palette`, `$wui-palettes-extra`)
 // hanya mengalir lewat `@forward`; urutan terbalik membuat build gagal: "This module was already loaded…".
 // `abstracts` di-forward juga supaya aplikasi bisa memakai fungsi/mixin-nya langsung,
 // mis. `@use '@wajek/wui/scss/wui.scss' as wui;` lalu `@include wui.space(mt, 3);`.
@@ -35,12 +35,13 @@
 @include themes.light-theme;
 @include themes.dark-theme;
 
-// Peran warna: `--wui-color-primary`, `-on-primary`, `-secondary`, `-danger`, `-surface`, …
-// untuk mode terang & gelap. Dikonfigurasi aplikasi lewat `with ($wui-roles: (…))`.
-@include themes.roles;
+// Skema warna: `--wui-color-primary`, `-on-primary`, `-secondary`, `-error`, `-surface`, …
+// untuk mode terang & gelap. Dikonfigurasi aplikasi lewat `with ($wui-schemes: (…))`.
+@include themes.schemes;
 
-// Skala palet: `--wui-color-<palet>-<tone>`.
-// Kalau aplikasi menyetel `$wui-palette: false`, baris ini tidak melakukan apa pun.
+// Skala palet: `--wui-color-<palet>-<tone>` (data pasif, M6).
+// Bawaannya `$wui-palette: false` → tidak ada yang di-emit; setel ke nama palet **non-peran**
+// kalau skalanya memang dibutuhkan.
 @include themes.palette(themes.$wui-palette);
 @include components.app;
 @include components.button;

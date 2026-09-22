@@ -69,8 +69,9 @@
                         aplikasi tetap bisa diatur.
                     </p>
 
-                    <pre class="wui-p-3 wui-mb-3"><code>// src/styles.scss
-    &#64;use '&#64;wajek/wui/scss/wui.scss' with ($wui-palette: 'purple');</code></pre>
+                    <pre class="wui-p-3 wui-mb-3"><code>// src/styles.scss — warna dari export Material Theme Builder
+    &#64;use './theme/wui-schemes' as theme;
+    &#64;use '&#64;wajek/wui/scss/wui.scss' with ($wui-schemes: theme.$wui-schemes);</code></pre>
 
                     <p class="wui-mb-3">
                         Konfigurasi di dalam <code>with (...)</code> bersifat <strong>opsional</strong> &mdash; tanpa itu
@@ -88,21 +89,23 @@
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td><code>$wui-schemes</code></td>
+                                    <td>Inti konfigurasi warna: peran untuk <code>light</code> &amp;
+                                        <code>dark</code>. Bawaannya skema M3 penuh (45 peran) hasil export Material
+                                        Theme Builder; nilainya boleh <code>(palet, tone)</code>, warna langsung, atau
+                                        CSS apa pun.</td>
+                                </tr>
+                                <tr>
                                     <td><code>$wui-palette</code></td>
-                                    <td>Palet yang skalanya di-emit. Bawaan <code>'purple'</code>; pilihan bawaan lain
-                                        <code>red</code>, <code>magenta</code>, <code>neutral</code>.</td>
+                                    <td>Skala palet yang di-emit (<code>--wui-color-&lt;palet&gt;-&lt;tone&gt;</code>).
+                                        Bawaan <code>false</code>: palet cuma data, jadi nama bawaan yang sama dengan
+                                        nama peran M3 tidak pernah sampai ke CSS.</td>
                                 </tr>
                                 <tr>
                                     <td><code>$wui-palettes-extra</code></td>
-                                    <td>Palet milik aplikasi. Ditulis <strong>lengkap</strong> (semua tone 50&ndash;950
-                                        &times; dua mode) — library memvalidasi kelengkapan, bukan menambal tone yang
-                                        kurang.</td>
-                                </tr>
-                                <tr>
-                                    <td><code>$wui-roles</code></td>
-                                    <td>Peran warna per mode: <code>primary</code>, <code>on-primary</code>,
-                                        <code>surface</code>, <code>danger</code>, &hellip; Nilainya boleh
-                                        <code>(palet, tone)</code>, warna langsung, atau CSS apa pun.</td>
+                                    <td>Palet milik aplikasi, bentuk MTB: satu skala tone absolut
+                                        <code>0&ndash;100</code> untuk kedua mode. Perlu hanya kalau mau memakai peran
+                                        <code>(palet, tone)</code> atau meng-emit skalanya.</td>
                                 </tr>
                             </tbody>
                         </table>

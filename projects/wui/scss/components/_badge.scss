@@ -1,6 +1,6 @@
 // Level 4 — Style komponen & directive `WuiBadge`.
 // Badge mandiri bergaya Bootstrap/Material 3 tanpa dependensi Bootstrap:
-// - Mendukung peran warna semantik (primary, secondary, success, danger, warning, info, default)
+// - Mendukung peran warna semantik (primary, secondary, error, success, warning, info, default)
 // - Mendukung varian visual (filled, subtle, outlined)
 // - Mendukung bentuk pill (kapsul 9999px), dot (titik status), dan overlap (notifikasi di sudut tombol)
 
@@ -9,9 +9,13 @@
 @mixin badge {
     .wui-badge,
     wui-badge {
+        // Warna dasar badge = peran netral. `--wui-badge-container`/`-on-container` dipakai varian
+        // `subtle`; tiap varian warna menimpanya dengan peran `*-container`-nya sendiri.
         --wui-badge-color: var(--wui-color-on-surface);
-        --wui-badge-bg: var(--wui-color-surface-container, color-mix(in srgb, var(--wui-color-on-surface) 15%, var(--wui-color-surface)));
+        --wui-badge-bg: var(--wui-color-surface-container);
         --wui-badge-text: var(--wui-color-on-surface);
+        --wui-badge-container: var(--wui-color-surface-container-high);
+        --wui-badge-on-container: var(--wui-color-on-surface);
 
         display: inline-flex;
         align-items: center;
@@ -91,37 +95,55 @@
         &.wui-badge--primary {
             --wui-badge-color: var(--wui-color-primary);
             --wui-badge-bg: var(--wui-color-primary);
-            --wui-badge-text: var(--wui-color-on-primary, #ffffff);
+            --wui-badge-text: var(--wui-color-on-primary);
+            --wui-badge-container: var(--wui-color-primary-container);
+            --wui-badge-on-container: var(--wui-color-on-primary-container);
         }
 
         &.wui-badge--secondary {
             --wui-badge-color: var(--wui-color-secondary);
             --wui-badge-bg: var(--wui-color-secondary);
-            --wui-badge-text: var(--wui-color-on-secondary, #ffffff);
+            --wui-badge-text: var(--wui-color-on-secondary);
+            --wui-badge-container: var(--wui-color-secondary-container);
+            --wui-badge-on-container: var(--wui-color-on-secondary-container);
         }
 
+        // `--danger` dipertahankan sebagai alias satu mayor (S3/K4).
+        &.wui-badge--error,
         &.wui-badge--danger {
-            --wui-badge-color: var(--wui-color-danger);
-            --wui-badge-bg: var(--wui-color-danger);
-            --wui-badge-text: var(--wui-color-on-danger, #ffffff);
+            --wui-badge-color: var(--wui-color-error);
+            --wui-badge-bg: var(--wui-color-error);
+            --wui-badge-text: var(--wui-color-on-error);
+            --wui-badge-container: var(--wui-color-error-container);
+            --wui-badge-on-container: var(--wui-color-on-error-container);
         }
 
+        // ⚠️ `success`/`warning`/`info` **bukan** peran Material 3 dan belum punya peran sendiri
+        // (K2 di `docs/planning/wui-color-structure-plan.md` masih terbuka). Ini satu-satunya warna
+        // keras yang tersisa di komponen; varian `subtle`-nya tetap memakai campuran dari warnanya
+        // sendiri karena tidak ada `*-container` yang bisa dipakai.
         &.wui-badge--success {
             --wui-badge-color: #137333;
             --wui-badge-bg: #137333;
             --wui-badge-text: #ffffff;
+            --wui-badge-container: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
+            --wui-badge-on-container: var(--wui-badge-color);
         }
 
         &.wui-badge--warning {
             --wui-badge-color: #b06000;
             --wui-badge-bg: #b06000;
             --wui-badge-text: #ffffff;
+            --wui-badge-container: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
+            --wui-badge-on-container: var(--wui-badge-color);
         }
 
         &.wui-badge--info {
             --wui-badge-color: #1a73e8;
             --wui-badge-bg: #1a73e8;
             --wui-badge-text: #ffffff;
+            --wui-badge-container: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
+            --wui-badge-on-container: var(--wui-badge-color);
         }
 
         // ── Gaya Varian (Filled, Subtle, Outlined) ──────────────────────────────
@@ -130,11 +152,11 @@
         background-color: var(--wui-badge-bg);
         color: var(--wui-badge-text);
 
-        // 2. Subtle (Tonal / Soft)
+        // 2. Subtle (Tonal / Soft) — peran `*-container` + `on-*-container` (M3), bukan tint persen.
         &.wui-badge--subtle {
-            background-color: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
-            color: var(--wui-badge-color);
-            border-color: color-mix(in srgb, var(--wui-badge-color) 22%, transparent);
+            background-color: var(--wui-badge-container);
+            color: var(--wui-badge-on-container);
+            border-color: transparent;
         }
 
         // 3. Outlined
@@ -145,6 +167,8 @@
         }
     }
 
+    // Satu-satunya alasan blok mode gelap ini masih ada: `success`/`warning`/`info` memakai hex
+    // (K2 terbuka). Semua varian berbasis peran sudah mode-aware sendiri lewat `--wui-color-*`.
     @media (prefers-color-scheme: dark) {
         .wui-badge,
         wui-badge {

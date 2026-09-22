@@ -14,7 +14,7 @@ Ringkasan perilaku & jebakan terverifikasi per komponen. Detail keputusan ada di
 ## Button (`src/button/`)
 
 - `WuiButton` (`[wuiButton]`) + input `variant` (`filled|outlined|text`), `size` (`sm|md|lg|xl`),
-  `color` (`default|primary|danger`), `iconPos` (`start|end`), `iconOnly`.
+  `color` (`default|primary|error`, `danger` masih diterima sebagai alias), `iconPos` (`start|end`), `iconOnly`.
 - Default tombol = **netral** (`default`), bukan primary.
 - Indirection 4 variabel: `--wui-button-container` (latar filled), `--wui-button-content` (label di
   atas container), `--wui-button-accent` (label outlined/text **dan** warna state layer),

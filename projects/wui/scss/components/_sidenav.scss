@@ -193,7 +193,7 @@
     // Garis horizontal pemisah grup menu
     .wui-sidenav-divider {
         border: 0;
-        border-top: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
+        border-top: 1px solid var(--wui-color-outline-variant);
         margin: var(--wui-space-2) 0;
         width: 100%;
     }
@@ -206,7 +206,7 @@
         font-weight: 700;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: color-mix(in srgb, var(--wui-color-on-surface) 70%, transparent);
+        color: var(--wui-color-on-surface-variant);
         user-select: none;
     }
 

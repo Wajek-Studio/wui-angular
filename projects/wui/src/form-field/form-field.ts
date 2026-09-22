@@ -60,7 +60,7 @@ export class WuiFormField {
 
   /**
    * Pesan kesalahan/validasi. Mengisi properti ini berarti kontrol dianggap tidak valid:
-   * pesannya menggantikan `hint`, warnanya memakai peran `danger`, dan kontrol ditandai
+   * pesannya menggantikan `hint`, warnanya memakai peran `error`, dan kontrol ditandai
    * `aria-invalid="true"`.
    *
    * Teks disediakan aplikasi (tidak ada i18n di library) — mis.

@@ -21,7 +21,7 @@
         color: var(--wui-color-on-surface);
 
         tr {
-            border-bottom: 1px solid color-mix(in srgb, var(--wui-color-outline) 40%, transparent);
+            border-bottom: 1px solid var(--wui-color-outline-variant);
 
             th,
             td {
@@ -71,7 +71,7 @@
 
         thead {
             tr {
-                border-bottom: 1px solid color-mix(in srgb, var(--wui-color-outline) 65%, transparent);
+                border-bottom: 1px solid var(--wui-color-outline-variant);
             }
         }
 
@@ -83,7 +83,7 @@
 
         tfoot {
             tr:first-child {
-                border-top: 1px solid color-mix(in srgb, var(--wui-color-outline) 65%, transparent);
+                border-top: 1px solid var(--wui-color-outline-variant);
                 border-bottom: none;
             }
         }
@@ -92,11 +92,11 @@
         &.wui-table-alternate,
         &.is-alternate {
             > tbody > tr:nth-child(even) {
-                background-color: color-mix(in srgb, var(--wui-color-on-surface) 2%, transparent);
+                background-color: var(--wui-color-surface-container-low);
 
                 > .wui-table-col--sticky-right,
                 > .wui-table-col--sticky-left {
-                    background-color: color-mix(in srgb, var(--wui-color-on-surface) 2%, var(--wui-color-surface));
+                    background-color: var(--wui-color-surface-container-low);
                 }
             }
         }
@@ -104,11 +104,11 @@
         &.wui-table-hover,
         &.is-hoverable {
             tbody tr:hover {
-                background-color: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent);
+                background-color: var(--wui-color-surface-container);
 
                 > .wui-table-col--sticky-right,
                 > .wui-table-col--sticky-left {
-                    background-color: color-mix(in srgb, var(--wui-color-on-surface) 4%, var(--wui-color-surface));
+                    background-color: var(--wui-color-surface-container);
                 }
             }
         }

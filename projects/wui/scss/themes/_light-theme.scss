@@ -11,7 +11,7 @@
     color-scheme: light;
 
     // Warna TIDAK ditulis di sini: semua token `--wui-color-*` (surface, on-surface, outline,
-    // primary, …) di-emit `themes/_roles.scss` — satu tempat untuk kedua mode.
+    // primary, …) di-emit `themes/_schemes.scss` — satu tempat untuk kedua mode.
 
     // Spasi & radius
     --wui-space-0: #{a.$wui-space-0};

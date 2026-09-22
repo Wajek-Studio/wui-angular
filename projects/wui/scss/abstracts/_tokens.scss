@@ -5,135 +5,118 @@
 // =============================================================================
 @use 'sass:map';
 
-// ── Palet Warna (Figma wui/color) ───────────────────────────────────────────
-// Palet = **data intensitas saja**: satu skala tone `50…950` per mode. Tidak ada kunci peran di
-// sini — peran semantik (`primary`, `on-primary`, `danger`, `surface`, …) punya lapisan sendiri di
-// `themes/_roles.scss`, dan boleh menunjuk tone mana pun dari palet mana pun.
-// `$wui-palettes-builtin` = palet bawaan library, `$wui-palettes-extra` = palet milik
-// aplikasi. Keduanya digabung jadi `$wui-palettes` — satu-satunya map yang dibaca fungsi
-// & mixin lain. `extra` di-merge paling akhir, jadi aplikasi juga boleh meretur tone bawaan.
-// ⚠️ `red` & `magenta` masih **placeholder** (menunggu angka final dari desainer); menggantinya
-// cukup menimpa tone di sini, tidak ada berkas lain yang perlu diubah.
-// `neutral` = skala gray dari paling terang ke paling gelap, **acuan peran netral**
-// (`surface`, `on-surface`, `surface-container`, `outline`) — lihat `themes/_roles.scss`.
-// Di skala neutral, tone besar = makin gelap di kedua mode (beda dengan palet brand).
+// ── Palet Warna (data intensitas) ───────────────────────────────────────────
+// Palet = **data pasif**: skala tone absolut seperti export Material Theme Builder (`0` = hitam,
+// `100` = putih) — **satu skala untuk kedua mode**. Peran semantik tidak lagi menunjuk palet;
+// nilainya hex di `themes/_schemes.scss` (M1/M9 di `docs/planning/wui-color-mtb-plan.md`).
+// `$wui-palettes-builtin` = data bawaan library (5 palet dari `default.json`), `$wui-palettes-extra`
+// = palet milik aplikasi. Keduanya digabung jadi `$wui-palettes` — satu-satunya map yang dibaca
+// fungsi & mixin lain.
+// ⚠️ Skala palet **tidak di-emit** secara default (`$wui-palette: false`, lihat `themes/_palette.scss`),
+// jadi nama bawaan yang sama dengan MTB (`primary`, `secondary`, …) tidak pernah sampai ke CSS.
+// Untuk memakai palet lewat peran `(palet, tone)`, pakai nama **non-peran**:
+//     $wui-palettes-extra: ('brand': (0: #000, …, 100: #fff))
+//     @use 'abstracts' as a;  →  a.color-raw('brand', 40)
 $wui-palettes-builtin: (
-  'purple': (
-    'light': (
-      50: #844cf6,
-      100: #7331f6,
-      200: #6115f9,
-      300: #4a02d9,
-      400: #3800a8,
-      500: #320095,
-      600: #30008f,
-      700: #270075,
-      800: #160042,
-      900: #05000f,
-      950: #000,
-    ),
-    'dark': (
-      50: #fff,
-      100: #fff,
-      200: #fff,
-      300: #fff,
-      400: #ded6ff,
-      500: #d9d0ff,
-      600: #cabdff,
-      700: #b6a3ff,
-      800: #8d70ff,
-      900: #643dff,
-      950: #3b0aff,
-    ),
+  'primary': (
+    0: #000,
+    5: #140043,
+    10: #1f005f,
+    15: #2a007a,
+    20: #360891,
+    25: #411d9c,
+    30: #4d2da7,
+    35: #593bb4,
+    40: #6548c1,
+    50: #7e62dc,
+    60: #997df8,
+    70: #b29dff,
+    80: #cdbdff,
+    90: #e7deff,
+    95: #f5eeff,
+    98: #fdf7ff,
+    99: #fffbff,
+    100: #fff,
   ),
-  // Dipakai peran `danger`/`on-danger` (lihat `themes/_roles.scss`).
-  'red': (
-    'light': (
-      50: #fff5f4,
-      100: #ffe3e0,
-      200: #ffc9c4,
-      300: #ffa39c,
-      400: #e8554b,
-      500: #b3261e,
-      600: #9a201a,
-      700: #7c1a15,
-      800: #5c1310,
-      900: #3c0c0a,
-      950: #260705,
-    ),
-    'dark': (
-      50: #fff5f4,
-      100: #ffe9e6,
-      200: #ffd5d0,
-      300: #ffb4ac,
-      400: #f79a93,
-      500: #f2b8b5,
-      600: #e58e88,
-      700: #d3706a,
-      800: #a8534e,
-      900: #7a3a36,
-      950: #601410,
-    ),
+  'secondary': (
+    0: #000,
+    5: #120d25,
+    10: #1d1831,
+    15: #28223c,
+    20: #322d47,
+    25: #3e3852,
+    30: #49435e,
+    35: #554e6b,
+    40: #615a77,
+    50: #7a7391,
+    60: #948cac,
+    70: #afa7c7,
+    80: #cbc2e3,
+    90: #e7deff,
+    95: #f5eeff,
+    98: #fdf7ff,
+    99: #fffbff,
+    100: #fff,
   ),
-  // Dipakai peran `secondary`/`on-secondary` (lihat `themes/_roles.scss`).
-  'magenta': (
-    'light': (
-      50: #fff5fc,
-      100: #ffe2f7,
-      200: #ffc6ef,
-      300: #ffa0e3,
-      400: #f26bd0,
-      500: #a61e9e,
-      600: #8c1986,
-      700: #73146e,
-      800: #571050,
-      900: #3a0b36,
-      950: #250720,
-    ),
-    'dark': (
-      50: #fff5fc,
-      100: #ffeaf9,
-      200: #ffd6f2,
-      300: #ffb2e7,
-      400: #f79bdf,
-      500: #f5b0ec,
-      600: #e68fdd,
-      700: #d06fc5,
-      800: #a854a0,
-      900: #7a3b74,
-      950: #5a1e56,
-    ),
+  'tertiary': (
+    0: #000,
+    5: #280214,
+    10: #360c1f,
+    15: #42162a,
+    20: #4f2134,
+    25: #5c2c40,
+    30: #69374b,
+    35: #774257,
+    40: #854e63,
+    50: #a1667c,
+    60: #bd7f96,
+    70: #da99b0,
+    80: #f8b3cc,
+    90: #ffd9e4,
+    95: #ffecf0,
+    98: #fff8f8,
+    99: #fffbff,
+    100: #fff,
   ),
-  // Acuan peran netral: `surface`, `on-surface`, `outline`, `surface-container`.
-  // Tone besar = makin gelap **di kedua mode** (beda dari palet brand yang nilainya berbalik),
-  // jadi `surface` memakai tone 50 di mode terang dan tone 950 di mode gelap — lihat `$wui-roles`.
   'neutral': (
-    'light': (
-      50: #FDF8FF,
-      100: #f7f2fa,
-      200: #ede7f2,
-      300: #ded8e4,
-      400: #CAC4D5,
-      500: #9e97ac,
-      600: #736d80,
-      700: #514b5b,
-      800: #332f3c,
-      900: #1a1a1a,
-      950: #0f0d12,
-    ),
-    'dark': (
-      50: #f5f5f5,
-      100: #edeaf1,
-      200: #dad5e0,
-      300: #beb8c6,
-      400: #9a93a8,
-      500: #75707f,
-      600: #5a5563,
-      700: #484553,
-      800: #2f2c37,
-      900: #211f29,
-      950: #14121A,
-    ),
+    0: #000,
+    5: #111014,
+    10: #1c1b1e,
+    15: #272529,
+    20: #313033,
+    25: #3c3b3e,
+    30: #48464a,
+    35: #545156,
+    40: #605d62,
+    50: #79767a,
+    60: #938f94,
+    70: #aeaaaf,
+    80: #c9c5ca,
+    90: #e6e1e6,
+    95: #f4eff4,
+    98: #fdf8fd,
+    99: #fffbff,
+    100: #fff,
+  ),
+  'neutral-variant': (
+    0: #000,
+    5: #121017,
+    10: #1c1a22,
+    15: #27252d,
+    20: #322f38,
+    25: #3d3a43,
+    30: #48454e,
+    35: #54515a,
+    40: #605d66,
+    50: #79757f,
+    60: #938f99,
+    70: #aea9b4,
+    80: #cac4cf,
+    90: #e6e0ec,
+    95: #f5eefa,
+    98: #fdf7ff,
+    99: #fffbff,
+    100: #fff,
   ),
 ) !default;
 
@@ -141,38 +124,75 @@ $wui-palettes-builtin: (
 $wui-palettes-extra: () !default;
 $wui-palettes: map.merge($wui-palettes-builtin, $wui-palettes-extra) !default;
 
-// Tone yang wajib ada di setiap palet (kedua mode) karena dipakai peran semantik.
-$wui-palette-required-tones: (500,) !default;
-
 // ── Warna netral: sekarang dari palet ───────────────────────────────────────
 // Nilai `surface`/`on-surface`/`outline` TIDAK lagi disimpan sebagai variabel di sini —
-// semuanya tone dari palet `neutral` di atas, dipetakan di `themes/_roles.scss`.
+// semuanya tone dari palet `neutral` di atas, dipetakan di `themes/_schemes.scss`.
 
 // ── State layer ─────────────────────────────────────────────────────────────
-// Nilainya diturunkan di CSS dari warna perannya (lihat `themes/_roles.scss`),
+// Nilainya diturunkan di CSS dari warna perannya (lihat `themes/_schemes.scss`),
 // jadi tidak ada hex tambahan yang perlu diisi.
 // Kunci opacity WAJIB string: angka `08` dibaca Sass sebagai `8`, sehingga nama
 // token-nya jadi `opacity-8` — bukan `opacity-08`.
-// Daftar peran di sini harus ada di `$wui-roles` (`themes/_roles.scss`), kalau tidak → `@error`.
-$wui-state-layer-roles: ('primary', 'on-primary', 'secondary', 'on-secondary', 'danger', 'on-danger') !default;
+// Peran yang **wajib** ada di setiap scheme, karena dibaca langsung oleh komponen/base. Scheme yang
+// tidak punya salah satunya **menggagalkan build** dengan pesan yang menyebut peran yang hilang —
+// custom property yang tidak terdefinisi bukan error CSS, jadi tanpa penjaga ini gejalanya cuma
+// "teks jadi transparan" atau "divider tak terlihat".
+// Aturan: begitu ada komponen yang membaca sebuah peran, masukkan peran itu ke daftar ini.
+$wui-role-required: (
+  // aksen & teks di atasnya
+  'primary',
+  'on-primary',
+  'secondary',
+  'on-secondary',
+  'error',
+  'on-error',
+  // permukaan & teks
+  'surface',
+  'on-surface',
+  'on-surface-variant',
+  'surface-container-low',
+  // garis
+  'outline',
+  'outline-variant',
+  // container yang dibaca komponen (badge `subtle`)
+  'primary-container',
+  'on-primary-container',
+  'secondary-container',
+  'on-secondary-container',
+  'error-container',
+  'on-error-container',
+) !default;
+
+// Peran yang punya state layer (hover/pressed/dragged). Peran yang tidak ada di scheme aplikasi
+// dilewati tanpa error — yang wajib sudah dijaga `$wui-role-required` di atas.
+$wui-state-layer-roles: (
+  'primary',
+  'on-primary',
+  'secondary',
+  'on-secondary',
+  'tertiary',
+  'on-tertiary',
+  'error',
+  'on-error',
+) !default;
 $wui-state-layer-opacities: (
   '08': 0.08,
   '10': 0.10,
   '16': 0.16,
 ) !default;
 
-// `surface-container` dan `default` tidak disimpan sebagai warna baru: keduanya diturunkan dari
-// `surface` + `on-surface` di `themes/_roles.scss`, jadi otomatis ikut kalau `surface` diganti
-// aplikasi. Mengubah angka di sini = mengubah seberapa kuat tint netralnya.
+// `surface-container` & `surface-container-high` **bukan** nilai di sini: keduanya peran M3 yang
+// datang dari scheme. Dua peta di bawah hanya **fallback** untuk scheme yang belum punya peran itu
+// (mis. peta tulisan tangan yang minimal) — `themes/_schemes.scss` yang menurunkannya dari `surface`
+// + `on-surface`. Mengubah angkanya = mengubah seberapa kuat tint netralnya.
 $wui-surface-container-tint: (
   'light': 0.05,
   'dark': 0.08,
 ) !default;
 
-// Container netral untuk elemen interaktif (mis. tombol `color="default"`). Tint-nya lebih kuat
-// dari `surface-container` sehingga latar tombol tetap terbaca — kira-kira setara tone `neutral.200`
-// (mode terang) dan `neutral.800` (mode gelap).
-$wui-default-container-tint: (
+// Fallback `surface-container-high` — level permukaan yang dipakai tombol `color="default"` (M8).
+// Tint-nya lebih kuat dari `surface-container` supaya latar tombol tetap terbaca.
+$wui-surface-container-high-tint: (
   'light': 0.08,
   'dark': 0.14,
 ) !default;

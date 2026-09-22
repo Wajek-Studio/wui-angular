@@ -1,13 +1,12 @@
-// Level 3 — Peran warna (token semantik).
+// Level 3 — Skema warna (token semantik).
 // Lapisan ini menjembatani **palet** (data intensitas) dengan **komponen**: komponen hanya membaca
-// `var(--wui-color-<peran>)` dan tidak pernah tahu nama palet.
-// Konfigurasi dari aplikasi (`src/styles.scss`):
-//     @use '@wajek/wui/scss/wui.scss' with (
-//       $wui-roles: (
-//         'light': ('primary': ('brand', 500), 'on-primary': #fff, …),
-//         'dark':  ( … ),   // boleh dikosongkan: mode gelap ikut nilai 'light'
-//       ),
-//     );
+// `var(--wui-color-<peran>)` dan tidak pernah tahu dari mana nilainya datang.
+// Istilah mengikuti Material 3 (sama dengan export Material Theme Builder):
+//   - **scheme** = satu set peran untuk SATU mode (`'light'`, `'dark'`, …) → `$wui-schemes`
+//   - **role**   = satu entri warna di dalam scheme (`primary`, `on-surface-variant`, …) → `--wui-color-*`
+// Konfigurasi dari aplikasi (`src/styles.scss`), biasanya hasil `npx wui-theme`:
+//     @use './theme/wui-schemes' as theme;
+//     @use '@wajek/wui/scss/wui.scss' with ($wui-schemes: theme.$wui-schemes);
 // Nilai sebuah peran boleh:
 //   - `(palet, tone)` — diambil dari data palet pada mode yang sedang di-emit (hasilnya hex),
 //   - warna (`#rrggbb`, `rgb(…)`) — dipakai apa adanya,
@@ -20,134 +19,274 @@
 @use '../abstracts' as a;
 @use 'palette';
 
-/// Peran warna per mode. Nilai bawaan sengaja **menyalin tampilan yang berlaku sekarang**, sehingga
-/// memakai library ini tanpa konfigurasi tetap menghasilkan visual yang sama.
-$wui-roles: (
+/// Skema warna: peta **mode → peran → nilai**. Bawaan = skema M3 penuh (45 peran) hasil export
+/// Material Theme Builder `default.json` (seed `#593bb4`) — M9 di `docs/planning/wui-color-mtb-plan.md`.
+/// Nilainya **hex** supaya sama persis dengan yang dihitung MTB; bentuk `(palet, tone)` tetap
+/// didukung untuk keperluan khusus (lihat `scheme-value()`).
+$wui-schemes: (
   'light': (
-    'primary': ('purple', 500),
+    'primary': #635690,
     'on-primary': #fff,
-    'secondary': ('magenta', 500),
-    'on-secondary': ('magenta', 50),
-    'danger': ('red', 500),
-    'on-danger': ('red', 50),
-    'surface': ('neutral', 50),
-    'on-surface': ('neutral', 900),
-    'on-surface-container': ('neutral', 900),
-    'outline': ('neutral', 400),
+    'primary-container': #e7deff,
+    'on-primary-container': #4a3e76,
+
+    'secondary': #615b71,
+    'on-secondary': #fff,
+    'secondary-container': #e7dff8,
+    'on-secondary-container': #494458,
+
+    'tertiary': #7d5262,
+    'on-tertiary': #fff,
+    'tertiary-container': #ffd9e4,
+    'on-tertiary-container': #633b4a,
+
+    'error': #ba1a1a,
+    'on-error': #fff,
+    'error-container': #ffdad6,
+    'on-error-container': #93000a,
+
+    'surface': #fdf7ff,
+    'on-surface': #1c1b20,
+    'on-surface-variant': #48454e,
+    'surface-dim': #ddd8e0,
+    'surface-bright': #fdf7ff,
+    'surface-container-lowest': #fff,
+    'surface-container-low': #f7f2fa,
+    'surface-container': #f1ecf4,
+    'surface-container-high': #ece6ee,
+    'surface-container-highest': #e6e1e9,
+
+    'outline': #79757f,
+    'outline-variant': #cac4cf,
+
+    'inverse-surface': #312f35,
+    'inverse-on-surface': #f4eff7,
+    'inverse-primary': #cdbdff,
+
+    'shadow': #000,
+    'scrim': #000,
+
+    'primary-fixed': #e7deff,
+    'on-primary-fixed': #1e1048,
+    'primary-fixed-dim': #cdbdff,
+    'on-primary-fixed-variant': #4a3e76,
+    'secondary-fixed': #e7dff8,
+    'on-secondary-fixed': #1d192b,
+    'secondary-fixed-dim': #cac3dc,
+    'on-secondary-fixed-variant': #494458,
+    'tertiary-fixed': #ffd9e4,
+    'on-tertiary-fixed': #31111e,
+    'tertiary-fixed-dim': #eeb8ca,
+    'on-tertiary-fixed-variant': #633b4a,
   ),
   'dark': (
-    'primary': ('purple', 500),
-    'on-primary': #05000f,
-    'secondary': ('magenta', 500),
-    'on-secondary': ('magenta', 950),
-    'danger': ('red', 500),
-    'on-danger': ('red', 950),
-    'surface': ('neutral', 950),
-    'on-surface': ('neutral', 50),
-    'on-surface-container': ('neutral', 50),
-    'outline': ('neutral', 700),
+    'primary': #cdbdff,
+    'on-primary': #34275e,
+    'primary-container': #4a3e76,
+    'on-primary-container': #e7deff,
+
+    'secondary': #cac3dc,
+    'on-secondary': #322e41,
+    'secondary-container': #494458,
+    'on-secondary-container': #e7dff8,
+
+    'tertiary': #eeb8ca,
+    'on-tertiary': #492533,
+    'tertiary-container': #633b4a,
+    'on-tertiary-container': #ffd9e4,
+
+    'error': #ffb4ab,
+    'on-error': #690005,
+    'error-container': #93000a,
+    'on-error-container': #ffdad6,
+
+    'surface': #141318,
+    'on-surface': #e6e1e9,
+    'on-surface-variant': #cac4cf,
+    'surface-dim': #141318,
+    'surface-bright': #3a383e,
+    'surface-container-lowest': #0f0d13,
+    'surface-container-low': #1c1b20,
+    'surface-container': #201f24,
+    'surface-container-high': #2b292f,
+    'surface-container-highest': #36343a,
+
+    'outline': #938f99,
+    'outline-variant': #48454e,
+
+    'inverse-surface': #e6e1e9,
+    'inverse-on-surface': #312f35,
+    'inverse-primary': #635690,
+
+    'shadow': #000,
+    'scrim': #000,
+
+    'primary-fixed': #e7deff,
+    'on-primary-fixed': #1e1048,
+    'primary-fixed-dim': #cdbdff,
+    'on-primary-fixed-variant': #4a3e76,
+    'secondary-fixed': #e7dff8,
+    'on-secondary-fixed': #1d192b,
+    'secondary-fixed-dim': #cac3dc,
+    'on-secondary-fixed-variant': #494458,
+    'tertiary-fixed': #ffd9e4,
+    'on-tertiary-fixed': #31111e,
+    'tertiary-fixed-dim': #eeb8ca,
+    'on-tertiary-fixed-variant': #633b4a,
   ),
 ) !default;
 
-/// Mengambil peta peran satu mode. Mode `dark` boleh kosong — jatuh ke `light`.
+/// Mengambil peta peran satu scheme (mode) + memvalidasinya. Mode `dark` boleh kosong — jatuh ke `light`.
 /// @param {String} $wui-mode - `'light'` atau `'dark'`.
-/// @return {Map} Peta peran untuk mode tersebut.
-@function roles-for-mode($wui-mode) {
-  @if map.has-key($wui-roles, $wui-mode) {
-    @return map.get($wui-roles, $wui-mode);
+/// @return {Map} Peta peran scheme tersebut (sudah lolos `scheme-validated()`).
+@function schemes-for-mode($wui-mode) {
+  @if map.has-key($wui-schemes, $wui-mode) {
+    @return scheme-validated($wui-mode, map.get($wui-schemes, $wui-mode));
   }
 
-  @if $wui-mode == 'dark' and map.has-key($wui-roles, 'light') {
-    @return map.get($wui-roles, 'light');
+  @if $wui-mode == 'dark' and map.has-key($wui-schemes, 'light') {
+    @return scheme-validated($wui-mode, map.get($wui-schemes, 'light'));
   }
 
-  @error 'wui: `$wui-roles` tidak punya bagian `#{$wui-mode}`. Kunci yang ada: #{map.keys($wui-roles)}.';
+  @error 'wui: `$wui-schemes` tidak punya bagian `#{$wui-mode}`. Kunci yang ada: #{map.keys($wui-schemes)}.';
+}
+
+/// Memvalidasi satu scheme sebelum dipakai: peran **wajib** ada, dan pasangan peran M3 lengkap
+/// (`primary` ↔ `on-primary`, `primary-container` ↔ `on-primary-container`, dst.).
+/// Dijalankan dari `schemes-for-mode()`, jadi berlaku untuk skema bawaan **maupun** skema aplikasi.
+/// @param {String} $wui-mode - `'light'` / `'dark'` (dipakai di pesan error).
+/// @param {Map} $wui-scheme - Peta peran scheme tersebut.
+/// @return {Map} Scheme yang sama, setelah lolos validasi.
+@function scheme-validated($wui-mode, $wui-scheme) {
+  $wui-missing: ();
+
+  @each $wui-role in a.$wui-role-required {
+    @if not map.has-key($wui-scheme, $wui-role) {
+      $wui-missing: list.append($wui-missing, $wui-role);
+    }
+  }
+
+  @if list.length($wui-missing) > 0 {
+    @error 'wui: scheme `#{$wui-mode}` tidak punya peran wajib: #{$wui-missing}. Peran itu dibaca komponen, jadi `var(--wui-color-…)`-nya akan kosong (elemen transparan). Buat skema lengkap dengan `npx wui-theme` dari export Material Theme Builder.';
+  }
+
+  @each $wui-group in ('primary', 'secondary', 'tertiary', 'error') {
+    @if map.has-key($wui-scheme, $wui-group) and not map.has-key($wui-scheme, 'on-#{$wui-group}') {
+      @error 'wui: scheme `#{$wui-mode}` punya `#{$wui-group}` tanpa `on-#{$wui-group}` — teks di atasnya tidak dijamin kontrasnya (aturan S4).';
+    }
+
+    @if map.has-key($wui-scheme, '#{$wui-group}-container') and not map.has-key($wui-scheme, 'on-#{$wui-group}-container') {
+      @error 'wui: scheme `#{$wui-mode}` punya `#{$wui-group}-container` tanpa `on-#{$wui-group}-container`.';
+    }
+  }
+
+  @return $wui-scheme;
 }
 
 /// Menerjemahkan satu nilai peran jadi nilai CSS.
-/// @param {*} $wui-value - Nilai dari `$wui-roles`.
-/// @param {String} $wui-mode - `'light'` atau `'dark'`.
+/// @param {*} $wui-value - Nilai peran dari `$wui-schemes`.
 /// @return {*|null} Nilai CSS, atau `null` bila peran dimatikan (`false`).
-@function role-value($wui-value, $wui-mode) {
+@function scheme-value($wui-value) {
   @if $wui-value == false {
     @return null;
   }
 
   @if meta.type-of($wui-value) == 'list' and list.length($wui-value) == 2 {
+    // `(palet, tone)` — tone MTB **absolut**, jadi satu nilai berlaku untuk kedua mode. Beda antar
+    // mode dibuat dengan menulis pasangan berbeda di `'light'` dan `'dark'` (mis. 40 vs 80).
     $wui-palette: palette.palette-key(list.nth($wui-value, 1));
     $wui-tone: list.nth($wui-value, 2);
 
-    @return a.color-raw($wui-palette, $wui-mode, $wui-tone);
+    @return a.color-raw($wui-palette, $wui-tone);
   }
 
   @return $wui-value;
 }
 
-/// Meng-emit peran turunan yang tidak ditulis eksplisit di `$wui-roles`.
+/// Meng-emit peran turunan & alias yang tidak ditulis eksplisit di scheme.
 /// Peran turunan **tidak** masuk `$wui-state-layer-roles`: nilainya dihitung dari peran lain lewat
 /// CSS, jadi komponen menghitung lapisan interaksinya langsung dari variabel warnanya.
 /// @param {String} $wui-mode - Mode yang sedang di-emit.
-/// @param {Map} $wui-mode-roles - Peta peran mode tersebut.
-@mixin derived-roles($wui-mode, $wui-mode-roles) {
-  @if not map.has-key($wui-mode-roles, 'surface-container') {
+/// @param {Map} $wui-scheme - Peta peran scheme tersebut.
+@mixin derived-roles($wui-mode, $wui-scheme) {
+  // ── Fallback permukaan netral ──
+  // Skema MTB sudah membawa `surface-container*`; dua blok ini hanya bekerja untuk scheme yang belum
+  // punya keduanya (mis. peta tulisan tangan yang minimal), supaya komponen tetap terbaca.
+  @if not map.has-key($wui-scheme, 'surface-container') {
     --wui-color-surface-container: color-mix(in srgb, var(--wui-color-on-surface) #{map.get(a.$wui-surface-container-tint, $wui-mode) * 100%}, var(--wui-color-surface));
   }
 
-  // Netral untuk elemen interaktif (tombol `color="default"`): diturunkan dari `surface` +
-  // `on-surface`, jadi tidak ada tone yang dipatok langsung di sini.
-  @if not map.has-key($wui-mode-roles, 'default') {
-    --wui-color-default: color-mix(in srgb, var(--wui-color-on-surface) #{map.get(a.$wui-default-container-tint, $wui-mode) * 100%}, var(--wui-color-surface));
+  @if not map.has-key($wui-scheme, 'surface-container-high') {
+    --wui-color-surface-container-high: color-mix(in srgb, var(--wui-color-on-surface) #{map.get(a.$wui-surface-container-high-tint, $wui-mode) * 100%}, var(--wui-color-surface));
   }
 
-  @if not map.has-key($wui-mode-roles, 'on-default') {
+  // ── Ekstensi library (bukan peran M3) ──
+  // `default` = permukaan netral untuk elemen interaktif (tombol `color="default"`, item sidenav
+  // aktif). Sejak M8 ia **mendelegasikan** ke peran netral M3, bukan tint campuran sendiri.
+  @if not map.has-key($wui-scheme, 'default') {
+    --wui-color-default: var(--wui-color-surface-container-high);
+  }
+
+  @if not map.has-key($wui-scheme, 'on-default') {
     --wui-color-on-default: var(--wui-color-on-surface);
+  }
+
+  // ── Alias migrasi (satu mayor) ──
+  // `danger` → `error` mengikuti M3 (S3). Komponen dipindahkan ke `error` di F3; alias ini menjaga
+  // tampilan lama tetap hidup sampai mayor berikutnya.
+  @if map.has-key($wui-scheme, 'error') and not map.has-key($wui-scheme, 'danger') {
+    --wui-color-danger: var(--wui-color-error);
+  }
+
+  @if map.has-key($wui-scheme, 'on-error') and not map.has-key($wui-scheme, 'on-danger') {
+    --wui-color-on-danger: var(--wui-color-on-error);
   }
 }
 
 /// State layer untuk peran yang interaktif. Cukup di-emit sekali di `:root`: nilainya
 /// `color-mix()` dari `var(--wui-color-<peran>)`, jadi otomatis ikut saat mode berganti.
-/// @param {Map} $wui-mode-roles - Peta peran mode terang (dasar validasi).
-@mixin state-layers($wui-mode-roles) {
+/// @param {Map} $wui-scheme - Peta peran scheme mode terang (dasar validasi).
+@mixin state-layers($wui-scheme) {
   @each $wui-role in a.$wui-state-layer-roles {
-    @if not map.has-key($wui-mode-roles, $wui-role) {
-      @error 'wui: peran `#{$wui-role}` terdaftar di `$wui-state-layer-roles` tapi tidak ada di `$wui-roles`. Peran yang tersedia: #{map.keys($wui-mode-roles)}.';
-    }
-
-    @each $wui-step, $wui-opacity in a.$wui-state-layer-opacities {
-      --wui-color-state-layer-#{$wui-role}-opacity-#{$wui-step}: color-mix(in srgb, var(--wui-color-#{$wui-role}) #{$wui-opacity * 100%}, transparent);
+    // Peran yang tidak ada di scheme dilewati (bukan error): skema aplikasi boleh menyempit, dan
+    // peran yang wajib sudah dijaga `$wui-role-required` sebelum sampai ke sini.
+    @if map.has-key($wui-scheme, $wui-role) {
+      @each $wui-step, $wui-opacity in a.$wui-state-layer-opacities {
+        --wui-color-state-layer-#{$wui-role}-opacity-#{$wui-step}: color-mix(in srgb, var(--wui-color-#{$wui-role}) #{$wui-opacity * 100%}, transparent);
+      }
     }
   }
 }
 
 /// Meng-emit seluruh token peran untuk kedua mode + state layernya.
-@mixin roles {
-  $wui-light-roles: roles-for-mode('light');
-  $wui-dark-roles: roles-for-mode('dark');
+@mixin schemes {
+  $wui-light-scheme: schemes-for-mode('light');
+  $wui-dark-scheme: schemes-for-mode('dark');
 
   :root {
-    @each $wui-role, $wui-value in $wui-light-roles {
-      $wui-css: role-value($wui-value, 'light');
+    @each $wui-role, $wui-value in $wui-light-scheme {
+      $wui-css: scheme-value($wui-value);
 
       @if $wui-css {
         --wui-color-#{$wui-role}: #{$wui-css};
       }
     }
 
-    @include derived-roles('light', $wui-light-roles);
-    @include state-layers($wui-light-roles);
+    @include derived-roles('light', $wui-light-scheme);
+    @include state-layers($wui-light-scheme);
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
-      @each $wui-role, $wui-value in $wui-dark-roles {
-        $wui-css: role-value($wui-value, 'dark');
+      @each $wui-role, $wui-value in $wui-dark-scheme {
+        $wui-css: scheme-value($wui-value);
 
         @if $wui-css {
           --wui-color-#{$wui-role}: #{$wui-css};
         }
       }
 
-      @include derived-roles('dark', $wui-dark-roles);
+      @include derived-roles('dark', $wui-dark-scheme);
     }
   }
 }

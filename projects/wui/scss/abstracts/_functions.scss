@@ -65,36 +65,27 @@
   @return color.change($color, $alpha: $amount);
 }
 
-/// Mengembalikan CSS Variable warna.
-/// Contoh: `color('purple', 500)` → `var(--wui-color-purple-500)`
-/// Contoh: `color('purple', 500, 'light')` → `var(--wui-color-purple-light-500)`
-@function color($name, $tone: 500, $mode: null) {
-  @if $mode {
-    @return var(--wui-color-#{$name}-#{$mode}-#{$tone});
-  }
-
+/// Mengembalikan CSS variable skala palet: `color('brand', 40)` → `var(--wui-color-brand-40)`.
+/// Hanya berguna kalau skalanya memang di-emit (`$wui-palette` di `themes/_palette.scss` bawaannya
+/// `false`). Warna **peran** dibaca langsung sebagai `var(--wui-color-<peran>)` di komponen.
+@function color($name, $tone) {
   @return var(--wui-color-#{$name}-#{$tone});
 }
 
-/// Mengambil nilai HEX mentah warna dari palet (compile-time).
-/// Contoh: `color-raw('purple', 'light', 500)` → `#320095`
-@function color-raw($name, $mode, $tone) {
+/// Mengambil warna mentah (compile-time) dari data palet `$wui-palettes`.
+/// Tone MTB **absolut** (`0` = hitam, `100` = putih) dan sama untuk kedua mode.
+/// Contoh: `color-raw('brand', 40)` → `#6548c1`
+@function color-raw($name, $tone) {
   $wui-palette: map.get(tokens.$wui-palettes, $name);
 
   @if not $wui-palette {
     @error 'wui: palet #{$name} tidak ada. Palet yang tersedia: #{map.keys(tokens.$wui-palettes)}.';
   }
 
-  $wui-tones: map.get($wui-palette, $mode);
-
-  @if not $wui-tones {
-    @error "Mode '#{$mode}' tidak ditemukan pada palet '#{$name}'.";
-  }
-
-  $wui-hex: map.get($wui-tones, $tone);
+  $wui-hex: map.get($wui-palette, $tone);
 
   @if not $wui-hex {
-    @error 'wui: tone #{$tone} tidak ada di palet #{$name} (#{$mode}).';
+    @error 'wui: tone #{$tone} tidak ada di palet #{$name}. Tone yang tersedia: #{map.keys($wui-palette)}.';
   }
 
   @return $wui-hex;

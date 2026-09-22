@@ -7,7 +7,7 @@
         <p class="button-subtitle">
           Tombol <code>@wajek/wui</code> mengikuti Material 3 dengan tiga sumbu yang bisa digabung bebas:
           <strong>bentuk</strong> (<code>variant</code>: <code>filled</code>/<code>outlined</code>/<code>text</code>),
-          <strong>peran warna</strong> (<code>color</code>: <code>default</code>/<code>primary</code>/<code>danger</code>),
+          <strong>peran warna</strong> (<code>color</code>: <code>default</code>/<code>primary</code>/<code>error</code>),
           dan <strong>ukuran</strong> (<code>size</code>: <code>sm</code>/<code>md</code>/<code>lg</code>/<code>xl</code>).
           Dipasang sebagai atribut pada <code>&lt;button&gt;</code> — atau <code>&lt;a&gt;</code> — native,
           sehingga <code>disabled</code>, <code>type</code>, dan perilaku form tetap milik browser.
@@ -59,7 +59,7 @@
         <p class="section-note">
           Container transparan dengan border 1px (<code>--wui-button-outline</code>) dan label dari peran
           warna aktif (<code>--wui-button-accent</code>). Border mengikuti warna peran untuk
-          <code>primary</code>/<code>danger</code>, sedangkan <code>default</code> memakai
+          <code>primary</code>/<code>error</code>, sedangkan <code>default</code> memakai
           <code>--wui-color-outline</code> yang lebih tenang. State layer-nya memakai warna label sebagai
           lapisan transparan.
         </p>
@@ -205,7 +205,7 @@
         <h2 class="section-title">5. Modifier yang tersedia</h2>
         <p class="section-note">
           Bentuk, warna, dan ukuran bisa digabung bebas, mis.
-          <code>&lt;button wuiButton variant="outlined" color="danger" size="lg"&gt;</code>.
+          <code>&lt;button wuiButton variant="outlined" color="error" size="lg"&gt;</code>.
           Ukuran tidak dijadikan contoh visual di halaman ini — cukup tabel berikut.
         </p>
 
@@ -327,9 +327,9 @@
               <td>aksi utama / brand</td>
             </tr>
             <tr>
-              <td><code>danger</code></td>
-              <td><code>.wui-button--color-danger</code></td>
-              <td><code>danger</code> / <code>on-danger</code></td>
+              <td><code>error</code></td>
+              <td><code>.wui-button--color-error</code></td>
+              <td><code>error</code> / <code>on-error</code></td>
               <td>aksi destruktif (hapus, batalkan)</td>
             </tr>
           </tbody>
@@ -338,7 +338,7 @@
         <p class="section-note">
           <code>color</code> berlaku untuk ketiga varian: <code>filled</code> memakai peran sebagai
           container, <code>outlined</code>/<code>text</code> memakainya sebagai warna label. Semua nilainya
-          token peran — menggantinya cukup lewat <code>$wui-roles</code> di <code>src/styles.scss</code>,
+          token peran — menggantinya cukup lewat <code>$wui-schemes</code> di <code>src/styles.scss</code>,
           tanpa menyentuh komponen.
         </p>
 
@@ -442,7 +442,7 @@
       <section class="button-section">
         <h2 class="section-title">7. Peran warna <code>color</code></h2>
         <p class="section-note">
-          Tiga peran warna × tiga varian. Nilainya di-resolve per mode: <code>danger</code> di mode gelap
+          Tiga peran warna × tiga varian. Nilainya di-resolve per mode: <code>error</code> di mode gelap
           memakai <code>#f2b8b5</code> dengan label <code>#601410</code>, bukan versi mode terang.
         </p>
 
@@ -472,16 +472,16 @@
             <span class="sample-label">label <code>primary</code></span>
           </div>
           <div class="button-sample">
-            <button wuiButton color="danger">danger · filled</button>
-            <span class="sample-label">container <code>danger</code></span>
+            <button wuiButton color="error">error · filled</button>
+            <span class="sample-label">container <code>error</code></span>
           </div>
           <div class="button-sample">
-            <button wuiButton color="danger" variant="outlined">danger · outlined</button>
-            <span class="sample-label">label <code>danger</code></span>
+            <button wuiButton color="error" variant="outlined">error · outlined</button>
+            <span class="sample-label">label <code>error</code></span>
           </div>
           <div class="button-sample">
-            <button wuiButton color="danger" variant="text">danger · text</button>
-            <span class="sample-label">label <code>danger</code></span>
+            <button wuiButton color="error" variant="text">error · text</button>
+            <span class="sample-label">label <code>error</code></span>
           </div>
         </div>
       </section>

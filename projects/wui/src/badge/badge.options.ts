@@ -2,6 +2,7 @@ export type WuiBadgeColor =
   | 'default'
   | 'primary'
   | 'secondary'
+  | 'error'
   | 'success'
   | 'danger'
   | 'warning'
