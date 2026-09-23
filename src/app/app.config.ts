@@ -20,6 +20,7 @@ import {
   mdiTable,
   mdiViewDashboardOutline,
   mdiWindowMaximize,
+  mdiSquareRoundedBadge,
 } from '@mdi/js';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { provideHttpClient } from '@angular/common/http';
@@ -44,7 +45,8 @@ export const appConfig: ApplicationConfig = {
       { name: 'dialog', path: mdiWindowMaximize },
       { name: 'form', path: mdiFormTextbox },
       { name: 'form-select', path: mdiFormSelect },
-      { name: 'play', path: mdiPlayCircle }
+      { name: 'play', path: mdiPlayCircle },
+      { name: 'snackbar', path: mdiSquareRoundedBadge}
     ),
     provideHighlightOptions({
       coreLibraryLoader: () => import('highlight.js/lib/core'),

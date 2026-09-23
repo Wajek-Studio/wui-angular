@@ -49,3 +49,7 @@ export * from './loading/loading';
 export * from './loading/loading.options';
 export * from './badge/badge';
 export * from './badge/badge.options';
+
+export * from './snackbar/snackbar.service';
+export * from './snackbar/snackbar.component';
+export * from './snackbar/snackbar.ref';

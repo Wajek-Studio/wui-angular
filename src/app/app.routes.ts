@@ -32,6 +32,8 @@ export const routes: Routes = [{
 }, {
     path: 'context-menu', loadComponent: () => import('./pages/context-menu/context-menu.page/context-menu.page').then(m => m.ContextMenuPage)
 }, {
+    path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
+}, {
     // Halaman spike F0 (`wui-context-menu-plan.md`) — kode sekali pakai, tidak ditautkan di
     // navigasi. Hapus rute ini (beserta folder `pages/context-menu-spike/`) setelah F0 selesai.
     path: 'context-menu-spike', loadComponent: () => import('./pages/context-menu-spike/context-menu-spike.page').then(m => m.ContextMenuSpikePage)

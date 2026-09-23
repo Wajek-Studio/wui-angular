@@ -57,6 +57,7 @@
 @include components.pagination;
 @include components.loading;
 @include components.badge;
+@include components.snackbar;
 
 // Primitif layout (container, grid) dipanggil setelah komponen supaya boleh menimpa style komponen
 // tanpa `!important`, tapi sebelum utilitas.
