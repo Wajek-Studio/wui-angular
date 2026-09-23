@@ -26,7 +26,13 @@ export const routes: Routes = [{
 }, {
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
 }, {
-    path: 'layout', loadComponent: () => import('./pages/layout.page/layout.page').then(m => m.LayoutPage)
+    path: 'grid', loadComponent: () => import('./pages/grid.page/grid.page').then(m => m.GridPage)
+}, {
+    path: 'flex', loadComponent: () => import('./pages/flex.page/flex.page').then(m => m.FlexPage)
+}, {
+    path: 'spacing', loadComponent: () => import('./pages/spacing.page/spacing.page').then(m => m.SpacingPage)
+}, {
+    path: 'layout', redirectTo: '/grid', pathMatch: 'full'
 }, {
     path: 'select', loadComponent: () => import('./pages/select/select.page/select.page').then(m => m.SelectPage)
 }, {

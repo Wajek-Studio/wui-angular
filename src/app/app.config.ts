@@ -21,6 +21,9 @@ import {
   mdiViewDashboardOutline,
   mdiWindowMaximize,
   mdiSquareRoundedBadge,
+  mdiViewGridOutline,
+  mdiViewArrayOutline,
+  mdiFormatLineSpacing,
 } from '@mdi/js';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { provideHttpClient } from '@angular/common/http';
@@ -41,6 +44,9 @@ export const appConfig: ApplicationConfig = {
       { name: 'dock-left', path: mdiDockLeft },
       { name: 'table', path: mdiTable },
       { name: 'layout', path: mdiViewDashboardOutline },
+      { name: 'grid', path: mdiViewGridOutline },
+      { name: 'flex', path: mdiViewArrayOutline },
+      { name: 'spacing', path: mdiFormatLineSpacing },
       { name: 'dots-vertical', path: mdiDotsVertical },
       { name: 'dialog', path: mdiWindowMaximize },
       { name: 'form', path: mdiFormTextbox },

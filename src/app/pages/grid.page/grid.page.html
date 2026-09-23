@@ -1,0 +1,140 @@
+<ng-template #page>
+  <wui-page>
+    <div class="wui-page-content grid-doc-container">
+      <header class="doc-header">
+        <a routerLink="/home" class="doc-back-btn">← Kembali ke Beranda</a>
+        <h1 class="doc-title">Grid &amp; Container</h1>
+        <p class="doc-subtitle">
+          Sistem pembungkus terpusat responsif (<code>.wui-container</code>) dan kisi 12-kolom berbasis
+          CSS Grid native (<code>.wui-row</code> &amp; <code>.wui-col-*</code>) di <code>@wajek/wui</code>.
+        </p>
+      </header>
+
+      <p class="doc-note">
+        Primitif layout datang dari <code>projects/wui/scss/layout/</code> — class murni tanpa komponen
+        Angular. Grid menggunakan <code>display: grid</code> dengan 12 kolom dan <code>minmax(0, 1fr)</code>
+        sehingga anti bocor pada konten panjang, serta mendukung breakpoint mobile-first:
+        <code>sm</code> (576px), <code>md</code> (768px), <code>lg</code> (992px), <code>xl</code> (1200px), dan <code>xxl</code> (1400px).
+      </p>
+
+      <!-- 1. CONTAINER -->
+      <section class="doc-section">
+        <h2 class="section-title">1. Container (Pembungkus Halaman)</h2>
+        <p class="section-note">
+          <code>.wui-container</code> memusatkan isi halaman secara otomatis dan membatasi lebar maksimalnya
+          sejak breakpoint <code>md</code>. Sedangkan <code>.wui-container-fluid</code> selalu mengisi 100%
+          lebar tanpa batas maksimum.
+        </p>
+
+        <app-showcase
+          title="Container vs Container Fluid"
+          description="Perbandingan visual batas lebar antara kontainer standar dan fluid."
+          [tabs]="containerTabs()"
+        >
+          <div class="wui-d-flex wui-flex-column wui-gap-3">
+            <div class="wui-container demo-container-outline">
+              <div class="demo-box demo-box--primary">
+                <strong>.wui-container</strong>
+                <span>100% di bawah 768px, batas proporsional sejak md, berhenti di 1200px.</span>
+              </div>
+            </div>
+
+            <div class="wui-container-fluid demo-container-outline">
+              <div class="demo-box demo-box--secondary">
+                <strong>.wui-container-fluid</strong>
+                <span>Selalu 100% penuh di semua ukuran layar.</span>
+              </div>
+            </div>
+          </div>
+        </app-showcase>
+      </section>
+
+      <!-- 2. BASIC 12-COLUMN GRID -->
+      <section class="doc-section">
+        <h2 class="section-title">2. Basic 12-Column Grid</h2>
+        <p class="section-note">
+          Wadah baris menggunakan <code>.wui-row</code>. Kolom menggunakan <code>.wui-col-[1..12]</code> atau
+          <code>.wui-col</code> (span 1 rata). Jarak antar sel menggunakan utilitas gap seperti <code>.wui-gap-3</code>.
+        </p>
+
+        <app-showcase
+          title="Pembagian 12 Kolom"
+          description="Grid 12-kolom native dengan berbagai kombinasi lebar kolom."
+          [tabs]="basicTabs()"
+        >
+          <div class="wui-row wui-gap-2">
+            <!-- 12 kolom rata -->
+            @for (i of [1,2,3,4,5,6,7,8,9,10,11,12]; track i) {
+              <div class="wui-col grid-cell">{{ i }}</div>
+            }
+
+            <!-- 6 & 6 -->
+            <div class="wui-col-6 grid-cell grid-cell--alt">span 6 (.wui-col-6)</div>
+            <div class="wui-col-6 grid-cell grid-cell--alt">span 6 (.wui-col-6)</div>
+
+            <!-- 4, 4, 4 -->
+            <div class="wui-col-4 grid-cell">span 4 (.wui-col-4)</div>
+            <div class="wui-col-4 grid-cell">span 4 (.wui-col-4)</div>
+            <div class="wui-col-4 grid-cell">span 4 (.wui-col-4)</div>
+
+            <!-- 8 & 4 -->
+            <div class="wui-col-8 grid-cell grid-cell--alt">span 8 (.wui-col-8)</div>
+            <div class="wui-col-4 grid-cell grid-cell--alt">span 4 (.wui-col-4)</div>
+          </div>
+        </app-showcase>
+      </section>
+
+      <!-- 3. RESPONSIVE BREAKPOINTS -->
+      <section class="doc-section">
+        <h2 class="section-title">3. Responsive Breakpoints</h2>
+        <p class="section-note">
+          Setiap kolom dapat ditentukan perilakunya per breakpoint: <code>.wui-col-12</code> di mobile,
+          <code>.wui-col-md-6</code> di tablet, dan <code>.wui-col-lg-4</code> di desktop.
+        </p>
+
+        <app-showcase
+          title="Kolom Responsif Mobile-First"
+          description="Ubah ukuran jendela browser untuk melihat perpindahan pembagian kolom secara dinamis."
+          [tabs]="responsiveTabs()"
+        >
+          <div class="wui-row wui-gap-3">
+            <div class="wui-col-12 wui-col-md-6 wui-col-lg-4 grid-cell grid-cell--alt">
+              <strong>Kolom 1</strong>
+              <span>12 (mobile) → 6 (md) → 4 (lg)</span>
+            </div>
+            <div class="wui-col-12 wui-col-md-6 wui-col-lg-4 grid-cell grid-cell--alt">
+              <strong>Kolom 2</strong>
+              <span>12 (mobile) → 6 (md) → 4 (lg)</span>
+            </div>
+            <div class="wui-col-12 wui-col-md-12 wui-col-lg-4 grid-cell grid-cell--alt">
+              <strong>Kolom 3</strong>
+              <span>12 (mobile) → 12 (md) → 4 (lg)</span>
+            </div>
+          </div>
+        </app-showcase>
+      </section>
+
+      <!-- 4. GRID GAPS -->
+      <section class="doc-section">
+        <h2 class="section-title">4. Pengaturan Gap</h2>
+        <p class="section-note">
+          Karena berbasis CSS Grid native, Anda dapat memasang jarak horizontal (<code>.wui-column-gap-*</code>)
+          dan jarak vertikal (<code>.wui-row-gap-*</code>) yang berbeda tanpa memerlukan CSS khusus.
+        </p>
+
+        <app-showcase
+          title="Kombinasi Row & Column Gap"
+          description="Contoh pengaturan column-gap-4 (1.5rem) dan row-gap-2 (0.5rem)."
+          [tabs]="gapTabs()"
+        >
+          <div class="wui-row wui-column-gap-4 wui-row-gap-2">
+            <div class="wui-col-6 grid-cell">Col 6 (column-gap-4, row-gap-2)</div>
+            <div class="wui-col-6 grid-cell">Col 6 (column-gap-4, row-gap-2)</div>
+            <div class="wui-col-6 grid-cell">Col 6 (column-gap-4, row-gap-2)</div>
+            <div class="wui-col-6 grid-cell">Col 6 (column-gap-4, row-gap-2)</div>
+          </div>
+        </app-showcase>
+      </section>
+    </div>
+  </wui-page>
+</ng-template>

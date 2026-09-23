@@ -1,0 +1,164 @@
+<ng-template #page>
+  <wui-page>
+    <div class="wui-page-content spacing-doc-container">
+      <header class="doc-header">
+        <a routerLink="/home" class="doc-back-btn">← Kembali ke Beranda</a>
+        <h1 class="doc-title">Spacing &amp; Margin / Padding Utilities</h1>
+        <p class="doc-subtitle">
+          Rangkaian utilitas spasi di <code>@wajek/wui</code> (margin, padding, auto-margin, dan gap)
+          yang terhubung langsung ke skala token desain <code>--wui-space-*</code>.
+        </p>
+      </header>
+
+      <p class="doc-note">
+        Utilitas spacing datang dari <code>projects/wui/scss/utilities/_spacing.scss</code> dan <code>_gap.scss</code>.
+        Nilai skala langkah: <code>0</code> (0), <code>1</code> (0.25rem = 4px), <code>2</code> (0.5rem = 8px),
+        <code>3</code> (1rem = 16px), <code>4</code> (1.5rem = 24px), dan <code>5</code> (3rem = 48px).
+        Dukungan arah: <code>t</code> (top), <code>b</code> (bottom), <code>s</code> (start/kiri LTR),
+        <code>e</code> (end/kanan LTR), <code>x</code> (horizontal), <code>y</code> (vertical).
+      </p>
+
+      <!-- 1. MARGIN UTILITIES -->
+      <section class="doc-section">
+        <h2 class="section-title">1. Margin Utilities</h2>
+        <p class="section-note">
+          Tambahkan jarak luar di sekeliling atau pada sisi tertentu elemen menggunakan <code>.wui-m-*</code>,
+          <code>.wui-mt-*</code>, <code>.wui-mb-*</code>, <code>.wui-ms-*</code>, <code>.wui-me-*</code>,
+          <code>.wui-mx-*</code>, dan <code>.wui-my-*</code>.
+        </p>
+
+        <app-showcase
+          title="Skala Margin (0 - 5) & Directional"
+          description="Area bergaris putus-putus menunjukkan batas luar elemen."
+          [tabs]="marginTabs()"
+        >
+          <div class="demo-wrapper">
+            <span class="demo-label">Skala Margin Menyeluruh (.wui-m-[0..5]):</span>
+            <div class="margin-matrix">
+              <div class="margin-slot"><div class="spacing-box wui-m-0">m-0 (0)</div></div>
+              <div class="margin-slot"><div class="spacing-box wui-m-1">m-1 (4px)</div></div>
+              <div class="margin-slot"><div class="spacing-box wui-m-2">m-2 (8px)</div></div>
+              <div class="margin-slot"><div class="spacing-box wui-m-3">m-3 (16px)</div></div>
+              <div class="margin-slot"><div class="spacing-box wui-m-4">m-4 (24px)</div></div>
+            </div>
+
+            <span class="demo-label wui-mt-4">Margin Arah Tertentu:</span>
+            <div class="wui-d-flex wui-flex-wrap wui-gap-3">
+              <div class="margin-slot"><div class="spacing-box wui-mt-4">wui-mt-4 (top)</div></div>
+              <div class="margin-slot"><div class="spacing-box wui-mb-4">wui-mb-4 (bottom)</div></div>
+              <div class="margin-slot"><div class="spacing-box wui-ms-4">wui-ms-4 (start)</div></div>
+              <div class="margin-slot"><div class="spacing-box wui-me-4">wui-me-4 (end)</div></div>
+            </div>
+          </div>
+        </app-showcase>
+      </section>
+
+      <!-- 2. PADDING UTILITIES -->
+      <section class="doc-section">
+        <h2 class="section-title">2. Padding Utilities</h2>
+        <p class="section-note">
+          Tambahkan bantalan ruang dalam elemen menggunakan <code>.wui-p-*</code> atau per arah spesifik
+          seperti <code>.wui-pt-*</code>, <code>.wui-pb-*</code>, <code>.wui-ps-*</code>, <code>.wui-pe-*</code>,
+          <code>.wui-px-*</code>, dan <code>.wui-py-*</code>.
+        </p>
+
+        <app-showcase
+          title="Skala Padding (1 - 5) & Directional"
+          description="Perhatikan area dalam kotak yang membesar sesuai nilai padding."
+          [tabs]="paddingTabs()"
+        >
+          <div class="demo-wrapper">
+            <span class="demo-label">Skala Padding Menyeluruh (.wui-p-[1..5]):</span>
+            <div class="wui-d-flex wui-flex-wrap wui-align-items-start wui-gap-3">
+              <div class="padding-card wui-p-1">p-1 (0.25rem)</div>
+              <div class="padding-card wui-p-2">p-2 (0.5rem)</div>
+              <div class="padding-card wui-p-3">p-3 (1rem)</div>
+              <div class="padding-card wui-p-4">p-4 (1.5rem)</div>
+            </div>
+
+            <span class="demo-label wui-mt-4">Padding Horizontal (.wui-px-*) vs Vertikal (.wui-py-*):</span>
+            <div class="wui-d-flex wui-flex-wrap wui-gap-3">
+              <div class="padding-card wui-px-4 wui-py-1">wui-px-4 (lebar horizontal)</div>
+              <div class="padding-card wui-px-2 wui-py-4">wui-py-4 (tinggi vertikal)</div>
+            </div>
+          </div>
+        </app-showcase>
+      </section>
+
+      <!-- 3. AUTO MARGIN -->
+      <section class="doc-section">
+        <h2 class="section-title">3. Auto Margin Centering &amp; Flex Push</h2>
+        <p class="section-note">
+          Auto margin sangat berguna untuk memusatkan elemen blok secara horizontal (<code>.wui-mx-auto</code>)
+          atau mendorong grup elemen navigasi ke sisi kanan flexbox (<code>.wui-ms-auto</code>).
+        </p>
+
+        <app-showcase
+          title="Pusat Horizontal & Tombol Dorong"
+          description="Memanfaatkan wui-mx-auto untuk wadah tengah dan wui-ms-auto pada navigasi."
+          [tabs]="autoMarginTabs()"
+        >
+          <div class="demo-wrapper">
+            <span class="demo-label">Memusatkan Blok dengan .wui-mx-auto:</span>
+            <div class="demo-boundary">
+              <div class="auto-box wui-mx-auto">
+                .wui-mx-auto (Tengah)
+              </div>
+            </div>
+
+            <span class="demo-label wui-mt-4">Mendorong Navigasi ke Kanan dengan .wui-ms-auto:</span>
+            <div class="wui-d-flex wui-align-items-center demo-boundary wui-p-3">
+              <strong class="wui-me-3">WAJEK</strong>
+              <span class="nav-item">Dashboard</span>
+              <span class="nav-item wui-ms-2">Laporan</span>
+
+              <!-- Mendorong tombol ke ujung kanan -->
+              <div class="wui-ms-auto wui-d-flex wui-gap-2">
+                <button wuiButton variant="text">Bantuan</button>
+                <button wuiButton color="primary">Masuk</button>
+              </div>
+            </div>
+          </div>
+        </app-showcase>
+      </section>
+
+      <!-- 4. GAP UTILITIES -->
+      <section class="doc-section">
+        <h2 class="section-title">4. Gap Utilities</h2>
+        <p class="section-note">
+          Utilitas <code>.wui-gap-*</code> memberikan jarak konsisten antara anak elemen flex atau sel grid
+          tanpa trik margin negatif.
+        </p>
+
+        <app-showcase
+          title="Skala Jarak Antar Item (Gap)"
+          description="Bandingkan gap-1, gap-3, dan gap-5."
+          [tabs]="gapTabs()"
+        >
+          <div class="demo-wrapper">
+            <span class="demo-label">wui-gap-1 (4px):</span>
+            <div class="wui-d-flex wui-gap-1 demo-boundary wui-p-2">
+              <div class="gap-item">A</div>
+              <div class="gap-item">B</div>
+              <div class="gap-item">C</div>
+            </div>
+
+            <span class="demo-label wui-mt-3">wui-gap-3 (16px):</span>
+            <div class="wui-d-flex wui-gap-3 demo-boundary wui-p-2">
+              <div class="gap-item">A</div>
+              <div class="gap-item">B</div>
+              <div class="gap-item">C</div>
+            </div>
+
+            <span class="demo-label wui-mt-3">wui-gap-5 (48px):</span>
+            <div class="wui-d-flex wui-gap-5 demo-boundary wui-p-2">
+              <div class="gap-item">A</div>
+              <div class="gap-item">B</div>
+              <div class="gap-item">C</div>
+            </div>
+          </div>
+        </app-showcase>
+      </section>
+    </div>
+  </wui-page>
+</ng-template>
