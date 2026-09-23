@@ -55,3 +55,6 @@ export * from './snackbar/snackbar.component';
 export * from './snackbar/snackbar.ref';
 
 export * from './checkbox/checkbox';
+
+export * from './radio/radio-button';
+export * from './radio/radio-group';

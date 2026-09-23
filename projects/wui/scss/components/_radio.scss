@@ -1,0 +1,111 @@
+@mixin radio {
+
+    wui-radio-group {
+        --wui-radio-group-gap: 1.5rem;
+
+        display: flex;
+        gap: var(--wui-radio-group-gap)
+    }
+
+    wui-radio-button {
+        display: inline-flex;
+        vertical-align: middle;
+        --wui-radio-button-size: 1.25rem;
+        --wui-radio-button-circle-size: .625rem;
+        --wui-radio-button-state-layer-size: 2.5rem;
+        --wui-radio-button-gap: 1.5rem;
+    }
+
+    .wui-radio-button {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--wui-radio-button-gap);
+        position: relative;
+
+        &:hover {
+            .wui-radio-button__circle::before {
+                background: var(--wui-color-state-layer-on-surface-opacity-08);
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+
+            .wui-radi-button__input:checked ~ .wui-radio-button__circle::before {
+                background: var(--wui-color-state-layer-primary-opacity-08);
+            }
+        }
+    }
+
+    .wui-radio-button__input {
+        position: absolute;
+        opacity: 0;
+        width: var(--wui-radio-button-size);
+        height: var(--wui-radio-button-size);
+        margin: 0;
+
+        &:checked ~ .wui-radio-button__circle {
+            border-color: var(--wui-color-primary);
+            
+            &::after {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    }
+
+    .wui-radio-button__label {
+        flex: 1 1 auto;
+    }
+
+    .wui-radio-button__circle {
+        width: var(--wui-radio-button-size);
+        height: var(--wui-radio-button-size);
+        border: 2px solid var(--wui-color-on-surface);
+        border-radius: 50%;
+        position: relative;
+        box-sizing: border-box;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex: 0 0 auto;
+
+        &:before {
+            content: "";
+            display: block;
+            width: var(--wui-radio-button-state-layer-size);
+            height: var(--wui-radio-button-state-layer-size);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(.5);
+            background: var(--wui-color-state-layer-primary-opacity-08);
+            border-radius: 50%;
+            opacity: 0;
+            transition: 
+                transform 100ms linear,
+                opacity 100ms linear;
+        }
+
+        &:after {
+            content: "";
+            width: 50%;
+            height: 50%;
+            background: var(--wui-color-primary);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0);
+            transition:
+                transform 100ms linear,
+                opacity 100ms linear;
+        }
+    }
+
+    .wui-radio-group--disabled {
+        .wui-radio-button__circle {
+            opacity: .38;
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,19 @@
+<ng-template #pageTpl>
+    <wui-page>
+        <div class="wui-page-content">
+            <div class="wui-container wui-py-5">
+                <h1 class="wui-pb-4">Radio</h1>
+
+                <div class="wui-pb-3">
+                    <p>Menggunakan radio untuk memilih value dengan desain radiobox</p>
+                </div>
+
+                <wui-radio-group (ngModel)]="selected">
+                    <wui-radio-button value="option-1">Option 1</wui-radio-button>
+                    <wui-radio-button value="option-2">Option 2</wui-radio-button>
+                    <wui-radio-button value="option-3">Option 3</wui-radio-button>
+                </wui-radio-group>
+            </div>
+        </div>
+    </wui-page>
+</ng-template>

@@ -16,6 +16,8 @@ export const routes: Routes = [{
 }, {
     path: 'tipografi', loadComponent: () => import('./pages/tipografi.page/tipografi.page').then(m => m.TipografiPage)
 }, {
+    path: 'radio', loadComponent: () => import('./pages/radio/radio.page').then(m => m.RadioPage)
+}, {
     path: 'button', loadComponent: () => import('./pages/button/button.page/button.page').then(m => m.ButtonPage)
 }, {
     path: 'dialog', loadComponent: () => import('./pages/dialog/dialog.page/dialog.page').then(m => m.DialogPage)

@@ -24,6 +24,7 @@ import {
   mdiViewGridOutline,
   mdiViewArrayOutline,
   mdiFormatLineSpacing,
+  mdiRadioboxMarked,
 } from '@mdi/js';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { provideHttpClient } from '@angular/common/http';
@@ -52,7 +53,8 @@ export const appConfig: ApplicationConfig = {
       { name: 'form', path: mdiFormTextbox },
       { name: 'form-select', path: mdiFormSelect },
       { name: 'play', path: mdiPlayCircle },
-      { name: 'snackbar', path: mdiSquareRoundedBadge}
+      { name: 'snackbar', path: mdiSquareRoundedBadge},
+      { name: 'radiobox-marked', path: mdiRadioboxMarked}
     ),
     provideHighlightOptions({
       coreLibraryLoader: () => import('highlight.js/lib/core'),
