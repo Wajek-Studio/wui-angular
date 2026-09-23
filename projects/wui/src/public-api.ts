@@ -53,3 +53,5 @@ export * from './badge/badge.options';
 export * from './snackbar/snackbar.service';
 export * from './snackbar/snackbar.component';
 export * from './snackbar/snackbar.ref';
+
+export * from './checkbox/checkbox';

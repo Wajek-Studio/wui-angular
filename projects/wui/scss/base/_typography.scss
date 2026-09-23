@@ -11,6 +11,13 @@
       'Segoe UI',
       sans-serif;
     line-height: 1.5;
+
+    // Skala `rem` dipatok 16px: seluruh token spacing & skala tipografi ditulis dalam `rem` dengan
+    // asumsi root 16px (lihat `abstracts/_tokens.scss`), jadi nilai absolut ini yang membuat
+    // asumsinya selalu benar — tidak lagi ikut setelan ukuran font bawaan browser (12–24px) yang
+    // membuat metrik melar diam-diam. Trade-off sadar: preferensi "perbesar font" pengguna tidak
+    // lagi menggeser satuan `rem`; zoom halaman tetap berfungsi karena zoom menskalakan px juga.
+    font-size: 16px;
   }
 
   body {
@@ -21,9 +28,10 @@
     // dibaca dari token peran itu, bukan angka lepas, supaya ikut berubah kalau skala tipografi
     // direvisi desainer; fallback-nya sengaja ditulis dalam rem yang sama, jadi teks tetap 14px
     // walau konsumen mematikan layer `themes`.
-    // Ditaruh di `body`, BUKAN `:root`: font-size di `:root` mengubah arti `rem` untuk seluruh
-    // dokumen — semua token spacing & skala tipografi (yang satuannya rem) ikut menyusut 12,5%.
-    // Yang diinginkan di sini hanya ukuran teks bawaan, bukan perubahan skala global.
+    // Ditaruh di `body`, BUKAN `:root`: `:root` hanya mematok arti satuan `rem` (16px absolut),
+    // sedangkan ukuran teks bawaan adalah keputusan tipografi. Menaruh 0.875rem di `:root` akan
+    // ikut mengartikan ulang `rem` untuk seluruh dokumen — semua token spacing & skala tipografi
+    // menyusut 12,5%. Yang diinginkan di sini hanya ukuran teks bawaan, bukan perubahan skala global.
     font-size: var(--wui-font-size-body-medium, 0.875rem);
   }
 

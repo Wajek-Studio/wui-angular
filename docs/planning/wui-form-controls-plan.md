@@ -36,6 +36,23 @@
 > bersamaan, dan menganimasikan salah satu saja membuat kolom teks berkedip 1px di tengah animasi.
 > `$wui-field-focused-border-width` kini **di-emit** ke `:root` (sebelumnya hanya fallback `2px`,
 > yang berarti nilai desain hidup di dua tempat).
+>
+> **State nonaktif checkbox (23 Sep 2026):** checkbox memakai token disabled M3 yang **sudah ada** —
+> `--wui-color-disabled-container` (12%) & `--wui-color-disabled-content` (38%), keduanya turunan
+> `on-surface` di `themes/_light-theme.scss`, jadi satu definisi untuk dua mode. Dua variabel lepas
+> lama (`--wui-checkbox-disabled-color: #1c1b1f`, `--wui-checkbox-disabled-opacity: 0.38`)
+> **dihapus**: tidak ada lagi warna ditulis tangan di `_checkbox.scss`. Nama barunya
+> `--wui-checkbox-disabled-container` / `-content` (pola indirection seperti `--wui-button-*`)
+> supaya pewarnaan bisa ditimpa per pemakaian.
+> Pemetaan M3: belum dicentang = garis `on-surface` 38% + latar transparan; dicentang = latar
+> `on-surface` 12% + centang 38% (garis mengikuti container); label 38%; **tanpa state layer**.
+> Hook-nya kelas host `.wui-checkbox--disabled` — satu-satunya sisi yang bisa menjangkau `cursor`
+> pada `label` pembungkus, dan sudah dipasang komponen dari field `disabled`.
+> ⚠️ Aturan hover label harus `&:where(:hover)` (0,2,1). Kalau tetap `&:hover` (0,3,1), state layer
+> tetap muncul di kotak nonaktif karena specificity mengalahkan urutan (jebakan §10 `panduan-scss.md`).
+> ⚠️ **Belum diukur di browser**, dan **belum bisa dipanggil dari template**: `WuiCheckbox` belum
+> punya `@Input() disabled` — padahal K1 menyebut kontrol harus tetap mengekspos `input()` biasa —
+> jadi satu-satunya jalur sekarang adalah `setDisabledState()` lewat Reactive Forms/`ngModel`.
 
 ---
 
