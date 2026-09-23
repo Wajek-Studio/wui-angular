@@ -18,71 +18,69 @@
         saja — menunya, bukan dialog yang membungkusnya.
       </p>
 
-      <p class="wui-body-medium wui-mb-5">
+      <div class="wui-mb-4 wui-p-3" style="background: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent); border-radius: 8px; border: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 10%, transparent);">
         Aksi terakhir: <strong>{{ aksiTerakhir() }}</strong>
-      </p>
+      </div>
 
       <!-- 1. PEMICU TOMBOL -->
-      <h2 class="wui-headline-small wui-mb-2">1. Pemicu tombol</h2>
-      <p class="wui-body-medium wui-mb-3">
-        Klik kanan pada tombol. Item terakhir nonaktif (boleh dilewati panah, tidak boleh
-        diaktifkan), dan ada satu pemisah serta satu item dengan label type-ahead berbeda dari
-        teksnya.
-      </p>
+      <app-showcase
+        title="1. Pemicu tombol"
+        description="Klik kanan pada tombol untuk membuka menu konteks. Item terakhir nonaktif (dilewati panah, tidak aktif), terdapat pemisah (divider), serta item dengan typeaheadLabel."
+        [tabs]="buttonTriggerTabs()"
+      >
+        <div>
+          <button wuiButton variant="outlined" [wuiContextMenu]="menuBerkas" class="wui-me-3">
+            Klik kanan di sini
+          </button>
 
-      <div class="wui-mb-5">
-        <button wuiButton variant="outlined" [wuiContextMenu]="menuBerkas" class="wui-me-3">
-          Klik kanan di sini
-        </button>
-
-        <button
-          wuiButton
-          variant="text"
-          [wuiContextMenu]="menuBerkas"
-          (click)="bukaTerprogram($event, trgProgram)"
-          #trgProgram="wuiContextMenu"
-        >
-          Buka dari kode — buka(x, y)
-        </button>
-      </div>
+          <button
+            wuiButton
+            variant="text"
+            [wuiContextMenu]="menuBerkas"
+            (click)="bukaTerprogram($event, trgProgram)"
+            #trgProgram="wuiContextMenu"
+          >
+            Buka dari kode — buka(x, y)
+          </button>
+        </div>
+      </app-showcase>
 
       <!-- 2. BARIS TABEL + DATA KONTEKS -->
-      <h2 class="wui-headline-small wui-mb-2">2. Baris tabel dengan data konteks</h2>
-      <p class="wui-body-medium wui-mb-3">
-        Tiap baris memakai menu yang sama, tetapi mengirim datanya sendiri lewat
-        <code>[wuiContextMenuData]</code> — template menu membacanya dengan
-        <code>&lt;ng-template #menu let-data&gt;</code>.
-      </p>
-
-      <div class="wui-mb-5" wuiTableResponsive>
-        <table wuiTable hover>
-          <thead>
-            <tr>
-              <th>Nama</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (item of baris(); track item.id) {
-              <tr [wuiContextMenu]="menuBaris" [wuiContextMenuData]="item">
-                <td>{{ item.nama }}</td>
-                <td>klik kanan baris ini</td>
+      <app-showcase
+        title="2. Baris tabel dengan data konteks"
+        description="Tiap baris memakai menu yang sama, tetapi mengirim datanya sendiri lewat [wuiContextMenuData] — template menu membacanya dengan <ng-template #menu let-data>."
+        [tabs]="withDataTabs()"
+      >
+        <div wuiTableResponsive>
+          <table wuiTable hover>
+            <thead>
+              <tr>
+                <th>Nama</th>
+                <th>Aksi</th>
               </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              @for (item of baris(); track item.id) {
+                <tr [wuiContextMenu]="menuBaris" [wuiContextMenuData]="item">
+                  <td>{{ item.nama }}</td>
+                  <td>klik kanan baris ini</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </app-showcase>
 
       <!-- 3. DI DALAM DIALOG -->
-      <h2 class="wui-headline-small wui-mb-2">3. Di dalam dialog</h2>
-      <p class="wui-body-medium wui-mb-3">
-        Buka dialog, lalu klik kanan di dalamnya. Satu kali <code>Esc</code> menutup
-        <strong>menu saja</strong>; <code>Esc</code> berikutnya baru menutup dialognya.
-      </p>
-
-      <div class="wui-mb-5">
-        <button wuiButton variant="filled" (click)="bukaDialog()">Buka dialog</button>
-      </div>
+      <app-showcase
+        title="3. Di dalam dialog"
+        description="Buka dialog modal, lalu klik kanan di dalamnya. Satu kali Esc menutup menu saja; Esc berikutnya baru menutup dialognya."
+        [tabs]="inDialogTabs()"
+      >
+        <div>
+          <button wuiButton variant="filled" (click)="bukaDialog()">Buka dialog</button>
+        </div>
+      </app-showcase>
 
       <h2 class="wui-headline-small wui-mb-2">4. Yang perlu diperiksa di F2</h2>
       <ul class="wui-body-medium">

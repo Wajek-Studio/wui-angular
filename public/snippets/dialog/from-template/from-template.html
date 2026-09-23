@@ -1,0 +1,19 @@
+<!-- Tombol pemicu dialog template -->
+<div class="dialog-actions-demo">
+  <button wuiButton variant="outlined" (click)="bukaTemplate()">
+    Buka Dialog Template
+  </button>
+  <span class="hasil">Hasil: <strong>{{ hasilTemplate }}</strong></span>
+</div>
+
+<!-- Template dialog didefinisikan langsung di HTML halaman -->
+<ng-template #tplDialog let-data>
+  <h2 class="wui-title-medium" id="demo-template-title">Hapus {{ data.nama }}?</h2>
+  <p class="wui-body-medium">
+    Dialog ini dirender langsung dari ng-template milik halaman.
+  </p>
+  <div class="demo-actions" style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+    <button wuiButton variant="text" (click)="tutupTemplate('batal')">Batal</button>
+    <button wuiButton color="error" (click)="tutupTemplate('hapus')">Hapus</button>
+  </div>
+</ng-template>

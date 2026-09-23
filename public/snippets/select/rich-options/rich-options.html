@@ -1,0 +1,43 @@
+<div class="wui-row wui-gap-4 wui-align-items-start">
+  <div class="wui-col-12 wui-col-md-6">
+    <wui-form-field hint="Isi opsinya bebas (proyeksi konten); typeaheadLabel dipakai untuk label terpilih.">
+      <label wuiLabel>Kota (opsi berdesain)</label>
+      <wui-select
+        wuiInput
+        placeholder="Pilih kota"
+        [value]="kotaKaya()"
+        (valueChange)="kotaKaya.set($event)"
+      >
+        <wui-option value="jkt" typeaheadLabel="Jakarta">
+          <wui-icon icon="home" class="wui-me-2"></wui-icon>
+          <span class="wui-d-flex wui-flex-column">
+            <span class="wui-title-small">Jakarta</span>
+            <span class="wui-body-small">Ibu kota negara</span>
+          </span>
+        </wui-option>
+
+        <wui-option value="bdg" typeaheadLabel="Bandung">
+          <wui-icon icon="home" class="wui-me-2"></wui-icon>
+          <span class="wui-d-flex wui-flex-column">
+            <span class="wui-title-small">Bandung</span>
+            <span class="wui-body-small">Kota kembang</span>
+          </span>
+        </wui-option>
+
+        <wui-option value="dps" typeaheadLabel="Denpasar" disabled>
+          <wui-icon icon="home" class="wui-me-2"></wui-icon>
+          <span class="wui-d-flex wui-flex-column">
+            <span class="wui-title-small">Denpasar</span>
+            <span class="wui-body-small">Sedang tidak tersedia</span>
+          </span>
+        </wui-option>
+      </wui-select>
+    </wui-form-field>
+  </div>
+
+  <div class="wui-col-12 wui-col-md-6">
+    <p class="wui-body-medium">
+      Nilai: <strong>{{ kotaKaya() ?? '(belum ada pilihan)' }}</strong>
+    </p>
+  </div>
+</div>

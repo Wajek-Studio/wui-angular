@@ -23,16 +23,11 @@
       </p>
 
       <!-- 1. FILLED -->
-      <section class="button-section">
-        <h2 class="section-title">1. Filled <code>variant="filled"</code></h2>
-        <p class="section-note">
-          Varian default: latar dari peran warna aktif (<code>--wui-button-container</code>) dan label
-          <code>--wui-button-content</code>. Tanpa input <code>color</code>, tombol memakai peran
-          <strong>netral</strong> (<code>--wui-color-default</code>, diturunkan dari <code>surface</code> +
-          <code>on-surface</code>). Lapisan interaksinya dicampur ke warna container sehingga latarnya
-          tidak tertimpa.
-        </p>
-
+      <app-showcase
+        title="1. Filled (variant=&quot;filled&quot;)"
+        description="Varian default: latar dari peran warna aktif (--wui-button-container) dan label --wui-button-content. Tanpa input color, tombol memakai peran netral (--wui-color-default)."
+        [tabs]="filledTabs()"
+      >
         <div class="button-grid">
           <div class="button-sample">
             <button wuiButton variant="filled">Filled</button>
@@ -51,19 +46,14 @@
             <span class="sample-label">disabled · container 12%, label 38%</span>
           </div>
         </div>
-      </section>
+      </app-showcase>
 
       <!-- 2. OUTLINED -->
-      <section class="button-section">
-        <h2 class="section-title">2. Outlined <code>variant="outlined"</code></h2>
-        <p class="section-note">
-          Container transparan dengan border 1px (<code>--wui-button-outline</code>) dan label dari peran
-          warna aktif (<code>--wui-button-accent</code>). Border mengikuti warna peran untuk
-          <code>primary</code>/<code>error</code>, sedangkan <code>default</code> memakai
-          <code>--wui-color-outline</code> yang lebih tenang. State layer-nya memakai warna label sebagai
-          lapisan transparan.
-        </p>
-
+      <app-showcase
+        title="2. Outlined (variant=&quot;outlined&quot;)"
+        description="Container transparan dengan border 1px (--wui-button-outline) dan label dari peran warna aktif (--wui-button-accent). State layer-nya memakai warna label sebagai lapisan transparan."
+        [tabs]="outlinedTabs()"
+      >
         <div class="button-grid">
           <div class="button-sample">
             <button wuiButton variant="outlined">Outlined</button>
@@ -82,16 +72,14 @@
             <span class="sample-label">disabled · border 12%, label 38%</span>
           </div>
         </div>
-      </section>
+      </app-showcase>
 
       <!-- 3. TEXT -->
-      <section class="button-section">
-        <h2 class="section-title">3. Text <code>variant="text"</code></h2>
-        <p class="section-note">
-          Tanpa container dan border, label dari peran warna aktif, dengan padding inline yang lebih
-          rapat (lihat tabel ukuran di bawah).
-        </p>
-
+      <app-showcase
+        title="3. Text (variant=&quot;text&quot;)"
+        description="Tanpa container dan border, label dari peran warna aktif, dengan padding inline yang lebih rapat."
+        [tabs]="textTabs()"
+      >
         <div class="button-grid">
           <div class="button-sample">
             <button wuiButton variant="text">Text button</button>
@@ -110,19 +98,14 @@
             <span class="sample-label">disabled · label 38%</span>
           </div>
         </div>
-      </section>
+      </app-showcase>
 
       <!-- 4. IKON -->
-      <section class="button-section">
-        <h2 class="section-title">4. Ikon di dalam tombol</h2>
-        <p class="section-note">
-          Tulis <code>&lt;wui-icon&gt;</code> sebagai <strong>anak langsung</strong> tombol — tanpa atribut
-          penanda. Sisinya diatur input <code>iconPos</code> (<code>start</code> default, <code>end</code>),
-          jadi <strong>urutan markup tidak menentukan hasilnya</strong>. Ukuran ikon mengikuti ukuran tombol,
-          padding tombol tetap <strong>simetris</strong> (sisi ikon sama dengan sisi label), dan jarak
-          ikon ↔ label diatur <code>gap</code> tombol — tidak perlu margin manual.
-        </p>
-
+      <app-showcase
+        title="4. Ikon di dalam tombol"
+        description="Tulis <wui-icon> sebagai anak langsung tombol. Sisinya diatur input iconPos ('start' default, 'end'). Tombol juga mendukung iconOnly untuk tombol berbentuk bujur sangkar."
+        [tabs]="iconsTabs()"
+      >
         <div class="button-grid">
           <div class="button-sample">
             <button wuiButton variant="filled">
@@ -192,13 +175,7 @@
             <span class="sample-label">ikon-saja sm · 32×32</span>
           </div>
         </div>
-
-        <p class="section-note">
-          Warna ikon tidak perlu disetel: <code>wui-icon</code> memakai <code>color</code> induknya, jadi
-          ikon yang sama ikut berubah di ketiga varian, saat <code>disabled</code>, dan saat
-          <code>.is-hover</code>/<code>.is-pressed</code>.
-        </p>
-      </section>
+      </app-showcase>
 
       <!-- 5. MODIFIER -->
       <section class="button-section">
@@ -389,14 +366,11 @@
       </section>
 
       <!-- 6. LINK -->
-      <section class="button-section">
-        <h2 class="section-title">6. Dipakai pada link (<code>&lt;a&gt;</code>)</h2>
-        <p class="section-note">
-          Karena <code>wuiButton</code> adalah directive pada elemen apa pun,
-          <code>&lt;a wuiButton&gt;</code> bekerja dengan varian, ukuran, dan ikon yang sama. Underline
-          bawaan link dimatikan oleh <code>.wui-button</code>, dan warnanya mengikuti varian tombol.
-        </p>
-
+      <app-showcase
+        title="6. Dipakai pada link (<a>)"
+        description="Karena wuiButton adalah directive pada elemen apa pun, <a wuiButton> bekerja dengan varian, ukuran, dan ikon yang sama."
+        [tabs]="linkTabs()"
+      >
         <div class="button-grid">
           <div class="button-sample">
             <a wuiButton variant="filled" routerLink="/home">Kembali</a>
@@ -429,23 +403,14 @@
             <span class="sample-label">ikon-saja sebagai link</span>
           </div>
         </div>
-
-        <p class="section-note">
-          Yang <strong>tidak</strong> berlaku di <code>&lt;a&gt;</code>: <code>disabled</code>,
-          <code>type</code>, dan <code>form</code> — semuanya milik <code>&lt;button&gt;</code>. Pilih
-          <code>&lt;a&gt;</code> untuk navigasi (bisa dibuka di tab baru, URL bisa disalin) dan
-          <code>&lt;button&gt;</code> untuk aksi di halaman.
-        </p>
-      </section>
+      </app-showcase>
 
       <!-- 7. WARNA -->
-      <section class="button-section">
-        <h2 class="section-title">7. Peran warna <code>color</code></h2>
-        <p class="section-note">
-          Tiga peran warna × tiga varian. Nilainya di-resolve per mode: <code>error</code> di mode gelap
-          memakai <code>#f2b8b5</code> dengan label <code>#601410</code>, bukan versi mode terang.
-        </p>
-
+      <app-showcase
+        title="7. Peran warna color"
+        description="Tiga peran warna × tiga varian. Nilainya di-resolve per mode: error di mode gelap memakai #f2b8b5 dengan label #601410, bukan versi mode terang."
+        [tabs]="colorsTabs()"
+      >
         <div class="button-grid">
           <div class="button-sample">
             <button wuiButton>default · filled</button>
@@ -484,7 +449,7 @@
             <span class="sample-label">label <code>error</code></span>
           </div>
         </div>
-      </section>
+      </app-showcase>
     </div>
   </wui-page>
 </ng-template>

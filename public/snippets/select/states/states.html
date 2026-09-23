@@ -1,0 +1,23 @@
+<div class="wui-row wui-gap-4 wui-align-items-start">
+  <!-- Keadaan Nonaktif (disabled) -->
+  <div class="wui-col-12 wui-col-md-6">
+    <wui-form-field hint="Tidak bisa dibuka (aria-disabled=true).">
+      <label wuiLabel>Kota (nonaktif)</label>
+      <wui-select wuiInput placeholder="Pilih kota" disabled [value]="kota()">
+        <wui-option>Jakarta</wui-option>
+        <wui-option>Bandung</wui-option>
+      </wui-select>
+    </wui-form-field>
+  </div>
+
+  <!-- Pesan Error / Invalid -->
+  <div class="wui-col-12 wui-col-md-6">
+    <wui-form-field error="Wajib dipilih sebelum menyimpan.">
+      <label wuiLabel>Kota (invalid)</label>
+      <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
+        <wui-option>Jakarta</wui-option>
+        <wui-option>Bandung</wui-option>
+      </wui-select>
+    </wui-form-field>
+  </div>
+</div>

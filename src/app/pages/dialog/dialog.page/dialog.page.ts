@@ -1,8 +1,16 @@
-import { Component, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { WuiButton, WuiDialogRef, WuiDialogService, WuiPage, WuiPageService } from '@wajek/wui';
-
+import { firstValueFrom } from 'rxjs';
+import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
 import { HapusDialog } from '../hapus-dialog/hapus-dialog';
+
+export interface DialogSnippet {
+  html?: string;
+  ts?: string;
+  dialogTs?: string;
+}
 
 /**
  * Halaman demo `WuiDialogService`.
@@ -13,11 +21,12 @@ import { HapusDialog } from '../hapus-dialog/hapus-dialog';
  */
 @Component({
   selector: 'app-dialog.page',
-  imports: [RouterLink, WuiButton, WuiPage],
+  imports: [RouterLink, WuiButton, WuiPage, ShowcaseComponent],
   templateUrl: './dialog.page.html',
   styleUrl: './dialog.page.scss',
 })
 export class DialogPage implements OnInit {
+  private readonly http = inject(HttpClient);
   private readonly pageService: WuiPageService = inject(WuiPageService);
   protected readonly dialogs: WuiDialogService = inject(WuiDialogService);
 
@@ -33,15 +42,104 @@ export class DialogPage implements OnInit {
   /** Ref dialog template — tidak ada komponen pemilik, jadi ref-nya dipegang halaman. */
   private templateRef: WuiDialogRef<string> | null = null;
 
-  ngOnInit(): void {
+  // Snippets
+  readonly fromComponentSnippet = signal<DialogSnippet>({});
+  readonly fromTemplateSnippet = signal<DialogSnippet>({});
+  readonly alertRoleSnippet = signal<DialogSnippet>({});
+  readonly alertSnippet = signal<DialogSnippet>({});
+
+  // Dynamic Tabs for ShowcaseComponent
+  readonly fromComponentTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.fromComponentSnippet().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.fromComponentSnippet().ts ?? '', language: 'typescript' },
+    { label: 'Komponen Dialog (HapusDialog)', code: this.fromComponentSnippet().dialogTs ?? '', language: 'typescript' },
+  ]);
+
+  readonly fromTemplateTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.fromTemplateSnippet().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.fromTemplateSnippet().ts ?? '', language: 'typescript' },
+  ]);
+
+  readonly alertRoleTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.alertRoleSnippet().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.alertRoleSnippet().ts ?? '', language: 'typescript' },
+  ]);
+
+  readonly alertTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.alertSnippet().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.alertSnippet().ts ?? '', language: 'typescript' },
+  ]);
+
+  async ngOnInit(): Promise<void> {
     this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+
+    // Load snippet dialog secara paralel
+    const [fromComp, fromTpl, alertRole, alertSys] = await Promise.all([
+      this.loadComponentSnippet(),
+      this.loadTemplateSnippet(),
+      this.loadAlertRoleSnippet(),
+      this.loadAlertSnippet(),
+    ]);
+
+    this.fromComponentSnippet.set(fromComp);
+    this.fromTemplateSnippet.set(fromTpl);
+    this.alertRoleSnippet.set(alertRole);
+    this.alertSnippet.set(alertSys);
+  }
+
+  private async loadComponentSnippet(): Promise<DialogSnippet> {
+    try {
+      const [html, ts, dialogTs] = await Promise.all([
+        firstValueFrom(this.http.get('snippets/dialog/from-component/from-component.html', { responseType: 'text' })).catch(() => ''),
+        firstValueFrom(this.http.get('snippets/dialog/from-component/from-component.ts', { responseType: 'text' })).catch(() => ''),
+        firstValueFrom(this.http.get('snippets/dialog/from-component/hapus-dialog.ts', { responseType: 'text' })).catch(() => ''),
+      ]);
+      return { html, ts, dialogTs };
+    } catch {
+      return {};
+    }
+  }
+
+  private async loadTemplateSnippet(): Promise<DialogSnippet> {
+    try {
+      const [html, ts] = await Promise.all([
+        firstValueFrom(this.http.get('snippets/dialog/from-template/from-template.html', { responseType: 'text' })).catch(() => ''),
+        firstValueFrom(this.http.get('snippets/dialog/from-template/from-template.ts', { responseType: 'text' })).catch(() => ''),
+      ]);
+      return { html, ts };
+    } catch {
+      return {};
+    }
+  }
+
+  private async loadAlertRoleSnippet(): Promise<DialogSnippet> {
+    try {
+      const [html, ts] = await Promise.all([
+        firstValueFrom(this.http.get('snippets/dialog/alert/alert.html', { responseType: 'text' })).catch(() => ''),
+        firstValueFrom(this.http.get('snippets/dialog/alert/alert.ts', { responseType: 'text' })).catch(() => ''),
+      ]);
+      return { html, ts };
+    } catch {
+      return {};
+    }
+  }
+
+  private async loadAlertSnippet(): Promise<DialogSnippet> {
+    try {
+      const [html, ts] = await Promise.all([
+        firstValueFrom(this.http.get('snippets/dialog/alert-system/alert-system.html', { responseType: 'text' })).catch(() => ''),
+        firstValueFrom(this.http.get('snippets/dialog/alert-system/alert-system.ts', { responseType: 'text' })).catch(() => ''),
+      ]);
+      return { html, ts };
+    } catch {
+      return {};
+    }
   }
 
   /** Dialog dari komponen: ref-nya di-inject oleh komponen dialognya sendiri. */
   protected async bukaKomponen(): Promise<void> {
     const ref = this.dialogs.open<boolean>(HapusDialog, {
       data: { nama: 'Produk A' },
-      // Label untuk screen reader — mengarah ke `<h2 id="hapus-dialog-title">` di isi dialog.
       ariaLabelledBy: 'hapus-dialog-title',
     });
 
@@ -65,12 +163,7 @@ export class DialogPage implements OnInit {
     this.templateRef?.close(nilai);
   }
 
-  /**
-   * Alert: `role="alertdialog"` + `disableClose`.
-   *
-   * `disableClose` mematikan ESC dan klik backdrop, jadi satu-satunya jalan keluar adalah tombol
-   * di dalam dialog — perilaku yang diharapkan untuk dialog sistem.
-   */
+  /** Alert: `role="alertdialog"` + `disableClose`. */
   protected bukaAlert(): void {
     void this.dialogs
       .open<boolean>(HapusDialog, {
@@ -88,7 +181,6 @@ export class DialogPage implements OnInit {
   protected async alertError(): Promise<void> {
     const pilihan = await this.dialogs.alert({
       title: 'Gagal memuat kontak',
-      // `\n` dipertahankan (`white-space: pre-line` di isi dialog), jadi teks biasa tidak perlu HTML.
       content: 'Server tidak merespons.\nTidak ada data yang berubah.',
     });
 
@@ -118,7 +210,6 @@ export class DialogPage implements OnInit {
     this.hasilAlert.set(this.labelAlert(pilihan));
   }
 
-  /** `null` berarti ditutup tanpa memilih tombol (ESC / klik backdrop). */
   private labelAlert(pilihan: number | null): string {
     return pilihan === null ? 'null (ditutup)' : `index ${pilihan}`;
   }

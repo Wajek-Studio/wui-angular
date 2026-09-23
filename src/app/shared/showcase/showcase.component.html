@@ -1,0 +1,47 @@
+<section class="showcase-card">
+  @if (title() || description()) {
+    <div class="showcase-header">
+      @if (title()) {
+        <h2 class="showcase-title">{{ title() }}</h2>
+      }
+      @if (description()) {
+        <p class="showcase-desc">{{ description() }}</p>
+      }
+    </div>
+  }
+
+  <!-- Live Interactive Preview / Demo Area -->
+  <div class="showcase-preview">
+    <ng-content />
+  </div>
+
+  <!-- Dynamic Tabs & Code Viewer Bar -->
+  @if (hasTabs()) {
+    <div class="showcase-code-bar">
+      <div class="code-tabs">
+        @for (tab of tabs(); track tab.label) {
+          <button
+            type="button"
+            class="tab-btn"
+            [class.is-active]="selectedLabel() === tab.label"
+            (click)="selectTab(tab.label)"
+          >
+            {{ tab.label }}
+          </button>
+        }
+      </div>
+
+      @if (collapsible()) {
+        <button type="button" class="toggle-btn" (click)="toggleCode()">
+          {{ showCode() ? 'Sembunyikan Kode' : 'Lihat Kode' }}
+        </button>
+      }
+    </div>
+
+    @if (showCode()) {
+      <div class="showcase-code-body">
+        <pre><code [highlight]="currentTab()?.code ?? ''" [language]="currentTab()?.language ?? 'html'"></code></pre>
+      </div>
+    }
+  }
+</section>

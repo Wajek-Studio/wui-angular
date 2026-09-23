@@ -1,0 +1,23 @@
+<div class="wui-row wui-gap-4 wui-align-items-start">
+  <div class="wui-col-12 wui-col-md-6">
+    <wui-form-field variant="filled" hint="Placeholder baru tampil saat select difokus.">
+      <label wuiLabel>Kota (filled)</label>
+      <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
+        <wui-option>Jakarta</wui-option>
+        <wui-option>Bandung</wui-option>
+        <wui-option>Denpasar</wui-option>
+      </wui-select>
+    </wui-form-field>
+  </div>
+
+  <div class="wui-col-12 wui-col-md-6">
+    <wui-form-field variant="filled" hint="Label mengapung di dalam kotak.">
+      <label wuiLabel>Negara (filled)</label>
+      <wui-select wuiInput placeholder="Pilih negara" [value]="negara()">
+        <wui-option>Indonesia</wui-option>
+        <wui-option>Malaysia</wui-option>
+        <wui-option>Singapura</wui-option>
+      </wui-select>
+    </wui-form-field>
+  </div>
+</div>

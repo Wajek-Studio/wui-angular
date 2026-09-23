@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
@@ -12,8 +12,8 @@ import {
   WuiSnackbarRef,
   WuiSnackbarService,
 } from '@wajek/wui';
-import { Highlight } from 'ngx-highlightjs';
 import { firstValueFrom } from 'rxjs';
+import { ShowcaseComponent, ShowcaseTab } from '../../shared/showcase';
 
 export interface ActivityLog {
   time: string;
@@ -37,7 +37,7 @@ export interface ExampleScript {
     WuiFormField,
     WuiInput,
     WuiLabel,
-    Highlight,
+    ShowcaseComponent,
   ],
 })
 export class SnackbarPage implements OnInit {
@@ -53,10 +53,13 @@ export class SnackbarPage implements OnInit {
   readonly isActive = signal(false);
   readonly logs = signal<ActivityLog[]>([]);
 
-  // State Code Viewer
-  readonly activeTab = signal<'html' | 'ts'>('html');
-  readonly showCode = signal(true);
+  // Snippet Signal & Dynamic Tabs for ShowcaseComponent
   readonly simpleSnippet = signal<ExampleScript>({});
+
+  readonly snackbarTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.simpleSnippet().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.simpleSnippet().ts ?? '', language: 'typescript' },
+  ]);
 
   private currentRef?: WuiSnackbarRef;
 
@@ -85,14 +88,6 @@ export class SnackbarPage implements OnInit {
         html: '<!-- Gagal memuat snippet HTML. -->',
       };
     }
-  }
-
-  setTab(tab: 'html' | 'ts'): void {
-    this.activeTab.set(tab);
-  }
-
-  toggleCode(): void {
-    this.showCode.update((val) => !val);
   }
 
   setDuration(duration: number): void {

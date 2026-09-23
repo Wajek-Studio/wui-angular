@@ -23,59 +23,44 @@
       </p>
 
       <!-- 1. DARI KOMPONEN -->
-      <section class="dialog-section">
-        <h2 class="section-title">1. Dari komponen — <code>open()</code></h2>
-        <p class="section-note">
-          Hasilnya bertipe: <code>open&lt;boolean&gt;(HapusDialog, &#123; data &#125;)</code> →
-          <code>await ref.result</code> bernilai <code>boolean</code>, atau
-          <code>undefined</code> kalau ditutup lewat ESC/backdrop. Komponen dialog mengambil
-          datanya lewat <code>injectDialogData()</code> dan menutup dirinya lewat
-          <code>inject(WuiDialogRef)</code>.
-        </p>
-
+      <app-showcase
+        title="1. Dari komponen — open()"
+        description="Hasilnya bertipe: open<boolean>(HapusDialog, { data }) → await ref.result bernilai boolean, atau undefined kalau ditutup lewat ESC/backdrop. Komponen dialog mengambil datanya lewat injectDialogData() dan menutup dirinya lewat inject(WuiDialogRef)."
+        [tabs]="fromComponentTabs()"
+      >
         <div class="dialog-actions-demo">
           <button wuiButton (click)="bukaKomponen()">Buka dialog konfirmasi</button>
           <span class="hasil">Hasil: <strong>{{ hasilKomponen() }}</strong></span>
         </div>
-      </section>
+      </app-showcase>
 
       <!-- 2. DARI TEMPLATE -->
-      <section class="dialog-section">
-        <h2 class="section-title">2. Dari <code>&lt;ng-template&gt;</code> — <code>openTemplate()</code></h2>
-        <p class="section-note">
-          Konteks template memakai kontrak CDK: <code>let-data</code> berisi
-          <code>options.data</code>. Karena tidak ada komponen pemilik, ref-nya dipegang halaman
-          (<code>openTemplate()</code> tetap mengembalikan <code>WuiDialogRef</code>).
-        </p>
-
+      <app-showcase
+        title="2. Dari <ng-template> — openTemplate()"
+        description="Konteks template memakai kontrak CDK: let-data berisi options.data. Karena tidak ada komponen pemilik, ref-nya dipegang halaman (openTemplate() tetap mengembalikan WuiDialogRef)."
+        [tabs]="fromTemplateTabs()"
+      >
         <div class="dialog-actions-demo">
           <button wuiButton variant="outlined" (click)="bukaTemplate()">Buka dialog template</button>
           <span class="hasil">Hasil: <strong>{{ hasilTemplate() }}</strong></span>
         </div>
-      </section>
+      </app-showcase>
 
       <!-- 3. ALERT -->
-      <section class="dialog-section">
-        <h2 class="section-title">3. Alert — <code>role="alertdialog"</code> + <code>disableClose</code></h2>
-        <p class="section-note">
-          ESC dan klik backdrop dimatikan, jadi hanya tombol di dalam dialog yang bisa
-          menutupnya — perilaku yang diharapkan untuk dialog sistem. Penampilan alert khusus
-          (ikon, warna, tata letak) belum ada; di v1 ini baru peran ARIA-nya.
-        </p>
-
+      <app-showcase
+        title='3. Alert — role="alertdialog" + disableClose'
+        description="ESC dan klik backdrop dimatikan, jadi hanya tombol di dalam dialog yang bisa menutupnya — perilaku yang diharapkan untuk dialog sistem. Penampilan alert khusus (ikon, warna, tata letak) belum ada; di v1 ini baru peran ARIA-nya."
+        [tabs]="alertRoleTabs()"
+      >
         <button wuiButton color="error" variant="outlined" (click)="bukaAlert()">Buka alert</button>
-      </section>
+      </app-showcase>
 
       <!-- 4. DIALOG SISTEM -->
-      <section class="dialog-section">
-        <h2 class="section-title">4. Dialog sistem — <code>alert()</code></h2>
-        <p class="section-note">
-          Untuk pesan yang tidak punya tata letak sendiri (error API, konfirmasi singkat). Isinya
-          datang sebagai <strong>data</strong> — tidak ada komponen atau
-          <code>&lt;ng-template&gt;</code> baru di sisi aplikasi. Hasilnya index tombol
-          (<code>0 … n-1</code>), atau <code>null</code> kalau ditutup tanpa memilih.
-        </p>
-
+      <app-showcase
+        title="4. Dialog sistem — alert()"
+        description="Untuk pesan yang tidak punya tata letak sendiri (error API, konfirmasi singkat). Isinya datang sebagai data — tidak ada komponen atau <ng-template> baru di sisi aplikasi. Hasilnya index tombol (0 … n-1), atau null kalau ditutup tanpa memilih."
+        [tabs]="alertTabs()"
+      >
         <div class="dialog-actions-demo">
           <button wuiButton (click)="alertError()">Error API — 1 tombol</button>
           <button wuiButton variant="outlined" (click)="alertRetry()">Error API + Coba lagi</button>
@@ -84,8 +69,8 @@
           </button>
         </div>
 
-        <p class="hasil">Hasil: <strong>{{ hasilAlert() }}</strong></p>
-      </section>
+        <p class="hasil" style="margin-top: 1rem;">Hasil: <strong>{{ hasilAlert() }}</strong></p>
+      </app-showcase>
 
       <p class="dialog-status">
         Dialog yang sedang terbuka (<code>dialogs.count()</code>):
@@ -111,6 +96,6 @@
 
   <div class="demo-actions">
     <button wuiButton variant="text" (click)="tutupTemplate('batal')">Batal</button>
-    <button wuiButton color="danger" (click)="tutupTemplate('hapus')">Hapus</button>
+    <button wuiButton color="error" (click)="tutupTemplate('hapus')">Hapus</button>
   </div>
 </ng-template>

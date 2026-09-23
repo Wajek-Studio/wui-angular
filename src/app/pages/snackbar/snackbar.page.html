@@ -19,175 +19,127 @@
       </p>
 
       <!-- 1. LIVE INTERACTIVE PLAYGROUND -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">1. Playground Interaktif</h2>
-          <p class="showcase-desc">
-            Uji coba langsung pengiriman notifikasi snackbar dengan mengetikkan pesan kustom, memilih durasi otomatis, atau menutupnya secara manual.
-          </p>
-        </div>
+      <app-showcase
+        title="1. Playground Interaktif"
+        description="Uji coba langsung pengiriman notifikasi snackbar dengan mengetikkan pesan kustom, memilih durasi otomatis, atau menutupnya secara manual."
+        [tabs]="snackbarTabs()"
+      >
+        <div class="playground-grid">
+          <!-- Input Pesan -->
+          <wui-form-field hint="Teks yang akan ditampilkan pada label snackbar.">
+            <label wuiLabel for="custom-msg">Isi Pesan Notifikasi</label>
+            <input
+              wuiInput
+              type="text"
+              id="custom-msg"
+              [ngModel]="customMessage()"
+              (ngModelChange)="customMessage.set($event)"
+              placeholder="mis. Perubahan data berhasil disimpan."
+            />
+          </wui-form-field>
 
-        <div class="showcase-preview">
-          <div class="playground-grid">
-            <!-- Input Pesan -->
-            <wui-form-field hint="Teks yang akan ditampilkan pada label snackbar.">
-              <label wuiLabel for="custom-msg">Isi Pesan Notifikasi</label>
-              <input
-                wuiInput
-                type="text"
-                id="custom-msg"
-                [ngModel]="customMessage()"
-                (ngModelChange)="customMessage.set($event)"
-                placeholder="mis. Perubahan data berhasil disimpan."
-              />
-            </wui-form-field>
-
-            <!-- Pilihan Durasi -->
-            <div class="control-row">
-              <span class="duration-label">Durasi Timer:</span>
-              <div class="duration-selector">
-                <button
-                  type="button"
-                  class="duration-chip"
-                  [class.is-active]="selectedDuration() === 1500"
-                  (click)="setDuration(1500)"
-                >
-                  1.5 Detik (Cepat)
-                </button>
-                <button
-                  type="button"
-                  class="duration-chip"
-                  [class.is-active]="selectedDuration() === 3000"
-                  (click)="setDuration(3000)"
-                >
-                  3 Detik (Standar)
-                </button>
-                <button
-                  type="button"
-                  class="duration-chip"
-                  [class.is-active]="selectedDuration() === 6000"
-                  (click)="setDuration(6000)"
-                >
-                  6 Detik (Lama)
-                </button>
-                <button
-                  type="button"
-                  class="duration-chip"
-                  [class.is-active]="selectedDuration() === 0"
-                  (click)="setDuration(0)"
-                >
-                  Persistent (Hanya Tombol OK)
-                </button>
-              </div>
-            </div>
-
-            <!-- Tombol Aksi -->
-            <div class="control-row" style="margin-top: 0.5rem;">
-              <button wuiButton variant="filled" color="primary" (click)="bukaKustom()">
-                Tampilkan Snackbar
-              </button>
-              <button wuiButton variant="outlined" (click)="bukaSederhana()">
-                Contoh Cepat (3s)
+          <!-- Pilihan Durasi -->
+          <div class="control-row">
+            <span class="duration-label">Durasi Timer:</span>
+            <div class="duration-selector">
+              <button
+                type="button"
+                class="duration-chip"
+                [class.is-active]="selectedDuration() === 1500"
+                (click)="setDuration(1500)"
+              >
+                1.5 Detik (Cepat)
               </button>
               <button
-                wuiButton
-                variant="text"
-                [disabled]="!isActive()"
-                (click)="tutupManual()"
+                type="button"
+                class="duration-chip"
+                [class.is-active]="selectedDuration() === 3000"
+                (click)="setDuration(3000)"
               >
-                Tutup Manual Sekarang
+                3 Detik (Standar)
+              </button>
+              <button
+                type="button"
+                class="duration-chip"
+                [class.is-active]="selectedDuration() === 6000"
+                (click)="setDuration(6000)"
+              >
+                6 Detik (Lama)
+              </button>
+              <button
+                type="button"
+                class="duration-chip"
+                [class.is-active]="selectedDuration() === 0"
+                (click)="setDuration(0)"
+              >
+                Persistent (Hanya Tombol OK)
               </button>
             </div>
+          </div>
 
-            <!-- Live Status & Activity Log -->
-            <div class="activity-box">
-              <div class="activity-box__header">
-                <span>Status Komponen:</span>
-                <span
-                  class="activity-box__status"
-                  [class.is-active]="isActive()"
-                  [class.is-idle]="!isActive()"
-                >
-                  <span class="status-dot"></span>
-                  {{ isActive() ? 'Aktif Menampilkan Snackbar' : 'Siaga (Tidak Ada Snackbar)' }}
-                </span>
-              </div>
+          <!-- Tombol Aksi -->
+          <div class="control-row" style="margin-top: 0.5rem;">
+            <button wuiButton variant="filled" color="primary" (click)="bukaKustom()">
+              Tampilkan Snackbar
+            </button>
+            <button wuiButton variant="outlined" (click)="bukaSederhana()">
+              Contoh Cepat (3s)
+            </button>
+            <button
+              wuiButton
+              variant="text"
+              [disabled]="!isActive()"
+              (click)="tutupManual()"
+            >
+              Tutup Manual Sekarang
+            </button>
+          </div>
 
-              <div style="font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);">
-                Riwayat Aktivitas &amp; Lifecycle Event:
-              </div>
-              <ul class="activity-box__log">
-                @for (log of logs(); track log.time) {
-                  <li>
-                    <span class="log-time">[{{ log.time }}]</span>
-                    <span>{{ log.message }}</span>
-                  </li>
-                } @empty {
-                  <li style="color: color-mix(in srgb, var(--wui-color-on-surface) 50%, transparent);">
-                    (Belum ada event tercatat. Klik salah satu tombol di atas untuk memulai).
-                  </li>
-                }
-              </ul>
+          <!-- Live Status & Activity Log -->
+          <div class="activity-box">
+            <div class="activity-box__header">
+              <span>Status Komponen:</span>
+              <span
+                class="activity-box__status"
+                [class.is-active]="isActive()"
+                [class.is-idle]="!isActive()"
+              >
+                <span class="status-dot"></span>
+                {{ isActive() ? 'Aktif Menampilkan Snackbar' : 'Siaga (Tidak Ada Snackbar)' }}
+              </span>
             </div>
+
+            <div style="font-size: 0.8rem; font-weight: 600; margin-bottom: 0.25rem; color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);">
+              Riwayat Aktivitas &amp; Lifecycle Event:
+            </div>
+            <ul class="activity-box__log">
+              @for (log of logs(); track log.time) {
+                <li>
+                  <span class="log-time">[{{ log.time }}]</span>
+                  <span>{{ log.message }}</span>
+                </li>
+              } @empty {
+                <li style="color: color-mix(in srgb, var(--wui-color-on-surface) 50%, transparent);">
+                  (Belum ada event tercatat. Klik salah satu tombol di atas untuk memulai).
+                </li>
+              }
+            </ul>
           </div>
         </div>
-
-        <!-- Code Viewer Bar -->
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button
-              type="button"
-              class="tab-btn"
-              [class.is-active]="activeTab() === 'html'"
-              (click)="setTab('html')"
-            >
-              HTML
-            </button>
-            <button
-              type="button"
-              class="tab-btn"
-              [class.is-active]="activeTab() === 'ts'"
-              (click)="setTab('ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode()">
-            {{ showCode() ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode()) {
-          <div class="showcase-code-body">
-            @if (activeTab() === 'html') {
-              <pre><code [highlight]="simpleSnippet().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="simpleSnippet().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
-      </section>
+      </app-showcase>
 
       <!-- 2. ANTRIAN & PENGGANTIAN CEPAT -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">2. Antrean &amp; Penggantian Otomatis (Singleton)</h2>
-          <p class="showcase-desc">
-            Dalam arsitektur WUI, hanya ada <strong>satu</strong> instance snackbar yang tampil di layar pada satu waktu.
-            Jika metode <code>snackbarService.open()</code> dipanggil kembali saat snackbar sebelumnya masih ada, snackbar lama otomatis di-dismiss dengan animasi keluar sebelum menampilkan yang baru.
-          </p>
-        </div>
-
-        <div class="showcase-preview">
-          <p class="section-note" style="margin-top: 0;">
-            Klik tombol di bawah untuk menyimulasikan dua notifikasi cepat: pesan pertama muncul, lalu digantikan oleh pesan kedua setelah 700ms.
-          </p>
-          <button wuiButton variant="outlined" color="primary" (click)="bukaAntrean()">
-            Uji Pergantian Cepat (2 Pesan Beruntun)
-          </button>
-        </div>
-      </section>
+      <app-showcase
+        title="2. Antrean &amp; Penggantian Otomatis (Singleton)"
+        description="Dalam arsitektur WUI, hanya ada satu instance snackbar yang tampil di layar pada satu waktu. Jika metode snackbarService.open() dipanggil kembali saat snackbar sebelumnya masih ada, snackbar lama otomatis di-dismiss dengan animasi keluar sebelum menampilkan yang baru."
+      >
+        <p class="section-note" style="margin-top: 0;">
+          Klik tombol di bawah untuk menyimulasikan dua notifikasi cepat: pesan pertama muncul, lalu digantikan oleh pesan kedua setelah 700ms.
+        </p>
+        <button wuiButton variant="outlined" color="primary" (click)="bukaAntrean()">
+          Uji Pergantian Cepat (2 Pesan Beruntun)
+        </button>
+      </app-showcase>
 
       <!-- 3. TABEL REFERENSI API -->
       <section class="doc-section">

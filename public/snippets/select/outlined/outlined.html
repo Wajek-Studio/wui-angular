@@ -1,0 +1,34 @@
+<div class="wui-row wui-gap-4 wui-align-items-start">
+  <div class="wui-col-12 wui-col-md-6">
+    <wui-form-field hint="Nilai opsi = teksnya sendiri; satu opsi nonaktif.">
+      <label wuiLabel>Kota</label>
+      <wui-select
+        wuiInput
+        placeholder="Pilih kota"
+        [value]="kota()"
+        (valueChange)="kota.set($event)"
+      >
+        <wui-option>Jakarta</wui-option>
+        <wui-option>Bandung</wui-option>
+        <wui-option disabled>Surabaya (nonaktif)</wui-option>
+        <wui-option>Denpasar</wui-option>
+      </wui-select>
+    </wui-form-field>
+
+    <div class="wui-mt-3">
+      <button wuiButton variant="outlined" (click)="isi()">Isi nilai</button>
+      <button wuiButton variant="text" (click)="kosongkan()">Kosongkan</button>
+    </div>
+  </div>
+
+  <div class="wui-col-12 wui-col-md-6">
+    <wui-form-field hint="Nilai dari API (string) ditampilkan sebagai label opsinya.">
+      <label wuiLabel>Negara</label>
+      <wui-select wuiInput placeholder="Pilih negara" [value]="negara()">
+        <wui-option>Indonesia</wui-option>
+        <wui-option>Malaysia</wui-option>
+        <wui-option>Singapura</wui-option>
+      </wui-select>
+    </wui-form-field>
+  </div>
+</div>

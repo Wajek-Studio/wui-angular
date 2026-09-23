@@ -1,0 +1,31 @@
+<!-- Tabel dengan menu konteks per baris yang membawa data konteks -->
+<div wuiTableResponsive>
+  <table wuiTable hover>
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of baris(); track item.id) {
+        <tr [wuiContextMenu]="menuBaris" [wuiContextMenuData]="item">
+          <td>{{ item.nama }}</td>
+          <td>klik kanan baris ini</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<!-- Template menu membaca data konteks dengan let-data -->
+<ng-template #menuBaris let-data>
+  <wui-menu>
+    <wui-menu-item (triggered)="aksi('Buka', data)">
+      <wui-icon icon="play" /> Buka {{ data.nama }}
+    </wui-menu-item>
+    <wui-menu-item (triggered)="aksi('Ganti nama', data)">Ganti nama…</wui-menu-item>
+    <hr wuiMenuDivider />
+    <wui-menu-item (triggered)="aksi('Hapus', data)">Hapus</wui-menu-item>
+  </wui-menu>
+</ng-template>
