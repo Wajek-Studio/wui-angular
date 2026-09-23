@@ -30,6 +30,12 @@ export const routes: Routes = [{
 }, {
     path: 'select', loadComponent: () => import('./pages/select/select.page/select.page').then(m => m.SelectPage)
 }, {
+    path: 'context-menu', loadComponent: () => import('./pages/context-menu/context-menu.page/context-menu.page').then(m => m.ContextMenuPage)
+}, {
+    // Halaman spike F0 (`wui-context-menu-plan.md`) — kode sekali pakai, tidak ditautkan di
+    // navigasi. Hapus rute ini (beserta folder `pages/context-menu-spike/`) setelah F0 selesai.
+    path: 'context-menu-spike', loadComponent: () => import('./pages/context-menu-spike/context-menu-spike.page').then(m => m.ContextMenuSpikePage)
+}, {
     // Halaman spike F0 (`wui-select-plan.md`) — kode sekali pakai, tidak ditautkan di navigasi.
     // Hapus rute ini (beserta folder `pages/select-spike/`) setelah F0 selesai.
     path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)

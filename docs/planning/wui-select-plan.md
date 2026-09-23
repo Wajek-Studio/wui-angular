@@ -227,6 +227,16 @@ Empat hal yang baru muncul saat F2 dikerjakan (dan wajib diingat saat mengubah p
 
 **Panel = dialog tanpa backdrop gelap** (revisi 22 Sep 2026, usul user):
 
+> ⚠️ **Koreksi terukur 23 Sep 2026** (dari spike context menu, `wui-context-menu-plan.md` §9 baris
+> 11): `scrollStrategies.block()` **no-op** kalau `<html>` sendiri tidak menggulir —
+> `BlockScrollStrategy._canBeEnabled()` (`@angular/cdk/fesm2022/overlay-module.mjs:89-101`)
+> mensyaratkan `documentElement.scrollHeight > viewport.height`. Di aplikasi ini yang menggulir
+> adalah `.wui-page-content` di dalam lapisan page, jadi "gulir halaman terkunci" pada panel select
+> **belum** benar-benar berlaku — bukan salah `block()`, tapi salah sasaran. Diukur di halaman spike
+> menu: halaman tetap bergulir (832 → 1232) selagi panel terbuka, tanpa kelas
+> `cdk-global-scrollblock`. Solusinya sama dengan yang diusulkan di plan menu §6 no. 1; belum
+> dikerjakan di select.
+
 - `hasBackdrop: true` + `backdropClass: 'cdk-overlay-transparent-backdrop'` (bawaan CDK: tak terlihat,
   tapi `pointer-events: auto` saat showing). Akibatnya interaksi dengan elemen di belakang panel
   berhenti, dan klik di mana pun di luar panel menutupnya lewat `backdropClick()` — jadi

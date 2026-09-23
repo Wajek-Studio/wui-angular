@@ -61,6 +61,18 @@
     --wui-select-option-height: #{a.$wui-select-option-height};
     --wui-select-panel-max-height: #{a.$wui-select-panel-max-height};
 
+    // Menu (Material 3, varian baseline)
+    --wui-menu-min-width: #{a.$wui-menu-min-width};
+    --wui-menu-max-width: #{a.$wui-menu-max-width};
+    --wui-menu-radius: #{a.$wui-menu-radius};
+    --wui-menu-item-height: #{a.$wui-menu-item-height};
+    --wui-menu-item-padding-inline: #{a.$wui-menu-item-padding-inline};
+    --wui-menu-item-gap: #{a.$wui-menu-item-gap};
+    --wui-menu-icon-size: #{a.$wui-menu-icon-size};
+    --wui-menu-divider-height: #{a.$wui-menu-divider-height};
+    --wui-menu-max-height: #{a.$wui-menu-max-height};
+    --wui-menu-elevation: #{a.$wui-menu-elevation};
+
     // Layout: container. Breakpoint-nya compile-time (media query tidak bisa pakai `var()`),
     // tapi lebar maksimum, batas kiri-kanan, dan gutter bisa ditimpa aplikasi saat runtime.
     // --wui-container-max-width: #{a.$wui-container-max-width};

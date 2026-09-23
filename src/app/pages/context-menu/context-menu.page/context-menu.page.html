@@ -1,0 +1,142 @@
+<ng-template #page>
+  <wui-page>
+    <div class="wui-page-content wui-container wui-py-5">
+      <h1 class="wui-display-medium wui-mb-2">WUI Menu Konteks</h1>
+
+      <p class="wui-body-large wui-mb-3">
+        Menu konteks dibuka lewat <strong>klik kanan</strong> (atau long-press di sentuh) pada sebuah
+        elemen: <code>[wuiContextMenu]</code> memegang template menunya, dan isi menu ditulis dengan
+        <code>&lt;wui-menu&gt;</code> + <code>&lt;wui-menu-item&gt;</code>. Perilaku keyboard
+        (panah, <code>Home</code>/<code>End</code>, type-ahead, <code>Enter</code>) datang dari
+        <code>@angular/cdk/menu</code>.
+      </p>
+
+      <p class="wui-body-medium wui-mb-5">
+        Panelnya memperlakukan dirinya seperti panel <code>&lt;wui-select&gt;</code>: ada backdrop
+        transparan, jadi elemen di belakang menu <strong>tidak</strong> bereaksi dan halaman
+        <strong>tidak</strong> ikut bergulir; <code>Esc</code> menutup <strong>satu tingkat</strong>
+        saja — menunya, bukan dialog yang membungkusnya.
+      </p>
+
+      <p class="wui-body-medium wui-mb-5">
+        Aksi terakhir: <strong>{{ aksiTerakhir() }}</strong>
+      </p>
+
+      <!-- 1. PEMICU TOMBOL -->
+      <h2 class="wui-headline-small wui-mb-2">1. Pemicu tombol</h2>
+      <p class="wui-body-medium wui-mb-3">
+        Klik kanan pada tombol. Item terakhir nonaktif (boleh dilewati panah, tidak boleh
+        diaktifkan), dan ada satu pemisah serta satu item dengan label type-ahead berbeda dari
+        teksnya.
+      </p>
+
+      <div class="wui-mb-5">
+        <button wuiButton variant="outlined" [wuiContextMenu]="menuBerkas" class="wui-me-3">
+          Klik kanan di sini
+        </button>
+
+        <button
+          wuiButton
+          variant="text"
+          [wuiContextMenu]="menuBerkas"
+          (click)="bukaTerprogram($event, trgProgram)"
+          #trgProgram="wuiContextMenu"
+        >
+          Buka dari kode — buka(x, y)
+        </button>
+      </div>
+
+      <!-- 2. BARIS TABEL + DATA KONTEKS -->
+      <h2 class="wui-headline-small wui-mb-2">2. Baris tabel dengan data konteks</h2>
+      <p class="wui-body-medium wui-mb-3">
+        Tiap baris memakai menu yang sama, tetapi mengirim datanya sendiri lewat
+        <code>[wuiContextMenuData]</code> — template menu membacanya dengan
+        <code>&lt;ng-template #menu let-data&gt;</code>.
+      </p>
+
+      <div class="wui-mb-5" wuiTableResponsive>
+        <table wuiTable hover>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of baris(); track item.id) {
+              <tr [wuiContextMenu]="menuBaris" [wuiContextMenuData]="item">
+                <td>{{ item.nama }}</td>
+                <td>klik kanan baris ini</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 3. DI DALAM DIALOG -->
+      <h2 class="wui-headline-small wui-mb-2">3. Di dalam dialog</h2>
+      <p class="wui-body-medium wui-mb-3">
+        Buka dialog, lalu klik kanan di dalamnya. Satu kali <code>Esc</code> menutup
+        <strong>menu saja</strong>; <code>Esc</code> berikutnya baru menutup dialognya.
+      </p>
+
+      <div class="wui-mb-5">
+        <button wuiButton variant="filled" (click)="bukaDialog()">Buka dialog</button>
+      </div>
+
+      <h2 class="wui-headline-small wui-mb-2">4. Yang perlu diperiksa di F2</h2>
+      <ul class="wui-body-medium">
+        <li><code>Esc</code> &amp; <code>Tab</code> menutup menu; fokus kembali ke elemen pemicu.</li>
+        <li>Panah atas/bawah berpindah item (item nonaktif <em>tidak</em> dilewati), <code>Home</code>/<code>End</code> ke ujung.</li>
+        <li>Mengetik huruf melompat sesuai <code>typeaheadLabel</code>.</li>
+        <li>Daftar panjang (menu dengan banyak item) menggulir sendiri tanpa menggeser halaman.</li>
+      </ul>
+    </div>
+  </wui-page>
+</ng-template>
+
+<!-- MENU: berkas -->
+<ng-template #menuBerkas>
+  <wui-menu>
+    <wui-menu-item (triggered)="aksi('Buka')">
+      <wui-icon icon="play" /> Buka
+    </wui-menu-item>
+    <wui-menu-item typeaheadLabel="Salin berkas" (triggered)="aksi('Salin')">
+      <wui-icon icon="form" /> Salin
+    </wui-menu-item>
+    <hr wuiMenuDivider />
+    <wui-menu-item disabled (triggered)="aksi('Hapus (nonaktif)')">
+      <wui-icon icon="menu" /> Hapus
+    </wui-menu-item>
+  </wui-menu>
+</ng-template>
+
+<!-- MENU: baris tabel (memakai data konteks) -->
+<ng-template #menuBaris let-data>
+  <wui-menu>
+    <wui-menu-item (triggered)="aksi('Buka', data)">
+      <wui-icon icon="play" /> Buka {{ data.nama }}
+    </wui-menu-item>
+    <wui-menu-item (triggered)="aksi('Ganti nama', data)">Ganti nama…</wui-menu-item>
+    <hr wuiMenuDivider />
+    <wui-menu-item (triggered)="aksi('Hapus', data)">Hapus</wui-menu-item>
+  </wui-menu>
+</ng-template>
+
+<!-- MENU: di dalam dialog (isi menu sama, ditulis ulang supaya jelas mandiri) -->
+<ng-template #dialog>
+  <div class="wui-p-4">
+    <p class="wui-body-medium wui-mb-3">
+      Klik kanan pada kotak di bawah, lalu tekan <code>Esc</code> sekali dan sekali lagi.
+    </p>
+
+    <button wuiButton variant="outlined" [wuiContextMenu]="menuDialog">Klik kanan di sini</button>
+  </div>
+</ng-template>
+
+<ng-template #menuDialog>
+  <wui-menu>
+    <wui-menu-item (triggered)="aksi('Ubah')">Ubah</wui-menu-item>
+    <wui-menu-item (triggered)="aksi('Duplikat')">Duplikat</wui-menu-item>
+  </wui-menu>
+</ng-template>

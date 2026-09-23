@@ -343,6 +343,35 @@ $wui-select-arrow-size: 1.25rem !default;
 $wui-select-option-height: 48px !default;
 $wui-select-panel-max-height: 280px !default;
 
+// ── Menu (Material 3 — varian *baseline*) ───────────────────────────────────
+// Angka dari spesifikasi Material 3 (*Menus* → *Menu (baseline)* → *Measurements*) dan token
+// `md.comp.menu.*` Material Web; keduanya sepakat: lebar 112–280dp, radius 4dp, item 48dp, padding
+// kiri/kanan item 12dp, jarak antar elemen dalam item 12dp, ikon 24dp, pemisah 1dp dengan jarak 8dp.
+$wui-menu-min-width: 112px !default;
+$wui-menu-max-width: 280px !default;
+$wui-menu-radius: 4px !default;
+
+// Bantalan atas/bawah panel (M3 8dp) dan jarak pemisah (8dp) **bukan** token di sini: keduanya
+// kebetulan sama dengan langkah 2 skala spasi repo, jadi ditulis lewat `a.space(py, 2)` /
+// `a.space(my, 2)` di `components/_menu.scss` — satu sumber angka, tanpa token cermin.
+$wui-menu-item-height: 48px !default;
+$wui-menu-item-padding-inline: 12px !default;
+
+// Jarak antara ikon dan label di dalam satu item (M3: "padding between elements within a list item").
+$wui-menu-item-gap: 12px !default;
+
+$wui-menu-icon-size: 24px !default;
+
+$wui-menu-divider-height: 1px !default;
+
+// M3 tidak menyebut tinggi maksimum menu (isinya dianggap pendek). Material Web memakai
+// `calc(100% - 32px)` relatif jendela; di sini sama, dinyatakan dengan satuan ruang pandang dinamis
+// supaya tetap benar saat bilah alamat ponsel muncul/hilang.
+$wui-menu-max-height: calc(100dvh - 16px) !default;
+
+// Elevasi M3 **level 2** (`md.comp.menu.container.elevation`) — satu tingkat di bawah dialog.
+$wui-menu-elevation: 0 1px 2px 0 rgb(0 0 0 / 30%), 0 2px 6px 2px rgb(0 0 0 / 15%) !default;
+
 // ── Tipografi: Bobot Font ───────────────────────────────────────────────────
 $wui-font-weight-regular: 400 !default;
 $wui-font-weight-medium: 500 !default;

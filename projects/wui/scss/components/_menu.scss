@@ -1,0 +1,110 @@
+// Level 4 — menu (`<wui-menu>`, `<wui-menu-item>`, `[wuiMenuDivider]`).
+//
+// Panel menu dirender ke `document.body` lewat overlay `[wuiContextMenu]`, jadi gayanya harus
+// global: `panelClass` memasang `.wui-context-menu-panel` di pane CDK, sedangkan panelnya sendiri
+// ber-class `.wui-menu`. Yang tinggal di halaman hanyalah pemicunya (tidak bergaya).
+//
+// Angka mengikuti Material 3 varian *baseline* (lihat komentar di `abstracts/_tokens.scss`).
+// Dua nilai M3 — 12dp padding kiri/kanan item dan 12dp jarak ikon↔label — **tidak ada di skala
+// spasi repo** (0 · 4 · 8 · 16 · 24), jadi keduanya lewat token `--wui-menu-*` alih-alih
+// `a.space(...)`; sisanya tetap memakai mixin supaya tidak ada angka mentah.
+
+@use '../abstracts' as a;
+
+/// Panel + item menu.
+@mixin menu {
+    // ── Pane overlay ────────────────────────────────────────────────────────
+    // Pane CDK adalah flex container dan membungkus panelnya. Ditulis sebagai
+    // `.cdk-overlay-pane.wui-context-menu-panel` supaya specificity-nya menang atas gaya bawaan CDK
+    // (yang stylesheet-nya datang setelah milik kita) — pola yang sama dengan dialog & panel select.
+    .cdk-overlay-pane.wui-context-menu-panel {
+        display: flex;
+    }
+
+    // ── Panel ───────────────────────────────────────────────────────────────
+    .wui-menu {
+        display: flex;
+        flex-direction: column;
+        min-width: var(--wui-menu-min-width, #{a.$wui-menu-min-width});
+        max-width: var(--wui-menu-max-width, #{a.$wui-menu-max-width});
+        max-height: var(--wui-menu-max-height, #{a.$wui-menu-max-height});
+        overflow-y: auto;
+        border-radius: var(--wui-menu-radius, #{a.$wui-menu-radius});
+        background-color: var(--wui-color-surface-container);
+        color: var(--wui-color-on-surface);
+        box-shadow: var(--wui-menu-elevation, #{a.$wui-menu-elevation});
+
+        // Menu yang menggulir sendiri tidak boleh merembetkan gulirnya ke halaman di belakangnya.
+        overscroll-behavior: contain;
+
+        // M3 memakai `label-large` untuk label item menu.
+        @include a.typography('label', 'large');
+
+        // Bantalan atas/bawah panel (M3 8dp = langkah 2 skala repo). Tanpa bantalan kiri/kanan:
+        // jarak tepi diatur tiap item supaya sorotannya menyentuh tepi panel.
+        @include a.space(py, 2);
+    }
+
+    // ── Item ────────────────────────────────────────────────────────────────
+    // Ini desain default-nya; isi item diproyeksikan aplikasi, jadi teks biasa, ikon, atau dua baris
+    // tetap bekerja di atas dasar ini.
+    .wui-menu-item {
+        display: flex;
+        align-items: center;
+        gap: var(--wui-menu-item-gap, #{a.$wui-menu-item-gap});
+        min-height: var(--wui-menu-item-height, #{a.$wui-menu-item-height});
+        padding-inline: var(--wui-menu-item-padding-inline, #{a.$wui-menu-item-padding-inline});
+        cursor: pointer;
+        color: var(--wui-color-on-surface);
+
+        // Menu itu daftar aksi: teksnya tidak untuk disalin, dan ini juga mencegah seleksi liar saat
+        // klik kanan atau seret.
+        user-select: none;
+    }
+
+    // Ikon mengikuti ukuran token M3 (24dp) dan warnanya peran `on-surface-variant` — pola yang sama
+    // dengan panah select (`.wui-button > wui-icon`).
+    .wui-menu-item > wui-icon {
+        --wui-icon-size: var(--wui-menu-icon-size, #{a.$wui-menu-icon-size});
+
+        flex: 0 0 auto;
+        color: var(--wui-color-on-surface-variant);
+    }
+
+    // Nonaktif dibaca dari ARIA — bukan `:disabled`, karena host-nya elemen kustom (dan item menu
+    // memang harus tetap bisa difokus panah: CDK tidak melewatinya).
+    .wui-menu-item[aria-disabled='true'] {
+        cursor: not-allowed;
+        color: var(--wui-color-disabled-content);
+    }
+
+    .wui-menu-item[aria-disabled='true'] > wui-icon {
+        color: var(--wui-color-disabled-content);
+    }
+
+    // Sorotan mengikuti pola panel select: `on-surface` 8% di atas permukaan setara dengan peran
+    // `surface-container-high` — jadi bahasanya satu dengan `<wui-option>`, tanpa angka persen
+    // ad-hoc. Hover dibatasi `(hover: hover)` supaya tidak "lengket" di layar sentuh.
+    @media (hover: hover) {
+        .wui-menu-item:hover:not([aria-disabled='true']) {
+            background-color: var(--wui-color-surface-container-high);
+        }
+    }
+
+    // Item yang difokus keyboard (CDK memindahkan fokus DOM ke item) — sedikit lebih tegas daripada
+    // hover, karena inilah satu-satunya petunjuk posisi saat memakai panah. Cincin fokus bawaan
+    // browser sengaja dibiarkan hidup.
+    .wui-menu-item:focus-visible {
+        background-color: var(--wui-color-surface-container-highest);
+    }
+
+    // ── Pemisah ─────────────────────────────────────────────────────────────
+    .wui-menu-divider {
+        height: var(--wui-menu-divider-height, #{a.$wui-menu-divider-height});
+        border: 0;
+        background-color: var(--wui-color-outline-variant);
+
+        // M3: jarak 8dp di atas & bawah pemisah (= langkah 2 skala repo).
+        @include a.space(my, 2);
+    }
+}

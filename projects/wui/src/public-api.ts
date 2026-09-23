@@ -15,6 +15,11 @@ export * from './form-field/form-field';
 export * from './form-field/input';
 export * from './form-field/label';
 
+export * from './menu/context-menu';
+export * from './menu/menu';
+export * from './menu/menu-divider';
+export * from './menu/menu-item';
+
 export * from './select/select';
 export * from './select/option';
 

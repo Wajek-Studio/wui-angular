@@ -1,0 +1,86 @@
+// Harness F0 context menu — **kode sekali pakai**, bukan gaya komponen library.
+//
+// CDK tidak mengirim satu baris pun CSS untuk menu (rencana §2), jadi panel di sini diberi gaya
+// seminimal mungkin supaya bisa diukur dan dilihat. Angka di sini **bukan** angka desain; token
+// `$wui-menu-*` baru ditentukan di F1/F3.
+
+.spike-cm {
+  // Wadah halaman supaya gaya harness tidak bocor ke halaman demo lain.
+}
+
+.spike-cm__baris {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.spike-cm__kotak {
+  display: inline-block;
+  padding: 12px 16px;
+  border: 1px dashed currentColor;
+  border-radius: 8px;
+  cursor: context-menu;
+  user-select: none;
+}
+
+.spike-cm__jejak {
+  max-height: 240px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+
+// Panel menu: hanya struktur yang dibutuhkan (CDK tidak menyediakannya).
+.spike-cm__menu {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--wui-color-surface-container);
+  color: var(--wui-color-on-surface);
+  box-shadow:
+    0 1px 3px 0 rgb(0 0 0 / 30%),
+    0 4px 8px 3px rgb(0 0 0 / 15%);
+}
+
+.spike-cm__menu--panjang {
+  max-height: 240px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.spike-cm__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.spike-cm__item:hover,
+.spike-cm__item:focus-visible {
+  background: var(--wui-color-surface-container-high);
+}
+
+.spike-cm__item[aria-disabled='true'] {
+  opacity: 0.38;
+  cursor: default;
+}
+
+.spike-cm__ruang {
+  height: 150vh;
+}

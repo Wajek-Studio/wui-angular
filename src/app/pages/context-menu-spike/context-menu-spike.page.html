@@ -1,0 +1,268 @@
+<ng-template #halaman>
+  <wui-page>
+    <div class="wui-page-content wui-container wui-py-5 spike-cm">
+      <h1 class="wui-display-medium wui-mb-2">Spike F0 — context menu</h1>
+      <p class="wui-body-large wui-mb-4">
+        Harness pengukuran untuk <code>docs/planning/wui-context-menu-plan.md</code> (§7 F0, hasil
+        masuk ke §9). Menunya memakai directive CDK <strong>apa adanya</strong>
+        (<code>[cdkContextMenuTriggerFor]</code> + <code>cdkMenu</code> + <code>cdkMenuItem</code>),
+        tanpa pembungkus <code>wui-*</code>; strategi gulir ditimpa jadi <code>block()</code>
+        (keputusan N5). CDK tidak mengirim CSS menu sama sekali, jadi gaya panel di bawah ini milik
+        harness — bukan angka desain.
+      </p>
+
+      <div class="spike-cm__baris wui-mb-3">
+        <button wuiButton variant="outlined" id="btn-bersih" (click)="bersihkan()">
+          Bersihkan log
+        </button>
+        <button wuiButton variant="text" id="btn-belakang" (click)="klikBelakang()">
+          Tombol di belakang panel (terklik {{ hitungBelakang() }}×)
+        </button>
+      </div>
+
+      <pre id="jejak" class="spike-cm__jejak wui-mb-5">{{ jejakTeks() }}</pre>
+
+      <!-- 1. PEMICU DIV (tidak fokusable) -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">1. Pemicu <code>div</code> (tidak fokusable)</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Klik kanan di dalam kotak. Yang dicari: panel muncul di titik penunjuk, item pertama
+          difokus, dan saat menu tertutup fokus kembali ke elemen pemicu (yang tidak fokusable ini
+          akan jadi catatan tersendiri).
+        </p>
+        <div class="spike-cm__baris">
+          <div
+            spikeBlok
+            id="trg-dasar"
+            class="spike-cm__kotak"
+            [cdkContextMenuTriggerFor]="menuDasar"
+            (contextmenu)="catatTitik($event)"
+            (cdkContextMenuOpened)="saatBuka('dasar')"
+            (cdkContextMenuClosed)="saatTutup('dasar')"
+          >
+            klik kanan di sini
+          </div>
+          <button wuiButton variant="outlined" id="btn-ukur-dasar" (click)="ukur('dasar', 'menu-dasar')">
+            Ukur panel
+          </button>
+        </div>
+      </section>
+
+      <!-- 2. PEMICU BUTTON (fokusable) -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">2. Pemicu <code>button</code> (fokusable)</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Sama, tapi pemicunya tombol: fokus harus bisa kembali ke tombol itu saat menu tertutup.
+        </p>
+        <button
+          wuiButton
+          variant="outlined"
+          spikeBlok
+          id="trg-button"
+          [cdkContextMenuTriggerFor]="menuKecil"
+          (contextmenu)="catatTitik($event)"
+          (cdkContextMenuOpened)="saatBuka('button')"
+          (cdkContextMenuClosed)="saatTutup('button')"
+        >
+          klik kanan pada tombol
+        </button>
+      </section>
+
+      <!-- 3. DAFTAR PANJANG -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">3. Daftar panjang (gulir di dalam panel)</h2>
+        <p class="wui-body-medium wui-mb-3">
+          40 item, panel dibatasi <code>max-height: 240px</code>. Yang dicari: roda gulir di atas
+          panel menggulir <strong>panelnya</strong>, sementara halaman tetap terkunci.
+        </p>
+        <div
+          spikeBlok
+          id="trg-panjang"
+          class="spike-cm__kotak"
+          [cdkContextMenuTriggerFor]="menuPanjang"
+          (contextmenu)="catatTitik($event)"
+          (cdkContextMenuOpened)="saatBuka('panjang')"
+          (cdkContextMenuClosed)="saatTutup('panjang')"
+        >
+          klik kanan untuk daftar 40 item
+        </div>
+      </section>
+
+      <!-- 4. ITEM DINAMIS -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">4. Item dinamis selagi menu terbuka</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Kaitnya <code>window.spikeTambah()</code> / <code>window.spikeHapus()</code> (dipanggil
+          dari luar) — tombol di halaman tidak bisa dipakai karena mengkliknya adalah klik di luar
+          panel. Yang dicari: setelah daftar berubah, panah tetap bekerja pada daftar terbaru.
+        </p>
+        <div
+          spikeBlok
+          id="trg-dinamis"
+          class="spike-cm__kotak"
+          [cdkContextMenuTriggerFor]="menuDinamis"
+          (contextmenu)="catatTitik($event)"
+          (cdkContextMenuOpened)="saatBuka('dinamis')"
+          (cdkContextMenuClosed)="saatTutup('dinamis')"
+        >
+          klik kanan (daftar {{ daftarDinamis().length }} item)
+        </div>
+      </section>
+
+      <!-- 5. TEPI JENDELA -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">5. Buka paksa di sudut kanan-bawah</h2>
+        <p class="wui-body-medium wui-mb-3">
+          <code>CdkContextMenuTrigger.open()</code> di 6px dari tepi kanan &amp; bawah. Yang dicari:
+          panel <strong>di-push</strong> ke dalam jendela (utuh), bukan keluar layar.
+        </p>
+        <div class="spike-cm__baris">
+          <div
+            spikeBlok
+            id="trg-tepi"
+            class="spike-cm__kotak"
+            [cdkContextMenuTriggerFor]="menuDasar"
+            #trgTepi="cdkContextMenuTriggerFor"
+            (contextmenu)="catatTitik($event)"
+            (cdkContextMenuOpened)="saatBuka('tepi')"
+            (cdkContextMenuClosed)="saatTutup('tepi')"
+          >
+            klik kanan di sini
+          </div>
+          <button wuiButton variant="outlined" id="btn-tepi" (click)="bukaDiTepi(trgTepi)">
+            Buka di sudut kanan-bawah
+          </button>
+          <button wuiButton variant="text" id="btn-ukur-tepi" (click)="ukur('tepi', 'menu-dasar')">
+            Ukur panel
+          </button>
+        </div>
+      </section>
+
+      <!-- 6. RTL -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">6. RTL</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Kotak <code>dir="rtl"</code>: arah <code>start</code>/<code>end</code> panel harus ikut
+          terbalik (offset 2px bawaan CDK ada di sisi yang berbeda).
+        </p>
+        <div dir="rtl" class="spike-cm__baris">
+          <div
+            spikeBlok
+            id="trg-rtl"
+            class="spike-cm__kotak"
+            [cdkContextMenuTriggerFor]="menuKecil"
+            (contextmenu)="catatTitik($event)"
+            (cdkContextMenuOpened)="saatBuka('rtl')"
+            (cdkContextMenuClosed)="saatTutup('rtl')"
+          >
+            klik kanan di kotak RTL
+          </div>
+          <button wuiButton variant="outlined" id="btn-ukur-rtl" (click)="ukur('rtl', 'menu-kecil')">
+            Ukur panel
+          </button>
+        </div>
+      </section>
+
+      <!-- 7. DI DALAM DIALOG -->
+      <section class="wui-mb-5">
+        <h2 class="wui-headline-small wui-mb-2">7. Di dalam dialog (focus trap menyala)</h2>
+        <p class="wui-body-medium wui-mb-3">
+          Yang dicari: menu tetap terbuka (trap dialog tidak merebut fokus itemnya), panel tampak di
+          atas dialog, dan <code>Esc</code> menutup <strong>menu saja</strong>.
+        </p>
+        <button wuiButton variant="filled" id="btn-dialog" (click)="bukaDialog()">
+          Buka dialog
+        </button>
+      </section>
+
+      <p class="wui-body-medium wui-mb-5">
+        Ruang kosong di bawah ini hanya supaya halaman cukup tinggi untuk membuktikan gulirnya
+        terkunci: roda gulir di luar panel harus <strong>tidak</strong> menggeser
+        <code>window.scrollY</code> selama menu terbuka.
+      </p>
+      <div class="spike-cm__ruang"></div>
+    </div>
+  </wui-page>
+</ng-template>
+
+<!-- MENU: dasar (dipakai juga oleh pemicu tepi & dialog) -->
+<ng-template #menuDasar>
+  <div class="spike-cm__menu" id="menu-dasar" cdkMenu>
+    <button type="button" class="spike-cm__item" cdkMenuItem (cdkMenuItemTriggered)="aktifkan('Salin')">
+      Salin
+    </button>
+    <button type="button" class="spike-cm__item" cdkMenuItem (cdkMenuItemTriggered)="aktifkan('Ubah')">
+      Ubah
+    </button>
+    <button
+      type="button"
+      class="spike-cm__item"
+      cdkMenuItem
+      disabled
+      (cdkMenuItemTriggered)="aktifkan('Hapus (nonaktif!)')"
+    >
+      Hapus (nonaktif)
+    </button>
+    <button
+      type="button"
+      class="spike-cm__item"
+      cdkMenuItem
+      cdkMenuitemTypeaheadLabel="Zebra"
+      (cdkMenuItemTriggered)="aktifkan('Zebra')"
+    >
+      Zebra (label type-ahead)
+    </button>
+  </div>
+</ng-template>
+
+<!-- MENU: kecil -->
+<ng-template #menuKecil>
+  <div class="spike-cm__menu" id="menu-kecil" cdkMenu>
+    <button type="button" class="spike-cm__item" cdkMenuItem (cdkMenuItemTriggered)="aktifkan('Satu-satunya')">
+      Satu-satunya item
+    </button>
+  </div>
+</ng-template>
+
+<!-- MENU: panjang -->
+<ng-template #menuPanjang>
+  <div class="spike-cm__menu spike-cm__menu--panjang" id="menu-panjang" cdkMenu>
+    @for (baris of panjang; track baris) {
+      <button type="button" class="spike-cm__item" cdkMenuItem (cdkMenuItemTriggered)="aktifkan(baris)">
+        {{ baris }}
+      </button>
+    }
+  </div>
+</ng-template>
+
+<!-- MENU: dinamis -->
+<ng-template #menuDinamis>
+  <div class="spike-cm__menu" id="menu-dinamis" cdkMenu>
+    @for (baris of daftarDinamis(); track $index) {
+      <button type="button" class="spike-cm__item" cdkMenuItem (cdkMenuItemTriggered)="aktifkan(baris)">
+        {{ baris }}
+      </button>
+    }
+  </div>
+</ng-template>
+
+<!-- DIALOG dengan pemicu di dalamnya -->
+<ng-template #dialog>
+  <div class="wui-p-4">
+    <p class="wui-body-medium wui-mb-3">
+      Klik kanan di kotak; lalu coba <code>Esc</code> sekali (menu saja yang tertutup) dan sekali
+      lagi (dialognya tertutup).
+    </p>
+    <div
+      spikeBlok
+      id="trg-dialog"
+      class="spike-cm__kotak"
+      [cdkContextMenuTriggerFor]="menuDasar"
+      (contextmenu)="catatTitik($event)"
+      (cdkContextMenuOpened)="saatBuka('dialog')"
+      (cdkContextMenuClosed)="saatTutup('dialog')"
+    >
+      klik kanan di dalam dialog
+    </div>
+  </div>
+</ng-template>
