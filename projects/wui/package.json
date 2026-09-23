@@ -1,6 +1,6 @@
 {
   "name": "@wajek/wui",
-  "version": "20.0.1",
+  "version": "20.1.0",
   "description": "Wajek UI — komponen dan style layer Angular yang bisa dimuat manual per project.",
   "publishConfig": {
     "access": "public"

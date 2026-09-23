@@ -3,7 +3,7 @@
     <div class="wui-page-content form-container">
       <header class="form-header">
         <a routerLink="/home" class="form-back-btn">← Kembali ke Beranda</a>
-        <h1 class="form-title">WUI Form Field</h1>
+        <h1 class="form-title">Forms</h1>
         <p class="form-subtitle">
           <code>&lt;wui-form-field&gt;</code> menyusun label, kontrol, dan pesan hint/error.
           Kontrolnya tetap elemen <strong>native</strong> — <code>&lt;input&gt;</code> atau
@@ -12,6 +12,32 @@
           <code>formControlName</code> tetap milik browser/Angular.
         </p>
       </header>
+
+      <h2 class="wui-title-medium wui-mb-4">Simple Text Field</h2>
+
+      <div>simple.ts</div>
+      <pre><code [highlight]="simple().ts ?? ''" language="typescript"></code></pre>
+
+      <div>simple.html</div>
+      <pre><code [highlight]="simple().html ?? ''" language="html"></code></pre>
+
+      <wui-form-field hint="Sesuai kartu identitas." class="wui-mb-4">
+          <label wuiLabel for="name">Nama Lengkap</label>
+          <input wuiInput type="text" id="name" autocomplete="name" placeholder="Masukkan nama lengkap anda"/>
+      </wui-form-field>
+
+      <h2 class="wui-title-medium wui-mb-4">Filled Text Field</h2>
+
+      <div>filled.ts</div>
+      <pre><code [highlight]="filled().ts ?? ''" language="typescript"></code></pre>
+
+      <div>filled.html</div>
+      <pre><code [highlight]="filled().html ?? ''" language="html"></code></pre>
+
+      <wui-form-field hint="Sesuai kartu identitas." class="wui-mb-4" variant="filled">
+          <label wuiLabel for="name">Nama Lengkap</label>
+          <input wuiInput type="text" id="name" autocomplete="name" placeholder="Masukkan nama lengkap anda"/>
+      </wui-form-field>
 
       <p class="page-note">
         Label adalah elemen <code>&lt;label&gt;</code> asli yang <strong>mengapung</strong> saat kontrol

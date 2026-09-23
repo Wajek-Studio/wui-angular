@@ -21,6 +21,8 @@ import {
   mdiViewDashboardOutline,
   mdiWindowMaximize,
 } from '@mdi/js';
+import { provideHighlightOptions } from 'ngx-highlightjs';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,5 +46,15 @@ export const appConfig: ApplicationConfig = {
       { name: 'form-select', path: mdiFormSelect },
       { name: 'play', path: mdiPlayCircle }
     ),
+    provideHighlightOptions({
+      coreLibraryLoader: () => import('highlight.js/lib/core'),
+      languages: {
+        typescript: () => import('highlight.js/lib/languages/typescript'),
+        html: () => import('highlight.js/lib/languages/css'),
+        scss: () => import('highlight.js/lib/languages/scss')
+      },
+      themePath: 'highlight.js/styles/github-dark.min.css'
+    }),
+    provideHttpClient()
   ],
 };

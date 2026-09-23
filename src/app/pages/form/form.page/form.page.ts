@@ -1,7 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { WuiButton, WuiFormField, WuiInput, WuiLabel, WuiPage, WuiPageService } from '@wajek/wui';
+import { Highlight } from 'ngx-highlightjs';
+import { firstValueFrom } from 'rxjs';
+
+interface ExampleScript {
+  ts?: string,
+  html?: string
+}
 
 /**
  * Halaman demo `<wui-form-field>` + `[wuiInput]`.
@@ -12,14 +20,28 @@ import { WuiButton, WuiFormField, WuiInput, WuiLabel, WuiPage, WuiPageService } 
  */
 @Component({
   selector: 'app-form.page',
-  imports: [RouterLink, ReactiveFormsModule, WuiButton, WuiFormField, WuiInput, WuiPage, WuiLabel],
+  imports: [
+    RouterLink, 
+    ReactiveFormsModule, 
+    WuiButton, 
+    WuiFormField, 
+    WuiInput, 
+    WuiPage, 
+    WuiLabel,
+    Highlight
+  ],
   templateUrl: './form.page.html',
   styleUrl: './form.page.scss',
 })
 export class FormPage implements OnInit {
+
+  private http = inject(HttpClient);
   private readonly pageService: WuiPageService = inject(WuiPageService);
 
   readonly pageTpl = viewChild<TemplateRef<unknown>>('page');
+
+  simple = signal<ExampleScript>({});
+  filled = signal<ExampleScript>({});
 
   protected readonly form = new FormGroup({
     nama: new FormControl('', {
@@ -32,8 +54,22 @@ export class FormPage implements OnInit {
 
   protected readonly status = signal('(belum disimpan)');
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+
+    let simpleTs = await firstValueFrom(this.http.get('snippets/forms/text-field/simple/simple.ts', {responseType: 'text'}));
+    let simpleHtml = await firstValueFrom(this.http.get('snippets/forms/text-field/simple/simple.html', {responseType: 'text'}));
+    this.simple.set({
+      ts: simpleTs,
+      html: simpleHtml
+    });
+
+    let filledTs = await firstValueFrom(this.http.get('snippets/forms/text-field/filled/filled.ts', {responseType: 'text'}));
+    let filledHtml = await firstValueFrom(this.http.get('snippets/forms/text-field/filled/filled.html', {responseType: 'text'}));
+    this.filled.set({
+      ts: filledTs,
+      html: filledHtml
+    });
   }
 
   /**
