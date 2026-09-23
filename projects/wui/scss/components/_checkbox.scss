@@ -85,8 +85,8 @@
             top: 50%;
             width: 10px;
             height: 5px;
-            border-left: 2px solid var(--wui-color-on-surface);
-            border-bottom: 2px solid var(--wui-color-on-surface);
+            border-left: 2px solid var(--wui-color-on-primary);
+            border-bottom: 2px solid var(--wui-color-on-primary);
             transform: translate(-50%, -60%) rotate(-45deg) scale(0);
             opacity: 0;
             transition:
