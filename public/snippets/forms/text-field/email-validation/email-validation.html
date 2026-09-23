@@ -1,0 +1,13 @@
+<wui-form-field 
+  hint="Kami tidak akan menyebarkan email Anda."
+  [error]="pesanError"
+>
+  <label wuiLabel>Email Pengguna</label>
+  <input 
+    wuiInput 
+    type="email" 
+    [formControl]="emailControl" 
+    placeholder="nama@domain.com"
+    autocomplete="email" 
+  />
+</wui-form-field>

@@ -1,0 +1,12 @@
+<wui-form-field 
+  hint="Tulis instruksi tambahan jika ada (maks. 200 karakter)."
+  [error]="pesanError"
+>
+  <label wuiLabel>Catatan Pengiriman</label>
+  <textarea 
+    wuiInput 
+    rows="3" 
+    [formControl]="catatanControl" 
+    placeholder="Tuliskan catatan detail di sini..."
+  ></textarea>
+</wui-form-field>

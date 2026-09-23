@@ -50,7 +50,7 @@ export const appConfig: ApplicationConfig = {
       coreLibraryLoader: () => import('highlight.js/lib/core'),
       languages: {
         typescript: () => import('highlight.js/lib/languages/typescript'),
-        html: () => import('highlight.js/lib/languages/css'),
+        html: () => import('highlight.js/lib/languages/xml'),
         scss: () => import('highlight.js/lib/languages/scss')
       },
       themePath: 'highlight.js/styles/github-dark.min.css'

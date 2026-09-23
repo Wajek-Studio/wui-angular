@@ -6,6 +6,6 @@ import { WuiFormField } from '@wajek/wui';
         // Import dulu librarynya
         WuiFormField 
     ],
-    templateUrl: 'simple.html'
+    templateUrl: 'filled.html'
 })
-export class SimpleComponent { }
+export class FilledComponent { }

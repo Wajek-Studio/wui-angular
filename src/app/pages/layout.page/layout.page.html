@@ -4,39 +4,35 @@
       <!-- HEADER -->
       <header class="doc-header">
         <a routerLink="/home" class="doc-back-btn">← Kembali ke Beranda</a>
-        <h1 class="doc-title">Layout — Container</h1>
+        <h1 class="doc-title">Layout — Container, Grid &amp; Flexbox</h1>
         <p class="doc-subtitle">
-          Primitif layout pertama di <code>@wajek/wui</code>: elemen pembungkus konten yang lebarnya
-          dibatasi dan dipusatkan di tengah halaman. Variannya sengaja dibuat sama dengan
-          <strong>Bootstrap 5</strong>, jadi kebiasaan yang sudah ada bisa langsung dipakai — hanya
-          prefix class-nya <code>wui-</code>.
+          Sistem tata letak komprehensif di <code>@wajek/wui</code>: pembungkus terpusat
+          (<code>.wui-container</code>), sistem kisi 12-kolom (<code>.wui-row</code> &amp; <code>.wui-col-*</code>),
+          serta rangkaian utilitas flexbox dan gap untuk merancang antarmuka responsif tanpa CSS kustom.
         </p>
       </header>
 
       <p class="doc-note">
-        Container datang dari level baru <code>layout/</code> — class murni tanpa komponen Angular,
-        dipanggil <strong>setelah</strong> <code>components/</code> dan <strong>sebelum</strong>
-        <code>utilities/</code>. Lebar maksimum &amp; gutter dibaca dari CSS variable, jadi bisa
-        ditimpa saat runtime; hanya <em>breakpoint</em>-nya yang compile-time, karena media query
-        tidak bisa memakai <code>var()</code>.
+        Primitif layout datang dari level <code>layout/</code> dan <code>utilities/</code> — class murni tanpa
+        komponen Angular tambahan. Seluruh ukuran, lebar, dan jarak terhubung langsung ke token desain
+        (<code>_tokens.scss</code>) dan CSS Variable bawaan WUI, mendukung breakpoint:
+        <code>sm</code> (576px), <code>md</code> (768px), <code>lg</code> (992px), <code>xl</code> (1200px), dan <code>xxl</code> (1400px).
       </p>
 
-      <!-- 1. KONTEKS NYATA -->
+      <!-- 1. CONTAINER -->
       <section class="doc-section">
-        <h2 class="section-title">1. Konteks nyata</h2>
+        <h2 class="section-title">1. Container (Pembungkus Halaman)</h2>
         <p class="section-note">
-          Ini container yang sesungguhnya, dipasang langsung di halaman ini. Karena halaman ini hidup
-          di dalam app shell (topbar + sidenav + padding halaman), area kontennya hampir selalu
-          <strong>lebih sempit</strong> dari batas container — jadi di sini lebarnya 100%, bukan
-          dipatok. Status di bawah menunjukkan <em>batas</em> yang sedang aktif menurut lebar jendela
-          Anda.
+          Container membatasi lebar maksimal konten dan memusatkannya secara horizontal di tengah layar.
+          Gutter bawaan (<code>1.5rem</code>) memastikan konten tidak menyentuh tepi layar di perangkat mobile.
         </p>
 
+        <!-- Status Realtime -->
         <div class="playground-status">
-          <span class="status-label">Aturan yang sedang berlaku:</span>
+          <span class="status-label">Batas container aktif saat ini:</span>
           <span class="readout"></span>
           <span class="breakpoint-chips">
-            <span class="bp-chip bp-chip--md">batas sejak md (≥768) aktif</span>
+            <span class="bp-chip bp-chip--md">batas sejak md (≥768px) aktif</span>
           </span>
         </div>
 
@@ -44,33 +40,21 @@
           <div class="wui-container playground-container">
             <div class="playground-box">
               <strong>.wui-container</strong>
-              <span>lebar: 100% di bawah 576px, lalu dipatok naik bertingkat</span>
+              <span>Lebar 100% di bawah 768px, margin tetap 3rem sejak md, dan berhenti di cap 1200px.</span>
             </div>
           </div>
         </div>
 
-        <p class="section-note section-note--after">
-          Artinya: <code>max-width</code> bekerja terhadap <strong>lebar jendela</strong>, bukan
-          terhadap lebar area konten. Pada aplikasi ber-app-shell seperti ini, batasnya baru
-          “menggigit” kalau area konten lebih lebar dari batasnya (mis. sidenav ditutup di jendela
-          lebar). Bagian 2 mensimulasikan halaman yang lebih lebar supaya efeknya tetap terlihat.
-        </p>
-      </section>
-
-      <!-- 2. SIMULASI LEBAR HALAMAN -->
-      <section class="doc-section">
-        <h2 class="section-title">2. Simulasi lebar halaman</h2>
+        <h3 class="sub-title">Simulasi Perbandingan Varian Container</h3>
         <p class="section-note">
-          Supaya perbedaannya kelihatan, baris di bawah adalah <strong>halaman simulasi</strong>
-          dengan lebar tetap yang diperkecil memakai <code>zoom</code> — tata letaknya tetap dihitung
-          pada lebar itu, hanya tampilannya yang mengecil. Kotak berwarna di dalamnya adalah container
-          asli dari library, bukan tiruan.
+          Simulasi di bawah diperkecil dengan <code>zoom</code> untuk memperlihatkan bagaimana container
+          berperilaku pada monitor lebar:
         </p>
 
         <div class="sim-row">
           <div class="sim-label">
             <code>halaman 1000px · .wui-container</code>
-            <span>Sejak <code>md</code>: batas kiri-kanan tetap — lebar container tidak mengikuti layar.</span>
+            <span>Sejak <code>md</code>: batas kiri-kanan tetap (3rem tiap sisi) — lebar container proporsional.</span>
           </div>
           <div class="sim-scroll">
             <div class="sim-page sim-page--1000">
@@ -84,7 +68,7 @@
         <div class="sim-row">
           <div class="sim-label">
             <code>halaman 1400px · .wui-container</code>
-            <span>Sudah melewati cap → berhenti di <strong>1200px</strong>, sisa ruang jadi margin.</span>
+            <span>Sudah melewati cap → berhenti di <strong>1200px</strong>, sisa ruang otomatis menjadi margin kiri-kanan.</span>
           </div>
           <div class="sim-scroll">
             <div class="sim-page">
@@ -98,7 +82,7 @@
         <div class="sim-row">
           <div class="sim-label">
             <code>halaman 1400px · .wui-container-fluid</code>
-            <span>Selalu 100% — tidak pernah dibatasi, tanpa cap.</span>
+            <span>Selalu 100% penuh di setiap ukuran layar tanpa batas maksimum.</span>
           </div>
           <div class="sim-scroll">
             <div class="sim-page">
@@ -109,142 +93,463 @@
           </div>
         </div>
 
-        <p class="section-note section-note--after">
-          Semua kotak di atas memakai container yang sama dengan yang dipakai aplikasi — hanya
-          halaman pembungkusnya yang disimulasikan. Yang berubah karena lebar jendela hanyalah
-          <em>tahap 2</em> (batas kiri-kanan sejak <code>md</code>): di bawah 768px container kembali
-          mengisi 100%.
-        </p>
-      </section>
-
-      <!-- 3. ATURAN LEBAR -->
-      <section class="doc-section">
-        <h2 class="section-title">3. Aturan lebar</h2>
-        <p class="section-note">
-          Tiga tahap, semuanya hidup di satu tempat: <code>abstracts/_tokens.scss</code>. Angka
-          bawaannya masih bisa berubah (menunggu desainer), tapi titik mulai batas mengikuti
-          <code>md</code> di <code>$wui-breakpoints</code>.
-        </p>
-
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th>Kondisi</th>
-              <th>Lebar <code>.wui-container</code></th>
-              <th>Catatan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>di bawah <code>md</code> (768px)</td>
-              <td><strong>100%</strong></td>
-              <td>Konten tetap dijauhkan dari tepi oleh gutter: 12px tiap sisi.</td>
-            </tr>
-            <tr>
-              <td><code>md</code> dan ke atas</td>
-              <td><code>100% − 6rem</code></td>
-              <td>Batas kiri-kanan <strong>tetap 3rem</strong> — tidak ikut melebar saat layar bertambah lebar.</td>
-            </tr>
-            <tr>
-              <td>setelah cap tercapai</td>
-              <td><strong>1200px</strong></td>
-              <td>Berhenti melebar, sisa ruang jadi margin. Tercapai di jendela ±1296px (1200px + 2 × 3rem).</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <p class="section-note section-note--after">
-          Karena titik mulainya diambil dari <code>$wui-breakpoints</code>, menggesernya cukup mengubah
-          map itu (mis. window size class Material 3: medium 600, expanded 840, large 1200,
-          extra-large 1600) — class-nya tidak perlu ditulis ulang.
-        </p>
-      </section>
-
-      <!-- 4. PEMAKAIAN -->
-      <section class="doc-section">
-        <h2 class="section-title">4. Pemakaian</h2>
-
         <div class="code-preview">
-          <pre><code>&lt;div class="wui-container"&gt;
-  &lt;h1&gt;Judul halaman&lt;/h1&gt;
-  &lt;p&gt;Penuh di layar kecil, berbatas 3rem sejak md, berhenti di 1200px.&lt;/p&gt;
-&lt;/div&gt;
+          <pre><code [highlight]="containerSnippet" language="html"></code></pre>
+        </div>
+      </section>
 
-&lt;!-- Selalu penuh, tanpa batas maupun cap? --&gt;
-&lt;div class="wui-container-fluid"&gt;…&lt;/div&gt;</code></pre>
+      <!-- 2. SISTEM GRID 12-KOLOM -->
+      <section class="doc-section">
+        <h2 class="section-title">2. Sistem Grid 12-Kolom (.wui-row &amp; .wui-col-*)</h2>
+        <p class="section-note">
+          WUI mengimplementasikan sistem grid 12-kolom berbasis <strong>CSS Grid native</strong>
+          (<code>grid-template-columns: repeat(12, minmax(0, 1fr))</code>). Elemen <code>.wui-row</code>
+          berperan sebagai kontainer grid, sedangkan <code>.wui-col-*</code> mengatur span kolom (1 sampai 12).
+        </p>
+
+        <!-- Spesimen Grid Dasar -->
+        <div class="specimen-card">
+          <div class="specimen-subtitle">Pembagian Kolom Dasar</div>
+
+          <div class="wui-row wui-gap-2 grid-demo-row">
+            @for (col of [1,2,3,4,5,6,7,8,9,10,11,12]; track col) {
+              <div class="wui-col-1">
+                <div class="grid-box">1</div>
+              </div>
+            }
+          </div>
+
+          <div class="wui-row wui-gap-2 grid-demo-row">
+            <div class="wui-col-6">
+              <div class="grid-box">.wui-col-6 (50%)</div>
+            </div>
+            <div class="wui-col-6">
+              <div class="grid-box">.wui-col-6 (50%)</div>
+            </div>
+          </div>
+
+          <div class="wui-row wui-gap-2 grid-demo-row">
+            <div class="wui-col-4">
+              <div class="grid-box">.wui-col-4 (33.3%)</div>
+            </div>
+            <div class="wui-col-4">
+              <div class="grid-box">.wui-col-4 (33.3%)</div>
+            </div>
+            <div class="wui-col-4">
+              <div class="grid-box">.wui-col-4 (33.3%)</div>
+            </div>
+          </div>
+
+          <div class="wui-row wui-gap-2 grid-demo-row">
+            <div class="wui-col-3">
+              <div class="grid-box">.wui-col-3 (25%)</div>
+            </div>
+            <div class="wui-col-3">
+              <div class="grid-box">.wui-col-3 (25%)</div>
+            </div>
+            <div class="wui-col-3">
+              <div class="grid-box">.wui-col-3 (25%)</div>
+            </div>
+            <div class="wui-col-3">
+              <div class="grid-box">.wui-col-3 (25%)</div>
+            </div>
+          </div>
+
+          <div class="specimen-subtitle">Tata Letak Asimetris (Konten + Sidebar)</div>
+          <div class="wui-row wui-gap-2 grid-demo-row">
+            <div class="wui-col-8">
+              <div class="grid-box">.wui-col-8 — Konten Utama (66.6%)</div>
+            </div>
+            <div class="wui-col-4">
+              <div class="grid-box grid-box--alt">.wui-col-4 — Sidebar (33.3%)</div>
+            </div>
+          </div>
+
+          <div class="wui-row wui-gap-2">
+            <div class="wui-col-9">
+              <div class="grid-box">.wui-col-9 (75%)</div>
+            </div>
+            <div class="wui-col-3">
+              <div class="grid-box grid-box--alt">.wui-col-3 (25%)</div>
+            </div>
+          </div>
         </div>
 
-        <h3 class="sub-title">Menyetel nilai</h3>
+        <div class="code-preview">
+          <pre><code [highlight]="gridBasicSnippet" language="html"></code></pre>
+        </div>
+
+        <!-- Spesimen Grid Responsif -->
+        <h3 class="sub-title">Grid Responsif per Breakpoint</h3>
         <p class="section-note">
-          Ganti nilai globalnya lewat SCSS (compile-time) atau timpa saat runtime lewat CSS variable
-          — perilaku <code>.wui-container</code> mengikuti keduanya tanpa perlu rebuild.
+          Gunakan class ber-prefix breakpoint seperti <code>.wui-col-sm-*</code>, <code>.wui-col-md-*</code>,
+          <code>.wui-col-lg-*</code>, <code>.wui-col-xl-*</code>, dan <code>.wui-col-xxl-*</code>.
+          Contoh di bawah ini akan tampil <strong>1 kolom</strong> di mobile, <strong>2 kolom</strong> di tablet (≥768px),
+          dan <strong>4 kolom</strong> di desktop (≥992px):
+        </p>
+
+        <div class="specimen-card">
+          <div class="specimen-subtitle">Spesimen Responsif (Coba ubah ukuran jendela browser Anda)</div>
+          <div class="wui-row wui-gap-3">
+            <div class="wui-col-12 wui-col-md-6 wui-col-lg-3">
+              <div class="grid-box">
+                <strong>Kartu 1</strong>
+                <div>col-12 col-md-6 col-lg-3</div>
+              </div>
+            </div>
+            <div class="wui-col-12 wui-col-md-6 wui-col-lg-3">
+              <div class="grid-box">
+                <strong>Kartu 2</strong>
+                <div>col-12 col-md-6 col-lg-3</div>
+              </div>
+            </div>
+            <div class="wui-col-12 wui-col-md-6 wui-col-lg-3">
+              <div class="grid-box">
+                <strong>Kartu 3</strong>
+                <div>col-12 col-md-6 col-lg-3</div>
+              </div>
+            </div>
+            <div class="wui-col-12 wui-col-md-6 wui-col-lg-3">
+              <div class="grid-box">
+                <strong>Kartu 4</strong>
+                <div>col-12 col-md-6 col-lg-3</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-preview">
+          <pre><code [highlight]="gridResponsiveSnippet" language="html"></code></pre>
+        </div>
+
+        <!-- Grid Gutters & Spacing -->
+        <h3 class="sub-title">Jarak Antar Kolom (Grid Gap)</h3>
+        <p class="section-note">
+          Karena <code>.wui-row</code> menggunakan CSS Grid, jarak horizontal maupun vertikal antar kolom diatur
+          menggunakan utilitas gap WUI (<code>.wui-gap-*</code>, <code>.wui-column-gap-*</code>, <code>.wui-row-gap-*</code>).
+        </p>
+
+        <div class="specimen-card">
+          <div class="specimen-subtitle">Gap Rapat (.wui-gap-1) vs Lapang (.wui-gap-4)</div>
+          <div class="wui-row wui-gap-1 grid-demo-row">
+            <div class="wui-col-6"><div class="grid-box">.wui-gap-1 (0.25rem)</div></div>
+            <div class="wui-col-6"><div class="grid-box">.wui-gap-1 (0.25rem)</div></div>
+          </div>
+          <div class="wui-row wui-gap-4">
+            <div class="wui-col-6"><div class="grid-box grid-box--alt">.wui-gap-4 (1.5rem)</div></div>
+            <div class="wui-col-6"><div class="grid-box grid-box--alt">.wui-gap-4 (1.5rem)</div></div>
+          </div>
+        </div>
+
+        <div class="code-preview">
+          <pre><code [highlight]="gridGapSnippet" language="html"></code></pre>
+        </div>
+      </section>
+
+      <!-- 3. UTILITAS FLEXBOX -->
+      <section class="doc-section">
+        <h2 class="section-title">3. Utilitas Flexbox (.wui-d-flex)</h2>
+        <p class="section-note">
+          Gunakan <code>.wui-d-flex</code> atau <code>.wui-d-inline-flex</code> untuk mengaktifkan flexbox,
+          lalu kombinasikan dengan utilitas perataan sumbu utama (justify), sumbu silang (align), arah (direction),
+          serta kontrol child (fill, grow, shrink, order).
+        </p>
+
+        <!-- Justify Content -->
+        <div class="specimen-card">
+          <div class="specimen-subtitle">Perataan Sumbu Utama (Justify Content)</div>
+
+          <div class="sim-label"><code>.wui-justify-content-start</code></div>
+          <div class="wui-d-flex wui-justify-content-start wui-gap-2 flex-demo-container">
+            <div class="flex-item">Item 1</div>
+            <div class="flex-item">Item 2</div>
+            <div class="flex-item">Item 3</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-justify-content-center</code></div>
+          <div class="wui-d-flex wui-justify-content-center wui-gap-2 flex-demo-container">
+            <div class="flex-item">Item 1</div>
+            <div class="flex-item">Item 2</div>
+            <div class="flex-item">Item 3</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-justify-content-end</code></div>
+          <div class="wui-d-flex wui-justify-content-end wui-gap-2 flex-demo-container">
+            <div class="flex-item">Item 1</div>
+            <div class="flex-item">Item 2</div>
+            <div class="flex-item">Item 3</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-justify-content-between</code></div>
+          <div class="wui-d-flex wui-justify-content-between wui-gap-2 flex-demo-container">
+            <div class="flex-item">Kiri</div>
+            <div class="flex-item">Tengah</div>
+            <div class="flex-item">Kanan</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-justify-content-around</code></div>
+          <div class="wui-d-flex wui-justify-content-around wui-gap-2 flex-demo-container">
+            <div class="flex-item">Item 1</div>
+            <div class="flex-item">Item 2</div>
+            <div class="flex-item">Item 3</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-justify-content-evenly</code></div>
+          <div class="wui-d-flex wui-justify-content-evenly wui-gap-2 flex-demo-container">
+            <div class="flex-item">Item 1</div>
+            <div class="flex-item">Item 2</div>
+            <div class="flex-item">Item 3</div>
+          </div>
+        </div>
+
+        <div class="code-preview">
+          <pre><code [highlight]="flexJustifySnippet" language="html"></code></pre>
+        </div>
+
+        <!-- Align Items -->
+        <h3 class="sub-title">Perataan Sumbu Silang (Align Items)</h3>
+        <p class="section-note">
+          Mengontrol posisi vertikal anak-anak flex ketika tingginya bervariasi:
+        </p>
+
+        <div class="specimen-card">
+          <div class="sim-label"><code>.wui-align-items-start</code></div>
+          <div class="wui-d-flex wui-align-items-start wui-gap-2 flex-demo-container">
+            <div class="flex-item flex-item--tall">Tinggi (5rem)</div>
+            <div class="flex-item flex-item--short">Pendek</div>
+            <div class="flex-item">Standar</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-align-items-center</code> (Paling sering untuk vertikal tengah)</div>
+          <div class="wui-d-flex wui-align-items-center wui-gap-2 flex-demo-container">
+            <div class="flex-item flex-item--tall">Tinggi (5rem)</div>
+            <div class="flex-item flex-item--short">Pendek</div>
+            <div class="flex-item">Standar</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-align-items-end</code></div>
+          <div class="wui-d-flex wui-align-items-end wui-gap-2 flex-demo-container">
+            <div class="flex-item flex-item--tall">Tinggi (5rem)</div>
+            <div class="flex-item flex-item--short">Pendek</div>
+            <div class="flex-item">Standar</div>
+          </div>
+
+          <div class="sim-label"><code>.wui-align-items-stretch</code></div>
+          <div class="wui-d-flex wui-align-items-stretch wui-gap-2 flex-demo-container">
+            <div class="flex-item flex-item--tall">Tinggi (5rem)</div>
+            <div class="flex-item">Ikut Merenggang</div>
+            <div class="flex-item">Ikut Merenggang</div>
+          </div>
+        </div>
+
+        <div class="code-preview">
+          <pre><code [highlight]="flexAlignSnippet" language="html"></code></pre>
+        </div>
+
+        <!-- Direction & Fill -->
+        <h3 class="sub-title">Arah &amp; Proporsi Anak (.wui-flex-fill &amp; Responsif)</h3>
+        <p class="section-note">
+          Gunakan <code>.wui-flex-fill</code> agar elemen anak mengisi sisa ruang yang tersedia secara merata.
+          Kombinasikan dengan responsive direction (<code>.wui-flex-column .wui-flex-md-row</code>) untuk tata letak
+          yang bertumpuk di HP lalu berdampingan di tablet/desktop.
+        </p>
+
+        <div class="specimen-card">
+          <div class="specimen-subtitle">Anak Flex Fill (.wui-flex-fill)</div>
+          <div class="wui-d-flex wui-gap-2 flex-demo-container">
+            <div class="flex-item wui-flex-fill" style="text-align: center;">.wui-flex-fill (Otomatis seimbang)</div>
+            <div class="flex-item wui-flex-fill" style="text-align: center;">.wui-flex-fill (Otomatis seimbang)</div>
+            <div class="flex-item wui-flex-fill" style="text-align: center;">.wui-flex-fill (Otomatis seimbang)</div>
+          </div>
+
+          <div class="specimen-subtitle">Responsive Direction (.wui-flex-column .wui-flex-md-row)</div>
+          <div class="wui-d-flex wui-flex-column wui-flex-md-row wui-gap-2 flex-demo-container">
+            <div class="flex-item wui-flex-fill" style="text-align: center;">Kolom 1 (Vertikal di HP, Sejajar sejak MD)</div>
+            <div class="flex-item wui-flex-fill" style="text-align: center;">Kolom 2 (Vertikal di HP, Sejajar sejak MD)</div>
+          </div>
+        </div>
+
+        <div class="code-preview">
+          <pre><code [highlight]="flexResponsiveSnippet" language="html"></code></pre>
+        </div>
+      </section>
+
+      <!-- 4. UTILITAS GAP -->
+      <section class="doc-section">
+        <h2 class="section-title">4. Skala Gap (.wui-gap-*)</h2>
+        <p class="section-note">
+          Seluruh utilitas gap WUI terikat secara konsisten dengan sistem spacing token <code>--wui-space-*</code>:
         </p>
 
         <table class="doc-table">
           <thead>
             <tr>
-              <th>Token / Variable</th>
-              <th>Default</th>
-              <th>Keterangan</th>
+              <th>Class</th>
+              <th>Token CSS</th>
+              <th>Ukuran Nilai</th>
+              <th>Visualisasi</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><code>$wui-breakpoints</code></td>
-              <td><code>md</code> = 768px</td>
-              <td>Compile-time. Container hanya memakai <code>md</code> sebagai titik mulai batas.</td>
+              <td><code>.wui-gap-0</code></td>
+              <td><code>--wui-space-0</code></td>
+              <td><code>0</code></td>
+              <td>Tanpa jarak</td>
             </tr>
             <tr>
-              <td><code>$wui-container-max-width</code></td>
-              <td><code>1200px</code></td>
-              <td>Cap — lebar berhenti di sini. Bisa ditimpa runtime.</td>
+              <td><code>.wui-gap-1</code></td>
+              <td><code>--wui-space-1</code></td>
+              <td><code>0.25rem</code> (4px)</td>
+              <td><div class="wui-d-flex wui-gap-1"><span class="grid-box" style="padding: 2px 6px;">A</span><span class="grid-box" style="padding: 2px 6px;">B</span></div></td>
             </tr>
             <tr>
-              <td><code>$wui-container-margin-inline</code></td>
-              <td><code>3rem</code></td>
-              <td>Batas kiri-kanan sejak <code>md</code>. Bisa ditimpa runtime.</td>
+              <td><code>.wui-gap-2</code></td>
+              <td><code>--wui-space-2</code></td>
+              <td><code>0.5rem</code> (8px)</td>
+              <td><div class="wui-d-flex wui-gap-2"><span class="grid-box" style="padding: 2px 6px;">A</span><span class="grid-box" style="padding: 2px 6px;">B</span></div></td>
             </tr>
             <tr>
-              <td><code>$wui-container-gutter-x</code></td>
-              <td><code>1.5rem</code></td>
-              <td>Gutter: padding tiap sisi = <strong>setengahnya</strong> (12px).</td>
+              <td><code>.wui-gap-3</code></td>
+              <td><code>--wui-space-3</code></td>
+              <td><code>1rem</code> (16px)</td>
+              <td><div class="wui-d-flex wui-gap-3"><span class="grid-box" style="padding: 2px 6px;">A</span><span class="grid-box" style="padding: 2px 6px;">B</span></div></td>
+            </tr>
+            <tr>
+              <td><code>.wui-gap-4</code></td>
+              <td><code>--wui-space-4</code></td>
+              <td><code>1.5rem</code> (24px)</td>
+              <td><div class="wui-d-flex wui-gap-4"><span class="grid-box" style="padding: 2px 6px;">A</span><span class="grid-box" style="padding: 2px 6px;">B</span></div></td>
+            </tr>
+            <tr>
+              <td><code>.wui-gap-5</code></td>
+              <td><code>--wui-space-5</code></td>
+              <td><code>3rem</code> (48px)</td>
+              <td><div class="wui-d-flex wui-gap-5"><span class="grid-box" style="padding: 2px 6px;">A</span><span class="grid-box" style="padding: 2px 6px;">B</span></div></td>
             </tr>
           </tbody>
         </table>
-
-        
       </section>
 
-      <!-- 5. CATATAN -->
+      <!-- 5. POLA LAYOUT SIAP PAKAI -->
       <section class="doc-section">
-        <h2 class="section-title">5. Catatan &amp; lanjutan</h2>
+        <h2 class="section-title">5. Pola Layout Siap Pakai</h2>
+        <p class="section-note">
+          Kombinasi umum yang sering dibutuhkan saat membangun aplikasi nyata:
+        </p>
 
+        <!-- Pola Toolbar -->
+        <div class="specimen-card">
+          <div class="specimen-subtitle">Pola 1: Header / Toolbar Interaktif</div>
+          <div class="wui-d-flex wui-justify-content-between wui-align-items-center wui-gap-3" style="padding: 0.75rem 1rem; background: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent); border-radius: 8px;">
+            <div>
+              <strong style="display: block; font-size: 1rem;">Daftar Pelanggan</strong>
+              <small style="color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);">Total 128 pelanggan terdaftar</small>
+            </div>
+            <div class="wui-d-flex wui-gap-2">
+              <span class="flex-item flex-item--alt" style="cursor: pointer;">Ekspor CSV</span>
+              <span class="flex-item" style="cursor: pointer;">+ Tambah Baru</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-preview">
+          <pre><code [highlight]="patternsSnippet" language="html"></code></pre>
+        </div>
+      </section>
+
+      <!-- 6. TABEL REFERENSI KELAS -->
+      <section class="doc-section">
+        <h2 class="section-title">6. Ringkasan &amp; Tabel Referensi Kelas</h2>
+        <p class="section-note">
+          Daftar seluruh utility class layout yang tersedia langsung di <code>@wajek/wui</code>:
+        </p>
+
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Class</th>
+              <th>Deskripsi &amp; Penggunaan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Container</strong></td>
+              <td><code>.wui-container</code></td>
+              <td>Membatasi lebar maksimal secara bertingkat dan memusatkan konten (cap 1200px).</td>
+            </tr>
+            <tr>
+              <td><strong>Container</strong></td>
+              <td><code>.wui-container-fluid</code></td>
+              <td>Lebar penuh 100% di segala ukuran layar tanpa batas maksimum.</td>
+            </tr>
+            <tr>
+              <td><strong>Grid</strong></td>
+              <td><code>.wui-row</code></td>
+              <td>Container CSS Grid 12-kolom (<code>grid-template-columns: repeat(12, minmax(0, 1fr))</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Grid</strong></td>
+              <td><code>.wui-col-&#123;1-12&#125;</code></td>
+              <td>Span kolom dasar (misal <code>.wui-col-6</code> untuk 50% lebar).</td>
+            </tr>
+            <tr>
+              <td><strong>Grid</strong></td>
+              <td><code>.wui-col-&#123;bp&#125;-&#123;1-12&#125;</code></td>
+              <td>Span kolom responsif per breakpoint (<code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>xxl</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Flex Display</strong></td>
+              <td><code>.wui-d-flex</code>, <code>.wui-d-inline-flex</code></td>
+              <td>Mengaktifkan mode flexbox atau inline-flexbox.</td>
+            </tr>
+            <tr>
+              <td><strong>Flex Direction</strong></td>
+              <td><code>.wui-flex-row</code>, <code>.wui-flex-column</code>, <code>*-reverse</code></td>
+              <td>Mengatur arah sumbu utama item (tersedia juga varian breakpoint misal <code>.wui-flex-md-row</code>).</td>
+            </tr>
+            <tr>
+              <td><strong>Flex Justify</strong></td>
+              <td><code>.wui-justify-content-&#123;start|center|end|between|around|evenly&#125;</code></td>
+              <td>Perataan item di sepanjang sumbu utama.</td>
+            </tr>
+            <tr>
+              <td><strong>Flex Align</strong></td>
+              <td><code>.wui-align-items-&#123;start|center|end|baseline|stretch&#125;</code></td>
+              <td>Perataan vertikal item di sepanjang sumbu silang.</td>
+            </tr>
+            <tr>
+              <td><strong>Flex Children</strong></td>
+              <td><code>.wui-flex-fill</code>, <code>.wui-flex-grow-&#123;0|1&#125;</code>, <code>.wui-flex-shrink-&#123;0|1&#125;</code></td>
+              <td>Mengontrol bagaimana anak flex mengisi ruang dan merespons peregangan.</td>
+            </tr>
+            <tr>
+              <td><strong>Gap</strong></td>
+              <td><code>.wui-gap-&#123;0-5&#125;</code>, <code>.wui-row-gap-*</code>, <code>.wui-column-gap-*</code></td>
+              <td>Jarak antar elemen grid atau flexbox terikat ke <code>--wui-space-*</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 7. CATATAN ARSITEKTUR -->
+      <section class="doc-section">
+        <h2 class="section-title">7. Catatan Arsitektur</h2>
         <ul class="note-list">
           <li>
-            Container <strong>tidak punya komponen Angular</strong> — cukup class, sama seperti
-            utilitas spacing. Tidak ada state, tidak ada directive.
+            <strong>Tanpa JavaScript</strong>: Seluruh layout dan grid dibangun murni dengan CSS Grid &amp; Flexbox native,
+            membuat rendering sangat cepat tanpa overhead Angular runtime.
           </li>
           <li>
-            Urutan layer penting: <code>layout/</code> dipanggil setelah <code>components/</code>
-            supaya boleh menimpa style komponen tanpa <code>!important</code> (lint melarangnya),
-            tapi masih kalah oleh <code>utilities/</code>.
+            <strong>Urutan Layer SCSS WUI</strong>:
+            <code>abstracts → base → themes → components → layout → utilities</code>.
+            Kelas di <code>layout/</code> (container, row, col) dapat menimpa komponen tanpa <code>!important</code>,
+            dan kelas di <code>utilities/</code> (flex, gap, spacing) memiliki spesifisitas akhir yang menang.
           </li>
           <li>
-            Gutter dipakai bersama: padding container = setengah gutter, sehingga
-            <code>layout/_grid.scss</code> nanti bisa memakai acuan negatif yang sama
-            (<code>margin-inline: calc(var(--wui-container-gutter-x) * -0.5)</code>).
-          </li>
-          <li>
-            Karena batasnya berbasis <strong>lebar jendela</strong> (sama seperti Bootstrap),
-            container tidak menyesuaikan diri terhadap area konten app shell. Kalau nanti diinginkan
-            batas yang mengikuti area konten, jalurnya adalah <em>container query</em>
-            (<code>@container</code> + <code>container-type: inline-size</code>) — keputusan
-            tersendiri, belum diambil.
-          </li>
-          <li>
-            <strong>Belum ada</strong>: <code>.wui-stack</code> (jarak antar anak) dan
-            <code>.wui-row</code> / <code>.wui-col-*</code>. Keduanya rencananya ikut di level
-            <code>layout/</code>.
+            <strong>Integrasi Token Desain</strong>: Semua breakpoint, batas container, dan skala gap bersumber dari
+            <code>projects/wui/scss/abstracts/_tokens.scss</code>, menjamin konsistensi visual di seluruh aplikasi.
           </li>
         </ul>
       </section>

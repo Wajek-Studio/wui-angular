@@ -1,0 +1,12 @@
+<wui-form-field 
+  hint="Gunakan 3 hingga 20 karakter unik."
+  [error]="pesanError"
+>
+  <label wuiLabel>Nama Pengguna (Username)</label>
+  <input 
+    wuiInput 
+    type="text" 
+    [formControl]="usernameControl" 
+    placeholder="mis. rizal_rachman"
+  />
+</wui-form-field>

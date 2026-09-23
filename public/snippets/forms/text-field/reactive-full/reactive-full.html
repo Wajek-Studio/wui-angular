@@ -1,0 +1,51 @@
+<form [formGroup]="profileForm" (ngSubmit)="simpan()" class="wui-d-flex wui-flex-column wui-gap-4">
+  <div class="wui-row wui-gap-3">
+    <div class="wui-col-12 wui-col-md-6">
+      <wui-form-field hint="Nama minimal 3 karakter." [error]="pesan('namaLengkap')">
+        <label wuiLabel>Nama Lengkap</label>
+        <input wuiInput type="text" formControlName="namaLengkap" placeholder="mis. Moch. Rizal" />
+      </wui-form-field>
+    </div>
+
+    <div class="wui-col-12 wui-col-md-6">
+      <wui-form-field hint="Gunakan email aktif." [error]="pesan('email')">
+        <label wuiLabel>Alamat Email</label>
+        <input wuiInput type="email" formControlName="email" placeholder="nama@domain.com" />
+      </wui-form-field>
+    </div>
+  </div>
+
+  <div class="wui-row wui-gap-3">
+    <div class="wui-col-12 wui-col-md-6">
+      <wui-form-field hint="Pilih unit kerja Anda." [error]="pesan('departemen')">
+        <label wuiLabel>Departemen</label>
+        <wui-select 
+          wuiInput 
+          placeholder="Pilih departemen" 
+          [value]="profileForm.controls.departemen.value"
+          (valueChange)="onDepartemenChange($event)"
+        >
+          <wui-option value="it">Teknologi Informasi (IT)</wui-option>
+          <wui-option value="marketing">Pemasaran & Bisnis</wui-option>
+          <wui-option value="finance">Keuangan & Akuntansi</wui-option>
+        </wui-select>
+      </wui-form-field>
+    </div>
+
+    <div class="wui-col-12 wui-col-md-6">
+      <wui-form-field hint="Opsional (maks. 150 karakter)." [error]="pesan('catatan')">
+        <label wuiLabel>Keterangan Tambahan</label>
+        <textarea wuiInput rows="3" formControlName="catatan" placeholder="Catatan opsional..."></textarea>
+      </wui-form-field>
+    </div>
+  </div>
+
+  <div class="wui-d-flex wui-align-items-center wui-gap-2">
+    <button wuiButton variant="filled" color="primary" type="submit">
+      Simpan Data
+    </button>
+    <button wuiButton variant="outlined" type="button" (click)="resetForm()">
+      Reset
+    </button>
+  </div>
+</form>
