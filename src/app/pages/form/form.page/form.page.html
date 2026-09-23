@@ -38,6 +38,104 @@
         </div>
       </div>
 
+      <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
+      <section class="showcase-card">
+        <div class="showcase-header">
+          <h2 class="showcase-title">Checkbox</h2>
+          <p class="showcase-desc">
+            Checkbox description
+          </p>
+        </div>
+
+        <div class="showcase-preview">
+          <wui-checkbox>Saya setuju dengan Syarat dan Ketentuan</wui-checkbox>
+        </div>
+
+        <div class="showcase-code-bar">
+          <div class="code-tabs">
+            <button 
+              type="button" 
+              class="tab-btn" 
+              [class.is-active]="activeTabs().simple === 'html'"
+              (click)="setTab('simple', 'html')"
+            >
+              HTML
+            </button>
+            <button 
+              type="button" 
+              class="tab-btn" 
+              [class.is-active]="activeTabs().simple === 'ts'"
+              (click)="setTab('simple', 'ts')"
+            >
+              TypeScript
+            </button>
+          </div>
+
+          <button type="button" class="toggle-btn" (click)="toggleCode('simple')">
+            {{ showCode().simple ? 'Sembunyikan Kode' : 'Lihat Kode' }}
+          </button>
+        </div>
+
+        @if (showCode().simple) {
+          <div class="showcase-code-body">
+            @if (activeTabs().simple === 'html') {
+              <pre><code [highlight]="simple().html ?? ''" language="html"></code></pre>
+            } @else {
+              <pre><code [highlight]="simple().ts ?? ''" language="typescript"></code></pre>
+            }
+          </div>
+        }
+      </section>
+
+      <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
+      <section class="showcase-card">
+        <div class="showcase-header">
+          <h2 class="showcase-title">Disabled Checkbox</h2>
+          <p class="showcase-desc">
+            Checkbox disabled
+          </p>
+        </div>
+
+        <div class="showcase-preview">
+          <wui-checkbox [disabled]="true" [checked]="true">Saya setuju dengan Syarat dan Ketentuan</wui-checkbox>
+        </div>
+
+        <div class="showcase-code-bar">
+          <div class="code-tabs">
+            <button 
+              type="button" 
+              class="tab-btn" 
+              [class.is-active]="activeTabs().simple === 'html'"
+              (click)="setTab('simple', 'html')"
+            >
+              HTML
+            </button>
+            <button 
+              type="button" 
+              class="tab-btn" 
+              [class.is-active]="activeTabs().simple === 'ts'"
+              (click)="setTab('simple', 'ts')"
+            >
+              TypeScript
+            </button>
+          </div>
+
+          <button type="button" class="toggle-btn" (click)="toggleCode('simple')">
+            {{ showCode().simple ? 'Sembunyikan Kode' : 'Lihat Kode' }}
+          </button>
+        </div>
+
+        @if (showCode().simple) {
+          <div class="showcase-code-body">
+            @if (activeTabs().simple === 'html') {
+              <pre><code [highlight]="simple().html ?? ''" language="html"></code></pre>
+            } @else {
+              <pre><code [highlight]="simple().ts ?? ''" language="typescript"></code></pre>
+            }
+          </div>
+        }
+      </section>
+
 
       <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
       <section class="showcase-card">

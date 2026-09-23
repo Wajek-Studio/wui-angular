@@ -1,0 +1,160 @@
+@mixin checkbox {
+
+    wui-checkbox {
+        /* Ukuran */
+        --wui-checkbox-size: 1.125rem;
+        --wui-checkbox-radius: 2px;
+        --wui-checkbox-gap: 1rem;
+        --wui-checkbox-state-size: 3rem;
+
+        /* Nonaktif (M3): container `on-surface` 12%, isi/garis 38% */
+        --wui-checkbox-disabled-container: var(--wui-color-disabled-container);
+        --wui-checkbox-disabled-content: var(--wui-color-disabled-content);
+
+        /* Transisi */
+        --wui-checkbox-transition: 100ms linear;
+
+        display: inline-flex;
+        vertical-align: middle;
+    }
+
+    .wui-checkbox {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--wui-checkbox-gap);
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+
+        // `:where()` menyumbang 0 specificity — aturan nonaktif di akhir berkas (0,2,1) jadi menang
+        // saat keduanya cocok, sehingga state layer tidak muncul di kotak nonaktif.
+        &:where(:hover) {
+            .wui-checkbox__box::before {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    }
+
+    input.wui-checkbox__input {
+        position: absolute;
+        width: var(--wui-checkbox-size);
+        height: var(--wui-checkbox-size);
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+
+        &:checked ~ .wui-checkbox__box{
+            background: var(--wui-color-primary);
+            border-color: var(--wui-color-primary);
+
+            &::before {
+                background: var(--wui-color-state-layer-primary-opacity-08);
+            }
+
+            &::after {
+                transform: translate(-50%, -60%) rotate(-45deg) scale(1);
+                opacity: 1;
+            }
+        }
+
+        &:focus-visible ~ .wui-checkbox__box::before {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+    }
+
+    span.wui-checkbox__box {
+        position: relative;
+        width: var(--wui-checkbox-size);
+        height: var(--wui-checkbox-size);
+        border-radius: var(--wui-checkbox-radius);
+        border: 2px solid var(--wui-color-on-surface);
+        background: transparent;
+        box-sizing: border-box;
+        flex-shrink: 0;
+        transition:
+            background-color var(--wui-checkbox-transition),
+            border-color var(--wui-checkbox-transition);
+
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 10px;
+            height: 5px;
+            border-left: 2px solid var(--wui-color-on-surface);
+            border-bottom: 2px solid var(--wui-color-on-surface);
+            transform: translate(-50%, -60%) rotate(-45deg) scale(0);
+            opacity: 0;
+            transition:
+                transform 150ms ease-out,
+                opacity var(--wui-checkbox-transition);
+            z-index: 1;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: var(--wui-checkbox-state-size);
+            height: var(--wui-checkbox-state-size);
+            border-radius: 50%;
+            background: var(--wui-color-state-layer-on-surface-opacity-08);
+            transform: translate(-50%, -50%) scale(0.6);
+            opacity: 0;
+            transition:
+                opacity var(--wui-checkbox-transition),
+                transform var(--wui-checkbox-transition);
+            pointer-events: none;
+            z-index: 0;
+        }
+    }
+
+    // ── Nonaktif (Material 3) ───────────────────────────────────────────────
+    // Satu hook: kelas host `.wui-checkbox--disabled`, dipasang `WuiCheckbox` dari field `disabled`
+    // (`[class.wui-checkbox--disabled]` di metadata `host`) sehingga ikut terisi lewat
+    // `setDisabledState()` CVA maupun pemakaian langsung. Dipilih ketimbang `input:disabled` karena
+    // `cursor` hidup di `label` pembungkus — hanya sisi leluhur ini yang bisa menjangkaunya.
+    // Pemetaan M3: belum dicentang = garis `on-surface` 38% + latar transparan; dicentang = latar
+    // `on-surface` 12% + centang 38%; label 38%; **tanpa state layer** sama sekali.
+    .wui-checkbox--disabled {
+        // `cursor: pointer` ditulis di `.wui-checkbox` (label); deklarasi elemen mengalahkan
+        // warisan, jadi kursor wajib ditulis ulang di sini — tidak cukup di elemen host.
+        .wui-checkbox {
+            cursor: default;
+        }
+
+        .wui-checkbox__label {
+            color: var(--wui-checkbox-disabled-content);
+        }
+
+        // Keadaan **belum dicentang**: garis 38% + latar transparan. Blok ini 0,2,1 — cukup
+        // mengalahkan basis `span.wui-checkbox__box` (0,1,1). Keadaan dicentang ditangani aturan
+        // sendiri di bawah, karena `input:checked` (0,3,1) lebih kuat dari blok ini.
+        .wui-checkbox__box {
+            background: transparent;
+            border-color: var(--wui-checkbox-disabled-content);
+
+            // Peran `disabled-content` juga untuk ikon: centang tidak lagi memakai `on-surface`.
+            &::after {
+                border-color: var(--wui-checkbox-disabled-content);
+            }
+
+            // Mematikan state layer. `:where(:hover)` di atas juga 0,2,1 tapi ditulis lebih awal,
+            // jadi aturan ini yang menang — hover pada kotak nonaktif tidak menyalakannya kembali.
+            &::before {
+                opacity: 0;
+            }
+        }
+
+        // Dicentang + nonaktif: 0,4,1 > `input:checked` (0,3,1), supaya latar 12% menang atas `primary`.
+        .wui-checkbox__input:checked ~ .wui-checkbox__box {
+            background: var(--wui-checkbox-disabled-container);
+            border-color: var(--wui-checkbox-disabled-container);
+        }
+    }
+}

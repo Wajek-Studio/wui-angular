@@ -38,6 +38,10 @@ Konvensi & jebakan style layer. Plan per fitur ada di `docs/planning/scss-*.md`.
   peran untuk dua mode; `themes/_dark-theme.scss` hanya `color-scheme`.
 - Karena semuanya CSS variable, aplikasi bisa menimpanya **saat runtime** tanpa rebuild (kecuali yang
   dipakai di media query, mis. breakpoint).
+- **Skala `rem` dipatok 16px** secara eksplisit di `base/_typography.scss`
+  (`:root { font-size: 16px }`). Token spacing & skala tipografi ditulis dengan asumsi root 16px,
+  jadi `1rem` tidak boleh ikut setelan ukuran font bawaan browser. Ukuran teks bawaan (body/medium)
+  tetap di `body`, **bukan** `:root` — lihat komentar di berkasnya.
 - ⚠️ Jangan pakai `null` sebagai "matikan" pada variabel konfigurasi `!default` — `null` dianggap
   "belum diisi" sehingga jatuh ke default. Sentinel yang dipakai repo ini: **`false`**.
 

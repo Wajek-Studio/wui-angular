@@ -11,6 +11,7 @@ import {
   WuiPage,
   WuiPageService,
   WuiSelect,
+  WuiCheckbox
 } from '@wajek/wui';
 import { Highlight } from 'ngx-highlightjs';
 import { firstValueFrom } from 'rxjs';
@@ -64,6 +65,7 @@ export interface FormShowCode {
     WuiOption,
     WuiPage,
     Highlight,
+    WuiCheckbox
   ],
   templateUrl: './form.page.html',
   styleUrl: './form.page.scss',

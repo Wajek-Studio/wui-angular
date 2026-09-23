@@ -70,6 +70,30 @@ Ringkasan perilaku & jebakan terverifikasi per komponen. Detail keputusan ada di
   `:focus` tidak cocok walau `document.activeElement` sudah `INPUT`. Pisahkan fokus & pembacaan ke dua
   `evaluate` + jeda.
 
+## Checkbox (`src/checkbox/`)
+
+- Struktur: `wui-checkbox` (host) > `label.wui-checkbox` > `input.wui-checkbox__input` +
+  `span.wui-checkbox__box` + `span.wui-checkbox__label`. Input tetap **native** (kotaknya digambar CSS
+  dari `::before`/`::after` di `.wui-checkbox__box`); state di dalamnya dibaca lewat selektor sibling
+  (`input:checked ~ .wui-checkbox__box`), bukan kelas tambahan.
+- CVA: `checked`/`disabled` diisi `writeValue()`/`setDisabledState()`; host membawa
+  `.wui-checkbox--checked` / `.wui-checkbox--disabled`.
+- ⚠️ Belum ada `@Input()` apa pun di `WuiCheckbox`, jadi `<wui-checkbox disabled>` **tidak
+  berpengaruh** (atribut biasa tidak menyentuh field `disabled`). Kontrol hanya bisa dinonaktifkan
+  lewat Reactive Forms/`ngModel`, atau nanti setelah input `disabled` ditambahkan (K1 di
+  `wui-form-controls-plan.md`).
+- State nonaktif mengikuti M3 lewat token bersama `--wui-color-disabled-container` (12%) dan
+  `--wui-color-disabled-content` (38%), dibaca lewat indirection `--wui-checkbox-disabled-container` /
+  `-content`. Belum dicentang: garis 38% + latar transparan. Dicentang: latar 12% + centang 38%.
+  Label 38%. Tanpa state layer.
+- ⚠️ Hover label ditulis `&:where(:hover)`, bukan `&:hover` — `:where()` menyumbang 0 specificity
+  supaya aturan nonaktif di akhir berkas (0,2,1) menang tanpa `!important`.
+- ⚠️ `cursor` hidup di `label.wui-checkbox`; `cursor: default` harus ditulis di situ juga
+  (`.wui-checkbox--disabled .wui-checkbox`), tidak cukup di elemen host — deklarasi elemen
+  mengalahkan warisan.
+- ⚠️ (23 Sep 2026) Tampilan state nonaktif **belum diukur di browser**; ukuran & pemetaan warna di
+  atas berasal dari spesifikasi M3, bukan hasil pengukuran.
+
 ## Sidenav (`src/sidenav/`)
 
 - Struktur dua area untuk mini **dan** full: `.wui-sidenav-body` (`[wuiSidenavBody]`, satu-satunya bagian
