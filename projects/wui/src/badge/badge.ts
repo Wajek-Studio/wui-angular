@@ -12,8 +12,8 @@ import { WuiBadgeColor, WuiBadgeSize, WuiBadgeVariant } from './badge.options';
  *
  * ```html
  * <!-- Status chip di tabel -->
- * <span wuiBadge color="success" variant="subtle" pill>Aktif</span>
- * <span wuiBadge color="warning" variant="subtle" pill>Tertunda</span>
+ * <span wuiBadge color="primary" variant="subtle" pill>Aktif</span>
+ * <span wuiBadge color="secondary" variant="subtle" pill>Tertunda</span>
  * <span wuiBadge color="error" pill>Non Aktif</span>
  *
  * <!-- Tag mandiri -->
@@ -33,10 +33,7 @@ import { WuiBadgeColor, WuiBadgeSize, WuiBadgeVariant } from './badge.options';
     '[class.wui-badge--default]': "color() === 'default'",
     '[class.wui-badge--primary]': "color() === 'primary'",
     '[class.wui-badge--secondary]': "color() === 'secondary'",
-    '[class.wui-badge--success]': "color() === 'success'",
     '[class.wui-badge--error]': "color() === 'error' || color() === 'danger'",
-    '[class.wui-badge--warning]': "color() === 'warning'",
-    '[class.wui-badge--info]': "color() === 'info'",
     '[class.wui-badge--filled]': "variant() === 'filled'",
     '[class.wui-badge--subtle]': "variant() === 'subtle'",
     '[class.wui-badge--outlined]': "variant() === 'outlined'",
@@ -49,7 +46,7 @@ import { WuiBadgeColor, WuiBadgeSize, WuiBadgeVariant } from './badge.options';
   },
 })
 export class WuiBadge {
-  /** Peran warna badge (`default` | `primary` | `secondary` | `error` | `success` | `danger` | `warning` | `info`). */
+  /** Peran warna badge (`default` | `primary` | `secondary` | `error` | `danger`). */
   readonly color = input<WuiBadgeColor>('default');
 
   /** Gaya visual (`filled` | `subtle` | `outlined`). */

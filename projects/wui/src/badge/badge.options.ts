@@ -3,10 +3,7 @@ export type WuiBadgeColor =
   | 'primary'
   | 'secondary'
   | 'error'
-  | 'success'
-  | 'danger'
-  | 'warning'
-  | 'info';
+  | 'danger';
 
 export type WuiBadgeVariant = 'filled' | 'subtle' | 'outlined';
 

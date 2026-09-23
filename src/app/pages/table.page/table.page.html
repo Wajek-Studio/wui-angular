@@ -169,18 +169,18 @@
                 <td>{{ item.group }}</td>
                 <td>
                   @if (item.status === 'Aktif') {
-                    <span wuiBadge color="success" variant="subtle" pill>
-                      <span wuiBadge dot color="success"></span>
+                    <span wuiBadge color="primary" variant="subtle" pill>
+                      <span wuiBadge dot color="primary"></span>
                       Aktif
                     </span>
                   } @else if (item.status === 'Tertunda') {
-                    <span wuiBadge color="warning" variant="subtle" pill>
-                      <span wuiBadge dot color="warning"></span>
+                    <span wuiBadge color="secondary" variant="subtle" pill>
+                      <span wuiBadge dot color="secondary"></span>
                       Tertunda
                     </span>
                   } @else {
-                    <span wuiBadge color="info" variant="subtle" pill>
-                      <span wuiBadge dot color="info"></span>
+                    <span wuiBadge color="default" variant="subtle" pill>
+                      <span wuiBadge dot color="default"></span>
                       Selesai
                     </span>
                   }
@@ -207,7 +207,7 @@
       <h2 class="section-title">3. WuiBadge (Pengganti Bootstrap Badge Native WUI)</h2>
       <p class="section-note">
         Komponen badge native WUI yang dirancang menggantikan Bootstrap badge tanpa dependensi eksternal.
-        Mendukung 3 varian (<code>filled</code>, <code>subtle</code>, <code>outlined</code>), 7 tema warna semantik,
+        Mendukung 3 varian (<code>filled</code>, <code>subtle</code>, <code>outlined</code>), 4 peran warna semantik (<code>default</code>, <code>primary</code>, <code>secondary</code>, <code>error</code>),
         bentuk kapsul (<code>pill</code>), status dot (<code>dot</code>), serta notifikasi melayang (<code>overlap</code>).
       </p>
 
@@ -217,10 +217,7 @@
           <span wuiBadge color="default" variant="subtle">Default</span>
           <span wuiBadge color="primary" variant="subtle">Primary</span>
           <span wuiBadge color="secondary" variant="subtle">Secondary</span>
-          <span wuiBadge color="success" variant="subtle">Success</span>
           <span wuiBadge color="error" variant="subtle">Error</span>
-          <span wuiBadge color="warning" variant="subtle">Warning</span>
-          <span wuiBadge color="info" variant="subtle">Info</span>
         </div>
 
         <div class="badge-demo-label">Varian Filled (Solid High-Contrast)</div>
@@ -228,33 +225,31 @@
           <span wuiBadge color="default">Default</span>
           <span wuiBadge color="primary">Primary</span>
           <span wuiBadge color="secondary">Secondary</span>
-          <span wuiBadge color="success">Success</span>
           <span wuiBadge color="error">Error</span>
-          <span wuiBadge color="warning">Warning</span>
-          <span wuiBadge color="info">Info</span>
         </div>
 
         <div class="badge-demo-label">Varian Outlined & Pill (Bentuk Kapsul Bundar)</div>
         <div class="badge-demo-group">
+          <span wuiBadge color="default" variant="outlined" pill>Outlined Default</span>
           <span wuiBadge color="primary" variant="outlined" pill>Outlined Primary</span>
-          <span wuiBadge color="success" variant="outlined" pill>Outlined Success</span>
+          <span wuiBadge color="secondary" variant="outlined" pill>Outlined Secondary</span>
           <span wuiBadge color="error" variant="outlined" pill>Outlined Error</span>
           <span wuiBadge color="primary" variant="subtle" pill>Subtle Pill</span>
-          <span wuiBadge color="success" pill>Filled Pill</span>
+          <span wuiBadge color="primary" pill>Filled Pill</span>
         </div>
 
         <div class="badge-demo-label">Status Dot & Notification Overlap pada Tombol</div>
         <div class="badge-demo-group">
-          <span wuiBadge color="success" variant="subtle" pill>
-            <span wuiBadge dot color="success"></span>
+          <span wuiBadge color="primary" variant="subtle" pill>
+            <span wuiBadge dot color="primary"></span>
             Online
           </span>
-            <span wuiBadge color="error" variant="subtle" pill>
-              <span wuiBadge dot color="error"></span>
+          <span wuiBadge color="error" variant="subtle" pill>
+            <span wuiBadge dot color="error"></span>
             Offline
           </span>
-          <span wuiBadge color="warning" variant="subtle" pill>
-            <span wuiBadge dot color="warning"></span>
+          <span wuiBadge color="secondary" variant="subtle" pill>
+            <span wuiBadge dot color="secondary"></span>
             Dalam Antrean
           </span>
 
@@ -291,8 +286,8 @@
           </tr>
           <tr>
             <td><code>[color]</code> (pada <code>wuiBadge</code>)</td>
-            <td><code>'default' | 'primary' | 'secondary' | 'error' | 'success' | 'warning' | 'info'</code></td>
-            <td>Warna semantik badge (default: <code>'default'</code>). Terintegrasi dengan token WUI dan dark theme.</td>
+            <td><code>'default' | 'primary' | 'secondary' | 'error' | 'danger'</code></td>
+            <td>Warna semantik badge (default: <code>'default'</code>). Terintegrasi penuh dengan token warna WUI (--wui-color-*).</td>
           </tr>
           <tr>
             <td><code>[variant]</code> (pada <code>wuiBadge</code>)</td>

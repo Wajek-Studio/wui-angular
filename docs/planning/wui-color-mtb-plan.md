@@ -14,9 +14,8 @@ generated; palet jadi data pasif bentuk MTB; dokumentasi ditulis ulang; plan str
 Keputusan terkunci: M1–M9 (**M2 direvisi 22 Sep 2026**).
 
 Yang **masih terbuka** (tidak menghalangi pemakaian): **K3** alias `background` (grep membuktikan tidak
-ada pemakainya), **K9** ejaan `$wui-palletes`, **K10** peta sebagian vs merge dengan bawaan, **K2**
-(`success`/`warning`/`info` di badge masih hex — dilacak di plan struktur), plus utang kecil:
-`scrim`/`shadow` belum dikonsumsi `$wui-overlay-color`/`$wui-elevation-*`.
+ada pemakainya), **K9** ejaan `$wui-palletes`, **K10** peta sebagian vs merge dengan bawaan, plus utang kecil:
+`scrim`/`shadow` belum dikonsumsi `$wui-overlay-color`/`$wui-elevation-*` (**K2** selesai: `success`/`warning`/`info` dihapus dari badge).
 
 Pengetesan tetap milik user (`AGENTS.md` §1): seluruh fase di dokumen ini **ditulis**, tapi belum
 di-lint/di-build/dilihat di browser oleh agent.

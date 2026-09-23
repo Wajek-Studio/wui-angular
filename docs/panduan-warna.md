@@ -44,8 +44,7 @@ Semua nama mengikuti Material 3 (`m3.material.io/styles/color/roles`), kecuali b
 8. **Nama peran tidak dikarang bebas.** Menambah peran di luar daftar ini = keputusan yang harus
    ditulis di plan + dokumen ini, bukan langsung di komponen.
 9. **Nilai hanya datang dari skema.** Jangan menulis hex di komponen; kalau sebuah warna belum punya
-   peran, itu keputusan desain — bukan tambalan di satu komponen (utang yang tetap tercatat: 3 warna
-   status di `_badge.scss`, lihat §12).
+   peran, itu keputusan desain — bukan tambalan di satu komponen (seluruh warna di komponen 100% berbasis peran semantik).
 10. **Divalidasi saat build.** `$wui-role-required` (18 peran yang dibaca komponen) wajib ada di
     setiap skema, dan setiap `X`/`X-container` wajib punya `on-*`-nya — kalau tidak, build gagal
     dengan menyebut peran yang hilang.
@@ -215,7 +214,7 @@ didokumentasikan di sini.
 | `background`, `onBackground` | ✅ dilewati | deprecated di M3 — nilainya identik dengan `surface`/`on-surface`; generator melewatinya & mencatatnya di header berkas generated |
 | `surfaceVariant` | ✅ dilewati | deprecated M3 — pakai `surface-container-highest` |
 | `surfaceTint` | ✅ dilewati | deprecated M3 — elevasi tidak lagi memakai tint |
-| `success`, `warning`, `info` | ⏳ **K2** (plan struktur) | **bukan peran M3**; badge masih memakai hex keras untuk ketiga varian ini — satu-satunya warna keras di komponen |
+| `success`, `warning`, `info` | ✅ dihapus | **bukan peran M3**; dihapus dari `_badge.scss` dan `WuiBadge` agar seluruh komponen 100% berbasis peran M3 |
 | Varian kontras MTB (`light-medium-contrast`, `dark-high-contrast`, …) | ⏳ **M5** | 4 skema tambahan; melipatgandakan CSS, ditunda |
 | Ganti mode manual (class/atribut) & ganti palet saat runtime | ⏳ ditunda | sekarang hanya `prefers-color-scheme` (C10) |
 

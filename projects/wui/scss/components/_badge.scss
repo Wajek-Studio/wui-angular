@@ -1,6 +1,6 @@
 // Level 4 — Style komponen & directive `WuiBadge`.
 // Badge mandiri bergaya Bootstrap/Material 3 tanpa dependensi Bootstrap:
-// - Mendukung peran warna semantik (primary, secondary, error, success, warning, info, default)
+// - Mendukung peran warna semantik (primary, secondary, error, default)
 // - Mendukung varian visual (filled, subtle, outlined)
 // - Mendukung bentuk pill (kapsul 9999px), dot (titik status), dan overlap (notifikasi di sudut tombol)
 
@@ -118,34 +118,6 @@
             --wui-badge-on-container: var(--wui-color-on-error-container);
         }
 
-        // ⚠️ `success`/`warning`/`info` **bukan** peran Material 3 dan belum punya peran sendiri
-        // (K2 di `docs/planning/wui-color-structure-plan.md` masih terbuka). Ini satu-satunya warna
-        // keras yang tersisa di komponen; varian `subtle`-nya tetap memakai campuran dari warnanya
-        // sendiri karena tidak ada `*-container` yang bisa dipakai.
-        &.wui-badge--success {
-            --wui-badge-color: #137333;
-            --wui-badge-bg: #137333;
-            --wui-badge-text: #ffffff;
-            --wui-badge-container: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
-            --wui-badge-on-container: var(--wui-badge-color);
-        }
-
-        &.wui-badge--warning {
-            --wui-badge-color: #b06000;
-            --wui-badge-bg: #b06000;
-            --wui-badge-text: #ffffff;
-            --wui-badge-container: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
-            --wui-badge-on-container: var(--wui-badge-color);
-        }
-
-        &.wui-badge--info {
-            --wui-badge-color: #1a73e8;
-            --wui-badge-bg: #1a73e8;
-            --wui-badge-text: #ffffff;
-            --wui-badge-container: color-mix(in srgb, var(--wui-badge-color) 12%, transparent);
-            --wui-badge-on-container: var(--wui-badge-color);
-        }
-
         // ── Gaya Varian (Filled, Subtle, Outlined) ──────────────────────────────
         // 1. Filled (Solid / Default)
         border: 1px solid transparent;
@@ -164,31 +136,6 @@
             background-color: transparent;
             color: var(--wui-badge-color);
             border-color: var(--wui-badge-color);
-        }
-    }
-
-    // Satu-satunya alasan blok mode gelap ini masih ada: `success`/`warning`/`info` memakai hex
-    // (K2 terbuka). Semua varian berbasis peran sudah mode-aware sendiri lewat `--wui-color-*`.
-    @media (prefers-color-scheme: dark) {
-        .wui-badge,
-        wui-badge {
-            &.wui-badge--success {
-                --wui-badge-color: #81c995;
-                --wui-badge-bg: #81c995;
-                --wui-badge-text: #052814;
-            }
-
-            &.wui-badge--warning {
-                --wui-badge-color: #fdd663;
-                --wui-badge-bg: #fdd663;
-                --wui-badge-text: #2b1700;
-            }
-
-            &.wui-badge--info {
-                --wui-badge-color: #8ab4f8;
-                --wui-badge-bg: #8ab4f8;
-                --wui-badge-text: #041e49;
-            }
         }
     }
 }

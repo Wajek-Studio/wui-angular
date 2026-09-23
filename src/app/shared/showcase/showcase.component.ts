@@ -20,11 +20,11 @@ export class ShowcaseComponent {
   readonly title = input<string>('');
   readonly description = input<string>('');
   readonly tabs = input<ShowcaseTab[]>([]);
-  readonly defaultShowCode = input<boolean>(true);
+  readonly defaultShowCode = input<boolean>(false);
   readonly collapsible = input<boolean>(true);
 
   private readonly userSelectedLabel = signal<string | null>(null);
-  readonly showCode = signal<boolean>(true);
+  readonly showCode = signal<boolean>(false);
 
   constructor() {
     effect(() => {
@@ -53,6 +53,9 @@ export class ShowcaseComponent {
 
   selectTab(label: string): void {
     this.userSelectedLabel.set(label);
+    if (!this.showCode()) {
+      this.showCode.set(true);
+    }
   }
 
   toggleCode(): void {
