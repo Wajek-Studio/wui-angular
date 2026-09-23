@@ -4,8 +4,7 @@
 // Regenerate `src/theme/_wui-schemes.scss` dengan `npm run theme:build` — jangan diedit tangan.
 // Urutan wajib: berkas tema dimuat LEBIH DULU, karena konfigurasi `with (…)` hanya boleh memakai
 // variabel dari modul yang sudah dimuat.
-@use './theme/wui-schemes' as theme;
-@use '@wajek/wui/scss/wui.scss' with ($wui-schemes: theme.$wui-schemes);
+@use '@wajek/wui/scss/wui.scss';
 
 // Catatan: `$wui-schemes` menggantikan seluruh peta (tidak digabung dengan bawaan), jadi peta yang
 // ditulis tangan wajib memuat semua peran `$wui-role-required` — praktisnya pakai generator di atas.
