@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { WuiFormField, WuiLabel, WuiOption, WuiSelect } from '@wajek/wui';
+import { WuiFormField, WuiInput, WuiLabel, WuiOption, WuiSelect } from '@wajek/wui';
 
 @Component({
   imports: [
     WuiFormField,
+    WuiInput,
     WuiLabel,
     WuiSelect,
     WuiOption,

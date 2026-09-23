@@ -15,6 +15,30 @@
         Saat <code>[error]</code> memiliki nilai, pesan error otomatis menggantikan <code>hint</code>, kontrol ditandai <code>aria-invalid="true"</code>, dan warna beralih ke peran semantik <code>error</code>.
       </p>
 
+      <!-- PANDUAN PENTING IMPORT DIRECTIVES -->
+      <div class="doc-alert">
+        <div class="doc-alert__icon">💡</div>
+        <div class="doc-alert__content">
+          <strong>Penting — Syarat Import Direktif Form:</strong>
+          <p>
+            Form di <code>@wajek/wui</code> dirancang modular berbasis directive native. Untuk bekerja sempurna, komponen Anda wajib mengimpor 
+            <strong>tiga direktif utama</strong>:
+          </p>
+          <ul style="margin: 0.5rem 0; padding-inline-start: 1.25rem;">
+            <li><code>WuiFormField</code> — Komponen pembungkus kontainer field (<code>&lt;wui-form-field&gt;</code>).</li>
+            <li><code>WuiLabel</code> — Directive label mengapung (<code>&lt;label wuiLabel&gt;</code>).</li>
+            <li><code>WuiInput</code> — Directive styling &amp; a11y kontrol (<code>&lt;input wuiInput&gt;</code>, <code>&lt;textarea wuiInput&gt;</code>, <code>&lt;wui-select wuiInput&gt;</code>).</li>
+          </ul>
+          <p style="margin-top: 0.5rem; font-size: 0.85rem; color: color-mix(in srgb, var(--wui-color-on-surface) 80%, transparent);">
+            ⚠️ <em>Jika Anda hanya mengimpor <code>WuiFormField</code> ke dalam <code>imports: [...]</code>, directive <code>wuiLabel</code> dan <code>wuiInput</code> tidak akan aktif sehingga label tidak mengapung dan styling kontrol tidak teraplikasi.</em>
+          </p>
+          <div style="margin-top: 1rem; border-radius: 8px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--wui-color-primary) 20%, transparent);">
+            <pre style="margin: 0; padding: 1rem; font-size: 0.825rem;"><code [highlight]="importGuideSnippet" language="typescript"></code></pre>
+          </div>
+        </div>
+      </div>
+
+
       <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
       <section class="showcase-card">
         <div class="showcase-header">
@@ -467,6 +491,96 @@
             }
           </div>
         }
+      </section>
+
+      <!-- 8. RINGKASAN & TABEL REFERENSI DIREKTIF -->
+      <section class="doc-section">
+        <h2 class="section-title">8. Ringkasan &amp; Tabel Referensi Direktif</h2>
+        <p class="section-note">
+          Daftar seluruh komponen dan direktif yang disediakan <code>@wajek/wui</code> untuk membangun form:
+        </p>
+
+        <h3 class="sub-title">A. Direktif &amp; Komponen yang Tersedia</h3>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Nama Simbol (Import)</th>
+              <th>Selector Template</th>
+              <th>Target Elemen</th>
+              <th>Fungsi &amp; Tanggung Jawab</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>WuiFormField</code></td>
+              <td><code>wui-form-field</code></td>
+              <td>Komponen Wrapper</td>
+              <td>Wadah induk yang mengelola penempatan label, kontrol, petunjuk (<em>hint</em>), dan pesan kesalahan (<em>error</em>).</td>
+            </tr>
+            <tr>
+              <td><code>WuiLabel</code></td>
+              <td><code>label[wuiLabel]</code></td>
+              <td><code>&lt;label&gt;</code> asli</td>
+              <td>Menerapkan animasi floating label saat kontrol difokus atau berisi teks, serta menautkan atribut <code>for</code> otomatis.</td>
+            </tr>
+            <tr>
+              <td><code>WuiInput</code></td>
+              <td><code>[wuiInput]</code></td>
+              <td><code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;wui-select&gt;</code></td>
+              <td>Menerapkan kelas styling <code>.wui-input</code>, mengelola placeholder pengapung, serta menautkan atribut ARIA (<code>aria-describedby</code>, <code>aria-invalid</code>).</td>
+            </tr>
+            <tr>
+              <td><code>WuiSelect</code></td>
+              <td><code>wui-select</code></td>
+              <td>Komponen Dropdown</td>
+              <td>Kontrol combobox kustom native WUI yang kompatibel penuh di dalam <code>&lt;wui-form-field&gt;</code>.</td>
+            </tr>
+            <tr>
+              <td><code>WuiOption</code></td>
+              <td><code>wui-option</code></td>
+              <td>Komponen Pilihan</td>
+              <td>Item pilihan data di dalam panel dropdown <code>&lt;wui-select&gt;</code>.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="sub-title">B. Properti Input pada &lt;wui-form-field&gt;</h3>
+        <table class="doc-table">
+          <thead>
+            <tr>
+              <th>Input Property</th>
+              <th>Tipe Data</th>
+              <th>Default</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>variant</code></td>
+              <td><code>'outlined' | 'filled'</code></td>
+              <td><code>'outlined'</code></td>
+              <td>Varian visual field: <code>outlined</code> (border penuh sekeliling) atau <code>filled</code> (latar solid dengan penegas bawah).</td>
+            </tr>
+            <tr>
+              <td><code>hint</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Teks petunjuk pengisian netral di bawah kotak input. Otomatis disembunyikan saat <code>error</code> memiliki nilai.</td>
+            </tr>
+            <tr>
+              <td><code>error</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>Pesan validasi gagal. Mengisi properti ini akan mengubah warna field ke tema error dan menyetel <code>aria-invalid="true"</code>.</td>
+            </tr>
+            <tr>
+              <td><code>id</code></td>
+              <td><code>string</code></td>
+              <td><code>''</code></td>
+              <td>ID kontrol spesifik (opsional). Jika dikosongkan, WUI akan membuatkan ID unik otomatis.</td>
+            </tr>
+          </tbody>
+        </table>
       </section>
     </div>
   </wui-page>

@@ -83,6 +83,24 @@ export class FormPage implements OnInit {
   readonly selectField = signal<ExampleScript>({});
   readonly reactiveFull = signal<ExampleScript>({});
 
+  // Panduan import directive
+  readonly importGuideSnippet = `import { WuiFormField, WuiInput, WuiLabel, WuiSelect, WuiOption } from '@wajek/wui';
+import { ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-my-form',
+  imports: [
+    ReactiveFormsModule, // atau FormsModule
+    WuiFormField,        // Komponen kontainer (<wui-form-field>)
+    WuiInput,            // Directive kontrol (<input wuiInput>, <textarea wuiInput>, <wui-select wuiInput>)
+    WuiLabel,            // Directive floating label (<label wuiLabel>)
+    WuiSelect,           // (Opsional) Dropdown kustom WUI (<wui-select>)
+    WuiOption,           // (Opsional) Item pilihan dropdown (<wui-option>)
+  ],
+  templateUrl: './my-form.html',
+})
+export class MyFormComponent {}`;
+
   // Active Code Tabs per Card ('html' | 'ts')
   readonly activeTabs = signal<FormActiveTabs>({
     simple: 'html',

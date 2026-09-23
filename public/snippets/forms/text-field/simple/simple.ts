@@ -1,11 +1,13 @@
-import { Component } from "@angular/core";
-import { WuiFormField } from '@wajek/wui';
+import { Component } from '@angular/core';
+import { WuiFormField, WuiInput, WuiLabel } from '@wajek/wui';
 
 @Component({
-    imports: [
-        // Import dulu librarynya
-        WuiFormField 
-    ],
-    templateUrl: 'simple.html'
+  imports: [
+    // WuiFormField, WuiInput, dan WuiLabel harus di-import bersamaan
+    WuiFormField,
+    WuiInput,
+    WuiLabel,
+  ],
+  templateUrl: './simple.html',
 })
-export class SimpleComponent { }
+export class SimpleComponent {}

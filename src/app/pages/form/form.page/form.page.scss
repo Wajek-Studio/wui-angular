@@ -175,3 +175,99 @@
     color: color-mix(in srgb, var(--wui-color-on-surface) 85%, transparent);
   }
 }
+
+// --- DOKUMENTASI DIRECTIVE & TABEL API ---
+.doc-section {
+  margin-bottom: 3.5rem;
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  color: var(--wui-color-on-surface);
+}
+
+.sub-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 1.75rem 0 0.5rem;
+  color: var(--wui-color-on-surface);
+}
+
+.doc-alert {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--wui-color-primary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--wui-color-primary) 30%, transparent);
+
+  &__icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--wui-color-primary);
+  }
+
+  &__content {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--wui-color-on-surface);
+
+    strong {
+      color: var(--wui-color-primary);
+    }
+
+    p {
+      margin: 0.35rem 0 0;
+    }
+
+    code {
+      background: color-mix(in srgb, var(--wui-color-primary) 12%, transparent);
+      color: var(--wui-color-primary);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  color: var(--wui-color-on-surface);
+  margin-top: 1rem;
+
+  th,
+  td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 12%, transparent);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  th {
+    color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: color-mix(in srgb, var(--wui-color-on-surface) 3%, transparent);
+  }
+
+  tbody tr:hover {
+    background: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent);
+  }
+
+  code {
+    background: color-mix(in srgb, var(--wui-color-on-surface) 8%, transparent);
+    color: var(--wui-color-on-surface);
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+}
+
