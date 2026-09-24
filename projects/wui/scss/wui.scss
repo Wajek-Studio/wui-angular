@@ -60,6 +60,7 @@
 @include components.snackbar;
 @include components.checkbox;
 @include components.radio;
+@include components.scrollbar;
 
 // Primitif layout (container, grid) dipanggil setelah komponen supaya boleh menimpa style komponen
 // tanpa `!important`, tapi sebelum utilitas.

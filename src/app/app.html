@@ -1,18 +1,18 @@
 <wui-app>
   <wui-topbar>
-    <div class="wui-topbar-leading">
+    <div wuiTopbarLeading>
       <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMini()">
         <wui-icon icon="menu"></wui-icon>
       </button>
     </div>
 
-    <div class="wui-topbar-content">
+    <div wuiTopbarContent>
       <span class="wui-title-medium">
         Wajek UI &mdash; WUI
       </span>
     </div>
 
-    <div class="wui-topbar-trailing">
+    <div wuiTopbarTrailing>
       <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenav()">
         <wui-icon icon="account-circle"></wui-icon>
       </button>
@@ -91,7 +91,7 @@
 
     <!-- Konten Penuh: mode open (ikon + teks label) -->
     <nav wuiSidenavFull>
-      <div wuiSidenavBody>
+      <div wuiSidenavBody wuiScrollbar>
         <a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem>
           <wui-icon icon="play"></wui-icon> Memulai
         </a>

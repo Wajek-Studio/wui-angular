@@ -1,0 +1,54 @@
+@mixin scrollbar {
+
+    .wui-scrollbar-host {
+        --wui-scrollbar-width: .5rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar { display: none; };
+
+        &:hover {
+            .wui-scrollbar-gutter {
+                opacity: 1;
+            }
+        }
+    }
+
+    .wui-scrollbar-gutter {
+        position: sticky;
+        top: 0; left: 0; right: 0; height: 0;
+        opacity: 0;
+        transition: opacity 100ms linear;
+    }
+
+    .wui-scrollbar-track {
+        position: absolute;
+        z-index: 10;
+
+        &--vertical {
+            right: 0; top: 0; bottom: 0;
+            width: var(--wui-scrollbar-width);
+            height: var(--wui-scrollbar-container-height);
+        }
+
+        &--horizontal {
+            top: calc(var(--wui-scrollbar-container-height) - var(--wui-scrollbar-width));
+            bottom: 0; left: 0; right: 0;
+            height: var(--wui-scrollbar-width);
+            width: var(--wui-scrollbar-container-width);
+        }
+    }
+
+    .wui-scrollbar-thumb {
+        position: absolute;
+        background: var(--wui-color-state-layer-on-surface-opacity-16);
+        border-radius: calc(var(--wui-scrollbar-width) / 2);
+        
+        &--vertical { left: 0; right: 0; top: 0; }
+        &--horizontal { top: 0; bottom: 0; left: 0; }
+
+        &:hover {
+            background: var(--wui-color-on-surface);
+        }
+    }
+
+}

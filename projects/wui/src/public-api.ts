@@ -23,7 +23,7 @@ export * from './menu/menu-item';
 export * from './select/select';
 export * from './select/option';
 
-export * from './page/page.component';
+export * from './page/page';
 export * from './page/page.options';
 export * from './page/page.ref';
 export * from './page/page.service';
@@ -58,3 +58,5 @@ export * from './checkbox/checkbox';
 
 export * from './radio/radio-button';
 export * from './radio/radio-group';
+
+export * from './scrollbar/scrollbar';
