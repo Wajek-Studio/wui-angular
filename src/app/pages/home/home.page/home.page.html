@@ -1,6 +1,6 @@
 <ng-template #page>
     <wui-page>
-        <div class="wui-page-content">
+        <div wuiPageContent wuiScrollbar>
 
             <div class="wui-container wui-py-5">
 
@@ -362,7 +362,7 @@
 
                     <pre class="wui-p-3 wui-mb-3"><code>&lt;!-- template halaman --&gt;
     &lt;wui-page&gt;
-    &lt;div class="wui-page-content"&gt;
+    &lt;div wuiPageContent wuiScrollbar&gt;
         &lt;h1&gt;Judul halaman&lt;/h1&gt;
         &hellip;isi halaman&hellip;
     &lt;/div&gt;
@@ -370,7 +370,7 @@
 
                     <p class="wui-mb-5">
                         Kalau satu halaman perlu topbar atau sidenav-nya sendiri, cukup ditulis di dalam
-                        <code>&lt;wui-page&gt;</code> sebelum <code>.wui-page-content</code> &mdash; komponen itu juga
+                        <code>&lt;wui-page&gt;</code> sebelum <code>[wuiPageContent]</code> &mdash; komponen itu juga
                         memproyeksikan <code>&lt;wui-topbar&gt;</code> dan <code>&lt;wui-sidenav&gt;</code>.
                     </p>
 

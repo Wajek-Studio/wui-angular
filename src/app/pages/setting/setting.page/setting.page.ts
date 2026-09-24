@@ -1,10 +1,10 @@
 import { Component, inject, OnDestroy, OnInit, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { WuiPage, WuiPageRef, WuiPageService } from '@wajek/wui';
+import { WuiPage, WuiPageContent, WuiPageRef, WuiPageService, WuiScrollbar } from '@wajek/wui';
 
 @Component({
   selector: 'app-setting.page',
-  imports: [WuiPage, RouterLink, RouterOutlet],
+  imports: [WuiPage, WuiPageContent, WuiScrollbar, RouterLink, RouterOutlet],
   templateUrl: './setting.page.html',
   styleUrl: './setting.page.scss',
 })

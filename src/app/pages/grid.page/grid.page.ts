@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, computed, inject, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WuiPage, WuiPageService } from '@wajek/wui';
+import { WuiPage, WuiPageContent, WuiPageService, WuiScrollbar } from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
 import { ShowcaseComponent, ShowcaseTab } from '../../shared/showcase';
 
@@ -12,7 +12,7 @@ export interface GridSnippet {
 
 @Component({
   selector: 'app-grid.page',
-  imports: [RouterLink, WuiPage, ShowcaseComponent],
+  imports: [RouterLink, WuiPage, WuiPageContent, WuiScrollbar, ShowcaseComponent],
   templateUrl: './grid.page.html',
   styleUrl: './grid.page.scss',
 })

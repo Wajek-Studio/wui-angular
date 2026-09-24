@@ -2,7 +2,9 @@ import { Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {
   WuiPage,
+  WuiPageContent,
   WuiPageService,
+  WuiScrollbar,
   WuiSidenavService,
   WuiTable,
   WuiTableResponsive,
@@ -10,7 +12,7 @@ import {
 
 @Component({
   selector: 'app-home.page',
-  imports: [WuiPage, RouterOutlet, WuiTable, WuiTableResponsive],
+  imports: [WuiPage, WuiPageContent, WuiScrollbar, RouterOutlet, WuiTable, WuiTableResponsive],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })

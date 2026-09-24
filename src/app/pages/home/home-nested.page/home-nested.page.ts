@@ -1,10 +1,10 @@
 import { Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WuiPage, WuiPageRef, WuiPageService } from '@wajek/wui';
+import { WuiPage, WuiPageContent, WuiPageRef, WuiPageService, WuiScrollbar } from '@wajek/wui';
 
 @Component({
   selector: 'app-home-nested.page',
-  imports: [WuiPage, RouterLink],
+  imports: [WuiPage, WuiPageContent, WuiScrollbar, RouterLink],
   templateUrl: './home-nested.page.html',
   styleUrl: './home-nested.page.scss',
 })

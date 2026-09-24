@@ -4,7 +4,9 @@ import {
   WuiButton,
   WuiIcon,
   WuiPage,
+  WuiPageContent,
   WuiPageService,
+  WuiScrollbar,
   WuiSidenav,
   WuiSidenavBody,
   WuiSidenavDivider,
@@ -21,6 +23,8 @@ import {
   imports: [
     RouterLink,
     WuiPage,
+    WuiPageContent,
+    WuiScrollbar,
     WuiSidenav,
     WuiSidenavBody,
     WuiSidenavFooter,

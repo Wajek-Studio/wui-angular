@@ -8,7 +8,9 @@ import {
   WuiLabel,
   WuiOption,
   WuiPage,
+  WuiPageContent,
   WuiPageService,
+  WuiScrollbar,
   WuiSelect,
 } from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
@@ -34,6 +36,8 @@ export interface SelectSnippet {
     WuiLabel,
     WuiOption,
     WuiPage,
+    WuiPageContent,
+    WuiScrollbar,
     WuiSelect,
     ShowcaseComponent,
   ],

@@ -9,7 +9,9 @@ import {
   WuiMenuDivider,
   WuiMenuItem,
   WuiPage,
+  WuiPageContent,
   WuiPageService,
+  WuiScrollbar,
   WuiTable,
   WuiTableResponsive,
 } from '@wajek/wui';
@@ -41,6 +43,8 @@ export interface ContextMenuSnippet {
     WuiMenuDivider,
     WuiMenuItem,
     WuiPage,
+    WuiPageContent,
+    WuiScrollbar,
     WuiTable,
     WuiTableResponsive,
     ShowcaseComponent,

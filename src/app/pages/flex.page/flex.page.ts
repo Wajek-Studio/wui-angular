@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, computed, inject, signal, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WuiButton, WuiPage, WuiPageService } from '@wajek/wui';
+import { WuiButton, WuiPage, WuiPageContent, WuiPageService, WuiScrollbar } from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
 import { ShowcaseComponent, ShowcaseTab } from '../../shared/showcase';
 
@@ -12,7 +12,7 @@ export interface FlexSnippet {
 
 @Component({
   selector: 'app-flex.page',
-  imports: [RouterLink, WuiPage, WuiButton, ShowcaseComponent],
+  imports: [RouterLink, WuiPage, WuiPageContent, WuiScrollbar, WuiButton, ShowcaseComponent],
   templateUrl: './flex.page.html',
   styleUrl: './flex.page.scss',
 })

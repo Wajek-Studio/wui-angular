@@ -2,7 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, TemplateRef, computed, inject, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { WuiButton, WuiPage, WuiPageService, WuiRadioButton, WuiRadioGroup } from '@wajek/wui';
+import {
+  WuiButton,
+  WuiPage,
+  WuiPageContent,
+  WuiPageService,
+  WuiRadioButton,
+  WuiRadioGroup,
+  WuiScrollbar,
+} from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
 import { ShowcaseComponent, ShowcaseTab } from '../../shared/showcase';
 
@@ -17,6 +25,8 @@ export interface RadioSnippet {
     RouterLink,
     FormsModule,
     WuiPage,
+    WuiPageContent,
+    WuiScrollbar,
     WuiButton,
     WuiRadioGroup,
     WuiRadioButton,

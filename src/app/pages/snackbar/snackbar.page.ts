@@ -8,7 +8,9 @@ import {
   WuiInput,
   WuiLabel,
   WuiPage,
+  WuiPageContent,
   WuiPageService,
+  WuiScrollbar,
   WuiSnackbarRef,
   WuiSnackbarService,
 } from '@wajek/wui';
@@ -33,6 +35,8 @@ export interface ExampleScript {
     RouterLink,
     FormsModule,
     WuiPage,
+    WuiPageContent,
+    WuiScrollbar,
     WuiButton,
     WuiFormField,
     WuiInput,
