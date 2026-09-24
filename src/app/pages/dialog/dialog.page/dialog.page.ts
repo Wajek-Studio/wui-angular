@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WuiButton, WuiDialogRef, WuiDialogService, WuiPage, WuiPageService } from '@wajek/wui';
+import { WuiButton, WuiDialogRef, WuiDialogService, WuiPage, WuiPageService, WuiPageContent, WuiScrollbar } from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
 import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
 import { HapusDialog } from '../hapus-dialog/hapus-dialog';
@@ -21,7 +21,7 @@ export interface DialogSnippet {
  */
 @Component({
   selector: 'app-dialog.page',
-  imports: [RouterLink, WuiButton, WuiPage, ShowcaseComponent],
+  imports: [RouterLink, WuiButton, WuiPage, ShowcaseComponent, WuiPageContent, WuiScrollbar],
   templateUrl: './dialog.page.html',
   styleUrl: './dialog.page.scss',
 })
