@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, computed, inject, signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
@@ -11,45 +11,16 @@ import {
   WuiPage,
   WuiPageService,
   WuiSelect,
-  WuiCheckbox
+  WuiRadioGroup,
+  WuiRadioButton,
 } from '@wajek/wui';
 import { Highlight } from 'ngx-highlightjs';
 import { firstValueFrom } from 'rxjs';
+import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
 
 export interface ExampleScript {
   ts?: string;
   html?: string;
-}
-
-export type CodeTab = 'html' | 'ts';
-
-export type CardKey =
-  | 'simple'
-  | 'filled'
-  | 'email'
-  | 'requiredLength'
-  | 'textarea'
-  | 'select'
-  | 'reactiveFull';
-
-export interface FormActiveTabs {
-  simple: CodeTab;
-  filled: CodeTab;
-  email: CodeTab;
-  requiredLength: CodeTab;
-  textarea: CodeTab;
-  select: CodeTab;
-  reactiveFull: CodeTab;
-}
-
-export interface FormShowCode {
-  simple: boolean;
-  filled: boolean;
-  email: boolean;
-  requiredLength: boolean;
-  textarea: boolean;
-  select: boolean;
-  reactiveFull: boolean;
 }
 
 @Component({
@@ -64,8 +35,10 @@ export interface FormShowCode {
     WuiSelect,
     WuiOption,
     WuiPage,
+    WuiRadioGroup,
+    WuiRadioButton,
     Highlight,
-    WuiCheckbox
+    ShowcaseComponent,
   ],
   templateUrl: './form.page.html',
   styleUrl: './form.page.scss',
@@ -103,27 +76,41 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class MyFormComponent {}`;
 
-  // Active Code Tabs per Card ('html' | 'ts')
-  readonly activeTabs = signal<FormActiveTabs>({
-    simple: 'html',
-    filled: 'html',
-    email: 'html',
-    requiredLength: 'html',
-    textarea: 'html',
-    select: 'html',
-    reactiveFull: 'html',
-  });
+  // Computed Showcase Tabs
+  readonly simpleTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.simple().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.simple().ts ?? '', language: 'typescript' },
+  ]);
 
-  // Code Visibility Toggle per Card
-  readonly showCode = signal<FormShowCode>({
-    simple: true,
-    filled: true,
-    email: true,
-    requiredLength: true,
-    textarea: true,
-    select: true,
-    reactiveFull: true,
-  });
+  readonly filledTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.filled().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.filled().ts ?? '', language: 'typescript' },
+  ]);
+
+  readonly emailTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.emailValidation().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.emailValidation().ts ?? '', language: 'typescript' },
+  ]);
+
+  readonly requiredLengthTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.requiredLength().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.requiredLength().ts ?? '', language: 'typescript' },
+  ]);
+
+  readonly textareaTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.textareaSnippet().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.textareaSnippet().ts ?? '', language: 'typescript' },
+  ]);
+
+  readonly selectTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.selectField().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.selectField().ts ?? '', language: 'typescript' },
+  ]);
+
+  readonly reactiveFullTabs = computed<ShowcaseTab[]>(() => [
+    { label: 'HTML', code: this.reactiveFull().html ?? '', language: 'html' },
+    { label: 'TypeScript', code: this.reactiveFull().ts ?? '', language: 'typescript' },
+  ]);
 
   // --- Interactive Form Controls for Live Demos ---
 
@@ -196,6 +183,10 @@ export class MyFormComponent {}`;
       validators: [Validators.required, Validators.email],
     }),
     departemen: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    tipeAkun: new FormControl('personal', {
       nonNullable: true,
       validators: [Validators.required],
     }),
@@ -276,13 +267,5 @@ export class MyFormComponent {}`;
         html: '<!-- Gagal memuat snippet HTML. -->',
       };
     }
-  }
-
-  setTab(key: CardKey, tab: CodeTab): void {
-    this.activeTabs.update((prev) => ({ ...prev, [key]: tab }));
-  }
-
-  toggleCode(key: CardKey): void {
-    this.showCode.update((prev) => ({ ...prev, [key]: !prev[key] }));
   }
 }

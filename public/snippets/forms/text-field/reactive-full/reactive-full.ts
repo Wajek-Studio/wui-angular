@@ -7,6 +7,8 @@ import {
   WuiLabel,
   WuiOption,
   WuiSelect,
+  WuiRadioGroup,
+  WuiRadioButton,
 } from '@wajek/wui';
 
 @Component({
@@ -18,6 +20,8 @@ import {
     WuiSelect,
     WuiOption,
     WuiButton,
+    WuiRadioGroup,
+    WuiRadioButton,
   ],
   templateUrl: './reactive-full.html',
 })
@@ -32,6 +36,10 @@ export class ReactiveFullComponent {
       validators: [Validators.required, Validators.email],
     }),
     departemen: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    tipeAkun: new FormControl('personal', {
       nonNullable: true,
       validators: [Validators.required],
     }),

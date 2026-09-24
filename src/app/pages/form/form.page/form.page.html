@@ -3,7 +3,7 @@
     <div class="wui-page-content form-container">
       <header class="form-header">
         <a routerLink="/home" class="form-back-btn">← Kembali ke Beranda</a>
-        <h1 class="form-title">Forms & Validation</h1>
+        <h1 class="form-title">Forms &amp; Validation</h1>
         <p class="form-subtitle">
           <code>&lt;wui-form-field&gt;</code> menyusun label mengapung, kontrol input native atau kustom (seperti <code>wui-select</code>), serta pesan petunjuk (<em>hint</em>) dan kesalahan (<em>error</em>).
           Terintegrasi penuh dengan <strong>Reactive Forms</strong> bawaan Angular tanpa dependensi pihak ketiga.
@@ -39,219 +39,40 @@
       </div>
 
       <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">Checkbox</h2>
-          <p class="showcase-desc">
-            Checkbox description
-          </p>
-        </div>
-
-        <div class="showcase-preview">
-          <wui-checkbox>Saya setuju dengan Syarat dan Ketentuan</wui-checkbox>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().simple === 'html'"
-              (click)="setTab('simple', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().simple === 'ts'"
-              (click)="setTab('simple', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('simple')">
-            {{ showCode().simple ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().simple) {
-          <div class="showcase-code-body">
-            @if (activeTabs().simple === 'html') {
-              <pre><code [highlight]="simple().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="simple().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
-      </section>
-
-      <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">Disabled Checkbox</h2>
-          <p class="showcase-desc">
-            Checkbox disabled
-          </p>
-        </div>
-
-        <div class="showcase-preview">
-          <wui-checkbox [disabled]="true" [checked]="true">Saya setuju dengan Syarat dan Ketentuan</wui-checkbox>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().simple === 'html'"
-              (click)="setTab('simple', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().simple === 'ts'"
-              (click)="setTab('simple', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('simple')">
-            {{ showCode().simple ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().simple) {
-          <div class="showcase-code-body">
-            @if (activeTabs().simple === 'html') {
-              <pre><code [highlight]="simple().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="simple().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
-      </section>
-
-
-      <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">1. Text Field Outlined (Dasar)</h2>
-          <p class="showcase-desc">
-            Varian standar Material dengan border penuh di sekeliling kotak. Label mengapung tepat memotong garis batas atas.
-          </p>
-        </div>
-
-        <div class="showcase-preview">
+      <section class="doc-section">
+        <app-showcase
+          title="1. Text Field Outlined (Dasar)"
+          description="Varian standar Material dengan border penuh di sekeliling kotak. Label mengapung tepat memotong garis batas atas."
+          [tabs]="simpleTabs()"
+        >
           <wui-form-field hint="Sesuai kartu identitas resmi Anda.">
             <label wuiLabel for="simple-nama">Nama Lengkap</label>
             <input wuiInput type="text" id="simple-nama" autocomplete="name" placeholder="Masukkan nama lengkap Anda" />
           </wui-form-field>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().simple === 'html'"
-              (click)="setTab('simple', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().simple === 'ts'"
-              (click)="setTab('simple', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('simple')">
-            {{ showCode().simple ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().simple) {
-          <div class="showcase-code-body">
-            @if (activeTabs().simple === 'html') {
-              <pre><code [highlight]="simple().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="simple().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
+        </app-showcase>
       </section>
 
       <!-- 2. FILLED TEXT FIELD -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">2. Text Field Varian Filled</h2>
-          <p class="showcase-desc">
-            Varian berlatar terisi dengan garis penegas bawah (<em>bottom stroke</em>). Label mengapung di bagian atas dalam kotak.
-          </p>
-        </div>
-
-        <div class="showcase-preview">
+      <section class="doc-section">
+        <app-showcase
+          title="2. Text Field Varian Filled"
+          description="Varian berlatar terisi dengan garis penegas bawah (bottom stroke). Label mengapung di bagian atas dalam kotak."
+          [tabs]="filledTabs()"
+        >
           <wui-form-field variant="filled" hint="Sesuai kartu identitas resmi Anda.">
             <label wuiLabel for="filled-nama">Nama Lengkap</label>
             <input wuiInput type="text" id="filled-nama" autocomplete="name" placeholder="Masukkan nama lengkap Anda" />
           </wui-form-field>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().filled === 'html'"
-              (click)="setTab('filled', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().filled === 'ts'"
-              (click)="setTab('filled', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('filled')">
-            {{ showCode().filled ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().filled) {
-          <div class="showcase-code-body">
-            @if (activeTabs().filled === 'html') {
-              <pre><code [highlight]="filled().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="filled().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
+        </app-showcase>
       </section>
 
       <!-- 3. EMAIL VALIDATION -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">3. Validasi Email (Live Demo)</h2>
-          <p class="showcase-desc">
-            Memvalidasi keberadaan isi (<code>Validators.required</code>) dan pola format alamat email yang benar (<code>Validators.email</code>).
-            Coba ketik alamat email salah lalu klik di luar input untuk melihat pesan kesalahan.
-          </p>
-        </div>
-
-        <div class="showcase-preview">
+      <section class="doc-section">
+        <app-showcase
+          title="3. Validasi Email (Live Demo)"
+          description="Memvalidasi keberadaan isi (Validators.required) dan format alamat email (Validators.email). Ketik email tidak valid lalu keluar dari input untuk melihat pesan error."
+          [tabs]="emailTabs()"
+        >
           <wui-form-field 
             hint="Kami tidak akan menyebarkan email Anda."
             [error]="pesanEmailDemo"
@@ -265,54 +86,16 @@
               autocomplete="email" 
             />
           </wui-form-field>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().email === 'html'"
-              (click)="setTab('email', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().email === 'ts'"
-              (click)="setTab('email', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('email')">
-            {{ showCode().email ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().email) {
-          <div class="showcase-code-body">
-            @if (activeTabs().email === 'html') {
-              <pre><code [highlight]="emailValidation().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="emailValidation().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
+        </app-showcase>
       </section>
 
       <!-- 4. REQUIRED & MIN/MAX LENGTH VALIDATION -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">4. Validasi Wajib Isi & Panjang Karakter (Live Demo)</h2>
-          <p class="showcase-desc">
-            Memvalidasi batas panjang teks minimum (<code>Validators.minLength(3)</code>) dan maksimum (<code>Validators.maxLength(20)</code>).
-          </p>
-        </div>
-
-        <div class="showcase-preview">
+      <section class="doc-section">
+        <app-showcase
+          title="4. Validasi Wajib Isi & Panjang Karakter (Live Demo)"
+          description="Memvalidasi batas panjang teks minimum (Validators.minLength(3)) dan maksimum (Validators.maxLength(20))."
+          [tabs]="requiredLengthTabs()"
+        >
           <wui-form-field 
             hint="Gunakan 3 hingga 20 karakter unik."
             [error]="pesanUsernameDemo"
@@ -325,54 +108,16 @@
               placeholder="mis. rizal_rachman"
             />
           </wui-form-field>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().requiredLength === 'html'"
-              (click)="setTab('requiredLength', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().requiredLength === 'ts'"
-              (click)="setTab('requiredLength', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('requiredLength')">
-            {{ showCode().requiredLength ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().requiredLength) {
-          <div class="showcase-code-body">
-            @if (activeTabs().requiredLength === 'html') {
-              <pre><code [highlight]="requiredLength().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="requiredLength().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
+        </app-showcase>
       </section>
 
       <!-- 5. TEXTAREA MULTILINE -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">5. Textarea Multiline & Validasi (Live Demo)</h2>
-          <p class="showcase-desc">
-            Kontrol <code>&lt;textarea wuiInput&gt;</code> mendukung multi-baris dengan floating label yang tetap selaras dan validasi panjang maksimal.
-          </p>
-        </div>
-
-        <div class="showcase-preview">
+      <section class="doc-section">
+        <app-showcase
+          title="5. Textarea Multiline & Validasi (Live Demo)"
+          description="Kontrol <textarea wuiInput> mendukung multi-baris dengan floating label yang tetap selaras dan validasi panjang maksimal."
+          [tabs]="textareaTabs()"
+        >
           <wui-form-field 
             hint="Tulis instruksi tambahan jika ada (maks. 200 karakter)."
             [error]="pesanCatatanDemo"
@@ -385,54 +130,16 @@
               placeholder="Tuliskan catatan detail di sini..."
             ></textarea>
           </wui-form-field>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().textarea === 'html'"
-              (click)="setTab('textarea', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().textarea === 'ts'"
-              (click)="setTab('textarea', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('textarea')">
-            {{ showCode().textarea ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().textarea) {
-          <div class="showcase-code-body">
-            @if (activeTabs().textarea === 'html') {
-              <pre><code [highlight]="textareaSnippet().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="textareaSnippet().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
+        </app-showcase>
       </section>
 
       <!-- 6. SELECT FIELD INTEGRATION -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">6. Integrasi Form Field & Select (Live Demo)</h2>
-          <p class="showcase-desc">
-            Komponen <code>&lt;wui-select&gt;</code> terhubung mulus ke dalam <code>&lt;wui-form-field&gt;</code> dengan label mengapung dan validasi wajib pilih.
-          </p>
-        </div>
-
-        <div class="showcase-preview">
+      <section class="doc-section">
+        <app-showcase
+          title="6. Integrasi Form Field & Select (Live Demo)"
+          description="Komponen <wui-select> terhubung mulus ke dalam <wui-form-field> dengan label mengapung dan validasi wajib pilih."
+          [tabs]="selectTabs()"
+        >
           <wui-form-field 
             hint="Pilih hak akses untuk pengguna ini."
             [error]="pesanRoleDemo"
@@ -450,54 +157,16 @@
               <wui-option value="investor">Investor Mitra</wui-option>
             </wui-select>
           </wui-form-field>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().select === 'html'"
-              (click)="setTab('select', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().select === 'ts'"
-              (click)="setTab('select', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('select')">
-            {{ showCode().select ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().select) {
-          <div class="showcase-code-body">
-            @if (activeTabs().select === 'html') {
-              <pre><code [highlight]="selectField().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="selectField().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
+        </app-showcase>
       </section>
 
       <!-- 7. COMPLETE REACTIVE FORM -->
-      <section class="showcase-card">
-        <div class="showcase-header">
-          <h2 class="showcase-title">7. Formulir Terpadu Lengkap (Full Reactive Form)</h2>
-          <p class="showcase-desc">
-            Contoh formulir lengkap menggabungkan input teks, email, dropdown select, textarea, tombol submit dan reset, serta penanganan <code>markAllAsTouched()</code> saat pengiriman data.
-          </p>
-        </div>
-
-        <div class="showcase-preview">
+      <section class="doc-section">
+        <app-showcase
+          title="7. Formulir Terpadu Lengkap (Full Reactive Form)"
+          description="Contoh formulir lengkap menggabungkan input teks, email, dropdown select, textarea, tombol submit dan reset, serta penanganan markAllAsTouched() saat pengiriman data."
+          [tabs]="reactiveFullTabs()"
+        >
           <form [formGroup]="fullForm" (ngSubmit)="simpanFull()" class="wui-d-flex wui-flex-column wui-gap-4">
             <div class="wui-row wui-gap-3">
               <div class="wui-col-12 wui-col-md-6">
@@ -540,6 +209,17 @@
               </div>
             </div>
 
+            <div>
+              <label class="wui-d-block wui-mb-2" style="font-size: 0.85rem; font-weight: 500; color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);">
+                Tipe Akun
+              </label>
+              <wui-radio-group formControlName="tipeAkun">
+                <wui-radio-button value="personal">Personal</wui-radio-button>
+                <wui-radio-button value="bisnis">Bisnis</wui-radio-button>
+                <wui-radio-button value="enterprise">Enterprise</wui-radio-button>
+              </wui-radio-group>
+            </div>
+
             <div class="wui-d-flex wui-align-items-center wui-gap-2">
               <button wuiButton variant="filled" color="primary" type="submit">
                 Simpan Data
@@ -550,45 +230,10 @@
             </div>
           </form>
 
-          <div class="preview-result">
+          <div class="preview-result wui-mt-3">
             <div>Status Pengiriman: <strong>{{ fullFormStatus() }}</strong></div>
           </div>
-        </div>
-
-        <div class="showcase-code-bar">
-          <div class="code-tabs">
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().reactiveFull === 'html'"
-              (click)="setTab('reactiveFull', 'html')"
-            >
-              HTML
-            </button>
-            <button 
-              type="button" 
-              class="tab-btn" 
-              [class.is-active]="activeTabs().reactiveFull === 'ts'"
-              (click)="setTab('reactiveFull', 'ts')"
-            >
-              TypeScript
-            </button>
-          </div>
-
-          <button type="button" class="toggle-btn" (click)="toggleCode('reactiveFull')">
-            {{ showCode().reactiveFull ? 'Sembunyikan Kode' : 'Lihat Kode' }}
-          </button>
-        </div>
-
-        @if (showCode().reactiveFull) {
-          <div class="showcase-code-body">
-            @if (activeTabs().reactiveFull === 'html') {
-              <pre><code [highlight]="reactiveFull().html ?? ''" language="html"></code></pre>
-            } @else {
-              <pre><code [highlight]="reactiveFull().ts ?? ''" language="typescript"></code></pre>
-            }
-          </div>
-        }
+        </app-showcase>
       </section>
 
       <!-- 8. RINGKASAN & TABEL REFERENSI DIREKTIF -->

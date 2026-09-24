@@ -29,7 +29,7 @@
                 opacity: 1;
             }
 
-            .wui-radi-button__input:checked ~ .wui-radio-button__circle::before {
+            .wui-radio-button__input:checked ~ .wui-radio-button__circle::before {
                 background: var(--wui-color-state-layer-primary-opacity-08);
             }
         }

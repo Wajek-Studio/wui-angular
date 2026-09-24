@@ -1,0 +1,8 @@
+<!-- Radio Group Horizontal Dasar dengan Two-Way Data Binding [(ngModel)] -->
+<wui-radio-group [(ngModel)]="selectedColor">
+  <wui-radio-button value="merah">Merah</wui-radio-button>
+  <wui-radio-button value="hijau">Hijau</wui-radio-button>
+  <wui-radio-button value="biru">Biru</wui-radio-button>
+</wui-radio-group>
+
+<p class="wui-mt-3">Warna terpilih: <strong>{{ selectedColor }}</strong></p>
