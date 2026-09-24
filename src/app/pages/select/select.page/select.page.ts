@@ -45,8 +45,8 @@ export class SelectPage implements OnInit {
 
   readonly pageTpl = viewChild<TemplateRef<unknown>>('page');
 
-  /** Nilai contoh yang bisa diisi/dikosongkan dari halaman — untuk melihat label mengapung. */
-  protected readonly kota = signal<unknown>(null);
+  /** Nilai contoh yang bisa diisi/dikosongkan dari halaman — diisi opsi di tengah ('Bekasi'). */
+  protected readonly kota = signal<unknown>('Bekasi');
 
   /** Field kedua dengan nilai awal, supaya keadaan "sudah terisi" bisa dibandingkan. */
   protected readonly negara = signal<unknown>('Indonesia');

@@ -14,8 +14,7 @@ import {
   templateUrl: './outlined.html',
 })
 export class SelectOutlinedDemoComponent {
-  readonly kota = signal<string | null>(null);
-  readonly negara = signal<string>('Indonesia');
+  readonly kota = signal<string | null>('Bekasi');
 
   isi(): void {
     this.kota.set('Bandung');
