@@ -33,6 +33,11 @@ export class WuiPageService {
     return host.attach(template);
   }
 
+  closeAll(hostName = 'main') {
+    const host = this.host(hostName);
+    host.detachAll();
+  }
+
   private host(name: string): WuiPageHost {
     const host = this.hosts[name];
     if (!host) {

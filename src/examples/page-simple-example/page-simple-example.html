@@ -1,0 +1,41 @@
+<!-- Tombol aksi -->
+<div class="wui-flex wui-justify-content-between wui-mb-4">
+  <div class="wui-flex-inline wui-gap-col-2">
+    <button wuiButton (click)="replace()">Replace</button>
+    <button wuiButton (click)="open()" [disabled]="nestedPageRef !== undefined">Open (Nested / Stack)</button>
+  </div>
+
+  <button wuiButton (click)="reset()">Reset</button>
+</div>
+
+<!-- Host tempat halaman dipasang -->
+<div class="page-simple-demo-box wui-border wui-border-dashed" wuiPageHost name="simple-page-host">
+    <div class="page-simple-demo-box--info"><code>wuiPageHost</code></div>
+</div>
+
+<!-- Template halaman -->
+<ng-template #pageTpl>
+  <wui-page>
+    <div wuiPageContent class="wui-p-4">
+      <h3 class="wui-headline-small wui-mb-2">Replace Page</h3>
+      <p class="wui-body-medium wui-mb-3">
+        Halaman ini dipasang ke dalam host via <code>replace()</code> dan dipastikan ada di urutan paling bawah.
+      </p>
+    </div>
+  </wui-page>
+</ng-template>
+
+<!-- Template halaman -->
+<ng-template #nestedPageTpl>
+  <wui-page>
+    <div wuiPageContent class="wui-p-4">
+      <h3 class="wui-headline-small wui-mb-2">Nested Page</h3>
+
+      <p class="wui-body-medium wui-mb-3">
+        Halaman ini dipasang ke dalam host via <code>open()</code> dan dipastikan ada di urutan paling atas.
+      </p>
+
+      <button wuiButton color="primary" (click)="close()">Tutup</button>
+    </div>
+  </wui-page>
+</ng-template>

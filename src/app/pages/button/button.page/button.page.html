@@ -66,12 +66,14 @@
         <h2 class="wui-title-large--em wui-mb-4">Usage</h2>
 
         <div class="wui-mb-5">
-          <app-showcase [tabs]="[{
+          <app-showcase 
+          [defaultShowCode]="true"
+          [tabs]="[{
             label: 'Typescript',
-            code: '/snippets/button/simple.ts',
+            code: '/examples/button-simple.example.ts',
             language: 'typescript'
           }]">
-            <button wuiButton>Filled Button</button>
+            <button-simple-example/>
           </app-showcase>
         </div>
 

@@ -5,29 +5,56 @@
         <h1 class="wui-headline-medium--em wui-mb-4">Page</h1>
 
         <div class="wui-mb-4">
-          <p><code>&lt;wui-page&gt;</code> adalah shell halaman. Isi halaman dipasang ke dalam <code>[wuiPageHost]</code> melalui <code>WuiPageService</code> — tanpa routing. Mendukung halaman bertumpuk (<em>nested</em>) dan beberapa host sekaligus.</p>
+          <p>Page didefinisikan di dalam <code>&lt;ng-template&gt;</code> menggunakan tag <code>&lt;wui-page&gt;</code>, lalu dipasang di dalam <code>wuiPageHost</code>.</p>
         </div>
 
         <h2 class="wui-title-large--em wui-mb-4">Showcase</h2>
 
         <app-showcase
+          [defaultShowCode]="true"
           title="Halaman Default — replace()"
           description="replace() memasang template baru ke dalam host sekaligus menutup semua layer yang sudah ada. Gunakan ini untuk navigasi menu utama."
           [tabs]="[{
-            label: 'HTML',
-            code: '/snippets/page/default/default.html',
+            label: 'page-simple-example.html',
+            code: '/examples/page-simple-example/page-simple-example.html',
             language: 'html'
           },{
-            label: 'Typescript',
-            code: '/snippets/page/default/default.ts',
+            label: 'page-simple-example.scss',
+            code: '/examples/page-simple-example/page-simple-example.scss',
+            language: 'scss'
+          },{
+            label: 'page-simple-example.ts',
+            code: '/examples/page-simple-example/page-simple-example.ts',
             language: 'typescript'
           }]"
         >
-          <div class="wui-mb-3">
-            <button wuiButton color="primary" (click)="openDefaultPage()">Buka Halaman</button>
-          </div>
-          <div class="page-demo-box" wuiPageHost name="default-demo"></div>
+          <page-simple-example/>
         </app-showcase>
+
+        <h2 class="wui-title-large--em wui-mb-4">WuiPageHost</h2>
+
+        <div class="wui-mb-4">
+          <p>Page Host digunakan untuk menampilkan <code>&lt;wui-page&gt;</code>. Anda dapat memasangnya di elemen apapun sebagai directive.</p>
+        </div>
+
+        <div class="wui-edge-fix-4 wui-mb-4">
+          <table wuiTable>
+            <thead>
+              <tr>
+                <th>PROPERTI</th>
+                <th>TIPE</th>
+                <th>KETERANGAN</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>name</code></td>
+                <td><code>string</code></td>
+                <td>Mendefinisikan nama host. Default : <code>main</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <h2 class="wui-title-large--em wui-mb-4">WuiPageService</h2>
         
@@ -127,6 +154,43 @@
           </div>
         </div>
 
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-5 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>closeAll(hostname: string = 'main'): void</code>
+          </div>
+
+          <div class="wui-mb-4">
+            <p>Menutup semua halaman yang tampil</p>
+          </div>
+
+          <h3 class="wui-title-medium--em wui-mb-3">Parameter</h3>
+
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead>
+                <tr>
+                  <th>NAMA</th>
+                  <th>TIPE</th>
+                  <th>KETERANGAN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <code>hostname</code>
+                  </td>
+                  <td>
+                    <code>string</code>
+                  </td>
+                  <td>
+                    Nama host yang akan ditutup. Default : <code>main</code>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
         <h2 class="wui-title-large--em wui-mb-4">WuiPageRef</h2>
         
         <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
@@ -139,18 +203,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </wui-page>
-</ng-template>
-
-<!-- ─── TEMPLATE SEKSI 1: DEFAULT ──────────────────────────────────────── -->
-<ng-template #defaultPageTpl>
-  <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4">
-      <h3 class="wui-headline-small wui-mb-2">Halaman Aktif</h3>
-      <p class="wui-body-medium">
-        Halaman ini dipasang ke dalam host via <code>replace()</code>.
-      </p>
     </div>
   </wui-page>
 </ng-template>

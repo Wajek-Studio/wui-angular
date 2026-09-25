@@ -3,6 +3,7 @@ import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } f
 import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiScrollbar, WuiContainer, WuiTable } from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
 import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
+import { ButtonSimpleExample } from '../../../../examples/button-simple.example';
 
 export interface ButtonSnippet {
   html?: string;
@@ -11,7 +12,7 @@ export interface ButtonSnippet {
 
 @Component({
   selector: 'app-button.page',
-  imports: [WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar, WuiContainer, WuiTable, ShowcaseComponent],
+  imports: [WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar, WuiContainer, WuiTable, ShowcaseComponent, ButtonSimpleExample],
   templateUrl: './button.page.html',
   styleUrl: './button.page.scss',
 })
