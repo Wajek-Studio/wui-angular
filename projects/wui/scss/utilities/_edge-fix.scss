@@ -10,8 +10,16 @@
         }
     }
 
-    // @each $bp-name in a.$wui-breakpoints {
-
-    // }
+    @each $bp-name, $bp-value in a.$wui-breakpoints {
+        @include a.media-up($bp-value) {
+            @each $spacer-name, $spacer-value in a.$wui-spacers {
+                .wui-edge-fix-#{$bp-name}-#{$spacer-name} {
+                    width: calc(100% + (2 * #{$spacer-value}));
+                    margin-left: -#{$spacer-value};
+                    margin-right: -#{$spacer-value};
+                }
+            }
+        }
+    }
 
 }

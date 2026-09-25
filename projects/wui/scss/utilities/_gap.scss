@@ -1,34 +1,26 @@
-// Level 6 — utilitas gap (jarak antar sel grid atau anak flex).
-// Nilainya dari skala `$wui-spacers` yang sama dengan margin/padding, jadi jaraknya konsisten:
-// `.wui-gap-3` = `--wui-space-3` = 1rem. Karena membaca CSS variable, aplikasi bisa mengubah
-// seluruh skala spasi tanpa rebuild — sama seperti utilitas margin/padding.
-// Ketiganya bisa dipakai di grid (`.wui-row`) maupun flex/setiap container mana pun yang
-// mendukung `gap`; di grid, `row-gap` dan `column-gap` boleh diisi berbeda.
-// Varian responsifnya `-<bp>` (mis. `.wui-gap-md-3`), berlaku dari breakpoint itu ke atas —
-// daftarnya dari `$wui-breakpoints`.
 @use 'sass:map';
 @use '../abstracts' as a;
 
 @mixin gap {
-    // Sama seperti `flex`: semua class dasar dulu, baru semua varian responsif, supaya yang `-<bp>`
-    // selalu menang atas yang dasar (specificity sama, jadi urutan sumber yang menentukan).
-    $wui-props: ('gap': gap, 'row-gap': row-gap, 'column-gap': column-gap);
+    @each $gap-size, $value in a.$wui-spacers {
+        .wui-gap-col-#{$gap-size} {
+            column-gap: $value;
+        }
 
-    @each $wui-step in map.keys(a.$wui-spacers) {
-        @each $wui-name, $wui-prop in $wui-props {
-            .wui-#{$wui-name}-#{$wui-step} {
-                #{$wui-prop}: a.spacing-var($wui-step);
-            }
+        .wui-gap-row-#{$gap-size} {
+            row-gap: $value;
         }
     }
 
-    @each $wui-key, $wui-min in a.$wui-breakpoints {
-        @include a.media-up($wui-min) {
-            @each $wui-step in map.keys(a.$wui-spacers) {
-                @each $wui-name, $wui-prop in $wui-props {
-                    .wui-#{$wui-name}-#{$wui-key}-#{$wui-step} {
-                        #{$wui-prop}: a.spacing-var($wui-step);
-                    }
+    @each $name, $size in a.$wui-breakpoints {
+        @include a.media-up($name) {
+            @each $gap-size, $value in a.$wui-spacers {
+                .wui-gap-col-#{$name}-#{$gap-size} {
+                    column-gap: $value;
+                }
+            
+                .wui-gap-row-#{$name}-#{$gap-size} {
+                    row-gap: $value;
                 }
             }
         }

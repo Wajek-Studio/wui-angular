@@ -1,5 +1,6 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
 import { Highlight } from 'ngx-highlightjs';
+import { Code } from '../code/code';
 
 export interface ShowcaseTab {
   /** Label teks tab, mis. 'HTML', 'TypeScript', 'SCSS', 'JSON' */
@@ -14,7 +15,7 @@ export interface ShowcaseTab {
   selector: 'app-showcase',
   templateUrl: './showcase.component.html',
   styleUrl: './showcase.component.scss',
-  imports: [Highlight],
+  imports: [Code],
 })
 export class ShowcaseComponent {
   readonly title = input<string>('');

@@ -1,5 +1,5 @@
 <section class="showcase-card">
-  @if (title() || description()) {
+  <!-- @if (title() || description()) {
     <div class="showcase-header">
       @if (title()) {
         <h2 class="showcase-title">{{ title() }}</h2>
@@ -8,7 +8,7 @@
         <p class="showcase-desc">{{ description() }}</p>
       }
     </div>
-  }
+  } -->
 
   <!-- Live Interactive Preview / Demo Area -->
   <div class="showcase-preview">
@@ -40,7 +40,7 @@
 
     @if (showCode()) {
       <div class="showcase-code-body">
-        <pre><code [highlight]="currentTab()?.code ?? ''" [language]="currentTab()?.language ?? 'html'"></code></pre>
+        <app-code [sourceUrl]="currentTab()?.code ?? ''" [lang]="currentTab()?.language ?? 'html'"></app-code>
       </div>
     }
   }

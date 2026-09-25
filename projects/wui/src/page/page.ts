@@ -12,10 +12,7 @@ export class WuiPageContent { }
     selector: 'wui-page',
     template: `
     <ng-content select="wui-topbar"/>
-    <div class="wui-page--container">
-        <ng-content select="wui-sidenav"/>
-        <ng-content select="[wuiPageContent]"/>
-    </div>
+    <ng-content select="[wuiPageContent]"/>
     `,
     host: {
         '[class.wui-page]': 'true'

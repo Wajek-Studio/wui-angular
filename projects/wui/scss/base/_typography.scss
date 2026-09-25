@@ -71,4 +71,20 @@
   .wui-font-bold {
     font-weight: var(--wui-font-weight-bold);
   }
+
+  code {
+    display: inline-block;
+    background-color: var(--wui-color-surface-container-high);
+    padding: .25rem .375rem;
+    border-radius: .25rem;
+    font-family: monospace;
+    white-space: pre;
+    
+    &.wui-code-block {
+      display: block;
+      padding: var(--wui-space-4);
+      border-radius: .5rem;
+      border: 1px solid var(--wui-color-outline-variant)
+    }
+  }
 }

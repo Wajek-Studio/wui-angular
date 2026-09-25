@@ -20,12 +20,8 @@ export class Code implements OnInit {
   lang = input<string>('html');
 
   async ngOnInit() {
-    console.log(this.sourceUrl());
-
     const url = this.sourceUrl();
     if (!url) return;
-
-    
 
     const res = await firstValueFrom(this.http.get(url, { responseType: 'text' }));
     this.source.set(res);

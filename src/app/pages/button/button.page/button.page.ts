@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiScrollbar, WuiContainer } from '@wajek/wui';
+import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiScrollbar, WuiContainer, WuiTable } from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
 import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
+import { Code } from '../../../shared/code/code';
 
 export interface ButtonSnippet {
   html?: string;
@@ -12,7 +13,7 @@ export interface ButtonSnippet {
 
 @Component({
   selector: 'app-button.page',
-  imports: [RouterLink, WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar, WuiContainer],
+  imports: [RouterLink, WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar, WuiContainer, WuiTable, Code, ShowcaseComponent],
   templateUrl: './button.page.html',
   styleUrl: './button.page.scss',
 })
