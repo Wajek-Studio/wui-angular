@@ -4,6 +4,7 @@ import { SettingNestedPage } from './pages/setting/setting-nested.page/setting-n
 import { HomePage } from './pages/home/home.page/home.page';
 import { HomeNestedPage } from './pages/home/home-nested.page/home-nested.page';
 import { TipografiPage } from './pages/tipografi.page/tipografi.page';
+import { PagePage } from './pages/page/page.page';
 
 export const routes: Routes = [{
     path: 'home', component: HomePage, children: [{
@@ -13,6 +14,8 @@ export const routes: Routes = [{
     path: 'setting', component: SettingPage, children: [{
         path: 'nested', component: SettingNestedPage
     }]
+}, {
+    path: 'page', loadComponent: () => import('./pages/page/page.page').then(m => m.PagePage)
 }, {
     path: 'tipografi', loadComponent: () => import('./pages/tipografi.page/tipografi.page').then(m => m.TipografiPage)
 }, {

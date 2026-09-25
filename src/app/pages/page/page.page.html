@@ -1,0 +1,34 @@
+<ng-template #pageTpl>
+    <wui-page>
+        <div wuiPageContent>
+            <div wuiContainer>
+                <h1 class="wui-headline-medium--em wui-mb-4">Page</h1>
+
+                <div class="wui-mb-3">
+                    <div class="wui-grid-inline wui-grid-col-2 wui-column-gap-3">
+                        <button wuiButton color="primary" (click)="openDemoPage()">Open Page</button>
+                        <button wuiButton color="primary" (click)="openNestedPage()">Open Nested Page</button>
+                    </div>
+                </div>
+
+                <div class="page-demo-box" wuiPageHost name="demo"></div>
+            </div>
+        </div>
+    </wui-page>
+</ng-template>
+
+<ng-template #pageDemoTpl>
+    <wui-page>
+        <div wuiPageContent>
+            <h1>Ini Demo</h1>
+        </div>
+    </wui-page>
+</ng-template>
+
+<ng-template #pageDemoNestedTpl>
+    <wui-page>
+        <div wuiPageContent>
+            <h1>Nested Page</h1>
+        </div>
+    </wui-page>
+</ng-template>

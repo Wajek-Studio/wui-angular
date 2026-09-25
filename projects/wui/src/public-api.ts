@@ -24,7 +24,6 @@ export * from './select/select';
 export * from './select/option';
 
 export * from './page/page';
-export * from './page/page.options';
 export * from './page/page.ref';
 export * from './page/page.service';
 export * from './page/page.host';
