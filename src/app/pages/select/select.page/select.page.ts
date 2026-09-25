@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, TemplateRef, computed, inject, signal, viewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
 import {
   WuiButton,
+  WuiContainer,
   WuiFormField,
   WuiIcon,
   WuiInput,
@@ -12,14 +12,9 @@ import {
   WuiPageService,
   WuiScrollbar,
   WuiSelect,
+  WuiTable,
 } from '@wajek/wui';
-import { firstValueFrom } from 'rxjs';
-import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
-
-export interface SelectSnippet {
-  html?: string;
-  ts?: string;
-}
+import { ShowcaseComponent } from '../../../shared/showcase';
 
 /**
  * Halaman demo `<wui-select>`.
@@ -30,6 +25,7 @@ export interface SelectSnippet {
   selector: 'app-select.page',
   imports: [
     WuiButton,
+    WuiContainer,
     WuiFormField,
     WuiIcon,
     WuiInput,
@@ -39,12 +35,12 @@ export interface SelectSnippet {
     WuiPageContent,
     WuiScrollbar,
     WuiSelect,
+    WuiTable,
     ShowcaseComponent,
   ],
   templateUrl: './select.page.html',
 })
 export class SelectPage implements OnInit {
-  private readonly http = inject(HttpClient);
   private readonly pageService: WuiPageService = inject(WuiPageService);
 
   readonly pageTpl = viewChild<TemplateRef<unknown>>('page');
@@ -58,60 +54,8 @@ export class SelectPage implements OnInit {
   /** Nilai select pada bagian "desain opsi sendiri" — opsinya bervalue eksplisit. */
   protected readonly kotaKaya = signal<unknown>(null);
 
-  // Snippets
-  readonly outlinedSnippet = signal<SelectSnippet>({});
-  readonly filledSnippet = signal<SelectSnippet>({});
-  readonly statesSnippet = signal<SelectSnippet>({});
-  readonly richOptionsSnippet = signal<SelectSnippet>({});
-
-  // Dynamic Tabs for ShowcaseComponent
-  readonly outlinedTabs = computed<ShowcaseTab[]>(() => [
-    { label: 'HTML', code: this.outlinedSnippet().html ?? '', language: 'html' },
-    { label: 'TypeScript', code: this.outlinedSnippet().ts ?? '', language: 'typescript' },
-  ]);
-
-  readonly filledTabs = computed<ShowcaseTab[]>(() => [
-    { label: 'HTML', code: this.filledSnippet().html ?? '', language: 'html' },
-    { label: 'TypeScript', code: this.filledSnippet().ts ?? '', language: 'typescript' },
-  ]);
-
-  readonly statesTabs = computed<ShowcaseTab[]>(() => [
-    { label: 'HTML', code: this.statesSnippet().html ?? '', language: 'html' },
-    { label: 'TypeScript', code: this.statesSnippet().ts ?? '', language: 'typescript' },
-  ]);
-
-  readonly richOptionsTabs = computed<ShowcaseTab[]>(() => [
-    { label: 'HTML', code: this.richOptionsSnippet().html ?? '', language: 'html' },
-    { label: 'TypeScript', code: this.richOptionsSnippet().ts ?? '', language: 'typescript' },
-  ]);
-
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.pageService.replace(this.pageTpl()!);
-
-    // Load snippet select secara paralel dari public/snippets/select/
-    const [outlined, filled, states, richOptions] = await Promise.all([
-      this.fetchSnippet('outlined'),
-      this.fetchSnippet('filled'),
-      this.fetchSnippet('states'),
-      this.fetchSnippet('rich-options'),
-    ]);
-
-    this.outlinedSnippet.set(outlined);
-    this.filledSnippet.set(filled);
-    this.statesSnippet.set(states);
-    this.richOptionsSnippet.set(richOptions);
-  }
-
-  private async fetchSnippet(name: string): Promise<SelectSnippet> {
-    try {
-      const [html, ts] = await Promise.all([
-        firstValueFrom(this.http.get(`snippets/select/${name}/${name}.html`, { responseType: 'text' })).catch(() => ''),
-        firstValueFrom(this.http.get(`snippets/select/${name}/${name}.ts`, { responseType: 'text' })).catch(() => ''),
-      ]);
-      return { html, ts };
-    } catch {
-      return {};
-    }
   }
 
   protected isi(): void {

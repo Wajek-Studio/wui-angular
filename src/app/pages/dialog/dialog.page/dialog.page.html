@@ -3,15 +3,14 @@
     <div wuiPageContent wuiScrollbar>
       <div wuiContainer class="wui-pb-5">
 
-        <!-- ─── HEADER ──────────────────────────────────────────────── -->
         <h1 class="wui-headline-large--em wui-mb-4">Dialog</h1>
 
         <div class="wui-mb-4">
           <p>Dialog modal dari <code class="wui-code-inline">WuiDialogService</code>. Isi dirender ke <code class="wui-code-inline">document.body</code>, terpisah dari page stack.</p>
         </div>
 
-        <!-- ─── SEKSI 1: DARI KOMPONEN ─────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">Dari Komponen</h2>
+        <!-- ─── SHOWCASE ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Showcase</h2>
 
         <div class="wui-mb-5">
           <app-showcase
@@ -30,12 +29,12 @@
           </app-showcase>
         </div>
 
-        <!-- ─── SEKSI 2: DARI TEMPLATE ─────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">Dari Template</h2>
+        <!-- ─── USAGE ─────────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Usage</h2>
 
         <div class="wui-mb-5">
           <app-showcase
-            title="openTemplate()"
+            title="Dari Template — openTemplate()"
             description="Buka dialog dari ng-template. Cocok untuk konten dialog sederhana tanpa komponen tersendiri."
             [tabs]="[
               { label: 'HTML',       code: '/snippets/dialog/from-template/from-template.html', language: 'html' },
@@ -49,8 +48,8 @@
           </app-showcase>
         </div>
 
-        <!-- ─── SEKSI 3: ALERT DIALOG ──────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">Alert Dialog</h2>
+        <!-- ─── ALERT ──────────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Alert</h2>
 
         <div class="wui-mb-5">
           <app-showcase
@@ -65,7 +64,7 @@
           </app-showcase>
         </div>
 
-        <!-- ─── SEKSI 4: DIALOG SISTEM ─────────────────────────────── -->
+        <!-- ─── DIALOG SISTEM ─────────────────────────────────────────── -->
         <h2 class="wui-title-large--em wui-mb-4">Dialog Sistem</h2>
 
         <div class="wui-mb-5">
@@ -86,8 +85,69 @@
           </app-showcase>
         </div>
 
-        <!-- ─── MODIFIER TABLE ─────────────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">Modifier</h2>
+        <!-- ─── WuiDialogService API ───────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">WuiDialogService</h2>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>open&lt;T&gt;(component: Type&lt;any&gt;, options?: WuiDialogOptions): WuiDialogRef&lt;T&gt;</code>
+          </div>
+          <p class="wui-mb-4">Buka dialog dari komponen Angular. Data diteruskan via <code>WUI_DIALOG_DATA</code>.</p>
+          <h3 class="wui-title-medium--em wui-mb-3">Parameter</h3>
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead><tr><th>Nama</th><th>Tipe</th><th>Keterangan</th></tr></thead>
+              <tbody>
+                <tr><td><code>component</code></td><td><code>Type&lt;any&gt;</code></td><td>Komponen yang dirender sebagai isi dialog</td></tr>
+                <tr><td><code>options</code></td><td><code>WuiDialogOptions</code></td><td>Konfigurasi opsional: data, role, disableClose, dll.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>openTemplate&lt;T&gt;(template: TemplateRef&lt;any&gt;, options?: WuiDialogOptions): WuiDialogRef&lt;T&gt;</code>
+          </div>
+          <p class="wui-mb-4">Buka dialog dari <code>&lt;ng-template&gt;</code>. Konteks template tersedia lewat <code>let-data</code>.</p>
+          <h3 class="wui-title-medium--em wui-mb-3">Parameter</h3>
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead><tr><th>Nama</th><th>Tipe</th><th>Keterangan</th></tr></thead>
+              <tbody>
+                <tr><td><code>template</code></td><td><code>TemplateRef&lt;any&gt;</code></td><td>Template yang dirender sebagai isi dialog</td></tr>
+                <tr><td><code>options</code></td><td><code>WuiDialogOptions</code></td><td>Konfigurasi opsional: data, role, disableClose, dll.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>alert(options: WuiAlertOptions): Promise&lt;number | null&gt;</code>
+          </div>
+          <p class="wui-mb-4">Buka dialog sistem tanpa komponen atau template. Hasilnya index tombol yang dipilih, atau <code>null</code> jika ditutup.</p>
+        </div>
+
+        <!-- ─── WuiDialogRef API ───────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">WuiDialogRef</h2>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>result: Promise&lt;T | undefined&gt;</code>
+          </div>
+          <p>Promise yang resolve saat dialog ditutup. Nilainya dari <code>close(value)</code>, atau <code>undefined</code> jika ditutup tanpa nilai.</p>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>close(value?: T): void</code>
+          </div>
+          <p>Tutup dialog dan kirim nilai ke <code>result</code>.</p>
+        </div>
+
+        <!-- ─── WuiDialogOptions ───────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">WuiDialogOptions</h2>
 
         <div class="wui-edge-fix-4">
           <table wuiTable>
@@ -104,32 +164,24 @@
               </tr>
               <tr>
                 <td><code>role</code></td>
-                <td>
-                  <code>'dialog'</code> (default) atau <code>'alertdialog'</code> — memengaruhi
-                  peran ARIA yang diumumkan ke screen reader
-                </td>
+                <td><code>'dialog'</code> (default) atau <code>'alertdialog'</code></td>
               </tr>
               <tr>
                 <td><code>disableClose</code></td>
-                <td><code>true</code> → ESC dan klik backdrop tidak menutup dialog. Wajib dipakai bersama <code>role="alertdialog"</code></td>
+                <td><code>true</code> → ESC dan klik backdrop tidak menutup dialog</td>
               </tr>
               <tr>
                 <td><code>ariaLabelledBy</code></td>
-                <td>ID elemen judul di dalam dialog untuk screen reader (<code>aria-labelledby</code>)</td>
+                <td>ID elemen judul di dalam dialog untuk <code>aria-labelledby</code></td>
               </tr>
               <tr>
-                <td><code>ref.result</code></td>
-                <td><code>Promise</code> yang resolve saat dialog ditutup dengan nilai dari <code>close(result)</code></td>
-              </tr>
-              <tr>
-                <td><code>ref.close(value?)</code></td>
-                <td>Tutup dialog dan kirim nilai ke <code>ref.result</code>. Tanpa nilai → resolve <code>undefined</code></td>
+                <td><code>dismissible</code></td>
+                <td>Khusus <code>alert()</code>. <code>false</code> → sama dengan <code>disableClose: true</code></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <!-- ─── STATUS ─────────────────────────────────────────────── -->
         <p class="dialog-status wui-mt-5">
           Dialog yang sedang terbuka (<code>dialogs.count()</code>):
           <strong>{{ dialogs.count() }}</strong>

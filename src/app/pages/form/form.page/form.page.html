@@ -1,330 +1,193 @@
 <ng-template #page>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="form-container">
-      <header class="form-header">
-        <a routerLink="/home" class="form-back-btn">← Kembali ke Beranda</a>
-        <h1 class="form-title">Forms &amp; Validation</h1>
-        <p class="form-subtitle">
-          <code>&lt;wui-form-field&gt;</code> menyusun label mengapung, kontrol input native atau kustom (seperti <code>wui-select</code>), serta pesan petunjuk (<em>hint</em>) dan kesalahan (<em>error</em>).
-          Terintegrasi penuh dengan <strong>Reactive Forms</strong> bawaan Angular tanpa dependensi pihak ketiga.
-        </p>
-      </header>
+    <div wuiPageContent wuiScrollbar>
+      <div wuiContainer class="wui-pb-5">
 
-      <p class="page-note">
-        <strong>Prinsip Desain:</strong> Label adalah elemen <code>&lt;label&gt;</code> asli yang mengapung otomatis saat kontrol difokus atau telah terisi.
-        Saat <code>[error]</code> memiliki nilai, pesan error otomatis menggantikan <code>hint</code>, kontrol ditandai <code>aria-invalid="true"</code>, dan warna beralih ke peran semantik <code>error</code>.
-      </p>
+        <h1 class="wui-headline-large--em wui-mb-4">Form Field</h1>
 
-      <!-- PANDUAN PENTING IMPORT DIRECTIVES -->
-      <div class="doc-alert">
-        <div class="doc-alert__icon">💡</div>
-        <div class="doc-alert__content">
-          <strong>Penting — Syarat Import Direktif Form:</strong>
-          <p>
-            Form di <code>@wajek/wui</code> dirancang modular berbasis directive native. Untuk bekerja sempurna, komponen Anda wajib mengimpor 
-            <strong>tiga direktif utama</strong>:
-          </p>
-          <ul style="margin: 0.5rem 0; padding-inline-start: 1.25rem;">
-            <li><code>WuiFormField</code> — Komponen pembungkus kontainer field (<code>&lt;wui-form-field&gt;</code>).</li>
-            <li><code>WuiLabel</code> — Directive label mengapung (<code>&lt;label wuiLabel&gt;</code>).</li>
-            <li><code>WuiInput</code> — Directive styling &amp; a11y kontrol (<code>&lt;input wuiInput&gt;</code>, <code>&lt;textarea wuiInput&gt;</code>, <code>&lt;wui-select wuiInput&gt;</code>).</li>
-          </ul>
-          <p style="margin-top: 0.5rem; font-size: 0.85rem; color: color-mix(in srgb, var(--wui-color-on-surface) 80%, transparent);">
-            ⚠️ <em>Jika Anda hanya mengimpor <code>WuiFormField</code> ke dalam <code>imports: [...]</code>, directive <code>wuiLabel</code> dan <code>wuiInput</code> tidak akan aktif sehingga label tidak mengapung dan styling kontrol tidak teraplikasi.</em>
-          </p>
-          <div style="margin-top: 1rem; border-radius: 8px; overflow: hidden; border: 1px solid color-mix(in srgb, var(--wui-color-primary) 20%, transparent);">
-            <pre style="margin: 0; padding: 1rem; font-size: 0.825rem;"><code [highlight]="importGuideSnippet" language="typescript"></code></pre>
+        <div class="wui-mb-4">
+          <p><code class="wui-code-inline">&lt;wui-form-field&gt;</code> menyusun label mengapung, kontrol input, petunjuk (<em>hint</em>), dan pesan error. Terintegrasi penuh dengan Reactive Forms Angular.</p>
+        </div>
+
+        <!-- ─── SHOWCASE ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Showcase</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Full Reactive Form"
+            description="Formulir lengkap dengan input teks, email, select, textarea, radio, dan validasi. Klik Simpan tanpa mengisi untuk melihat semua pesan error sekaligus."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/forms/text-field/reactive-full/reactive-full.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/forms/text-field/reactive-full/reactive-full.ts',  language: 'typescript' }
+            ]"
+          >
+            <form [formGroup]="fullForm" (ngSubmit)="simpanFull()" class="wui-d-flex wui-flex-column wui-gap-4">
+              <div class="wui-row wui-gap-col-3">
+                <div class="wui-col-12 wui-col-md-6">
+                  <wui-form-field hint="Nama minimal 3 karakter." [error]="pesanFull('namaLengkap')">
+                    <label wuiLabel>Nama Lengkap</label>
+                    <input wuiInput type="text" formControlName="namaLengkap" placeholder="mis. Moch. Rizal" />
+                  </wui-form-field>
+                </div>
+                <div class="wui-col-12 wui-col-md-6">
+                  <wui-form-field hint="Gunakan email aktif." [error]="pesanFull('email')">
+                    <label wuiLabel>Alamat Email</label>
+                    <input wuiInput type="email" formControlName="email" placeholder="nama@domain.com" />
+                  </wui-form-field>
+                </div>
+              </div>
+
+              <div class="wui-row wui-gap-col-3">
+                <div class="wui-col-12 wui-col-md-6">
+                  <wui-form-field hint="Pilih unit kerja Anda." [error]="pesanFull('departemen')">
+                    <label wuiLabel>Departemen</label>
+                    <wui-select
+                      wuiInput
+                      placeholder="Pilih departemen"
+                      [value]="fullForm.controls.departemen.value"
+                      (valueChange)="onDepartemenChange($event)"
+                    >
+                      <wui-option value="it">Teknologi Informasi (IT)</wui-option>
+                      <wui-option value="marketing">Pemasaran & Bisnis</wui-option>
+                      <wui-option value="finance">Keuangan & Akuntansi</wui-option>
+                    </wui-select>
+                  </wui-form-field>
+                </div>
+                <div class="wui-col-12 wui-col-md-6">
+                  <wui-form-field hint="Opsional (maks. 150 karakter)." [error]="pesanFull('catatan')">
+                    <label wuiLabel>Keterangan Tambahan</label>
+                    <textarea wuiInput rows="3" formControlName="catatan" placeholder="Catatan opsional..."></textarea>
+                  </wui-form-field>
+                </div>
+              </div>
+
+              <div class="wui-mb-3">
+                <label class="wui-label-sm wui-d-block wui-mb-3">Tipe Akun</label>
+                <wui-radio-group formControlName="tipeAkun">
+                  <wui-radio-button value="personal">Personal</wui-radio-button>
+                  <wui-radio-button value="bisnis">Bisnis</wui-radio-button>
+                  <wui-radio-button value="enterprise">Enterprise</wui-radio-button>
+                </wui-radio-group>
+              </div>
+
+              <div class="wui-d-flex wui-align-items-center wui-gap-col-2">
+                <button wuiButton variant="filled" color="primary" type="submit">Simpan Data</button>
+                <button wuiButton variant="outlined" type="button" (click)="resetFull()">Reset</button>
+              </div>
+            </form>
+
+            <div class="preview-result wui-mt-3">
+              Status: <strong>{{ fullFormStatus }}</strong>
+            </div>
+          </app-showcase>
+        </div>
+
+        <!-- ─── USAGE ─────────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Usage</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Text Field"
+            description="Satu wui-form-field dengan label mengapung, hint, dan input teks sederhana."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/forms/text-field/simple/simple.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/forms/text-field/simple/simple.ts',  language: 'typescript' }
+            ]"
+          >
+            <wui-form-field hint="Sesuai kartu identitas resmi Anda.">
+              <label wuiLabel for="simple-nama">Nama Lengkap</label>
+              <input wuiInput type="text" id="simple-nama" autocomplete="name" placeholder="Masukkan nama lengkap Anda" />
+            </wui-form-field>
+          </app-showcase>
+        </div>
+
+        <!-- ─── WuiFormField ───────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">WuiFormField</h2>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>&lt;wui-form-field [variant] [hint] [error]&gt;</code>
+          </div>
+          <p class="wui-mb-4">Wadah induk yang mengelola label, kontrol, hint, dan pesan error. Saat <code>[error]</code> berisi nilai, warna beralih ke error dan <code>aria-invalid="true"</code> diterapkan otomatis.</p>
+          <h3 class="wui-title-medium--em wui-mb-3">Properti</h3>
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead>
+                <tr><th>Properti</th><th>Tipe</th><th>Default</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>variant</code></td>
+                  <td><code>'outlined' | 'filled'</code></td>
+                  <td><code>'outlined'</code></td>
+                  <td>Varian visual: border penuh atau latar solid dengan garis bawah</td>
+                </tr>
+                <tr>
+                  <td><code>hint</code></td>
+                  <td><code>string</code></td>
+                  <td><code>''</code></td>
+                  <td>Teks petunjuk di bawah input. Disembunyikan otomatis saat <code>error</code> memiliki nilai</td>
+                </tr>
+                <tr>
+                  <td><code>error</code></td>
+                  <td><code>string</code></td>
+                  <td><code>''</code></td>
+                  <td>Pesan error. Mengisi properti ini mengaktifkan state error dan menyembunyikan hint</td>
+                </tr>
+                <tr>
+                  <td><code>id</code></td>
+                  <td><code>string</code></td>
+                  <td><em>auto</em></td>
+                  <td>ID kontrol. Jika dikosongkan, WUI membuatkan ID unik otomatis</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>
 
-      <!-- 1. SIMPLE TEXT FIELD (OUTLINED) -->
-      <section class="doc-section">
-        <app-showcase
-          title="1. Text Field Outlined (Dasar)"
-          description="Varian standar Material dengan border penuh di sekeliling kotak. Label mengapung tepat memotong garis batas atas."
-          [tabs]="simpleTabs()"
-        >
-          <wui-form-field hint="Sesuai kartu identitas resmi Anda.">
-            <label wuiLabel for="simple-nama">Nama Lengkap</label>
-            <input wuiInput type="text" id="simple-nama" autocomplete="name" placeholder="Masukkan nama lengkap Anda" />
-          </wui-form-field>
-        </app-showcase>
-      </section>
+        <!-- ─── WuiInput ───────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">WuiInput</h2>
 
-      <!-- 2. FILLED TEXT FIELD -->
-      <section class="doc-section">
-        <app-showcase
-          title="2. Text Field Varian Filled"
-          description="Varian berlatar terisi dengan garis penegas bawah (bottom stroke). Label mengapung di bagian atas dalam kotak."
-          [tabs]="filledTabs()"
-        >
-          <wui-form-field variant="filled" hint="Sesuai kartu identitas resmi Anda.">
-            <label wuiLabel for="filled-nama">Nama Lengkap</label>
-            <input wuiInput type="text" id="filled-nama" autocomplete="name" placeholder="Masukkan nama lengkap Anda" />
-          </wui-form-field>
-        </app-showcase>
-      </section>
-
-      <!-- 3. EMAIL VALIDATION -->
-      <section class="doc-section">
-        <app-showcase
-          title="3. Validasi Email (Live Demo)"
-          description="Memvalidasi keberadaan isi (Validators.required) dan format alamat email (Validators.email). Ketik email tidak valid lalu keluar dari input untuk melihat pesan error."
-          [tabs]="emailTabs()"
-        >
-          <wui-form-field 
-            hint="Kami tidak akan menyebarkan email Anda."
-            [error]="pesanEmailDemo"
-          >
-            <label wuiLabel>Email Pengguna</label>
-            <input 
-              wuiInput 
-              type="email" 
-              [formControl]="demoEmailControl" 
-              placeholder="nama@domain.com"
-              autocomplete="email" 
-            />
-          </wui-form-field>
-        </app-showcase>
-      </section>
-
-      <!-- 4. REQUIRED & MIN/MAX LENGTH VALIDATION -->
-      <section class="doc-section">
-        <app-showcase
-          title="4. Validasi Wajib Isi & Panjang Karakter (Live Demo)"
-          description="Memvalidasi batas panjang teks minimum (Validators.minLength(3)) dan maksimum (Validators.maxLength(20))."
-          [tabs]="requiredLengthTabs()"
-        >
-          <wui-form-field 
-            hint="Gunakan 3 hingga 20 karakter unik."
-            [error]="pesanUsernameDemo"
-          >
-            <label wuiLabel>Nama Pengguna (Username)</label>
-            <input 
-              wuiInput 
-              type="text" 
-              [formControl]="demoUsernameControl" 
-              placeholder="mis. rizal_rachman"
-            />
-          </wui-form-field>
-        </app-showcase>
-      </section>
-
-      <!-- 5. TEXTAREA MULTILINE -->
-      <section class="doc-section">
-        <app-showcase
-          title="5. Textarea Multiline & Validasi (Live Demo)"
-          description="Kontrol <textarea wuiInput> mendukung multi-baris dengan floating label yang tetap selaras dan validasi panjang maksimal."
-          [tabs]="textareaTabs()"
-        >
-          <wui-form-field 
-            hint="Tulis instruksi tambahan jika ada (maks. 200 karakter)."
-            [error]="pesanCatatanDemo"
-          >
-            <label wuiLabel>Catatan Pengiriman</label>
-            <textarea 
-              wuiInput 
-              rows="3" 
-              [formControl]="demoCatatanControl" 
-              placeholder="Tuliskan catatan detail di sini..."
-            ></textarea>
-          </wui-form-field>
-        </app-showcase>
-      </section>
-
-      <!-- 6. SELECT FIELD INTEGRATION -->
-      <section class="doc-section">
-        <app-showcase
-          title="6. Integrasi Form Field & Select (Live Demo)"
-          description="Komponen <wui-select> terhubung mulus ke dalam <wui-form-field> dengan label mengapung dan validasi wajib pilih."
-          [tabs]="selectTabs()"
-        >
-          <wui-form-field 
-            hint="Pilih hak akses untuk pengguna ini."
-            [error]="pesanRoleDemo"
-          >
-            <label wuiLabel>Peran Akun (Role)</label>
-            <wui-select 
-              wuiInput 
-              placeholder="Pilih peran pengguna"
-              [value]="demoRole()"
-              (valueChange)="onRoleChange($event)"
-            >
-              <wui-option value="admin">Administrator</wui-option>
-              <wui-option value="manager">Manager Operasional</wui-option>
-              <wui-option value="staff">Staff Petugas</wui-option>
-              <wui-option value="investor">Investor Mitra</wui-option>
-            </wui-select>
-          </wui-form-field>
-        </app-showcase>
-      </section>
-
-      <!-- 7. COMPLETE REACTIVE FORM -->
-      <section class="doc-section">
-        <app-showcase
-          title="7. Formulir Terpadu Lengkap (Full Reactive Form)"
-          description="Contoh formulir lengkap menggabungkan input teks, email, dropdown select, textarea, tombol submit dan reset, serta penanganan markAllAsTouched() saat pengiriman data."
-          [tabs]="reactiveFullTabs()"
-        >
-          <form [formGroup]="fullForm" (ngSubmit)="simpanFull()" class="wui-d-flex wui-flex-column wui-gap-4">
-            <div class="wui-row wui-gap-3">
-              <div class="wui-col-12 wui-col-md-6">
-                <wui-form-field hint="Nama minimal 3 karakter." [error]="pesanFull('namaLengkap')">
-                  <label wuiLabel>Nama Lengkap</label>
-                  <input wuiInput type="text" formControlName="namaLengkap" placeholder="mis. Moch. Rizal" />
-                </wui-form-field>
-              </div>
-
-              <div class="wui-col-12 wui-col-md-6">
-                <wui-form-field hint="Gunakan email aktif." [error]="pesanFull('email')">
-                  <label wuiLabel>Alamat Email</label>
-                  <input wuiInput type="email" formControlName="email" placeholder="nama@domain.com" />
-                </wui-form-field>
-              </div>
-            </div>
-
-            <div class="wui-row wui-gap-3">
-              <div class="wui-col-12 wui-col-md-6">
-                <wui-form-field hint="Pilih unit kerja Anda." [error]="pesanFull('departemen')">
-                  <label wuiLabel>Departemen</label>
-                  <wui-select 
-                    wuiInput 
-                    placeholder="Pilih departemen" 
-                    [value]="fullForm.controls.departemen.value"
-                    (valueChange)="onDepartemenChange($event)"
-                  >
-                    <wui-option value="it">Teknologi Informasi (IT)</wui-option>
-                    <wui-option value="marketing">Pemasaran & Bisnis</wui-option>
-                    <wui-option value="finance">Keuangan & Akuntansi</wui-option>
-                  </wui-select>
-                </wui-form-field>
-              </div>
-
-              <div class="wui-col-12 wui-col-md-6">
-                <wui-form-field hint="Opsional (maks. 150 karakter)." [error]="pesanFull('catatan')">
-                  <label wuiLabel>Keterangan Tambahan</label>
-                  <textarea wuiInput rows="3" formControlName="catatan" placeholder="Catatan opsional..."></textarea>
-                </wui-form-field>
-              </div>
-            </div>
-
-            <div>
-              <label class="wui-d-block wui-mb-2" style="font-size: 0.85rem; font-weight: 500; color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);">
-                Tipe Akun
-              </label>
-              <wui-radio-group formControlName="tipeAkun">
-                <wui-radio-button value="personal">Personal</wui-radio-button>
-                <wui-radio-button value="bisnis">Bisnis</wui-radio-button>
-                <wui-radio-button value="enterprise">Enterprise</wui-radio-button>
-              </wui-radio-group>
-            </div>
-
-            <div class="wui-d-flex wui-align-items-center wui-gap-2">
-              <button wuiButton variant="filled" color="primary" type="submit">
-                Simpan Data
-              </button>
-              <button wuiButton variant="outlined" type="button" (click)="resetFull()">
-                Reset
-              </button>
-            </div>
-          </form>
-
-          <div class="preview-result wui-mt-3">
-            <div>Status Pengiriman: <strong>{{ fullFormStatus() }}</strong></div>
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>[wuiInput]</code>
           </div>
-        </app-showcase>
-      </section>
+          <p class="wui-mb-4">Directive yang ditempelkan ke kontrol native. Menerapkan styling, mengelola atribut ARIA, dan menghubungkan kontrol ke <code>&lt;wui-form-field&gt;</code> induknya.</p>
+          <h3 class="wui-title-medium--em wui-mb-3">Target yang Didukung</h3>
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead>
+                <tr><th>Elemen</th><th>Contoh</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>&lt;input&gt;</code></td><td><code>&lt;input wuiInput type="text" /&gt;</code></td></tr>
+                <tr><td><code>&lt;textarea&gt;</code></td><td><code>&lt;textarea wuiInput&gt;&lt;/textarea&gt;</code></td></tr>
+                <tr><td><code>&lt;wui-select&gt;</code></td><td><code>&lt;wui-select wuiInput&gt;…&lt;/wui-select&gt;</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-      <!-- 8. RINGKASAN & TABEL REFERENSI DIREKTIF -->
-      <section class="doc-section">
-        <h2 class="section-title">8. Ringkasan &amp; Tabel Referensi Direktif</h2>
-        <p class="section-note">
-          Daftar seluruh komponen dan direktif yang disediakan <code>@wajek/wui</code> untuk membangun form:
-        </p>
+        <!-- ─── MODIFIER ───────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Modifier</h2>
 
-        <h3 class="sub-title">A. Direktif &amp; Komponen yang Tersedia</h3>
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th>Nama Simbol (Import)</th>
-              <th>Selector Template</th>
-              <th>Target Elemen</th>
-              <th>Fungsi &amp; Tanggung Jawab</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>WuiFormField</code></td>
-              <td><code>wui-form-field</code></td>
-              <td>Komponen Wrapper</td>
-              <td>Wadah induk yang mengelola penempatan label, kontrol, petunjuk (<em>hint</em>), dan pesan kesalahan (<em>error</em>).</td>
-            </tr>
-            <tr>
-              <td><code>WuiLabel</code></td>
-              <td><code>label[wuiLabel]</code></td>
-              <td><code>&lt;label&gt;</code> asli</td>
-              <td>Menerapkan animasi floating label saat kontrol difokus atau berisi teks, serta menautkan atribut <code>for</code> otomatis.</td>
-            </tr>
-            <tr>
-              <td><code>WuiInput</code></td>
-              <td><code>[wuiInput]</code></td>
-              <td><code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;wui-select&gt;</code></td>
-              <td>Menerapkan kelas styling <code>.wui-input</code>, mengelola placeholder pengapung, serta menautkan atribut ARIA (<code>aria-describedby</code>, <code>aria-invalid</code>).</td>
-            </tr>
-            <tr>
-              <td><code>WuiSelect</code></td>
-              <td><code>wui-select</code></td>
-              <td>Komponen Dropdown</td>
-              <td>Kontrol combobox kustom native WUI yang kompatibel penuh di dalam <code>&lt;wui-form-field&gt;</code>.</td>
-            </tr>
-            <tr>
-              <td><code>WuiOption</code></td>
-              <td><code>wui-option</code></td>
-              <td>Komponen Pilihan</td>
-              <td>Item pilihan data di dalam panel dropdown <code>&lt;wui-select&gt;</code>.</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="wui-edge-fix-4">
+          <table wuiTable>
+            <thead>
+              <tr><th>Simbol (Import)</th><th>Keterangan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>WuiFormField</code></td><td>Komponen wrapper <code>&lt;wui-form-field&gt;</code></td></tr>
+              <tr><td><code>WuiLabel</code></td><td>Directive floating label <code>&lt;label wuiLabel&gt;</code></td></tr>
+              <tr><td><code>WuiInput</code></td><td>Directive kontrol <code>[wuiInput]</code> untuk input, textarea, wui-select</td></tr>
+              <tr><td><code>WuiSelect</code></td><td>Komponen dropdown kustom <code>&lt;wui-select&gt;</code></td></tr>
+              <tr><td><code>WuiOption</code></td><td>Item pilihan <code>&lt;wui-option&gt;</code> di dalam wui-select</td></tr>
+              <tr><td><code>ReactiveFormsModule</code></td><td>Diperlukan untuk <code>formControl</code> dan <code>formGroup</code></td></tr>
+            </tbody>
+          </table>
+        </div>
 
-        <h3 class="sub-title">B. Properti Input pada &lt;wui-form-field&gt;</h3>
-        <table class="doc-table">
-          <thead>
-            <tr>
-              <th>Input Property</th>
-              <th>Tipe Data</th>
-              <th>Default</th>
-              <th>Keterangan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>variant</code></td>
-              <td><code>'outlined' | 'filled'</code></td>
-              <td><code>'outlined'</code></td>
-              <td>Varian visual field: <code>outlined</code> (border penuh sekeliling) atau <code>filled</code> (latar solid dengan penegas bawah).</td>
-            </tr>
-            <tr>
-              <td><code>hint</code></td>
-              <td><code>string</code></td>
-              <td><code>''</code></td>
-              <td>Teks petunjuk pengisian netral di bawah kotak input. Otomatis disembunyikan saat <code>error</code> memiliki nilai.</td>
-            </tr>
-            <tr>
-              <td><code>error</code></td>
-              <td><code>string</code></td>
-              <td><code>''</code></td>
-              <td>Pesan validasi gagal. Mengisi properti ini akan mengubah warna field ke tema error dan menyetel <code>aria-invalid="true"</code>.</td>
-            </tr>
-            <tr>
-              <td><code>id</code></td>
-              <td><code>string</code></td>
-              <td><code>''</code></td>
-              <td>ID kontrol spesifik (opsional). Jika dikosongkan, WUI akan membuatkan ID unik otomatis.</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+      </div>
     </div>
   </wui-page>
 </ng-template>

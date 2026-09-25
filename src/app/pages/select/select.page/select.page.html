@@ -1,196 +1,274 @@
 <ng-template #page>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-py-5">
-        <div class="wui-container">
-            <h1 class="wui-display-medium wui-mb-2">WUI Select</h1>
+    <div wuiPageContent wuiScrollbar>
+      <div wuiContainer class="wui-pb-5">
 
-            <p class="wui-body-large wui-mb-3">
-                Select adalah anggota keluarga <code>&lt;wui-form-field&gt;</code>: ditandai directive
-                <code>wuiInput</code> seperti <code>&lt;input&gt;</code>, jadi kotak field (tinggi, border,
-                varian, offset fokus), <code>id</code>, <code>aria-describedby</code>, dan
-                <code>aria-invalid</code> datang dari jalur yang sama — tidak ada tampilan field kedua yang
-                harus dijaga sinkron.
-            </p>
+        <h1 class="wui-headline-large--em wui-mb-4">WUI Select</h1>
 
-            <p class="wui-body-medium wui-mb-4">
-              <strong>Fase F2c.</strong> Panelnya bisa dipakai tanpa mouse: <strong>Space</strong> atau
-              <strong>Enter</strong> membuka panel, <strong>panah atas/bawah</strong> memindahkan penunjuk
-              opsi (opsi nonaktif dilewati), <strong>Home/End</strong> ke ujung, <strong>Enter/Space</strong>
-              memilih, <strong>Esc</strong> menutup tanpa mengubah nilai, dan <strong>Tab</strong> menutup lalu
-              pindah field. Fokus tidak pernah pindah ke panel — yang bergerak hanya penunjuknya, dan opsi
-              yang ditunjuk diumumkan lewat <code>aria-activedescendant</code>.
-            </p>
+        <div class="wui-mb-4">
+          <p>Komponen select dropdown native WUI, terintegrasi penuh dengan <code>&lt;wui-form-field&gt;</code> sehingga mengapungkan label, menerima warna error, dan mendukung interaksi via keyboard tanpa memindahkan fokus layar (aria-activedescendant).</p>
+        </div>
 
-            <!-- 1. OUTLINED -->
-            <app-showcase
-              title="1. Outlined (default)"
-              description="Klik labelnya: fokus pindah ke select. Label mengapung saat select difokus atau sudah ada pilihan (atribut data-filled). Placeholder baru tampil saat select difokus."
-              [tabs]="outlinedTabs()"
-            >
-              <div class="wui-row wui-gap-4 wui-align-items-start">
-                <div class="wui-col-12 wui-col-md-6">
-                  <wui-form-field hint="20 opsi kota dengan nilai aktif di tengah ('Bekasi') dan satu opsi nonaktif.">
-                    <label wuiLabel>Kota</label>
-                    <wui-select
-                      wuiInput
-                      placeholder="Pilih kota"
-                      [value]="kota()"
-                      (valueChange)="kota.set($event)"
-                    >
-                      <wui-option>Banda Aceh</wui-option>
-                      <wui-option>Medan</wui-option>
-                      <wui-option>Padang</wui-option>
-                      <wui-option>Pekanbaru</wui-option>
-                      <wui-option>Batam</wui-option>
-                      <wui-option>Palembang</wui-option>
-                      <wui-option>Bandar Lampung</wui-option>
-                      <wui-option>Jakarta</wui-option>
-                      <wui-option>Bogor</wui-option>
-                      <wui-option>Tangerang</wui-option>
-                      <wui-option>Bekasi</wui-option>
-                      <wui-option>Bandung</wui-option>
-                      <wui-option>Cirebon</wui-option>
-                      <wui-option>Semarang</wui-option>
-                      <wui-option>Surakarta (Solo)</wui-option>
-                      <wui-option>Yogyakarta</wui-option>
-                      <wui-option disabled>Surabaya (nonaktif)</wui-option>
-                      <wui-option>Malang</wui-option>
-                      <wui-option>Denpasar</wui-option>
-                      <wui-option>Makassar</wui-option>
-                    </wui-select>
-                  </wui-form-field>
+        <!-- ─── SHOWCASE ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Showcase</h2>
 
-                  <div class="wui-mt-3">
-                    <button wuiButton variant="outlined" (click)="isi()">Pilih Bandung</button>
-                    <button wuiButton variant="text" (click)="kosongkan()">Kosongkan</button>
-                  </div>
-                </div>
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Outlined (Default)"
+            description="Klik labelnya: fokus pindah ke select. Label mengapung saat difokus atau memiliki nilai. Placeholder baru tampil saat select difokus."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/select/outlined/outlined.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/select/outlined/outlined.ts',  language: 'typescript' }
+            ]"
+          >
+            <div class="wui-row wui-gap-col-4 wui-align-items-start">
+              <div class="wui-col-12 wui-col-md-6">
+                <wui-form-field hint="20 opsi kota dengan nilai aktif di tengah ('Bekasi') dan satu opsi nonaktif.">
+                  <label wuiLabel>Kota</label>
+                  <wui-select
+                    wuiInput
+                    placeholder="Pilih kota"
+                    [value]="kota()"
+                    (valueChange)="kota.set($event)"
+                  >
+                    <wui-option>Banda Aceh</wui-option>
+                    <wui-option>Medan</wui-option>
+                    <wui-option>Padang</wui-option>
+                    <wui-option>Pekanbaru</wui-option>
+                    <wui-option>Batam</wui-option>
+                    <wui-option>Palembang</wui-option>
+                    <wui-option>Bandar Lampung</wui-option>
+                    <wui-option>Jakarta</wui-option>
+                    <wui-option>Bogor</wui-option>
+                    <wui-option>Tangerang</wui-option>
+                    <wui-option>Bekasi</wui-option>
+                    <wui-option>Bandung</wui-option>
+                    <wui-option>Cirebon</wui-option>
+                    <wui-option>Semarang</wui-option>
+                    <wui-option>Surakarta (Solo)</wui-option>
+                    <wui-option>Yogyakarta</wui-option>
+                    <wui-option disabled>Surabaya (nonaktif)</wui-option>
+                    <wui-option>Malang</wui-option>
+                    <wui-option>Denpasar</wui-option>
+                    <wui-option>Makassar</wui-option>
+                  </wui-select>
+                </wui-form-field>
 
-                <div class="wui-col-12 wui-col-md-6">
-                  <wui-form-field hint="Field select dalam kondisi nonaktif (disabled).">
-                    <label wuiLabel>Negara (disabled)</label>
-                    <wui-select wuiInput placeholder="Pilih negara" disabled [value]="negara()">
-                      <wui-option>Indonesia</wui-option>
-                      <wui-option>Malaysia</wui-option>
-                      <wui-option>Singapura</wui-option>
-                    </wui-select>
-                  </wui-form-field>
+                <div class="wui-mt-3 wui-d-flex wui-gap-col-2">
+                  <button wuiButton variant="outlined" (click)="isi()">Pilih Bandung</button>
+                  <button wuiButton variant="text" (click)="kosongkan()">Kosongkan</button>
                 </div>
               </div>
-            </app-showcase>
 
-            <!-- 2. FILLED -->
-            <app-showcase
-              title="2. Varian filled"
-              description="Sama seperti <input>: labelnya mengapung di dalam kotak, bukan di garis atasnya. Tidak ada penyesuaian khusus di _select.scss untuk ini — variannya memang milik field."
-              [tabs]="filledTabs()"
-            >
-              <div class="wui-row wui-gap-4 wui-align-items-start">
-                <div class="wui-col-12 wui-col-md-6">
-                  <wui-form-field variant="filled" hint="Placeholder baru tampil saat select difokus.">
-                    <label wuiLabel>Kota (filled)</label>
-                    <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
-                      <wui-option>Jakarta</wui-option>
-                      <wui-option>Bandung</wui-option>
-                      <wui-option>Denpasar</wui-option>
-                    </wui-select>
-                  </wui-form-field>
-                </div>
-
-                <div class="wui-col-12 wui-col-md-6">
-                  <wui-form-field variant="filled" hint="Label mengapung di dalam kotak.">
-                    <label wuiLabel>Negara (filled)</label>
-                    <wui-select wuiInput placeholder="Pilih negara" [value]="negara()">
-                      <wui-option>Indonesia</wui-option>
-                      <wui-option>Malaysia</wui-option>
-                      <wui-option>Singapura</wui-option>
-                    </wui-select>
-                  </wui-form-field>
-                </div>
+              <div class="wui-col-12 wui-col-md-6">
+                <wui-form-field hint="Field select dalam kondisi nonaktif (disabled).">
+                  <label wuiLabel>Negara (disabled)</label>
+                  <wui-select wuiInput placeholder="Pilih negara" disabled [value]="negara()">
+                    <wui-option>Indonesia</wui-option>
+                    <wui-option>Malaysia</wui-option>
+                    <wui-option>Singapura</wui-option>
+                  </wui-select>
+                </wui-form-field>
               </div>
-            </app-showcase>
+            </div>
+          </app-showcase>
+        </div>
 
-            <!-- 3. NONAKTIF & ERROR -->
-            <app-showcase
-              title="3. Nonaktif dan pesan error"
-              description="Elemen kustom membaca keadaan nonaktif dari aria-disabled=&quot;true&quot;. Pesan error dari [error] menggantikan hint dan menandai select dengan aria-invalid=&quot;true&quot; sehingga border ikut merah otomatis."
-              [tabs]="statesTabs()"
-            >
-              <div class="wui-row wui-gap-4 wui-align-items-start">
-                <div class="wui-col-12 wui-col-md-6">
-                  <wui-form-field hint="Tidak bisa dibuka.">
-                    <label wuiLabel>Kota (nonaktif)</label>
-                    <wui-select wuiInput placeholder="Pilih kota" disabled [value]="kota()">
-                      <wui-option>Jakarta</wui-option>
-                      <wui-option>Bandung</wui-option>
-                    </wui-select>
-                  </wui-form-field>
-                </div>
+        <!-- ─── USAGE ─────────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Usage</h2>
 
-                <div class="wui-col-12 wui-col-md-6">
-                  <wui-form-field error="Wajib dipilih sebelum menyimpan.">
-                    <label wuiLabel>Kota (invalid)</label>
-                    <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
-                      <wui-option>Jakarta</wui-option>
-                      <wui-option>Bandung</wui-option>
-                    </wui-select>
-                  </wui-form-field>
-                </div>
+        <!-- Filled -->
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Varian Filled"
+            description="Label mengapung di dalam kotak latar solid."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/select/filled/filled.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/select/filled/filled.ts',  language: 'typescript' }
+            ]"
+          >
+            <div class="wui-row wui-gap-col-4 wui-align-items-start">
+              <div class="wui-col-12 wui-col-md-6">
+                <wui-form-field variant="filled" hint="Placeholder baru tampil saat select difokus.">
+                  <label wuiLabel>Kota (filled)</label>
+                  <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
+                    <wui-option>Jakarta</wui-option>
+                    <wui-option>Bandung</wui-option>
+                    <wui-option>Denpasar</wui-option>
+                  </wui-select>
+                </wui-form-field>
               </div>
-            </app-showcase>
 
-            <!-- 4. DESAIN OPSI SENDIRI -->
-            <app-showcase
-              title="4. Desain opsi sendiri"
-              description="Opsi adalah komponen sehingga isinya diproyeksikan bebas (ikon + judul + keterangan). typeaheadLabel wajib disediakan sebagai teks nilai terpilih dan navigasi type-ahead."
-              [tabs]="richOptionsTabs()"
-            >
-              <div class="wui-row wui-gap-4 wui-align-items-start">
-                <div class="wui-col-12 wui-col-md-6">
-                  <wui-form-field hint="Isi opsinya bebas; dasar desainnya tetap sama.">
-                    <label wuiLabel>Kota (opsi berdesain)</label>
-                    <wui-select
-                      wuiInput
-                      placeholder="Pilih kota"
-                      [value]="kotaKaya()"
-                      (valueChange)="kotaKaya.set($event)"
-                    >
-                      <wui-option value="jkt" typeaheadLabel="Jakarta">
-                        <wui-icon icon="home" class="wui-me-2"></wui-icon>
-                        <span class="wui-d-flex wui-flex-column">
-                          <span class="wui-title-small">Jakarta</span>
-                          <span class="wui-body-small">Ibu kota negara</span>
-                        </span>
-                      </wui-option>
-
-                      <wui-option value="bdg" typeaheadLabel="Bandung">
-                        <wui-icon icon="home" class="wui-me-2"></wui-icon>
-                        <span class="wui-d-flex wui-flex-column">
-                          <span class="wui-title-small">Bandung</span>
-                          <span class="wui-body-small">Kota kembang</span>
-                        </span>
-                      </wui-option>
-
-                      <wui-option value="dps" typeaheadLabel="Denpasar" disabled>
-                        <wui-icon icon="home" class="wui-me-2"></wui-icon>
-                        <span class="wui-d-flex wui-flex-column">
-                          <span class="wui-title-small">Denpasar</span>
-                          <span class="wui-body-small">Sedang tidak tersedia</span>
-                        </span>
-                      </wui-option>
-                    </wui-select>
-                  </wui-form-field>
-                </div>
-
-                <div class="wui-col-12 wui-col-md-6">
-                  <p class="wui-body-medium">
-                    Nilai: <strong>{{ kotaKaya() ?? '(belum ada pilihan)' }}</strong>
-                  </p>
-                </div>
+              <div class="wui-col-12 wui-col-md-6">
+                <wui-form-field variant="filled" hint="Label mengapung di dalam kotak.">
+                  <label wuiLabel>Negara (filled)</label>
+                  <wui-select wuiInput placeholder="Pilih negara" [value]="negara()">
+                    <wui-option>Indonesia</wui-option>
+                    <wui-option>Malaysia</wui-option>
+                    <wui-option>Singapura</wui-option>
+                  </wui-select>
+                </wui-form-field>
               </div>
-            </app-showcase>
+            </div>
+          </app-showcase>
+        </div>
 
-        </div>    
+        <!-- Nonaktif & Error -->
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Nonaktif dan Pesan Error"
+            description="Pesan error menggantikan hint, dan select merespons dengan warna border merah."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/select/states/states.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/select/states/states.ts',  language: 'typescript' }
+            ]"
+          >
+            <div class="wui-row wui-gap-col-4 wui-align-items-start">
+              <div class="wui-col-12 wui-col-md-6">
+                <wui-form-field hint="Tidak bisa dibuka.">
+                  <label wuiLabel>Kota (nonaktif)</label>
+                  <wui-select wuiInput placeholder="Pilih kota" disabled [value]="kota()">
+                    <wui-option>Jakarta</wui-option>
+                    <wui-option>Bandung</wui-option>
+                  </wui-select>
+                </wui-form-field>
+              </div>
+
+              <div class="wui-col-12 wui-col-md-6">
+                <wui-form-field error="Wajib dipilih sebelum menyimpan.">
+                  <label wuiLabel>Kota (invalid)</label>
+                  <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
+                    <wui-option>Jakarta</wui-option>
+                    <wui-option>Bandung</wui-option>
+                  </wui-select>
+                </wui-form-field>
+              </div>
+            </div>
+          </app-showcase>
+        </div>
+
+        <!-- Rich Options -->
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Desain Opsi Sendiri"
+            description="Opsi mendukung child elemen bebas. typeaheadLabel wajib disediakan untuk pencarian via keyboard dan tampilan hasil terpilih."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/select/rich-options/rich-options.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/select/rich-options/rich-options.ts',  language: 'typescript' }
+            ]"
+          >
+            <div class="wui-row wui-gap-col-4 wui-align-items-start">
+              <div class="wui-col-12 wui-col-md-6">
+                <wui-form-field hint="Isi opsinya bebas; properti typeaheadLabel menentukan teks terpilih.">
+                  <label wuiLabel>Kota (opsi berdesain)</label>
+                  <wui-select
+                    wuiInput
+                    placeholder="Pilih kota"
+                    [value]="kotaKaya()"
+                    (valueChange)="kotaKaya.set($event)"
+                  >
+                    <wui-option value="jkt" typeaheadLabel="Jakarta">
+                      <wui-icon icon="home" class="wui-me-2"></wui-icon>
+                      <span class="wui-d-flex wui-flex-column">
+                        <span class="wui-title-small">Jakarta</span>
+                        <span class="wui-body-small">Ibu kota negara</span>
+                      </span>
+                    </wui-option>
+
+                    <wui-option value="bdg" typeaheadLabel="Bandung">
+                      <wui-icon icon="home" class="wui-me-2"></wui-icon>
+                      <span class="wui-d-flex wui-flex-column">
+                        <span class="wui-title-small">Bandung</span>
+                        <span class="wui-body-small">Kota kembang</span>
+                      </span>
+                    </wui-option>
+
+                    <wui-option value="dps" typeaheadLabel="Denpasar" disabled>
+                      <wui-icon icon="home" class="wui-me-2"></wui-icon>
+                      <span class="wui-d-flex wui-flex-column">
+                        <span class="wui-title-small">Denpasar</span>
+                        <span class="wui-body-small">Sedang tidak tersedia</span>
+                      </span>
+                    </wui-option>
+                  </wui-select>
+                </wui-form-field>
+              </div>
+
+              <div class="wui-col-12 wui-col-md-6">
+                <p class="wui-body-medium">
+                  Nilai: <strong>{{ kotaKaya() ?? '(belum ada pilihan)' }}</strong>
+                </p>
+              </div>
+            </div>
+          </app-showcase>
+        </div>
+
+        <!-- ─── WuiSelect API ─────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">WuiSelect</h2>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>&lt;wui-select wuiInput [value] [placeholder] [disabled] (valueChange)&gt;</code>
+          </div>
+          <p class="wui-mb-4">Komponen dropdown utama. Wajib disandingkan dengan directive <code>wuiInput</code> agar styling dari wui-form-field dan properti ARIA terhubung dengan baik.</p>
+          <h3 class="wui-title-medium--em wui-mb-3">Properti & Event</h3>
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead>
+                <tr><th>Nama</th><th>Tipe</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>[value]</code></td><td><code>unknown</code></td><td>Nilai opsi yang saat ini terpilih.</td></tr>
+                <tr><td><code>[placeholder]</code></td><td><code>string</code></td><td>Teks yang ditampilkan saat select difokus namun belum ada nilai.</td></tr>
+                <tr><td><code>[disabled]</code></td><td><code>boolean</code></td><td>Menonaktifkan interaksi select.</td></tr>
+                <tr><td><code>(valueChange)</code></td><td><code>EventEmitter&lt;unknown&gt;</code></td><td>Event saat opsi baru dipilih oleh pengguna.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ─── WuiOption API ─────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">WuiOption</h2>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>&lt;wui-option [value] [disabled] [typeaheadLabel]&gt;</code>
+          </div>
+          <p class="wui-mb-4">Item pilihan di dalam panel dropdown.</p>
+          <h3 class="wui-title-medium--em wui-mb-3">Properti</h3>
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead>
+                <tr><th>Nama</th><th>Tipe</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>[value]</code></td><td><code>unknown</code></td><td>Nilai programatik opsi. Jika kosong, isi teks dari child element akan dipakai.</td></tr>
+                <tr><td><code>[disabled]</code></td><td><code>boolean</code></td><td>Mencegah opsi dipilih. Navigasi keyboard akan melewati opsi ini.</td></tr>
+                <tr><td><code>[typeaheadLabel]</code></td><td><code>string</code></td><td>Teks yang ditampilkan di select saat terpilih, dan digunakan untuk navigasi keyboard. Wajib jika opsi berisi elemen HTML kompleks.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ─── DIREKTIF ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Direktif</h2>
+
+        <div class="wui-edge-fix-4">
+          <table wuiTable>
+            <thead>
+              <tr><th>Simbol (Import)</th><th>Keterangan</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>WuiSelect</code></td><td>Komponen dropdown <code>&lt;wui-select&gt;</code></td></tr>
+              <tr><td><code>WuiOption</code></td><td>Item pilihan <code>&lt;wui-option&gt;</code></td></tr>
+              <tr><td><code>WuiFormField</code></td><td>Komponen wrapper parent <code>&lt;wui-form-field&gt;</code></td></tr>
+              <tr><td><code>WuiLabel</code></td><td>Directive floating label <code>&lt;label wuiLabel&gt;</code></td></tr>
+              <tr><td><code>WuiInput</code></td><td>Directive penghubung <code>wuiInput</code>, wajib disematkan pada <code>&lt;wui-select&gt;</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
   </wui-page>
 </ng-template>
