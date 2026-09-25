@@ -1,0 +1,23 @@
+// Level 6 — utilitas warna latar.
+// Satu class per peran skema (`.wui-bg-primary`, `.wui-bg-surface-container`, `.wui-bg-on-surface`, …).
+// Daftarnya **ikut `$wui-schemes`** aplikasi: peran yang tidak ada di skema tidak menghasilkan class,
+// dan peran baru langsung dapat class tanpa menyentuh file ini.
+@use '../themes/schemes' as schemes;
+
+/// Warna latar dari peran skema M3 (`--wui-color-*`).
+@mixin background {
+    @each $wui-role, $wui-value in schemes.schemes-for-mode('light') {
+        // Peran bernilai `false` sengaja tidak di-emit `themes/_schemes.scss`, jadi
+        // `var(--wui-color-…)`-nya kosong — class-nya pun tidak dibuat.
+        @if schemes.scheme-value($wui-value) {
+            .wui-bg-#{$wui-role} {
+                background-color: var(--wui-color-#{$wui-role});
+            }
+        }
+    }
+
+    // Kata kunci CSS yang sering dipakai untuk menghapus latar — bukan peran skema.
+    .wui-bg-transparent {
+        background-color: transparent;
+    }
+}

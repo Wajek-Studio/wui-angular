@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from "@angular/core";
-import { WuiPage, WuiPageContent, WuiPageService, WuiContainer, WuiButton, WuiPageHost, WuiPageRef } from "@wajek/wui";
+import { WuiPage, WuiPageContent, WuiPageService, WuiContainer, WuiButton, WuiPageHost, WuiPageRef, WuiTable } from "@wajek/wui";
 import { firstValueFrom } from "rxjs";
 import { ShowcaseTab } from "../../shared/showcase";
 import { ShowcaseComponent } from "../../shared/showcase/showcase.component";
@@ -14,7 +14,7 @@ export interface PageSnippet {
     selector: 'app-page-page',
     templateUrl: './page.page.html',
     styleUrl: './page.page.scss',
-    imports: [WuiPage, WuiPageContent, WuiContainer, WuiButton, WuiPageHost, ShowcaseComponent]
+    imports: [WuiPage, WuiPageContent, WuiContainer, WuiButton, WuiPageHost, ShowcaseComponent, WuiTable]
 })
 export class PagePage implements OnInit {
 

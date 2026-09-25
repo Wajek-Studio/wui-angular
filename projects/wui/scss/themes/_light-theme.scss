@@ -24,6 +24,12 @@
     --wui-radius-lg: #{a.$wui-radius-lg};
     --wui-page-radius: #{a.$wui-page-radius};
 
+    // Border — dibaca utilitas `.wui-border*`. Warnanya menunjuk peran `outline-variant`,
+    // peran yang sudah dipakai garis & pemisah di komponen.
+    --wui-border-width: #{a.$wui-border-width};
+    --wui-border-style: #{a.$wui-border-style};
+    --wui-border-color: var(--wui-color-outline-variant);
+
     // Z-index
     --wui-z-base: #{a.$wui-z-base};
     --wui-z-overlay: #{a.$wui-z-overlay};

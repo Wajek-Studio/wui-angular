@@ -273,10 +273,39 @@ $wui-padding-dirs: (
     py: (padding-block),
 ) !default;
 
+// ── Border ──────────────────────────────────────────────────────────────────
+// Dipakai utilitas `.wui-border*` lewat `--wui-border-width`/`-style`/`-color`
+// (di-emit `themes/_light-theme.scss`) supaya bisa diubah saat runtime.
+$wui-border-width: 1px !default;
+$wui-border-style: solid !default;
+
+// Skala lebar border → nama class `.wui-border-<n>`. `0` = garisnya dimatikan.
+$wui-border-widths: (
+    0: 0,
+    1: $wui-border-width,
+    2: 2px,
+    3: 3px,
+    4: 4px,
+) !default;
+
 // ── Radius ──────────────────────────────────────────────────────────────────
 $wui-radius-md: 8px !default;
 $wui-radius-lg: 12px !default;
 $wui-page-radius: 12px !default;
+
+// Radius penuh (bentuk pil).
+$wui-radius-full: 9999px !default;
+
+// Skala radius → nama class `.wui-radius-<n>`. Tangga 4px mengikuti langkah shape Material 3
+// (0 · 4 · 8 · 12 · 16); `2` dan `3` memakai token yang sudah dipakai komponen.
+$wui-radii: (
+    0: 0,
+    1: 4px,
+    2: $wui-radius-md,
+    3: $wui-radius-lg,
+    4: 16px,
+    'full': $wui-radius-full,
+) !default;
 
 // ── Z-index ─────────────────────────────────────────────────────────────────
 // Wajib dipakai semua komponen — dilarang menulis z-index mentah.

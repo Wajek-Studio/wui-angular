@@ -1,71 +1,146 @@
 <ng-template #pageTpl>
   <wui-page>
     <div wuiPageContent wuiScrollbar>
-      <div wuiContainer class="wui-py-5">
+      <div wuiContainer class="wui-pb-5">
 
-        <!-- ─── HEADER ──────────────────────────────────────────────── -->
-        <header class="wui-mb-6">
-          <h1 class="wui-headline-medium--em wui-mb-2">Page</h1>
-          <p class="wui-body-large wui-text-secondary">
-            <code>&lt;wui-page&gt;</code> adalah shell halaman. Isi halaman dipasang ke dalam
-            <code>[wuiPageHost]</code> melalui <code>WuiPageService</code> — tanpa routing.
-            Mendukung halaman bertumpuk (<em>nested</em>) dan beberapa host sekaligus.
+        <h1 class="wui-headline-medium--em wui-mb-4">Page</h1>
+
+        <div class="wui-mb-4">
+          <p>
+            <code>&lt;wui-page&gt;</code> adalah shell halaman. Isi halaman dipasang ke dalam <code>[wuiPageHost]</code> melalui <code>WuiPageService</code> — tanpa routing. Mendukung halaman bertumpuk (<em>nested</em>) dan beberapa host sekaligus.
           </p>
-        </header>
+        </div>
 
-        <!-- ─── SEKSI 1: DEFAULT PAGE ──────────────────────────────── -->
-        <section class="wui-mb-6">
-          <app-showcase
-            title="Halaman Default — replace()"
-            description="replace() memasang template baru ke dalam host sekaligus menutup semua layer yang sudah ada. Gunakan ini untuk navigasi menu utama."
-            [tabs]="defaultTabs()"
-          >
-            <div class="wui-mb-3">
-              <button wuiButton color="primary" (click)="openDefaultPage()">Buka Halaman</button>
-            </div>
-            <div class="page-demo-box" wuiPageHost name="default-demo"></div>
-          </app-showcase>
-        </section>
+        <h2 class="wui-title-large--em wui-mb-4">Showcase</h2>
 
-        <!-- ─── SEKSI 2: NESTED PAGE ───────────────────────────────── -->
-        <section class="wui-mb-6">
-          <app-showcase
-            title="Halaman Bertumpuk — open() & close()"
-            description="open() menumpuk halaman baru di atas halaman yang sudah ada. WuiPageRef.close() menutup hanya layer tersebut — halaman di bawahnya tetap ada. FocusTrap aktif otomatis di layer teratas."
-            [tabs]="nestedTabs()"
-          >
-            <div class="wui-grid-inline wui-grid-col-2 wui-column-gap-3 wui-mb-3">
-              <button wuiButton color="primary" (click)="openMainPage()">Buka Halaman Utama</button>
-              <button wuiButton color="primary" variant="outlined" (click)="openSubPage()">Buka Sub-Halaman</button>
-            </div>
-            <div class="page-demo-box" wuiPageHost name="nested-demo"></div>
-          </app-showcase>
-        </section>
+        <app-showcase
+          title="Halaman Default — replace()"
+          description="replace() memasang template baru ke dalam host sekaligus menutup semua layer yang sudah ada. Gunakan ini untuk navigasi menu utama."
+          [tabs]="[{
+            label: 'HTML',
+            code: '/snippets/page/default/default.html',
+            language: 'html'
+          },{
+            label: 'Typescript',
+            code: '/snippets/page/default/default.ts',
+            language: 'typescript'
+          }]"
+        >
+          <div class="wui-mb-3">
+            <button wuiButton color="primary" (click)="openDefaultPage()">Buka Halaman</button>
+          </div>
+          <div class="page-demo-box" wuiPageHost name="default-demo"></div>
+        </app-showcase>
 
-        <!-- ─── SEKSI 3: MULTI-HOST ────────────────────────────────── -->
-        <section class="wui-mb-6">
-          <app-showcase
-            title="Beberapa Host — multi wuiPageHost"
-            description="Satu halaman bisa memiliki lebih dari satu host dengan name berbeda. Setiap host dikendalikan secara independen — membuka Host A tidak mempengaruhi Host B."
-            [tabs]="multiHostTabs()"
-          >
-            <div class="demo-btn-row wui-mb-3">
-              <button wuiButton color="primary" (click)="openHostA()">Buka Host A</button>
-              <button wuiButton color="primary" variant="outlined" (click)="closeHostA()">Tutup Host A</button>
-              <button wuiButton (click)="openHostB()">Buka Host B</button>
-              <button wuiButton variant="outlined" (click)="closeHostB()">Tutup Host B</button>
-            </div>
-            <div class="multi-host-row">
-              <div class="page-demo-box page-demo-box--small" wuiPageHost name="host-a">
-                <span class="host-placeholder">Host A</span>
-              </div>
-              <div class="page-demo-box page-demo-box--small" wuiPageHost name="host-b">
-                <span class="host-placeholder">Host B</span>
-              </div>
-            </div>
-          </app-showcase>
-        </section>
+        <h2 class="wui-title-large--em wui-mb-4">WuiPageService</h2>
+        
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>replace(template: TemplateRef&lt;any&gt;, hostname: string = 'main'): WuiPageRef&lt;any&gt;</code>
+          </div>
 
+          <div class="wui-mb-4">
+            <p>Berfungsi untuk mengganti seluruh tumpukan halaman dengan halaman baru</p>
+          </div>
+
+          <h3 class="wui-title-medium--em wui-mb-3">Parameter</h3>
+
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead>
+                <tr>
+                  <th>NAMA</th>
+                  <th>TIPE</th>
+                  <th>KETERANGAN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <code>template</code>
+                  </td>
+                  <td>
+                    <code>TemplateRef&lt;any&gt;</code>
+                  </td>
+                  <td>
+                    Template yang digunakan dalam tumpukan page.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>hostname</code>
+                  </td>
+                  <td>
+                    <code>string</code>
+                  </td>
+                  <td>
+                    Nama pagehost yang digunakan untuk display halaman
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>open(template: TemplateRef&lt;any&gt;, hostname: string = 'main'): WuiPageRef&lt;any&gt;</code>
+          </div>
+
+          <div class="wui-mb-4">
+            <p>Menumpuk halaman yang tampil sekarang dengan halaman baru</p>
+          </div>
+
+          <h3 class="wui-title-medium--em wui-mb-3">Parameter</h3>
+
+          <div class="wui-edge-fix-4">
+            <table wuiTable>
+              <thead>
+                <tr>
+                  <th>NAMA</th>
+                  <th>TIPE</th>
+                  <th>KETERANGAN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <code>template</code>
+                  </td>
+                  <td>
+                    <code>TemplateRef&lt;any&gt;</code>
+                  </td>
+                  <td>
+                    Template yang digunakan dalam tumpukan page.
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>hostname</code>
+                  </td>
+                  <td>
+                    <code>string</code>
+                  </td>
+                  <td>
+                    Nama pagehost yang digunakan untuk display halaman
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h2 class="wui-title-large--em wui-mb-4">WuiPageRef</h2>
+        
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <div class="wui-mb-4">
+            <code>close(): void</code>
+          </div>
+
+          <div class="wui-mb-4">
+            <p>Berfungsi untuk menutup halaman</p>
+          </div>
+        </div>
       </div>
     </div>
   </wui-page>
@@ -79,53 +154,6 @@
       <p class="wui-body-medium">
         Halaman ini dipasang ke dalam host via <code>replace()</code>.
       </p>
-    </div>
-  </wui-page>
-</ng-template>
-
-<!-- ─── TEMPLATE SEKSI 2: NESTED ───────────────────────────────────────── -->
-<ng-template #mainPageTpl>
-  <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4">
-      <h3 class="wui-headline-small wui-mb-2">Halaman Utama</h3>
-      <p class="wui-body-medium wui-mb-3">Dipasang via <code>replace()</code>.</p>
-      <button wuiButton size="sm" color="primary" (click)="openSubPage()">
-        Buka Sub-Halaman →
-      </button>
-    </div>
-  </wui-page>
-</ng-template>
-
-<ng-template #subPageTpl>
-  <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4 demo-nested-layer">
-      <div class="wui-d-flex wui-align-items-center wui-justify-content-between wui-mb-2">
-        <h3 class="wui-headline-small wui-m-0">Sub-Halaman</h3>
-        <button wuiButton size="sm" variant="text" (click)="closeSubPage()">Tutup ×</button>
-      </div>
-      <p class="wui-body-medium wui-mb-3">
-        Ditumpuk di atas halaman utama via <code>open()</code>.
-      </p>
-      <button wuiButton size="sm" color="primary" (click)="closeSubPage()">Tutup Halaman</button>
-    </div>
-  </wui-page>
-</ng-template>
-
-<!-- ─── TEMPLATE SEKSI 3: MULTI-HOST ───────────────────────────────────── -->
-<ng-template #hostATpl>
-  <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4">
-      <h3 class="wui-headline-small wui-mb-2">Host A</h3>
-      <p class="wui-body-medium">Hanya mengisi Host A. Host B tidak terpengaruh.</p>
-    </div>
-  </wui-page>
-</ng-template>
-
-<ng-template #hostBTpl>
-  <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4">
-      <h3 class="wui-headline-small wui-mb-2">Host B</h3>
-      <p class="wui-body-medium">Hanya mengisi Host B. Host A tidak terpengaruh.</p>
     </div>
   </wui-page>
 </ng-template>

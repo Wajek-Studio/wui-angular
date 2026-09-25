@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Highlight } from 'ngx-highlightjs';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-code',
@@ -11,20 +12,19 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './code.html',
   styleUrl: './code.scss',
 })
-export class Code implements OnInit {
-
+export class Code {
+  
   http = inject(HttpClient);
   sourceUrl = input<string | null>('');
+  sourceCode = toSignal<string | null>(
+    toObservable(this.sourceUrl).pipe(
+      switchMap(async url => {
+        if (!url) return null;
+        return await firstValueFrom(this.http.get(url, { responseType: 'text' }));
+      })
+    )
+  );
 
-  source = signal<string | null>('');
   lang = input<string>('html');
-
-  async ngOnInit() {
-    const url = this.sourceUrl();
-    if (!url) return;
-
-    const res = await firstValueFrom(this.http.get(url, { responseType: 'text' }));
-    this.source.set(res);
-  }
 
 }

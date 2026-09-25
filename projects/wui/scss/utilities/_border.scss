@@ -1,0 +1,97 @@
+// Level 6 — utilitas border & radius.
+// Nama class mengikuti Bootstrap (`.border`, `.border-top`, `.rounded*`) dengan prefix `wui-`,
+// sama seperti utilitas flex/gap. Semua nilainya diambil dari token di `abstracts/_tokens.scss`,
+// jadi menambah langkah skala di sana otomatis menambah class di sini.
+// Belum ada varian responsif (`-<bp>`); polanya bisa meniru `utilities/_gap.scss` kalau nanti perlu.
+@use 'sass:list';
+@use '../abstracts' as a;
+
+/// Class bantu garis (border) dan sudut (radius).
+@mixin border {
+    // Sisi → properti. `top`/`bottom` fisik, `start`/`end` logical — mengikuti `$wui-padding-dirs`.
+    $wui-sides: (
+        'top': 'border-top',
+        'bottom': 'border-bottom',
+        'start': 'border-inline-start',
+        'end': 'border-inline-end',
+    );
+
+    // Sisi → dua sudut logical yang menyusunnya (`top` = dua sudut atas, `start` = dua sudut sisi awal).
+    $wui-radius-sides: (
+        'top': ('border-start-start-radius', 'border-start-end-radius'),
+        'bottom': ('border-end-start-radius', 'border-end-end-radius'),
+        'start': ('border-start-start-radius', 'border-end-start-radius'),
+        'end': ('border-start-end-radius', 'border-end-end-radius'),
+    );
+
+    // Gaya garis.
+    $wui-styles: (
+        'solid': solid,
+        'dashed': dashed,
+        'dotted': dotted,
+        'none': none,
+    );
+
+    // Warna garis: dua kata kunci CSS yang sering dipakai + peran skema yang lazim jadi garis.
+    $wui-colors: (
+        'current': currentcolor,
+        'transparent': transparent,
+        'outline': var(--wui-color-outline),
+        'outline-variant': var(--wui-color-outline-variant),
+        'primary': var(--wui-color-primary),
+        'secondary': var(--wui-color-secondary),
+        'tertiary': var(--wui-color-tertiary),
+        'error': var(--wui-color-error),
+    );
+
+    // Lebar + gaya + warna sekaligus. Dibaca lewat custom property supaya aplikasi bisa mengubah
+    // semua garis `wui-` sekali jalan; nilai token dipasang sebagai fallback.
+    $wui-line: var(--wui-border-width, #{a.$wui-border-width}) var(--wui-border-style, #{a.$wui-border-style}) var(--wui-border-color, var(--wui-color-outline-variant));
+
+    .wui-border {
+        border: $wui-line;
+    }
+
+    @each $wui-side, $wui-property in $wui-sides {
+        .wui-border-#{$wui-side} {
+            #{$wui-property}: $wui-line;
+        }
+
+        .wui-border-#{$wui-side}-0 {
+            #{$wui-property}: 0;
+        }
+    }
+
+    // Dipisah dari grup sisi supaya bisa menimpa lebarnya: `.wui-border-0` menang atas
+    // `.wui-border-top` karena ditulis belakangan.
+    @each $wui-step, $wui-width in a.$wui-border-widths {
+        .wui-border-#{$wui-step} {
+            border-width: #{$wui-width};
+        }
+    }
+
+    @each $wui-style, $wui-value in $wui-styles {
+        .wui-border-#{$wui-style} {
+            border-style: #{$wui-value};
+        }
+    }
+
+    @each $wui-color, $wui-value in $wui-colors {
+        .wui-border-#{$wui-color} {
+            border-color: #{$wui-value};
+        }
+    }
+
+    @each $wui-step, $wui-radius in a.$wui-radii {
+        .wui-radius-#{$wui-step} {
+            border-radius: #{$wui-radius};
+        }
+
+        @each $wui-side, $wui-corners in $wui-radius-sides {
+            .wui-radius-#{$wui-side}-#{$wui-step} {
+                #{list.nth($wui-corners, 1)}: #{$wui-radius};
+                #{list.nth($wui-corners, 2)}: #{$wui-radius};
+            }
+        }
+    }
+}

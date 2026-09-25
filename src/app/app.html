@@ -21,75 +21,6 @@
 
   <wui-sidenav-container>
     <wui-sidenav id="app-sidenav">
-      <!-- Konten Mini: khusus mode mini (hanya ikon) -->
-      <nav wuiSidenavMini>
-        <!-- Area isi: mengisi tinggi yang tersisa dan menggulir sendiri -->
-        <div wuiSidenavBody>
-          <a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem aria-label="Beranda">
-            <wui-icon icon="play"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/tipografi" routerLinkActive="is-active" wuiSidenavItem aria-label="Tipografi">
-            <wui-icon icon="format-font"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/button" routerLinkActive="is-active" wuiSidenavItem aria-label="Button">
-            <wui-icon icon="button"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/dialog" routerLinkActive="is-active" wuiSidenavItem aria-label="Dialog">
-            <wui-icon icon="dialog"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/form" routerLinkActive="is-active" wuiSidenavItem aria-label="Form">
-            <wui-icon icon="form"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/select" routerLinkActive="is-active" wuiSidenavItem aria-label="Select">
-            <wui-icon icon="form-select"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/context-menu" routerLinkActive="is-active" wuiSidenavItem aria-label="Menu konteks">
-            <wui-icon icon="dots-vertical"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/sidenav" routerLinkActive="is-active" wuiSidenavItem aria-label="Sidenav">
-            <wui-icon icon="dock-left"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/table" routerLinkActive="is-active" wuiSidenavItem aria-label="Table">
-            <wui-icon icon="table"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/grid" routerLinkActive="is-active" wuiSidenavItem aria-label="Grid">
-            <wui-icon icon="grid"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/flex" routerLinkActive="is-active" wuiSidenavItem aria-label="Flex">
-            <wui-icon icon="flex"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/spacing" routerLinkActive="is-active" wuiSidenavItem aria-label="Spacing & Utilities">
-            <wui-icon icon="spacing"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/snackbar" routerLinkActive="is-active" wuiSidenavItem aria-label="Snackbar">
-            <wui-icon icon="snackbar"></wui-icon>
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/radio" routerLinkActive="is-active" wuiSidenavItem aria-label="Radio">
-            <wui-icon icon="radiobox-marked"></wui-icon>
-          </a>
-        </div>
-
-        <!-- Area bawah: menempel di ujung bawah, tidak ikut tergulir -->
-        <div wuiSidenavFooter>
-          <a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem aria-label="Pengaturan">
-            <wui-icon icon="settings"></wui-icon>
-          </a>
-        </div>
-      </nav>
-
       <!-- Konten Penuh: mode open (ikon + teks label) -->
       <nav wuiSidenavFull>
         <div wuiSidenavBody wuiScrollbar>
@@ -97,9 +28,11 @@
             <wui-icon icon="play"></wui-icon> Memulai
           </a>
 
-          <a wuiButton variant="text" size="lg" routerLink="/tipografi" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="format-font"></wui-icon>
-            Tipografi
+          <div wuiSidenavSubheader>Layout</div>
+
+          <a wuiButton variant="text" size="lg" routerLink="/page" routerLinkActive="is-active" wuiSidenavItem>
+            <wui-icon icon="spacing"></wui-icon>
+            Page
           </a>
 
           <div wuiSidenavSubheader>Components</div>
@@ -108,6 +41,19 @@
             <wui-icon icon="button"></wui-icon>
             Button
           </a>
+
+          
+
+          <div wuiSidenavSubheader>Belum</div>
+
+          <a wuiButton variant="text" size="lg" routerLink="/tipografi" routerLinkActive="is-active" wuiSidenavItem>
+            <wui-icon icon="format-font"></wui-icon>
+            Tipografi
+          </a>
+
+          
+
+          
 
           <a wuiButton variant="text" size="lg" routerLink="/dialog" routerLinkActive="is-active" wuiSidenavItem>
             <wui-icon icon="dialog"></wui-icon>
@@ -149,12 +95,9 @@
             Radio
           </a>
 
-          <div wuiSidenavSubheader>Layout</div>
+          
 
-          <a wuiButton variant="text" size="lg" routerLink="/page" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="spacing"></wui-icon>
-            Page
-          </a>
+          
 
           <a wuiButton variant="text" size="lg" routerLink="/grid" routerLinkActive="is-active" wuiSidenavItem>
             <wui-icon icon="grid"></wui-icon>
