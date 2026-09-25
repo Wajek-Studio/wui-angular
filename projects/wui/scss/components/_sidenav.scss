@@ -7,7 +7,6 @@
         overflow: hidden;
         opacity: 1;
         width: var(--wui-sidenav-width, 16rem);
-        background-color: var(--wui-color-surface);
         color: var(--wui-color-on-surface);
         transition: 
             width var(--wui-motion-duration-base) var(--wui-motion-easing-standard),

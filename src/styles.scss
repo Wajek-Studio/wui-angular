@@ -15,3 +15,25 @@
         border: none;
     }
 }
+
+body {
+    background-color: var(--wui-color-surface-container);
+}
+
+wui-app {
+    .wui-sidenav-container {
+        &--content {
+            margin-inline: var(--wui-space-3);
+            margin-bottom: var(--wui-space-3);
+        }
+    }
+
+    .wui-page--host {
+        border-radius: var(--wui-space-3);
+        overflow: hidden;
+    }
+
+    .wui-container {
+        padding-inline: 3.75rem;
+    }
+}

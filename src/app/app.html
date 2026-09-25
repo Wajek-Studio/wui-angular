@@ -42,8 +42,6 @@
             Button
           </a>
 
-          
-
           <div wuiSidenavSubheader>Belum</div>
 
           <a wuiButton variant="text" size="lg" routerLink="/form" routerLinkActive="is-active" wuiSidenavItem>
@@ -55,7 +53,6 @@
             <wui-icon icon="format-font"></wui-icon>
             Tipografi
           </a>
-
 
           <a wuiButton variant="text" size="lg" routerLink="/select" routerLinkActive="is-active" wuiSidenavItem>
             <wui-icon icon="form-select"></wui-icon>
@@ -92,10 +89,6 @@
             Radio
           </a>
 
-          
-
-          
-
           <a wuiButton variant="text" size="lg" routerLink="/grid" routerLinkActive="is-active" wuiSidenavItem>
             <wui-icon icon="grid"></wui-icon>
             Grid
@@ -110,7 +103,6 @@
             <wui-icon icon="spacing"></wui-icon>
             Spacing &amp; Utilities
           </a>
-          
         </div>
 
         <div wuiSidenavFooter>
@@ -121,8 +113,10 @@
         </div>
       </nav>
     </wui-sidenav>
-    <div wuiSidenavContainerContent wuiPageHost>
-      <router-outlet/>
+    <div wuiSidenavContainerContent>
+      <div wuiPageHost>
+        <router-outlet/>
+      </div>
     </div>
   </wui-sidenav-container>
 </wui-app>

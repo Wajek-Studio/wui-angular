@@ -66,7 +66,6 @@ export class WuiScrollbar {
     private onScroll = () => this.updateThumbPosition();
 
     private measure() {
-        console.log('measuring...');
         const el = this.host.nativeElement;
         const { scrollHeight, clientHeight, scrollWidth, clientWidth } = el;
         this.renderer.setStyle(this.gutter, '--wui-scrollbar-container-height', `${clientHeight}px`, RendererStyleFlags2.DashCase);

@@ -10,7 +10,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     WuiSidenav,
     WuiSidenavBody,
     WuiSidenavFooter,
-    WuiSidenavMini,
     WuiSidenavFull,
     WuiSidenavItem,
     WuiSidenavSubheader,

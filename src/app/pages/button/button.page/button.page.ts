@@ -19,7 +19,7 @@ export class ButtonPage implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly pageService: WuiPageService = inject(WuiPageService);
 
-  readonly pageTpl = viewChild<TemplateRef<unknown>>('page');
+  readonly pageTpl = viewChild<TemplateRef<unknown>>('pageTpl');
 
   // Snippets
   readonly filledSnippet = signal<ButtonSnippet>({});
