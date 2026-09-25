@@ -1,81 +1,141 @@
 <ng-template #page>
   <wui-page>
     <div wuiPageContent wuiScrollbar>
-      <header class="dialog-header">
-        <a routerLink="/home" class="dialog-back-btn">← Kembali ke Beranda</a>
-        <h1 class="dialog-title">WUI Dialog</h1>
-        <p class="dialog-subtitle">
-          Dialog modal dari <code>WuiDialogService</code>. Mesinnya <code>@angular/cdk</code>, tapi
-          yang dipakai aplikasi hanya <code>WuiDialogRef</code>, <code>WuiDialogOptions</code>, dan
-          <code>WUI_DIALOG_DATA</code> — tipe CDK tidak perlu diimpor. Isi dialog dirender ke
-          <code>document.body</code>, terpisah dari page stack yang tinggal di dalam
-          <code>&lt;wui-app&gt;</code>.
+      <div wuiContainer class="wui-pb-5">
+
+        <!-- ─── HEADER ──────────────────────────────────────────────── -->
+        <h1 class="wui-headline-large--em wui-mb-4">Dialog</h1>
+
+        <div class="wui-mb-4">
+          <p>Dialog modal dari <code class="wui-code-inline">WuiDialogService</code>. Isi dirender ke <code class="wui-code-inline">document.body</code>, terpisah dari page stack.</p>
+        </div>
+
+        <!-- ─── SEKSI 1: DARI KOMPONEN ─────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Dari Komponen</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="open()"
+            description="Buka dialog dari komponen Angular. Komponen pemilik mengelola data dan penutupan dialog secara mandiri."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/dialog/from-component/from-component.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/dialog/from-component/from-component.ts',  language: 'typescript' },
+              { label: 'Dialog TS',  code: '/snippets/dialog/from-component/hapus-dialog.ts',    language: 'typescript' }
+            ]"
+          >
+            <div class="dialog-actions-demo">
+              <button wuiButton (click)="bukaKomponen()">Buka dialog konfirmasi</button>
+              <span class="hasil">Hasil: <strong>{{ hasilKomponen() }}</strong></span>
+            </div>
+          </app-showcase>
+        </div>
+
+        <!-- ─── SEKSI 2: DARI TEMPLATE ─────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Dari Template</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="openTemplate()"
+            description="Buka dialog dari ng-template. Cocok untuk konten dialog sederhana tanpa komponen tersendiri."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/dialog/from-template/from-template.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/dialog/from-template/from-template.ts',  language: 'typescript' }
+            ]"
+          >
+            <div class="dialog-actions-demo">
+              <button wuiButton variant="outlined" (click)="bukaTemplate()">Buka dialog template</button>
+              <span class="hasil">Hasil: <strong>{{ hasilTemplate() }}</strong></span>
+            </div>
+          </app-showcase>
+        </div>
+
+        <!-- ─── SEKSI 3: ALERT DIALOG ──────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Alert Dialog</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title='role="alertdialog" + disableClose'
+            description="Dialog yang tidak bisa ditutup dengan ESC atau klik backdrop — pengguna wajib memilih tombol."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/dialog/alert/alert.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/dialog/alert/alert.ts',   language: 'typescript' }
+            ]"
+          >
+            <button wuiButton color="error" variant="outlined" (click)="bukaAlert()">Buka alert</button>
+          </app-showcase>
+        </div>
+
+        <!-- ─── SEKSI 4: DIALOG SISTEM ─────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Dialog Sistem</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="alert()"
+            description="Pesan sistem cepat tanpa komponen atau template baru. Hasilnya index tombol yang dipilih, atau null."
+            [tabs]="[
+              { label: 'HTML',       code: '/snippets/dialog/alert-system/alert-system.html', language: 'html' },
+              { label: 'TypeScript', code: '/snippets/dialog/alert-system/alert-system.ts',   language: 'typescript' }
+            ]"
+          >
+            <div class="dialog-actions-demo">
+              <button wuiButton (click)="alertError()">Error API — 1 tombol</button>
+              <button wuiButton variant="outlined" (click)="alertRetry()">Error API + Coba lagi</button>
+              <button wuiButton variant="outlined" color="error" (click)="alertWajib()">Wajib dipilih</button>
+            </div>
+            <p class="hasil wui-mt-3">Hasil: <strong>{{ hasilAlert() }}</strong></p>
+          </app-showcase>
+        </div>
+
+        <!-- ─── MODIFIER TABLE ─────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Modifier</h2>
+
+        <div class="wui-edge-fix-4">
+          <table wuiTable>
+            <thead>
+              <tr>
+                <th>Properti</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>data</code></td>
+                <td>Data yang diteruskan ke komponen/template via <code>WUI_DIALOG_DATA</code> atau <code>let-data</code></td>
+              </tr>
+              <tr>
+                <td><code>role</code></td>
+                <td>
+                  <code>'dialog'</code> (default) atau <code>'alertdialog'</code> — memengaruhi
+                  peran ARIA yang diumumkan ke screen reader
+                </td>
+              </tr>
+              <tr>
+                <td><code>disableClose</code></td>
+                <td><code>true</code> → ESC dan klik backdrop tidak menutup dialog. Wajib dipakai bersama <code>role="alertdialog"</code></td>
+              </tr>
+              <tr>
+                <td><code>ariaLabelledBy</code></td>
+                <td>ID elemen judul di dalam dialog untuk screen reader (<code>aria-labelledby</code>)</td>
+              </tr>
+              <tr>
+                <td><code>ref.result</code></td>
+                <td><code>Promise</code> yang resolve saat dialog ditutup dengan nilai dari <code>close(result)</code></td>
+              </tr>
+              <tr>
+                <td><code>ref.close(value?)</code></td>
+                <td>Tutup dialog dan kirim nilai ke <code>ref.result</code>. Tanpa nilai → resolve <code>undefined</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ─── STATUS ─────────────────────────────────────────────── -->
+        <p class="dialog-status wui-mt-5">
+          Dialog yang sedang terbuka (<code>dialogs.count()</code>):
+          <strong>{{ dialogs.count() }}</strong>
         </p>
-      </header>
 
-      <p class="page-note">
-        Yang datang gratis dari CDK: <strong>focus trap</strong>, <strong>ESC</strong> menutup,
-        <strong>klik backdrop</strong> menutup, <strong>scroll halaman diblokir</strong>, fokus
-        kembali ke tombol pemicu, dan <code>role="dialog"</code> +
-        <code>aria-modal="true"</code>. Yang ditambahkan wui: permukaan
-        <code>.wui-dialog</code>, backdrop dari token <code>--wui-overlay-color</code>, dan urutan
-        lapisan lewat <code>--wui-z-dialog</code> (selalu di atas page stack).
-      </p>
-
-      <!-- 1. DARI KOMPONEN -->
-      <app-showcase
-        title="1. Dari komponen — open()"
-        description="Hasilnya bertipe: open<boolean>(HapusDialog, { data }) → await ref.result bernilai boolean, atau undefined kalau ditutup lewat ESC/backdrop. Komponen dialog mengambil datanya lewat injectDialogData() dan menutup dirinya lewat inject(WuiDialogRef)."
-        [tabs]="fromComponentTabs()"
-      >
-        <div class="dialog-actions-demo">
-          <button wuiButton (click)="bukaKomponen()">Buka dialog konfirmasi</button>
-          <span class="hasil">Hasil: <strong>{{ hasilKomponen() }}</strong></span>
-        </div>
-      </app-showcase>
-
-      <!-- 2. DARI TEMPLATE -->
-      <app-showcase
-        title="2. Dari <ng-template> — openTemplate()"
-        description="Konteks template memakai kontrak CDK: let-data berisi options.data. Karena tidak ada komponen pemilik, ref-nya dipegang halaman (openTemplate() tetap mengembalikan WuiDialogRef)."
-        [tabs]="fromTemplateTabs()"
-      >
-        <div class="dialog-actions-demo">
-          <button wuiButton variant="outlined" (click)="bukaTemplate()">Buka dialog template</button>
-          <span class="hasil">Hasil: <strong>{{ hasilTemplate() }}</strong></span>
-        </div>
-      </app-showcase>
-
-      <!-- 3. ALERT -->
-      <app-showcase
-        title='3. Alert — role="alertdialog" + disableClose'
-        description="ESC dan klik backdrop dimatikan, jadi hanya tombol di dalam dialog yang bisa menutupnya — perilaku yang diharapkan untuk dialog sistem. Penampilan alert khusus (ikon, warna, tata letak) belum ada; di v1 ini baru peran ARIA-nya."
-        [tabs]="alertRoleTabs()"
-      >
-        <button wuiButton color="error" variant="outlined" (click)="bukaAlert()">Buka alert</button>
-      </app-showcase>
-
-      <!-- 4. DIALOG SISTEM -->
-      <app-showcase
-        title="4. Dialog sistem — alert()"
-        description="Untuk pesan yang tidak punya tata letak sendiri (error API, konfirmasi singkat). Isinya datang sebagai data — tidak ada komponen atau <ng-template> baru di sisi aplikasi. Hasilnya index tombol (0 … n-1), atau null kalau ditutup tanpa memilih."
-        [tabs]="alertTabs()"
-      >
-        <div class="dialog-actions-demo">
-          <button wuiButton (click)="alertError()">Error API — 1 tombol</button>
-          <button wuiButton variant="outlined" (click)="alertRetry()">Error API + Coba lagi</button>
-          <button wuiButton variant="outlined" color="error" (click)="alertWajib()">
-            Wajib dipilih
-          </button>
-        </div>
-
-        <p class="hasil" style="margin-top: 1rem;">Hasil: <strong>{{ hasilAlert() }}</strong></p>
-      </app-showcase>
-
-      <p class="dialog-status">
-        Dialog yang sedang terbuka (<code>dialogs.count()</code>):
-        <strong>{{ dialogs.count() }}</strong>
-      </p>
+      </div>
     </div>
   </wui-page>
 </ng-template>
@@ -83,8 +143,6 @@
 <!--
   Isi dialog mode template. `let-data` disediakan CDK dari `options.data`.
   Tombolnya memanggil method halaman karena ref dialog dipegang halaman (`openTemplate()`).
-  Kalau perlu `dialogRef` langsung di dalam template, kontrak CDK juga menyediakan
-  `let-dialogRef="dialogRef"` — tapi yang diterima adalah `DialogRef` milik CDK, bukan wui.
 -->
 <ng-template #tplDialog let-data>
   <h2 class="wui-title-medium demo-title" id="demo-template-title">Hapus {{ data.nama }}?</h2>
