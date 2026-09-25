@@ -65,7 +65,7 @@ export class ContextMenuSpikePage {
 
   constructor() {
     afterNextRender(() => {
-      this.halaman.replace(this.tplHalaman(), { variant: 'full' });
+      this.halaman.replace(this.tplHalaman());
 
       // Kait dari luar: mengubah daftar item **selagi menu terbuka**. Tombol di halaman tidak bisa
       // dipakai untuk ini — mengkliknya adalah klik di luar panel, jadi menunya keburu tertutup.

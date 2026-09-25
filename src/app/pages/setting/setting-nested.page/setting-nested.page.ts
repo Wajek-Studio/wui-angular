@@ -16,7 +16,7 @@ export class SettingNestedPage implements OnInit, OnDestroy {
   page = viewChild.required<TemplateRef<any>>('page');
 
   ngOnInit(): void {
-    this.pageRef = this.pageService.push(this.page());
+    this.pageRef = this.pageService.open(this.page());
   }
 
   ngOnDestroy(): void {

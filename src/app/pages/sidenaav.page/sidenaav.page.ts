@@ -56,7 +56,7 @@ export class SidenaavPage implements OnInit {
   ngOnInit(): void {
     const tpl = this.pageTpl();
     if (tpl) {
-      this.pageService.replace(tpl, { variant: 'full' });
+      this.pageService.replace(tpl);
     }
     // Pastikan demo sidenav terdaftar dengan state awal open
     this.sidenavService.register(this.demoId, { state: 'open' });

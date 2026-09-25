@@ -34,7 +34,7 @@ export class HomePage {
   }
 
   ngOnInit(): void {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
   }
 
 }

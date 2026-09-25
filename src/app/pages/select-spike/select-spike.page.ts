@@ -39,7 +39,7 @@ import { activeDesc, diContainerCdk, hitPada, panelDari, rect } from './spike-uk
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectSpikePage {
-  private readonly halaman = inject(WuiPageService);
+  private readonly pageService = inject(WuiPageService);
   private readonly dialogs = inject(WuiDialogService);
   private readonly vcr = inject(ViewContainerRef);
 
@@ -54,7 +54,7 @@ export class SelectSpikePage {
 
   constructor() {
     afterNextRender(() => {
-      this.halaman.replace(this.tplHalaman(), { variant: 'full' });
+      this.pageService.replace(this.tplHalaman());
       this.spike.catat(`[env] jendela ${window.innerWidth}×${window.innerHeight}`);
     });
   }
@@ -83,13 +83,13 @@ export class SelectSpikePage {
 
   /** Kasus 2 — tumpuk lapisan page kedua (trap lapisan itu menyala). */
   protected bukaLapisan(): void {
-    this.halaman.push(this.tplLapisan(), { variant: 'full' });
-    this.spike.catat(`[B] lapisan kedua dibuka · depth=${this.halaman.depth()} · fokus=${activeDesc()}`);
+    // this.pageService.push(this.tplLapisan());
+    // this.spike.catat(`[B] lapisan kedua dibuka · depth=${this.pageService.depth()} · fokus=${activeDesc()}`);
   }
 
   protected tutupLapisan(): void {
-    this.halaman.closeTop();
-    this.spike.catat(`[B] lapisan kedua ditutup · depth=${this.halaman.depth()} · fokus=${activeDesc()}`);
+    // this.pageService.closeTop();
+    // this.spike.catat(`[B] lapisan kedua ditutup · depth=${this.pageService.depth()} · fokus=${activeDesc()}`);
   }
 
   /** Kasus 2 — panel dibuka dari dalam lapisan yang trap-nya menyala. */

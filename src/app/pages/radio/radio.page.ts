@@ -76,7 +76,7 @@ export class RadioPage implements OnInit {
   ]);
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl(), { variant: 'full' });
+    this.pageService.replace(this.pageTpl());
 
     const [
       basicHtml,

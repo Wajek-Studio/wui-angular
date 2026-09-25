@@ -71,7 +71,7 @@ export class DialogPage implements OnInit {
   ]);
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
 
     // Load snippet dialog secara paralel
     const [fromComp, fromTpl, alertRole, alertSys] = await Promise.all([

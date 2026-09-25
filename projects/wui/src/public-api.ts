@@ -27,6 +27,9 @@ export * from './page/page';
 export * from './page/page.options';
 export * from './page/page.ref';
 export * from './page/page.service';
+export * from './page/page.host';
+
+export * from './sidenav/sidenav.container';
 
 export * from './sidenav/sidenav/sidenav';
 export * from './sidenav/sidenav/sidenav.options';
@@ -60,3 +63,5 @@ export * from './radio/radio-button';
 export * from './radio/radio-group';
 
 export * from './scrollbar/scrollbar';
+
+export * from './container/container';

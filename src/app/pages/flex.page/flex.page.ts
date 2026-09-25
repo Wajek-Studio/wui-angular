@@ -56,7 +56,7 @@ export class FlexPage implements OnInit {
   ]);
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
 
     const [
       directionHtml,

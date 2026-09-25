@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiScrollbar } from '@wajek/wui';
+import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiScrollbar, WuiContainer } from '@wajek/wui';
 import { firstValueFrom } from 'rxjs';
 import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
 
@@ -12,7 +12,7 @@ export interface ButtonSnippet {
 
 @Component({
   selector: 'app-button.page',
-  imports: [RouterLink, WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar],
+  imports: [RouterLink, WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar, WuiContainer],
   templateUrl: './button.page.html',
   styleUrl: './button.page.scss',
 })
@@ -62,7 +62,7 @@ export class ButtonPage implements OnInit {
   ]);
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
 
     // Load snippet secara paralel dari public/snippets/button/
     const [filled, outlined, text, icons, colors, link] = await Promise.all([

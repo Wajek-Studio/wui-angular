@@ -232,7 +232,7 @@ export class MyFormComponent {}`;
   }
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
 
     // Load all snippets in parallel
     const [simple, filled, email, reqLength, textarea, select, reactiveFull] = await Promise.all([

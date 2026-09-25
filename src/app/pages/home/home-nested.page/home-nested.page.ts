@@ -15,7 +15,7 @@ export class HomeNestedPage {
   pageRef? : WuiPageRef;
 
   ngOnInit(): void {
-    this.pageRef = this.pageService.push(this.pageTpl());
+    this.pageRef = this.pageService.open(this.pageTpl());
   }
 
   ngOnDestroy(): void {

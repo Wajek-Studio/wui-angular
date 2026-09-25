@@ -90,7 +90,7 @@ export class ContextMenuPage implements OnInit {
   ]);
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
 
     // Load snippet secara paralel dari public/snippets/context-menu/
     const [buttonTrigger, withData, inDialog] = await Promise.all([

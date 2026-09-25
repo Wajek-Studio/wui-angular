@@ -73,11 +73,7 @@
     --wui-menu-max-height: #{a.$wui-menu-max-height};
     --wui-menu-elevation: #{a.$wui-menu-elevation};
 
-    // Layout: container. Breakpoint-nya compile-time (media query tidak bisa pakai `var()`),
-    // tapi lebar maksimum, batas kiri-kanan, dan gutter bisa ditimpa aplikasi saat runtime.
-    // --wui-container-max-width: #{a.$wui-container-max-width};
-    --wui-container-margin-inline: #{a.$wui-container-margin-inline};
-    --wui-container-gutter-x: #{a.$wui-container-gutter-x};
+    --wui-container-padding-inline: #{a.$wui-container-padding-inline};
 
     // Disabled — diturunkan dari `on-surface`, jadi satu definisi berlaku untuk dua mode.
     --wui-color-disabled-container: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-container-opacity * 100}%, transparent);

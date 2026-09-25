@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { WuiApp, WuiButton, WuiIcon, WuiSidenav, WuiSidenavBody, WuiSidenavFooter, WuiSidenavFull, WuiSidenavItem, WuiSidenavMini, WuiSidenavService, WuiSidenavSubheader, WuiTopbar, WuiTopbarLeading, WuiTopbarContent, WuiTopbarTrailing, WuiScrollbar } from '@wajek/wui';
+import { WuiApp, WuiButton, WuiIcon, WuiSidenav, WuiSidenavBody, WuiSidenavFooter, WuiSidenavFull, WuiSidenavItem, WuiSidenavMini, WuiSidenavService, WuiSidenavSubheader, WuiTopbar, WuiTopbarLeading, WuiTopbarContent, WuiTopbarTrailing, WuiScrollbar, WuiSidenavContainer, WuiSidenavContainerContent, WuiPageHost } from '@wajek/wui';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -22,7 +22,10 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     WuiTopbarLeading,
     WuiTopbarContent,
     WuiTopbarTrailing,
-    WuiScrollbar
+    WuiScrollbar,
+    WuiSidenavContainer,
+    WuiSidenavContainerContent,
+    WuiPageHost
 ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

@@ -1,0 +1,17 @@
+@use '../abstracts' as a;
+
+@mixin edge-fix {
+
+    @each $spacer-name, $spacer-value in a.$wui-spacers {
+        .wui-edge-fix-#{$spacer-name} {
+            width: calc(100% + (2 * #{$spacer-value}));
+            margin-left: -#{$spacer-value};
+            margin-right: -#{$spacer-value};
+        }
+    }
+
+    // @each $bp-name in a.$wui-breakpoints {
+
+    // }
+
+}

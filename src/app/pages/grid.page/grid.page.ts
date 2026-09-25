@@ -50,7 +50,7 @@ export class GridPage implements OnInit {
   ]);
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
 
     const [containerHtml, containerTs, basicHtml, basicTs, responsiveHtml, responsiveTs, gapHtml, gapTs] =
       await Promise.all([

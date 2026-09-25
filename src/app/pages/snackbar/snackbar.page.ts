@@ -68,7 +68,7 @@ export class SnackbarPage implements OnInit {
   private currentRef?: WuiSnackbarRef;
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl(), { variant: 'full' });
+    this.pageService.replace(this.pageTpl());
 
     // Load snippet dari folder public/snippets/snackbar/
     const snippet = await this.fetchSnippet('simple', 'simple');

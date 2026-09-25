@@ -1,0 +1,53 @@
+@use '../abstracts' as a;
+
+@mixin _grid {
+    display: grid;
+}
+
+@mixin _grid-inline {
+    display: inline-grid;
+}
+
+@mixin _grid-col($count) {
+    grid-template-columns: repeat($count, 1fr);
+}
+
+@mixin grid {
+
+    $grid-max-col: 12;
+
+    .wui-grid {
+        @include _grid;
+
+        &-inline {
+            @include _grid-inline;
+        }
+    }
+
+    @each $name, $size in a.$wui-breakpoints {
+        @include a.media-up($name) {
+            .wui-grid-#{$name} {
+                @include _grid;
+
+                &-inline {
+                    @include _grid-inline;
+                }
+            }
+        }
+    }
+
+    @for $i from 1 through $grid-max-col {
+        .wui-grid-col-#{$i} {
+            @include _grid-col($i);
+        }
+
+        @each $name, $size in a.$wui-breakpoints {
+            @include a.media-up($name) {
+                .wui-grid-col-#{$name}-#{$i} {
+                    @include _grid-col($i);
+                }
+            }
+        }    
+    }
+
+}

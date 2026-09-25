@@ -85,7 +85,7 @@ export class TablePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
     this.refreshData();
   }
 

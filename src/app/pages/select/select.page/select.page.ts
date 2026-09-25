@@ -86,7 +86,7 @@ export class SelectPage implements OnInit {
   ]);
 
   async ngOnInit(): Promise<void> {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
 
     // Load snippet select secara paralel dari public/snippets/select/
     const [outlined, filled, states, richOptions] = await Promise.all([
