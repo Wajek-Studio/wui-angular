@@ -1,0 +1,35 @@
+<!-- Tombol untuk masing-masing host -->
+<div class="wui-grid-inline wui-grid-col-2 wui-column-gap-3 wui-mb-3">
+  <button wuiButton color="primary" (click)="openHostA()">Buka Host A</button>
+  <button wuiButton color="secondary" (click)="openHostB()">Buka Host B</button>
+</div>
+
+<!-- Dua host berdampingan -->
+<div class="multi-host-row">
+  <div class="page-demo-box" wuiPageHost name="host-a">
+    <span class="host-placeholder">Host A</span>
+  </div>
+  <div class="page-demo-box" wuiPageHost name="host-b">
+    <span class="host-placeholder">Host B</span>
+  </div>
+</div>
+
+<!-- Template Host A -->
+<ng-template #hostATpl>
+  <wui-page>
+    <div wuiPageContent wuiScrollbar class="wui-p-4">
+      <h3 class="wui-headline-small wui-mb-2">Host A</h3>
+      <p class="wui-body-medium">Halaman ini hanya mengisi Host A. Host B tidak terpengaruh.</p>
+    </div>
+  </wui-page>
+</ng-template>
+
+<!-- Template Host B -->
+<ng-template #hostBTpl>
+  <wui-page>
+    <div wuiPageContent wuiScrollbar class="wui-p-4">
+      <h3 class="wui-headline-small wui-mb-2">Host B</h3>
+      <p class="wui-body-medium">Halaman ini hanya mengisi Host B. Host A tidak terpengaruh.</p>
+    </div>
+  </wui-page>
+</ng-template>

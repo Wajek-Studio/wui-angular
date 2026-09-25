@@ -1,0 +1,17 @@
+<!-- Tombol aksi -->
+<button wuiButton color="primary" (click)="openDefaultPage()">Buka Halaman</button>
+
+<!-- Host tempat halaman dipasang -->
+<div class="page-demo-box" wuiPageHost name="default-demo"></div>
+
+<!-- Template halaman -->
+<ng-template #defaultPageTpl>
+  <wui-page>
+    <div wuiPageContent wuiScrollbar class="wui-p-4">
+      <h3 class="wui-headline-small wui-mb-2">Halaman Aktif</h3>
+      <p class="wui-body-medium wui-mb-3">
+        Halaman ini dipasang ke dalam host via <code>replace()</code>.
+      </p>
+    </div>
+  </wui-page>
+</ng-template>

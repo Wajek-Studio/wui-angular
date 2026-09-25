@@ -1,0 +1,40 @@
+<!-- Tombol aksi -->
+<div class="wui-grid-inline wui-grid-col-2 wui-column-gap-3 wui-mb-3">
+  <button wuiButton color="primary" (click)="openMainPage()">Buka Halaman Utama</button>
+  <button wuiButton color="primary" variant="outlined" (click)="openSubPage()">Buka Sub-Halaman</button>
+</div>
+
+<!-- Host tempat halaman ditumpuk -->
+<div class="page-demo-box" wuiPageHost name="nested-demo"></div>
+
+<!-- Template halaman utama -->
+<ng-template #mainPageTpl>
+  <wui-page>
+    <div wuiPageContent wuiScrollbar class="wui-p-4">
+      <h3 class="wui-headline-small wui-mb-2">Halaman Utama</h3>
+      <p class="wui-body-medium wui-mb-3">
+        Dipasang via <code>replace()</code>.
+      </p>
+      <button wuiButton size="sm" color="primary" (click)="openSubPage()">
+        Buka Sub-Halaman →
+      </button>
+    </div>
+  </wui-page>
+</ng-template>
+
+<!-- Template sub-halaman (nested) -->
+<ng-template #subPageTpl>
+  <wui-page>
+    <div wuiPageContent wuiScrollbar class="wui-p-4">
+      <div class="wui-d-flex wui-align-items-center wui-justify-content-between wui-mb-2">
+        <h3 class="wui-headline-small wui-m-0">Sub-Halaman</h3>
+        <button wuiButton size="sm" variant="text" (click)="closeSubPage()">Tutup ×</button>
+      </div>
+      <p class="wui-body-medium wui-mb-3">
+        Ditumpuk di atas halaman utama via <code>open()</code>.
+        Tutup untuk kembali ke halaman di bawahnya.
+      </p>
+      <button wuiButton size="sm" color="primary" (click)="closeSubPage()">Tutup Halaman</button>
+    </div>
+  </wui-page>
+</ng-template>

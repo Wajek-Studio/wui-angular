@@ -1,5 +1,39 @@
 .page-demo-box {
+    position: relative;
+    overflow: hidden;
     width: 350px;
-    height: 350px;
+    height: 220px;
     border: 1px solid var(--wui-color-outline);
+    border-radius: 4px;
+
+    &--small {
+        width: 250px;
+    }
+}
+
+.host-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wui-color-on-surface-variant);
+    font-size: 0.85rem;
+    opacity: 0.5;
+}
+
+.demo-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.multi-host-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.demo-nested-layer {
+    border-left: 2px solid var(--wui-color-primary);
 }
