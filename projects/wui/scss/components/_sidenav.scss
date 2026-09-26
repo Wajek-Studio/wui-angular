@@ -16,10 +16,32 @@
     .wui-sidenav {
         flex: 0 0 auto;
         display: block;
-        opacity: 1;
-        width: var(--wui-sidenav-width, 16rem);
-        padding-inline: var(--wui-space-2);
-        padding-block: var(--wui-space-4);
+        opacity: 0;
+        overflow: hidden;
+        width: 0;
+        transition: 
+            opacity 100ms linear,
+            width 100ms linear;
+        will-change: width, opacity;
+
+        &-content {
+            transform: translateX(-100%);
+            padding-inline: var(--wui-space-2);
+            padding-block: var(--wui-space-4);
+
+            transition: 
+                transform 100ms linear;
+            will-change: transform;
+        }
+        
+        &--show {
+            opacity: 1;
+            width: var(--wui-sidenav-width, 16rem);
+
+            .wui-sidenav-content {
+                transform: translateX(0);
+            }
+        }
 
         &-item {
             display: flex;
@@ -33,6 +55,7 @@
             font-weight: 500;
             line-height: 1.25rem;
             border-radius: .5rem;
+            text-overflow: clip;
 
             wui-icon {
                 --wui-icon-size: 1.75rem;
@@ -55,7 +78,10 @@
             color: var(--wui-color-on-surface-variant);
             padding-top: var(--wui-space-3);
             padding-bottom: var(--wui-space-2);
+            text-overflow: clip;
         }
+
+        
         
     }
 

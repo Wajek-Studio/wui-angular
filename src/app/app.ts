@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { WuiApp, WuiButton, WuiIcon, WuiTopbar, WuiSidenavContainer, WuiPageHost, WuiSidenav } from '@wajek/wui';
+import { Component, inject } from '@angular/core';
+import { WuiApp, WuiButton, WuiIcon, WuiTopbar, WuiSidenavContainer, WuiPageHost, WuiSidenav, WuiSidenavService } from '@wajek/wui';
 import { RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -21,13 +21,13 @@ import { RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/rou
 })
 export class App {
 
-  // private readonly sidenavService = inject(WuiSidenavService);
+  private readonly sidenavService = inject(WuiSidenavService);
 
   /** Id harus sama dengan `id` pada `<wui-sidenav>` di template. */
   private readonly sidenavId = 'app-sidenav';
 
   toggleSidenav() {
-    // this.sidenavService.toggle(this.sidenavId);
+    this.sidenavService.toggle(this.sidenavId);
   }
 
   toggleSidenavMini() {

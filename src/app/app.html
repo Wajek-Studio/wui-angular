@@ -1,7 +1,7 @@
 <wui-app>
   <wui-topbar>
     <div class="wui-topbar-leading">
-      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMini()">
+      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenav()">
         <wui-icon icon="menu"></wui-icon>
       </button>
     </div>
@@ -20,7 +20,7 @@
   </wui-topbar>
 
   <wui-sidenav-container>
-    <wui-sidenav>
+    <wui-sidenav id="app-sidenav" [show]="true">
       <a class="wui-sidenav-item" routerLink="/home" routerLinkActive="active">
         <wui-icon icon="play"></wui-icon>
         <span class="wui-sidenav-item--label">Memulai</span>
