@@ -1,163 +1,99 @@
 <ng-template #pageTpl>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="radio-doc-container">
-      <header class="doc-header">
-        <a routerLink="/home" class="doc-back-btn">← Kembali ke Beranda</a>
-        <h1 class="doc-title">Radio Button</h1>
-        <p class="doc-subtitle">
-          Komponen pemilihan opsi tunggal eksklusif di <code>@wajek/wui</code> menggunakan
-          <code>&lt;wui-radio-group&gt;</code> dan <code>&lt;wui-radio-button&gt;</code> dengan dukungan penuh
-          two-way data binding (<code>[(ngModel)]</code>) dan Reactive Forms.
-        </p>
-      </header>
+    <div wuiPageContent wuiScrollbar>
+      <div wuiContainer class="wui-py-5">
+        
+        <h1 class="wui-headline-large--em wui-mb-4">Radio Button</h1>
+        
+        <div class="wui-mb-4">
+          <p>
+            Komponen <code>&lt;wui-radio-group&gt;</code> dan <code>&lt;wui-radio-button&gt;</code> untuk pemilihan opsi tunggal eksklusif. Terintegrasi penuh dengan <code>[(ngModel)]</code> maupun <i>Reactive Forms</i>.
+          </p>
+        </div>
 
-      <p class="doc-note">
-        <strong>Prinsip Penggunaan:</strong> <code>&lt;wui-radio-group&gt;</code> bertindak sebagai form control
-        induk (mengimplementasikan <code>ControlValueAccessor</code>). Status aktif (<em>checked</em>) dan penonaktifan
-        (<em>disabled</em>) pada setiap <code>&lt;wui-radio-button&gt;</code> diturunkan secara terpadu dari grupnya.
-      </p>
+        <!-- ─── USAGE ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Usage</h2>
 
-      <!-- 1. PENGGUNAAN DASAR -->
-      <section class="doc-section">
-        <h2 class="section-title">1. Penggunaan Dasar</h2>
-        <p class="section-note">
-          Radio button horizontal bawaan dengan sinkronisasi nilai secara langsung melalui <code>[(ngModel)]</code>.
-        </p>
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Radio Group Horizontal"
+            description="Bawaan standar untuk susunan menyamping. Otomatis sinkron via [(ngModel)]."
+            [tabs]="[
+              { label: 'radio-basic-example.html', code: '/examples/radio-basic-example/radio-basic-example.html', language: 'html' },
+              { label: 'radio-basic-example.ts', code: '/examples/radio-basic-example/radio-basic-example.ts', language: 'typescript' }
+            ]"
+          >
+            <radio-basic-example></radio-basic-example>
+          </app-showcase>
+        </div>
 
-        <app-showcase
-          title="Radio Group Horizontal"
-          description="Pilih salah satu warna di bawah ini untuk melihat pembaruan state secara langsung."
-          [tabs]="basicTabs()"
-        >
-          <div class="demo-wrapper">
-            <wui-radio-group [ngModel]="selectedColor()" (ngModelChange)="selectedColor.set($event)">
-              <wui-radio-button value="merah">Merah</wui-radio-button>
-              <wui-radio-button value="hijau">Hijau</wui-radio-button>
-              <wui-radio-button value="biru">Biru</wui-radio-button>
-            </wui-radio-group>
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Disabled State"
+            description="Tambahkan properti [disabled] pada <wui-radio-group> untuk langsung mematikan semua pilihan di dalamnya."
+            [tabs]="[
+              { label: 'radio-disabled-example.html', code: '/examples/radio-disabled-example/radio-disabled-example.html', language: 'html' },
+              { label: 'radio-disabled-example.ts', code: '/examples/radio-disabled-example/radio-disabled-example.ts', language: 'typescript' }
+            ]"
+          >
+            <radio-disabled-example></radio-disabled-example>
+          </app-showcase>
+        </div>
 
-            <div class="demo-output wui-mt-3">
-              Warna terpilih: <strong>{{ selectedColor() }}</strong>
-            </div>
-          </div>
-        </app-showcase>
-      </section>
+        <!-- ─── MODIFIER ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Modifier</h2>
 
-      <!-- 2. STATUS DINONAKTIFKAN (DISABLED) -->
-      <section class="doc-section">
-        <h2 class="section-title">2. Status Dinonaktifkan (Disabled)</h2>
-        <p class="section-note">
-          Gunakan properti <code>[disabled]="true"</code> pada <code>&lt;wui-radio-group&gt;</code> untuk menonaktifkan
-          seluruh pilihan di dalam grup secara otomatis.
-        </p>
+        <h3 class="wui-title-medium--em wui-mb-3">wui-radio-group</h3>
+        <div class="wui-edge-fix-4 wui-mb-5">
+          <table wuiTable>
+            <thead>
+              <tr>
+                <th>Properti</th>
+                <th>Tipe</th>
+                <th>Default</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>[(ngModel)]</code></td>
+                <td><code>any</code></td>
+                <td>-</td>
+                <td>Mengikat nilai terpilih dari grup. Mendukung <i>two-way binding</i> dan <i>Reactive Forms</i>.</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Menonaktifkan seluruh <code>wui-radio-button</code> yang ada di dalam grup ini.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <app-showcase
-          title="Disabled State"
-          description="Gunakan tombol toggle untuk beralih antara status aktif dan dinonaktifkan."
-          [tabs]="disabledTabs()"
-        >
-          <div class="demo-wrapper">
-            <div class="wui-d-flex wui-align-items-center wui-gap-3 wui-mb-3">
-              <button wuiButton variant="outlined" (click)="toggleDisabled()">
-                {{ isDisabled() ? 'Aktifkan Radio' : 'Nonaktifkan Radio' }}
-              </button>
-              <span class="status-indicator">
-                Status saat ini: <strong>{{ isDisabled() ? 'Disabled' : 'Enabled' }}</strong>
-              </span>
-            </div>
+        <h3 class="wui-title-medium--em wui-mb-3">wui-radio-button</h3>
+        <div class="wui-edge-fix-4 wui-mb-5">
+          <table wuiTable>
+            <thead>
+              <tr>
+                <th>Properti</th>
+                <th>Tipe</th>
+                <th>Default</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>any</code> <em>(Required)</em></td>
+                <td>-</td>
+                <td>Nilai spesifik untuk opsi ini. Jika diklik, <code>wui-radio-group</code> akan di-update dengan nilai ini.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-            <wui-radio-group
-              [ngModel]="selectedStatus()"
-              (ngModelChange)="selectedStatus.set($event)"
-              [disabled]="isDisabled()"
-            >
-              <wui-radio-button value="aktif">Aktif</wui-radio-button>
-              <wui-radio-button value="arsip">Diarsipkan</wui-radio-button>
-              <wui-radio-button value="hapus">Dihapus</wui-radio-button>
-            </wui-radio-group>
-          </div>
-        </app-showcase>
-      </section>
-
-      <!-- 3. ORIENTASI VERTIKAL -->
-      <section class="doc-section">
-        <h2 class="section-title">3. Orientasi Vertikal</h2>
-        <p class="section-note">
-          Terapkan utilitas flexbox <code>.wui-flex-column</code> dan <code>.wui-gap-3</code> pada grup untuk
-          menampilkan daftar pilihan yang bersusun ke bawah.
-        </p>
-
-        <app-showcase
-          title="Susunan Vertikal (List Pilihan)"
-          description="Pilihan metode pengiriman dengan tata letak kolom yang rapi."
-          [tabs]="verticalTabs()"
-        >
-          <div class="demo-wrapper">
-            <wui-radio-group
-              [ngModel]="shippingMethod()"
-              (ngModelChange)="shippingMethod.set($event)"
-              class="wui-flex-column wui-gap-3"
-            >
-              <wui-radio-button value="instant">Pengiriman Instan (1-2 Jam)</wui-radio-button>
-              <wui-radio-button value="same-day">Same Day (Tiba Hari Ini)</wui-radio-button>
-              <wui-radio-button value="reguler">Reguler (2-3 Hari Kerja)</wui-radio-button>
-              <wui-radio-button value="kargo">Kargo / Truk Berat</wui-radio-button>
-            </wui-radio-group>
-
-            <div class="demo-output wui-mt-3">
-              Metode terpilih: <strong>{{ shippingMethod() }}</strong>
-            </div>
-          </div>
-        </app-showcase>
-      </section>
-
-      <!-- 4. LABEL KAYA & KONTEN KUSTOM -->
-      <section class="doc-section">
-        <h2 class="section-title">4. Label Kaya &amp; Konten Kustom</h2>
-        <p class="section-note">
-          Slot <code>&lt;ng-content&gt;</code> di dalam <code>&lt;wui-radio-button&gt;</code> menerima elemen HTML apa pun,
-          seperti judul tebal, paragraf deskripsi, atau lencana.
-        </p>
-
-        <app-showcase
-          title="Pilihan Paket dengan Deskripsi"
-          description="Radio button yang menampung judul dan deskripsi subteks."
-          [tabs]="richLabelTabs()"
-        >
-          <div class="demo-wrapper">
-            <wui-radio-group
-              [ngModel]="plan()"
-              (ngModelChange)="plan.set($event)"
-              class="wui-flex-column wui-gap-3"
-            >
-              <wui-radio-button value="free">
-                <div class="plan-card">
-                  <strong class="plan-name">Paket Gratis</strong>
-                  <p class="plan-desc">Akses fitur dasar untuk eksplorasi dan proyek personal tanpa batas waktu.</p>
-                </div>
-              </wui-radio-button>
-
-              <wui-radio-button value="pro">
-                <div class="plan-card">
-                  <strong class="plan-name">Paket Profesional — Rp 99.000 / bln</strong>
-                  <p class="plan-desc">Dukungan prioritas, penyimpanan tidak terbatas, dan kolaborasi multi-pengguna.</p>
-                </div>
-              </wui-radio-button>
-
-              <wui-radio-button value="enterprise">
-                <div class="plan-card">
-                  <strong class="plan-name">Paket Enterprise</strong>
-                  <p class="plan-desc">Keamanan tingkat lanjut, garansi SLA 99.9%, dan integrasi sistem kustom.</p>
-                </div>
-              </wui-radio-button>
-            </wui-radio-group>
-
-            <div class="demo-output wui-mt-3">
-              Paket terpilih: <strong>{{ plan() }}</strong>
-            </div>
-          </div>
-        </app-showcase>
-      </section>
+      </div>
     </div>
   </wui-page>
 </ng-template>
