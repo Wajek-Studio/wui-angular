@@ -1,6 +1,5 @@
-import { Component, effect, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { WuiButton, WuiPage, WuiPageContent, WuiPageService, WuiScrollbar } from '@wajek/wui';
+import { Component, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
+import { WuiContainer, WuiPage, WuiPageContent, WuiPageService, WuiScrollbar, WuiTable } from '@wajek/wui';
 import { ShowcaseComponent } from '../../shared/showcase';
 import { FlexDirectionExample } from '../../../examples/flex-direction-example/flex-direction-example';
 import { FlexJustifyExample } from '../../../examples/flex-justify-example/flex-justify-example';
@@ -12,10 +11,11 @@ import { FlexResponsiveExample } from '../../../examples/flex-responsive-example
   selector: 'app-flex-page',
   standalone: true,
   imports: [
-    RouterLink, 
+    WuiContainer,
     WuiPage, 
     WuiPageContent, 
     WuiScrollbar, 
+    WuiTable,
     ShowcaseComponent,
     FlexDirectionExample,
     FlexJustifyExample,

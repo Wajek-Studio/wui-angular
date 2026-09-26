@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, inject, viewChild } from '@angular/core';
-import { WuiPage, WuiPageContent, WuiPageService, WuiScrollbar, WuiTable } from '@wajek/wui';
+import { WuiContainer, WuiPage, WuiPageContent, WuiPageService, WuiScrollbar, WuiTable } from '@wajek/wui';
 import { ShowcaseComponent } from '../../../shared/showcase/showcase.component';
 
 import { GridContainerExample } from '../../../../examples/grid-container-example/grid-container-example';
@@ -10,6 +10,7 @@ import { GridGapExample } from '../../../../examples/grid-gap-example/grid-gap-e
 @Component({
   selector: 'app-grid.page',
   imports: [
+    WuiContainer,
     WuiPage,
     WuiPageContent,
     WuiScrollbar,

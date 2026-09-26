@@ -42,5 +42,7 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'play', path: mdiPlayCircle },
       { name: 'snackbar', path: mdiSquareRoundedBadge},
       { name: 'radiobox-marked', path: mdiRadioboxMarked},
-      { name: 'text-box', path: mdiTextBox}
+      { name: 'text-box', path: mdiTextBox},
+      { name: 'grid', path: mdiViewGridOutline },
+      { name: 'flex', path: mdiViewArrayOutline },
 ]

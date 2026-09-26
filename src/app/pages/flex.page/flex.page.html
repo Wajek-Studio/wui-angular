@@ -1,235 +1,209 @@
 <ng-template #page>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-px-5 wui-py-4">
-      <header class="wui-mb-5 wui-border-b wui-pb-4">
-        <a routerLink="/home" class="wui-text-primary wui-fw-medium wui-d-inline-block wui-mb-2 wui-text-sm" style="text-decoration: none;">← Kembali ke Beranda</a>
-        <h1 class="wui-title-large wui-font-bold wui-m-0 wui-mb-2">Flexbox Utilities</h1>
-        <p class="wui-text-on-surface-variant wui-text-sm wui-m-0">
-          Rangkaian utilitas flexbox komprehensif di <code>@wajek/wui</code> (arah, wrap, perataan, distribusi ruang,
-          dan urutan) untuk mengatur tata letak 1-dimensi secara responsif tanpa menulis CSS kustom.
-        </p>
-      </header>
+    <div wuiPageContent wuiScrollbar>
+      <div wuiContainer class="wui-pb-5 wui-pt-5">
 
-      <div class="wui-bg-surface-container wui-border wui-px-3 wui-py-3 wui-radius-2 wui-mb-5">
-        <p class="wui-text-on-surface-variant wui-text-sm wui-m-0">
-          Utilitas flexbox datang dari <code>projects/wui/scss/utilities/_flex.scss</code> (Level 6).
-          Format nama mengikuti konvensi Bootstrap dengan prefix <code>wui-</code> (seperti <code>.wui-flex</code>,
-          <code>.wui-justify-content-between</code>, <code>.wui-align-items-center</code>).
-          Setiap utilitas memiliki varian responsif <code>-&lt;bp&gt;</code> (contoh: <code>.wui-flex-md-row</code>,
-          <code>.wui-justify-content-lg-end</code>).
-        </p>
-      </div>
+        <h1 class="wui-headline-large--em wui-mb-4">WUI Flexbox</h1>
 
-      <!-- 1. DIRECTION & WRAP -->
-      <section class="wui-mb-5">
-        <h2 class="wui-title-large--em wui-mb-2">1. Direction &amp; Wrap</h2>
-        <p class="wui-text-on-surface-variant wui-text-sm wui-m-0 wui-mb-4" style="max-width: 75ch;">
-          Atur arah aliran anak flex dengan <code>.wui-flex-row</code>, <code>.wui-flex-row-reverse</code>,
-          <code>.wui-flex-col</code>, <code>.wui-flex-col-reverse</code>, serta pembungkusan dengan
-          <code>.wui-flex-wrap</code> atau <code>.wui-flex-nowrap</code>.
-        </p>
-
-        <app-showcase
-          title="Arah Fleksibel & Wrap"
-          description="Contoh flex row, flex col, dan flex-wrap saat item melebihi lebar wadah."
-          [tabs]="[
-            { label: 'flex-direction-example.html', code: '/examples/flex-direction-example/flex-direction-example.html', language: 'html' },
-            { label: 'flex-direction-example.ts', code: '/examples/flex-direction-example/flex-direction-example.ts', language: 'typescript' },
-            { label: 'flex-direction-example.scss', code: '/examples/flex-direction-example/flex-direction-example.scss', language: 'scss' }
-          ]"
-        >
-          <flex-direction-example></flex-direction-example>
-        </app-showcase>
-      </section>
-
-      <!-- 2. JUSTIFY CONTENT -->
-      <section class="wui-mb-5">
-        <h2 class="wui-title-large--em wui-mb-2">2. Justify Content (Distribusi Sumbu Utama)</h2>
-        <p class="wui-text-on-surface-variant wui-text-sm wui-m-0 wui-mb-4" style="max-width: 75ch;">
-          Mengontrol perataan dan jarak antar item di sepanjang sumbu utama menggunakan
-          <code>.wui-justify-content-start</code>, <code>center</code>, <code>end</code>, <code>between</code>,
-          <code>around</code>, dan <code>evenly</code>.
-        </p>
-
-        <app-showcase
-          title="Distribusi Horizontal"
-          description="Bandingkan cara elemen diposisikan di sepanjang baris."
-          [tabs]="[
-            { label: 'flex-justify-example.html', code: '/examples/flex-justify-example/flex-justify-example.html', language: 'html' },
-            { label: 'flex-justify-example.ts', code: '/examples/flex-justify-example/flex-justify-example.ts', language: 'typescript' },
-            { label: 'flex-justify-example.scss', code: '/examples/flex-justify-example/flex-justify-example.scss', language: 'scss' }
-          ]"
-        >
-          <flex-justify-example></flex-justify-example>
-        </app-showcase>
-      </section>
-
-      <!-- 3. ALIGN ITEMS & ALIGN SELF -->
-      <section class="wui-mb-5">
-        <h2 class="wui-title-large--em wui-mb-2">3. Align Items &amp; Align Self (Sumbu Silang)</h2>
-        <p class="wui-text-on-surface-variant wui-text-sm wui-m-0 wui-mb-4" style="max-width: 75ch;">
-          Gunakan <code>.wui-align-items-start</code>, <code>center</code>, <code>end</code>, <code>baseline</code>,
-          <code>stretch</code> pada wadah, atau <code>.wui-align-self-*</code> untuk menimpa perataan pada anak individual.
-        </p>
-
-        <app-showcase
-          title="Perataan Vertikal / Silang"
-          description="Item dengan ketinggian bervariasi disejajarkan di tengah atau ditimpa per item."
-          [tabs]="[
-            { label: 'flex-align-example.html', code: '/examples/flex-align-example/flex-align-example.html', language: 'html' },
-            { label: 'flex-align-example.ts', code: '/examples/flex-align-example/flex-align-example.ts', language: 'typescript' },
-            { label: 'flex-align-example.scss', code: '/examples/flex-align-example/flex-align-example.scss', language: 'scss' }
-          ]"
-        >
-          <flex-align-example></flex-align-example>
-        </app-showcase>
-      </section>
-
-      <!-- 4. FILL, GROW & ORDER -->
-      <section class="wui-mb-5">
-        <h2 class="wui-title-large--em wui-mb-2">4. Flex Fill, Grow &amp; Order</h2>
-        <p class="wui-text-on-surface-variant wui-text-sm wui-m-0 wui-mb-4" style="max-width: 75ch;">
-          <code>.wui-flex-fill</code> (setara <code>flex: 1 1 auto</code>) membuat item mengisi sisa ruang yang tersedia.
-          <code>.wui-flex-grow-1</code> dan <code>.wui-order-*</code> mengatur proporsi pembesaran dan visual urutan.
-        </p>
-
-        <app-showcase
-          title="Pengisian Ruang & Pengurutan"
-          description="Pemanfaatan flex-fill untuk navigasi / toolbar dan perubahan urutan visual."
-          [tabs]="[
-            { label: 'flex-fill-example.html', code: '/examples/flex-fill-example/flex-fill-example.html', language: 'html' },
-            { label: 'flex-fill-example.ts', code: '/examples/flex-fill-example/flex-fill-example.ts', language: 'typescript' },
-            { label: 'flex-fill-example.scss', code: '/examples/flex-fill-example/flex-fill-example.scss', language: 'scss' }
-          ]"
-        >
-          <flex-fill-example></flex-fill-example>
-        </app-showcase>
-      </section>
-
-      <!-- 5. RESPONSIVE FLEX -->
-      <section class="wui-mb-5">
-        <h2 class="wui-title-large--em wui-mb-2">5. Responsive Flex Layout</h2>
-        <p class="wui-text-on-surface-variant wui-text-sm wui-m-0 wui-mb-4" style="max-width: 75ch;">
-          Pola umum kartu aksi / header halaman: bersusun ke bawah (<code>col</code>) pada mobile,
-          dan berdampingan (<code>row</code>) mulai dari breakpoint <code>md</code>.
-        </p>
-
-        <app-showcase
-          title="Kolom di Mobile → Baris di Desktop"
-          description="Gunakan .wui-flex-col .wui-flex-md-row untuk kartu adaptif."
-          [tabs]="[
-            { label: 'flex-responsive-example.html', code: '/examples/flex-responsive-example/flex-responsive-example.html', language: 'html' },
-            { label: 'flex-responsive-example.ts', code: '/examples/flex-responsive-example/flex-responsive-example.ts', language: 'typescript' },
-            { label: 'flex-responsive-example.scss', code: '/examples/flex-responsive-example/flex-responsive-example.scss', language: 'scss' }
-          ]"
-        >
-          <flex-responsive-example></flex-responsive-example>
-        </app-showcase>
-      </section>
-
-      <!-- ─── API REFERENCE (CLASS UTILITIES) ──────────────────────────── -->
-      <h2 class="wui-headline-medium--em wui-mt-5 wui-mb-4">Daftar Class (Referensi)</h2>
-
-      <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
-        <h3 class="wui-title-medium--em wui-mb-3">A. Display & Flex Direction</h3>
-        <div class="wui-edge-fix-4 wui-mb-5">
-          <table wuiTable>
-            <thead>
-              <tr><th>Class</th><th>Keterangan</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>.wui-flex</code></td>
-                <td>Menerapkan <code>display: flex</code>.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-flex-inline</code></td>
-                <td>Menerapkan <code>display: inline-flex</code>.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-flex-row</code>, <code>.wui-flex-row-reverse</code></td>
-                <td>Mengatur arah flex menjadi horizontal.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-flex-col</code>, <code>.wui-flex-col-reverse</code></td>
-                <td>Mengatur arah flex menjadi vertikal (kolom).</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="wui-mb-4">
+          <p>
+            Rangkaian utilitas flexbox komprehensif untuk mengatur tata letak 1-dimensi secara responsif tanpa menulis CSS kustom. 
+            Setiap utilitas memiliki varian responsif (contoh: <code>.wui-flex-md-row</code>).
+          </p>
         </div>
 
-        <h3 class="wui-title-medium--em wui-mb-3">B. Wrap, Grow & Shrink</h3>
-        <div class="wui-edge-fix-4 wui-mb-5">
-          <table wuiTable>
-            <thead>
-              <tr><th>Class</th><th>Keterangan</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>.wui-flex-wrap</code>, <code>.wui-flex-nowrap</code>, <code>.wui-flex-wrap-reverse</code></td>
-                <td>Mengatur pembungkusan item (flex-wrap).</td>
-              </tr>
-              <tr>
-                <td><code>.wui-flex-fill</code></td>
-                <td>Mengisi sisa ruang secara proporsional (<code>flex: 1 1 auto</code>).</td>
-              </tr>
-              <tr>
-                <td><code>.wui-flex-grow-0</code>, <code>.wui-flex-grow-1</code></td>
-                <td>Mengatur kemampuan item untuk membesar.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-flex-shrink-0</code>, <code>.wui-flex-shrink-1</code></td>
-                <td>Mengatur kemampuan item untuk menyusut.</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- 1. DIRECTION & WRAP -->
+        <h2 class="wui-title-large--em wui-mb-4">1. Direction &amp; Wrap</h2>
+        
+        <div class="wui-mb-4">
+          <app-showcase
+            title="Arah Fleksibel & Wrap"
+            description="Contoh flex row, flex col, dan flex-wrap saat item melebihi lebar wadah."
+            [tabs]="[
+              { label: 'flex-direction-example.html', code: '/examples/flex-direction-example/flex-direction-example.html', language: 'html' },
+              { label: 'flex-direction-example.ts', code: '/examples/flex-direction-example/flex-direction-example.ts', language: 'typescript' }
+            ]"
+          >
+            <flex-direction-example></flex-direction-example>
+          </app-showcase>
         </div>
 
-        <h3 class="wui-title-medium--em wui-mb-3">C. Alignment (Justify & Align)</h3>
-        <div class="wui-edge-fix-4 wui-mb-5">
-          <table wuiTable>
-            <thead>
-              <tr><th>Class</th><th>Keterangan</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>.wui-justify-content-[value]</code></td>
-                <td>Perataan sumbu utama. Nilai: <code>start</code>, <code>end</code>, <code>center</code>, <code>between</code>, <code>around</code>, <code>evenly</code>.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-align-items-[value]</code></td>
-                <td>Perataan sumbu silang pada container. Nilai: <code>start</code>, <code>end</code>, <code>center</code>, <code>baseline</code>, <code>stretch</code>.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-align-self-[value]</code></td>
-                <td>Perataan sumbu silang pada item individu. Nilai: <code>auto</code>, <code>start</code>, <code>end</code>, <code>center</code>, <code>baseline</code>, <code>stretch</code>.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-align-content-[value]</code></td>
-                <td>Perataan pembungkusan garis (flex-wrap). Nilai: <code>start</code>, <code>end</code>, <code>center</code>, <code>between</code>, <code>around</code>, <code>stretch</code>.</td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-5 wui-bg-surface-container">
+          <div class="wui-edge-fix-4 wui-mb-1">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-flex</code>, <code>.wui-flex-inline</code></td>
+                  <td>Menerapkan <code>display: flex</code> atau <code>inline-flex</code>.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-flex-row</code>, <code>.wui-flex-row-reverse</code></td>
+                  <td>Mengatur arah flex menjadi horizontal.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-flex-col</code>, <code>.wui-flex-col-reverse</code></td>
+                  <td>Mengatur arah flex menjadi vertikal (kolom).</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-flex-wrap</code>, <code>.wui-flex-nowrap</code></td>
+                  <td>Mengatur pembungkusan item jika melebihi ruang.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <h3 class="wui-title-medium--em wui-mb-3">D. Order & Breakpoints</h3>
-        <div class="wui-edge-fix-4 wui-mb-1">
-          <table wuiTable>
-            <thead>
-              <tr><th>Class</th><th>Keterangan</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>.wui-order-[value]</code></td>
-                <td>Urutan visual item. Nilai: <code>0..5</code>, <code>first</code>, <code>last</code>.</td>
-              </tr>
-              <tr>
-                <td><code>.wui-[flex-property]-[bp]-[value]</code></td>
-                <td>Hampir <strong>semua</strong> class flex memiliki varian responsif (<code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>xxl</code>). Contoh: <code>.wui-flex-md-row</code>, <code>.wui-justify-content-lg-between</code>, <code>.wui-order-xl-1</code>.</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- 2. JUSTIFY CONTENT -->
+        <h2 class="wui-title-large--em wui-mb-4">2. Justify Content (Sumbu Utama)</h2>
+
+        <div class="wui-mb-4">
+          <app-showcase
+            title="Distribusi Horizontal"
+            description="Bandingkan cara elemen diposisikan di sepanjang baris."
+            [tabs]="[
+              { label: 'flex-justify-example.html', code: '/examples/flex-justify-example/flex-justify-example.html', language: 'html' },
+              { label: 'flex-justify-example.ts', code: '/examples/flex-justify-example/flex-justify-example.ts', language: 'typescript' }
+            ]"
+          >
+            <flex-justify-example></flex-justify-example>
+          </app-showcase>
         </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-5 wui-bg-surface-container">
+          <div class="wui-edge-fix-4 wui-mb-1">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-justify-content-[value]</code></td>
+                  <td>Nilai: <code>start</code>, <code>end</code>, <code>center</code>, <code>between</code>, <code>around</code>, <code>evenly</code>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. ALIGN ITEMS & ALIGN SELF -->
+        <h2 class="wui-title-large--em wui-mb-4">3. Align Items &amp; Align Self (Sumbu Silang)</h2>
+
+        <div class="wui-mb-4">
+          <app-showcase
+            title="Perataan Vertikal / Silang"
+            description="Item dengan ketinggian bervariasi disejajarkan di tengah atau ditimpa per item."
+            [tabs]="[
+              { label: 'flex-align-example.html', code: '/examples/flex-align-example/flex-align-example.html', language: 'html' },
+              { label: 'flex-align-example.ts', code: '/examples/flex-align-example/flex-align-example.ts', language: 'typescript' }
+            ]"
+          >
+            <flex-align-example></flex-align-example>
+          </app-showcase>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-5 wui-bg-surface-container">
+          <div class="wui-edge-fix-4 wui-mb-1">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-align-items-[value]</code></td>
+                  <td>Perataan untuk semua anak flex. Nilai: <code>start</code>, <code>end</code>, <code>center</code>, <code>baseline</code>, <code>stretch</code>.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-align-self-[value]</code></td>
+                  <td>Menimpa perataan pada satu item. Nilai sama seperti di atas.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-align-content-[value]</code></td>
+                  <td>Perataan pembungkusan garis (saat wrap).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. FILL, GROW & ORDER -->
+        <h2 class="wui-title-large--em wui-mb-4">4. Flex Fill, Grow &amp; Order</h2>
+
+        <div class="wui-mb-4">
+          <app-showcase
+            title="Pengisian Ruang & Pengurutan"
+            description="Pemanfaatan flex-fill untuk navigasi / toolbar dan perubahan urutan visual."
+            [tabs]="[
+              { label: 'flex-fill-example.html', code: '/examples/flex-fill-example/flex-fill-example.html', language: 'html' },
+              { label: 'flex-fill-example.ts', code: '/examples/flex-fill-example/flex-fill-example.ts', language: 'typescript' }
+            ]"
+          >
+            <flex-fill-example></flex-fill-example>
+          </app-showcase>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-5 wui-bg-surface-container">
+          <div class="wui-edge-fix-4 wui-mb-1">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-flex-fill</code></td>
+                  <td>Mengisi sisa ruang secara proporsional (<code>flex: 1 1 auto</code>).</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-flex-grow-0</code>, <code>.wui-flex-grow-1</code></td>
+                  <td>Mengatur kemampuan item untuk membesar.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-flex-shrink-0</code>, <code>.wui-flex-shrink-1</code></td>
+                  <td>Mengatur kemampuan item untuk menyusut.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-order-[value]</code></td>
+                  <td>Urutan visual item. Nilai: <code>0..5</code>, <code>first</code>, <code>last</code>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 5. RESPONSIVE FLEX -->
+        <h2 class="wui-title-large--em wui-mb-4">5. Responsive Flex Layout</h2>
+
+        <div class="wui-mb-4">
+          <app-showcase
+            title="Kolom di Mobile → Baris di Desktop"
+            description="Pola umum responsif: bersusun ke bawah (col) pada layar kecil, berdampingan (row) mulai md."
+            [tabs]="[
+              { label: 'flex-responsive-example.html', code: '/examples/flex-responsive-example/flex-responsive-example.html', language: 'html' },
+              { label: 'flex-responsive-example.ts', code: '/examples/flex-responsive-example/flex-responsive-example.ts', language: 'typescript' }
+            ]"
+          >
+            <flex-responsive-example></flex-responsive-example>
+          </app-showcase>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-5 wui-bg-surface-container">
+          <div class="wui-edge-fix-4 wui-mb-1">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class Breakpoint</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-[flex-property]-[bp]-[value]</code></td>
+                  <td>Tambahkan sisipan breakpoint (<code>sm</code>, <code>md</code>, <code>lg</code>, <code>xl</code>, <code>xxl</code>). Contoh: <code>.wui-flex-md-row</code>, <code>.wui-justify-content-lg-between</code>, <code>.wui-order-xl-1</code>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   </wui-page>
