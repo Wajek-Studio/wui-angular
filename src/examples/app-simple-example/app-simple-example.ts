@@ -1,27 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { WuiApp, WuiButton, WuiIcon, WuiTopbar, WuiSidenavContainer, WuiSidenav, WuiSidenavFull, WuiSidenavBody, WuiSidenavService, WuiSidenavContainerContent } from '@wajek/wui';
+import { WuiApp, WuiButton, WuiIcon, WuiTopbar, WuiSidenavContainer } from '@wajek/wui';
 
 @Component({
     selector: 'app-simple-example',
     imports: [
-    WuiApp,
-    WuiTopbar,
-    WuiButton,
-    WuiIcon,
-    WuiSidenavContainer,
-    WuiSidenav,
-    WuiSidenavFull,
-    WuiSidenavBody,
-    WuiSidenavContainerContent
-],
+        WuiApp,
+        WuiTopbar,
+        WuiButton,
+        WuiIcon,
+        WuiSidenavContainer
+    ],
     templateUrl: './app-simple-example.html'
 })
 export class AppSimpleExample {
 
-    private readonly sidenavService = inject(WuiSidenavService);
+    // private readonly sidenavService = inject(WuiSidenavService);
 
     toggleSidenav() {
-        this.sidenavService.toggle('main-sidenav');
+        // this.sidenavService.toggle('main-sidenav');
     }
 
 }

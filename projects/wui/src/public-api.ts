@@ -29,13 +29,7 @@ export * from './page/page.service';
 export * from './page/page.host';
 
 export * from './sidenav/sidenav.container';
-
-export * from './sidenav/sidenav/sidenav';
-export * from './sidenav/sidenav/sidenav.options';
-export * from './sidenav/sidenav/sidenav.service';
-export * from './sidenav/sidenav-area/sidenav-area';
-export * from './sidenav/sidenav-item/sidenav-item';
-export * from './sidenav/sidenav-divider/sidenav-divider';
+export * from './sidenav/sidenav';
 
 export * from './topbar/topbar';
 

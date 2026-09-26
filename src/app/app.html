@@ -20,8 +20,38 @@
   </wui-topbar>
 
   <wui-sidenav-container>
-    <wui-sidenav id="app-sidenav">
-      <!-- Konten Penuh: mode open (ikon + teks label) -->
+    <wui-sidenav>
+      <a class="wui-sidenav-item" routerLink="/home" routerLinkActive="active">
+        <wui-icon icon="play"></wui-icon>
+        <span class="wui-sidenav-item--label">Memulai</span>
+      </a>
+
+      <div class="wui-sidenav-subheader">
+        <span class="wui-sidenav-subheader--label">LAYOUT</span>
+      </div>
+      <a class="wui-sidenav-item" routerLink="/page" routerLinkActive="active">
+        <wui-icon icon="text-box"></wui-icon>
+        <span class="wui-sidenav-item--label">Page</span>
+      </a>
+
+      <div class="wui-sidenav-subheader">
+        <span class="wui-sidenav-subheader--label">COMPONENTS</span>
+      </div>
+      <a class="wui-sidenav-item" routerLink="/button" routerLinkActive="active">
+        <wui-icon icon="button-cursor"></wui-icon>
+        <span class="wui-sidenav-item--label">Button</span>
+      </a>
+
+      <div class="wui-sidenav-subheader">
+        <span class="wui-sidenav-subheader--label">BELUM</span>
+      </div>
+      <a class="wui-sidenav-item" routerLink="/form" routerLinkActive="active">
+        <wui-icon icon="form-textbox"></wui-icon>
+        <span class="wui-sidenav-item--label">Form Field</span>
+      </a>
+    </wui-sidenav>
+
+    <!-- <wui-sidenav id="app-sidenav">
       <nav wuiSidenavFull>
         <div wuiSidenavBody wuiScrollbar>
           <a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem>
@@ -112,8 +142,8 @@
           </a>
         </div>
       </nav>
-    </wui-sidenav>
-    <div wuiSidenavContainerContent>
+    </wui-sidenav> -->
+    <div class="wui-sidenav-container--content">
       <div wuiPageHost>
         <router-outlet/>
       </div>

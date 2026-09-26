@@ -3,59 +3,16 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideIcons } from '@wajek/wui';
-import {
-  mdiAccount,
-  mdiAccountCircle,
-  mdiButtonCursor,
-  mdiCog,
-  mdiDockLeft,
-  mdiDotsVertical,
-  mdiFormatFont,
-  mdiFormTextbox,
-  mdiFormSelect,
-  mdiGestureTapButton,
-  mdiHome,
-  mdiMenu,
-  mdiPlayCircle,
-  mdiTable,
-  mdiViewDashboardOutline,
-  mdiWindowMaximize,
-  mdiSquareRoundedBadge,
-  mdiViewGridOutline,
-  mdiViewArrayOutline,
-  mdiFormatLineSpacing,
-  mdiRadioboxMarked,
-} from '@mdi/js';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { provideHttpClient } from '@angular/common/http';
+import { appIcons } from './app.icons';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideIcons(
-      { name: 'home', path: mdiHome },
-      { name: 'account', path: mdiAccount },
-      { name: 'settings', path: mdiCog },
-      { name: 'menu', path: mdiMenu },
-      { name: 'account-circle', path: mdiAccountCircle },
-      { name: 'format-font', path: mdiFormatFont },
-      { name: 'button', path: mdiButtonCursor },
-      { name: 'dock-left', path: mdiDockLeft },
-      { name: 'table', path: mdiTable },
-      { name: 'layout', path: mdiViewDashboardOutline },
-      { name: 'grid', path: mdiViewGridOutline },
-      { name: 'flex', path: mdiViewArrayOutline },
-      { name: 'spacing', path: mdiFormatLineSpacing },
-      { name: 'dots-vertical', path: mdiDotsVertical },
-      { name: 'dialog', path: mdiWindowMaximize },
-      { name: 'form', path: mdiFormTextbox },
-      { name: 'form-select', path: mdiFormSelect },
-      { name: 'play', path: mdiPlayCircle },
-      { name: 'snackbar', path: mdiSquareRoundedBadge},
-      { name: 'radiobox-marked', path: mdiRadioboxMarked}
-    ),
+    provideIcons(...appIcons),
     provideHighlightOptions({
       coreLibraryLoader: () => import('highlight.js/lib/core'),
       languages: {

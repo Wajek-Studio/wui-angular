@@ -3,8 +3,6 @@ import { SettingPage } from './pages/setting/setting.page/setting.page';
 import { SettingNestedPage } from './pages/setting/setting-nested.page/setting-nested.page';
 import { HomePage } from './pages/home/home.page/home.page';
 import { HomeNestedPage } from './pages/home/home-nested.page/home-nested.page';
-import { TipografiPage } from './pages/tipografi.page/tipografi.page';
-import { PagePage } from './pages/page/page.page';
 
 export const routes: Routes = [{
     path: 'home', component: HomePage, children: [{
@@ -27,8 +25,6 @@ export const routes: Routes = [{
 }, {
     path: 'form', loadComponent: () => import('./pages/form/form.page/form.page').then(m => m.FormPage)
 }, {
-    path: 'sidenav', loadComponent: () => import('./pages/sidenaav.page/sidenaav.page').then(m => m.SidenaavPage)
-}, {
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
 }, {
     path: 'grid', loadComponent: () => import('./pages/grid/grid.page/grid.page').then(m => m.GridPage)
@@ -45,12 +41,8 @@ export const routes: Routes = [{
 }, {
     path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
 }, {
-    // Halaman spike F0 (`wui-context-menu-plan.md`) — kode sekali pakai, tidak ditautkan di
-    // navigasi. Hapus rute ini (beserta folder `pages/context-menu-spike/`) setelah F0 selesai.
     path: 'context-menu-spike', loadComponent: () => import('./pages/context-menu-spike/context-menu-spike.page').then(m => m.ContextMenuSpikePage)
 }, {
-    // Halaman spike F0 (`wui-select-plan.md`) — kode sekali pakai, tidak ditautkan di navigasi.
-    // Hapus rute ini (beserta folder `pages/select-spike/`) setelah F0 selesai.
     path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)
 },{
     path: '', redirectTo: '/home', pathMatch: 'full'
