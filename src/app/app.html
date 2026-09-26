@@ -13,161 +13,53 @@
     </div>
 
     <div class="wui-topbar-trailing">
-      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenav()">
+      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMini()">
         <wui-icon icon="account-circle"></wui-icon>
       </button>
     </div>
   </wui-topbar>
 
   <wui-sidenav-container>
-    <wui-sidenav id="app-sidenav" [show]="true">
-      <a class="wui-sidenav-item" routerLink="/home" routerLinkActive="active">
-        <wui-icon icon="play"></wui-icon>
-        <span class="wui-sidenav-item--label">Memulai</span>
-      </a>
+    <wui-sidenav [id]="sidenavId" [show]="true">
+      <div class="wui-sidenav-content" wuiScrollbar>
+        <a wuiSidenavItem label="Memulai" routerLink="/home" routerLinkActive="active">
+          <wui-icon icon="play"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Tipografi" routerLink="/tipografi" routerLinkActive="active">
+          <wui-icon icon="format-font"></wui-icon>
+        </a>
 
-      <div class="wui-sidenav-subheader">
-        <span class="wui-sidenav-subheader--label">LAYOUT</span>
-      </div>
-      <a class="wui-sidenav-item" routerLink="/page" routerLinkActive="active">
-        <wui-icon icon="text-box"></wui-icon>
-        <span class="wui-sidenav-item--label">Page</span>
-      </a>
+        <div wuiSidenavSubheader label="LAYOUT"></div>
+        <a wuiSidenavItem label="Page" routerLink="/page" routerLinkActive="active">
+          <wui-icon icon="text-box"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Flex" routerLink="/flex" routerLinkActive="active">
+          <wui-icon icon="flex"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Grid" routerLink="/grid" routerLinkActive="active">
+          <wui-icon icon="grid"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Spacing &amp; Utilities" routerLink="/spacing" routerLinkActive="active">
+          <wui-icon icon="spacing"></wui-icon>
+        </a>
 
-      <div class="wui-sidenav-subheader">
-        <span class="wui-sidenav-subheader--label">COMPONENTS</span>
+        <div wuiSidenavSubheader label="COMPONENTS"></div>
+        <a wuiSidenavItem label="Button" routerLink="/button" routerLinkActive="active">
+          <wui-icon icon="button-cursor"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Text Field" routerLink="/form" routerLinkActive="active">
+          <wui-icon icon="form-textbox"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Radio" routerLink="/radio" routerLinkActive="active">
+          <wui-icon icon="radiobox-marked"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Snackbar" routerLink="/snackbar" routerLinkActive="active">
+          <wui-icon icon="snackbar"></wui-icon>
+        </a>
       </div>
-      <a class="wui-sidenav-item" routerLink="/button" routerLinkActive="active">
-        <wui-icon icon="button-cursor"></wui-icon>
-        <span class="wui-sidenav-item--label">Button</span>
-      </a>
-
-      <div class="wui-sidenav-subheader">
-        <span class="wui-sidenav-subheader--label">BELUM</span>
-      </div>
-      <a class="wui-sidenav-item" routerLink="/form" routerLinkActive="active">
-        <wui-icon icon="form-textbox"></wui-icon>
-        <span class="wui-sidenav-item--label">Form Field</span>
-      </a>
-      <a class="wui-sidenav-item" routerLink="/flex" routerLinkActive="active">
-        <wui-icon icon="flex"></wui-icon>
-        <span class="wui-sidenav-item--label">Flex</span>
-      </a>
-      <a class="wui-sidenav-item" routerLink="/grid" routerLinkActive="active">
-        <wui-icon icon="grid"></wui-icon>
-        <span class="wui-sidenav-item--label">Grid</span>
-      </a>
-      <a class="wui-sidenav-item" routerLink="/spacing" routerLinkActive="active">
-        <wui-icon icon="spacing"></wui-icon>
-        <span class="wui-sidenav-item--label">Spacing &amp; Utilities</span>
-      </a>
-      <a class="wui-sidenav-item" routerLink="/tipografi" routerLinkActive="active">
-        <wui-icon icon="format-font"></wui-icon>
-        <span class="wui-sidenav-item--label">Tipografi</span>
-      </a>
-      <a class="wui-sidenav-item" routerLink="/radio" routerLinkActive="active">
-        <wui-icon icon="radiobox-marked"></wui-icon>
-        <span class="wui-sidenav-item--label">Radio</span>
-      </a>
-      <a class="wui-sidenav-item" routerLink="/snackbar" routerLinkActive="active">
-        <wui-icon icon="snackbar"></wui-icon>
-        <span class="wui-sidenav-item--label">Snackbar</span>
-      </a>
     </wui-sidenav>
 
-    <!-- <wui-sidenav id="app-sidenav">
-      <nav wuiSidenavFull>
-        <div wuiSidenavBody wuiScrollbar>
-          <a wuiButton variant="text" size="lg" routerLink="/home" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="play"></wui-icon> Memulai
-          </a>
-
-          <div wuiSidenavSubheader>Layout</div>
-
-          <a wuiButton variant="text" size="lg" routerLink="/page" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="spacing"></wui-icon>
-            Page
-          </a>
-
-          <div wuiSidenavSubheader>Components</div>
-
-          <a wuiButton variant="text" size="lg" routerLink="/button" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="button"></wui-icon>
-            Button
-          </a>
-
-          <div wuiSidenavSubheader>Belum</div>
-
-          <a wuiButton variant="text" size="lg" routerLink="/form" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="form"></wui-icon>
-            Form
-          </a>
-          
-          <a wuiButton variant="text" size="lg" routerLink="/tipografi" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="format-font"></wui-icon>
-            Tipografi
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/select" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="form-select"></wui-icon>
-            Select
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/dialog" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="dialog"></wui-icon>
-            Dialog
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/context-menu" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="dots-vertical"></wui-icon>
-            Menu konteks
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/sidenav" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="dock-left"></wui-icon>
-            Sidenav
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/table" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="table"></wui-icon>
-            Table
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/snackbar" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="snackbar"></wui-icon>
-            Snackbar
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/radio" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="radiobox-marked"></wui-icon>
-            Radio
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/grid" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="grid"></wui-icon>
-            Grid
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/flex" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="flex"></wui-icon>
-            Flex
-          </a>
-
-          <a wuiButton variant="text" size="lg" routerLink="/spacing" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="spacing"></wui-icon>
-            Spacing &amp; Utilities
-          </a>
-        </div>
-
-        <div wuiSidenavFooter>
-          <a wuiButton variant="text" size="lg" routerLink="/setting" routerLinkActive="is-active" wuiSidenavItem>
-            <wui-icon icon="settings"></wui-icon>
-            Pengaturan
-          </a>
-        </div>
-      </nav>
-    </wui-sidenav> -->
-    <div class="wui-sidenav-container--content">
+    <div wuiSidenavContainerContent>
       <div wuiPageHost>
         <router-outlet/>
       </div>

@@ -25,14 +25,17 @@
         z-index: 10;
 
         &--vertical {
-            right: 0; top: 0; bottom: 0;
+            bottom: 0;
+            top: calc(0px - var(--wui-scrollbar-container-padding-top));
+            right: calc(0px - var(--wui-scrollbar-container-padding-right));
             width: var(--wui-scrollbar-width);
             height: var(--wui-scrollbar-container-height);
         }
 
         &--horizontal {
             top: calc(var(--wui-scrollbar-container-height) - var(--wui-scrollbar-width));
-            bottom: 0; left: 0; right: 0;
+            left: calc(0px - var(--wui-scrollbar-container-padding-left));
+            bottom: 0;  right: 0;
             height: var(--wui-scrollbar-width);
             width: var(--wui-scrollbar-container-width);
         }

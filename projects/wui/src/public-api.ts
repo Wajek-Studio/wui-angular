@@ -30,6 +30,7 @@ export * from './page/page.host';
 
 export * from './sidenav/sidenav.container';
 export * from './sidenav/sidenav.service';
+export * from './sidenav/sidenav.item';
 export * from './sidenav/sidenav';
 
 export * from './topbar/topbar';

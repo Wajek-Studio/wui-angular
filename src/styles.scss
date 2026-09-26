@@ -23,23 +23,35 @@ div.app-shell {
     }
 }
 
-// body {
-//     background-color: var(--wui-color-surface-container);
-// }
+body {
+    background-color: var(--wui-color-surface-container);
+}
 
-// wui-app {
-//     .wui-sidenav-container {
-//         &--content {
-//             margin: var(--wui-space-2);
-//         }
-//     }
+wui-app {
+    .wui-sidenav-container {
+        &--content {
+            margin-left: var(--wui-space-3);
+            margin-right: var(--wui-space-3);
+            margin-bottom: var(--wui-space-3);
+        }
+    }
 
-//     .wui-page--host {
-//         border-radius: var(--wui-space-3);
-//         overflow: hidden;
-//     }
+    .wui-page--host {
+        border-radius: var(--wui-space-3);
+        overflow: hidden;
+    }
 
-//     .wui-container {
-//         padding-inline: 3.75rem;
-//     }
-// }
+    .wui-container {
+        padding-inline: 3.75rem;
+    }
+}
+
+app-root {
+    &.sidenav-show {
+        wui-app {
+            .wui-sidenav-container--content {
+                margin-left: 0;
+            }
+        }
+    }
+}

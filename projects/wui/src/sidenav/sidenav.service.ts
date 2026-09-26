@@ -55,4 +55,13 @@ export class WuiSidenavService {
         });
     }
 
+    toggleMini(id: string = 'main') {
+        if(this.state(id) == undefined) return;
+        this._states.update((states) => {
+            states[id].mode = states[id].mode == 'full' ? 'mini' : 'full';
+            this.stateChange.next(states[id]);
+            return states;
+        });
+    }
+
 }

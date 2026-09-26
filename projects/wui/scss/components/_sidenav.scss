@@ -20,26 +20,49 @@
         overflow: hidden;
         width: 0;
         transition: 
-            opacity 100ms linear,
-            width 100ms linear;
+            opacity 100ms ease,
+            width 100ms ease;
         will-change: width, opacity;
 
         &-content {
             transform: translateX(-100%);
             padding-inline: var(--wui-space-2);
             padding-block: var(--wui-space-4);
+            height: 100%;
 
             transition: 
-                transform 100ms linear;
+                transform 100ms ease;
             will-change: transform;
         }
         
         &--show {
             opacity: 1;
-            width: var(--wui-sidenav-width, 16rem);
+
+            &.wui-sidenav--show {
+                width: var(--wui-sidenav-width, 16rem);
+
+                &.wui-sidenav--mini {
+                    width: 4.75rem;
+                }
+            }
 
             .wui-sidenav-content {
                 transform: translateX(0);
+            }
+        }
+
+        &--mini {
+            .wui-sidenav-subheader {
+                height: calc(var(--wui-space-3) + var(--wui-space-2));
+                opacity: 0;
+            }
+
+            .wui-sidenav-item {
+                border-radius: 1.625rem;
+            }
+
+            .wui-sidenav-item--label {
+                display: none;
             }
         }
 
@@ -47,8 +70,8 @@
             display: flex;
             align-items: center;
             width: 100%;
-            padding-inline: var(--wui-space-3);
-            height: 2.5rem;
+            padding-inline: 1.125rem;
+            height: 2.75rem;
             column-gap: var(--wui-space-4);
             color: var(--wui-color-on-surface);
             text-decoration: none;
@@ -56,10 +79,7 @@
             line-height: 1.25rem;
             border-radius: .5rem;
             text-overflow: clip;
-
-            wui-icon {
-                --wui-icon-size: 1.75rem;
-            }
+            white-space: nowrap;
 
             &:hover {
                 background-color: var(--wui-color-state-layer-primary-opacity-08);
@@ -72,13 +92,17 @@
         }
 
         &-subheader {
-            padding-inline: var(--wui-space-3);
+            padding-inline: 1.125rem;
             font-size: .75rem;
             font-weight: 600;
             color: var(--wui-color-on-surface-variant);
             padding-top: var(--wui-space-3);
             padding-bottom: var(--wui-space-2);
             text-overflow: clip;
+            white-space: nowrap;
+            transition: opacity 100ms ease,
+                height 100ms ease;
+            will-change: opacity, height;
         }
 
         

@@ -68,6 +68,14 @@ export class WuiScrollbar {
     private measure() {
         const el = this.host.nativeElement;
         const { scrollHeight, clientHeight, scrollWidth, clientWidth } = el;
+
+        const elComputedStyle = getComputedStyle(el);
+        const { paddingRight, paddingTop, paddingBottom, paddingLeft } = elComputedStyle;
+
+        this.renderer.setStyle(this.gutter, '--wui-scrollbar-container-padding-left', `${paddingLeft}`, RendererStyleFlags2.DashCase);
+        this.renderer.setStyle(this.gutter, '--wui-scrollbar-container-padding-bottom', `${paddingBottom}`, RendererStyleFlags2.DashCase);
+        this.renderer.setStyle(this.gutter, '--wui-scrollbar-container-padding-right', `${paddingRight}`, RendererStyleFlags2.DashCase);
+        this.renderer.setStyle(this.gutter, '--wui-scrollbar-container-padding-top', `${paddingTop}`, RendererStyleFlags2.DashCase);
         this.renderer.setStyle(this.gutter, '--wui-scrollbar-container-height', `${clientHeight}px`, RendererStyleFlags2.DashCase);
         this.renderer.setStyle(this.gutter, '--wui-scrollbar-container-width', `${clientWidth}px`, RendererStyleFlags2.DashCase);
 
