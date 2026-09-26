@@ -25,7 +25,7 @@
     }
 
     @each $name, $size in a.$wui-breakpoints {
-        @include a.media-up($name) {
+        @include a.media-up($size) {
             .wui-grid-#{$name} {
                 @include _grid;
 
@@ -42,7 +42,7 @@
         }
 
         @each $name, $size in a.$wui-breakpoints {
-            @include a.media-up($name) {
+            @include a.media-up($size) {
                 .wui-grid-col-#{$name}-#{$i} {
                     @include _grid-col($i);
                 }

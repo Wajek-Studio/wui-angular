@@ -2,12 +2,13 @@
   <wui-page>
     <div wuiPageContent wuiScrollbar>
       <div wuiContainer class="wui-py-5">
-        <h1 class="wui-headline-large--em wui-mb-4">Grid &amp; Container</h1>
+        <h1 class="wui-headline-large--em wui-mb-4">Container, Row/Col &amp; Grid</h1>
         
         <div class="wui-mb-4">
           <p>
-            Sistem pembungkus terpusat responsif (<code>.wui-container</code>) dan kisi 12-kolom berbasis CSS Grid native (<code>.wui-row</code> &amp; <code>.wui-col-*</code>).
-            Penggunaan CSS Grid murni (<code>display: grid</code>) dengan <code>minmax(0, 1fr)</code> membuat kolom anti-bocor pada konten panjang.
+            Sistem pembungkus terpusat responsif (<code>.wui-container</code>), sistem tata letak 12-kolom (<code>.wui-row</code> &amp; <code>.wui-col-*</code>), 
+            serta utilitas murni CSS Grid (<code>.wui-grid</code> &amp; <code>.wui-grid-col-*</code>) di <code>@wajek/wui</code>.
+            Keduanya memanfaatkan CSS Grid murni (<code>display: grid</code>) yang modern dan tangguh.
           </p>
         </div>
 
@@ -16,8 +17,8 @@
         
         <div class="wui-mb-4">
           <app-showcase
-            title="Container vs Container Fluid"
-            description="Perbandingan visual batas lebar antara kontainer standar (maks 1200px) dan fluid (selalu 100%)."
+            title="Container Standar"
+            description="Wadah pusat dengan batas maksimal proporsional (mentok 1200px di layar lebar)."
             [tabs]="[
               { label: 'grid-container-example.html', code: '/examples/grid-container-example/grid-container-example.html', language: 'html' },
               { label: 'grid-container-example.ts', code: '/examples/grid-container-example/grid-container-example.ts', language: 'typescript' }
@@ -36,24 +37,20 @@
               <tbody>
                 <tr>
                   <td><code>.wui-container</code></td>
-                  <td>Memusatkan layout dan membatasi lebar maksimal proporsional (mentok 1200px di layar lebar).</td>
-                </tr>
-                <tr>
-                  <td><code>.wui-container-fluid</code></td>
-                  <td>Selalu mengisi 100% lebar layar (tanpa batas maksimal).</td>
+                  <td>Memusatkan layout dan membatasi lebar maksimal proporsional.</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- ─── 2. BASIC 12-COLUMN GRID ──────────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">2. Basic 12-Column Grid</h2>
+        <!-- ─── 2. ROW & COLUMN (12-COLUMN) ──────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">2. Row &amp; Column (12-Column Layout)</h2>
         
         <div class="wui-mb-4">
           <app-showcase
             title="Pembagian 12 Kolom"
-            description="Grid 12-kolom native dengan berbagai kombinasi lebar kolom. Jarak sel diatur dengan class utilitas."
+            description="Tata letak row-col standar dengan berbagai kombinasi lebar kolom. Jarak sel diatur dengan class utilitas gap."
             [tabs]="[
               { label: 'grid-basic-example.html', code: '/examples/grid-basic-example/grid-basic-example.html', language: 'html' },
               { label: 'grid-basic-example.ts', code: '/examples/grid-basic-example/grid-basic-example.ts', language: 'typescript' }
@@ -72,7 +69,7 @@
               <tbody>
                 <tr>
                   <td><code>.wui-row</code></td>
-                  <td>Memulai wadah CSS Grid dengan definisi 12 kolom merata.</td>
+                  <td>Memulai wadah tata letak dengan definisi 12 kolom merata.</td>
                 </tr>
                 <tr>
                   <td><code>.wui-col</code></td>
@@ -87,8 +84,8 @@
           </div>
         </div>
 
-        <!-- ─── 3. RESPONSIVE BREAKPOINTS ────────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">3. Responsive Breakpoints</h2>
+        <!-- ─── 3. RESPONSIVE ROW/COL BREAKPOINTS ────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">3. Responsive Breakpoints (Row/Col)</h2>
         
         <div class="wui-mb-4">
           <app-showcase
@@ -119,13 +116,57 @@
           </div>
         </div>
 
-        <!-- ─── 4. GRID GAPS ─────────────────────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">4. Pengaturan Gap</h2>
+        <!-- ─── 4. CSS GRID UTILITIES ────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">4. CSS Grid Utilities &amp; Span</h2>
+        
+        <div class="wui-mb-4">
+          <app-showcase
+            title="Grid Otomatis & Grid Span"
+            description="Utilitas grid murni ini memungkinkan pembuatan template kolom (mis. wui-grid-col-3). Anda bisa merentangkan (span) elemen di dalamnya dengan menggunakan class .wui-col-* biasa."
+            [tabs]="[
+              { label: 'grid-utility-example.html', code: '/examples/grid-utility-example/grid-utility-example.html', language: 'html' },
+              { label: 'grid-utility-example.ts', code: '/examples/grid-utility-example/grid-utility-example.ts', language: 'typescript' }
+            ]"
+          >
+            <grid-utility-example></grid-utility-example>
+          </app-showcase>
+        </div>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-5 wui-bg-surface-container">
+          <div class="wui-edge-fix-4 wui-mb-1">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class Utilitas Grid</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-grid</code></td>
+                  <td>Mengaktifkan <code>display: grid</code> pada wadah.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-grid-inline</code></td>
+                  <td>Mengaktifkan <code>display: inline-grid</code> pada wadah.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-grid-col-[1..12]</code></td>
+                  <td>Menentukan jumlah template kolom di wadah grid untuk semua ukuran layar.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-grid-col-[bp]-[1..12]</code></td>
+                  <td>Menentukan jumlah template kolom di wadah grid mulai <em>breakpoint</em> <code>bp</code>.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ─── 5. GRID GAPS ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">5. Pengaturan Gap</h2>
         
         <div class="wui-mb-4">
           <app-showcase
             title="Kombinasi Row & Column Gap"
-            description="Karena berbasis CSS Grid, Anda dapat memasang wui-gap-col dan wui-gap-row yang berbeda tanpa margin negatif."
+            description="Karena berbasis CSS Grid, Anda dapat memasang wui-gap-col dan wui-gap-row yang berbeda secara independen."
             [tabs]="[
               { label: 'grid-gap-example.html', code: '/examples/grid-gap-example/grid-gap-example.html', language: 'html' },
               { label: 'grid-gap-example.ts', code: '/examples/grid-gap-example/grid-gap-example.ts', language: 'typescript' }

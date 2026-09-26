@@ -6,6 +6,7 @@ import { GridContainerExample } from '../../../../examples/grid-container-exampl
 import { GridBasicExample } from '../../../../examples/grid-basic-example/grid-basic-example';
 import { GridResponsiveExample } from '../../../../examples/grid-responsive-example/grid-responsive-example';
 import { GridGapExample } from '../../../../examples/grid-gap-example/grid-gap-example';
+import { GridUtilityExample } from '../../../../examples/grid-utility-example/grid-utility-example';
 
 @Component({
   selector: 'app-grid.page',
@@ -19,6 +20,7 @@ import { GridGapExample } from '../../../../examples/grid-gap-example/grid-gap-e
     GridContainerExample,
     GridBasicExample,
     GridResponsiveExample,
+    GridUtilityExample,
     GridGapExample
   ],
   templateUrl: './grid.page.html',

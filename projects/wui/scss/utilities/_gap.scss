@@ -13,7 +13,7 @@
     }
 
     @each $name, $size in a.$wui-breakpoints {
-        @include a.media-up($name) {
+        @include a.media-up($size) {
             @each $gap-size, $value in a.$wui-spacers {
                 .wui-gap-col-#{$name}-#{$gap-size} {
                     column-gap: $value;
