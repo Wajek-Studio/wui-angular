@@ -42,7 +42,7 @@
 <!-- ─── TEMPLATE SEKSI 2: NESTED ───────────────────────────────────────── -->
 <ng-template #mainPageTpl>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4">
+    <div class="wui-page-content" wuiScrollbar class="wui-p-4">
       <h3 class="wui-headline-small wui-mb-2">Halaman Utama</h3>
       <p class="wui-body-medium wui-mb-3">Dipasang via <code>replace()</code>.</p>
       <button wuiButton size="sm" color="primary" (click)="openSubPage()">
@@ -54,7 +54,7 @@
 
 <ng-template #subPageTpl>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4 demo-nested-layer">
+    <div class="wui-page-content" wuiScrollbar class="wui-p-4 demo-nested-layer">
       <div class="wui-d-flex wui-align-items-center wui-justify-content-between wui-mb-2">
         <h3 class="wui-headline-small wui-m-0">Sub-Halaman</h3>
         <button wuiButton size="sm" variant="text" (click)="closeSubPage()">Tutup ×</button>
@@ -70,7 +70,7 @@
 <!-- ─── TEMPLATE SEKSI 3: MULTI-HOST ───────────────────────────────────── -->
 <ng-template #hostATpl>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4">
+    <div class="wui-page-content" wuiScrollbar class="wui-p-4">
       <h3 class="wui-headline-small wui-mb-2">Host A</h3>
       <p class="wui-body-medium">Hanya mengisi Host A. Host B tidak terpengaruh.</p>
     </div>
@@ -79,7 +79,7 @@
 
 <ng-template #hostBTpl>
   <wui-page>
-    <div wuiPageContent wuiScrollbar class="wui-p-4">
+    <div class="wui-page-content" wuiScrollbar class="wui-p-4">
       <h3 class="wui-headline-small wui-mb-2">Host B</h3>
       <p class="wui-body-medium">Hanya mengisi Host B. Host A tidak terpengaruh.</p>
     </div>

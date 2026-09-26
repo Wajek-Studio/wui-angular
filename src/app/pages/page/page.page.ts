@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, TemplateRef, viewChild } from "@angular/core";
-import { WuiContainer, WuiPage, WuiPageContent, WuiPageService, WuiScrollbar, WuiTable } from "@wajek/wui";
+import { WuiPage, WuiPageService, WuiScrollbar, WuiTable } from "@wajek/wui";
 import { PageSimpleExample } from "../../../examples/page-simple-example/page-simple-example";
 import { ShowcaseComponent } from "../../shared/showcase/showcase.component";
 
@@ -7,7 +7,7 @@ import { ShowcaseComponent } from "../../shared/showcase/showcase.component";
     selector: 'app-page-page',
     templateUrl: './page.page.html',
     styleUrl: './page.page.scss',
-    imports: [WuiPage, WuiPageContent, WuiContainer, ShowcaseComponent, WuiTable, WuiScrollbar, PageSimpleExample]
+    imports: [WuiPage, ShowcaseComponent, WuiTable, WuiScrollbar, PageSimpleExample]
 })
 export class PagePage implements OnInit {
     

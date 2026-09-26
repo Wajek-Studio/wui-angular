@@ -1,8 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, computed, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
-import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiScrollbar, WuiContainer, WuiTable } from '@wajek/wui';
-import { firstValueFrom } from 'rxjs';
-import { ShowcaseComponent, ShowcaseTab } from '../../../shared/showcase';
+import { Component, inject, OnInit, TemplateRef, viewChild } from '@angular/core';
+import { WuiButton, WuiIcon, WuiPage, WuiPageService, WuiScrollbar, WuiTable } from '@wajek/wui';
+import { ShowcaseComponent } from '../../../shared/showcase';
 import { ButtonSimpleExample } from '../../../../examples/button-simple.example';
 
 export interface ButtonSnippet {
@@ -12,7 +10,7 @@ export interface ButtonSnippet {
 
 @Component({
   selector: 'app-button.page',
-  imports: [WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar, WuiContainer, WuiTable, ShowcaseComponent, ButtonSimpleExample],
+  imports: [WuiButton, WuiIcon, WuiPage, ShowcaseComponent, WuiScrollbar, WuiTable, ShowcaseComponent, ButtonSimpleExample],
   templateUrl: './button.page.html',
   styleUrl: './button.page.scss',
 })

@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
-import { WuiButton, WuiContainer, WuiDialogRef, WuiDialogService, WuiPage, WuiPageService, WuiPageContent, WuiScrollbar, WuiTable } from '@wajek/wui';
+import { WuiButton, WuiDialogRef, WuiDialogService, WuiPage, WuiPageService, WuiScrollbar, WuiTable } from '@wajek/wui';
 import { HapusDialog } from '../hapus-dialog/hapus-dialog';
 import { ShowcaseComponent } from '../../../shared/showcase';
 
@@ -12,7 +12,7 @@ import { ShowcaseComponent } from '../../../shared/showcase';
  */
 @Component({
   selector: 'app-dialog.page',
-  imports: [WuiButton, WuiContainer, WuiPage, ShowcaseComponent, WuiPageContent, WuiScrollbar, WuiTable],
+  imports: [WuiButton, WuiPage, ShowcaseComponent, WuiScrollbar, WuiTable],
   templateUrl: './dialog.page.html',
   styleUrl: './dialog.page.scss',
 })

@@ -1,21 +1,13 @@
-import { Component, Directive } from "@angular/core";
-
-@Directive({
-    selector: '[wuiPageContent]',
-    host: {
-        '[class.wui-page--content]': 'true'
-    }
-})
-export class WuiPageContent { }
+import { Component } from "@angular/core";
 
 @Component({
     selector: 'wui-page',
     template: `
     <ng-content select="wui-topbar"/>
-    <ng-content select="[wuiPageContent]"/>
+    <ng-content select=".wui-page-content"/>
     `,
     host: {
-        '[class.wui-page]': 'true'
+        class: 'wui-page'
     }
 })
 export class WuiPage { }

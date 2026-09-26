@@ -1,9 +1,7 @@
 import { Component, OnInit, TemplateRef, inject, viewChild } from '@angular/core';
 import {
   WuiPage,
-  WuiPageContent,
   WuiPageService,
-  WuiContainer,
   WuiScrollbar,
   WuiTable,
   WuiFormField,
@@ -18,8 +16,6 @@ import { FormReactiveFullExample } from '../../../../examples/form-reactive-full
   selector: 'app-form.page',
   imports: [
     WuiPage,
-    WuiPageContent,
-    WuiContainer,
     WuiScrollbar,
     WuiTable,
     WuiFormField,

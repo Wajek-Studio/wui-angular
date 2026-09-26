@@ -1,8 +1,6 @@
 import { Component, OnInit, TemplateRef, inject, viewChild } from '@angular/core';
 import {
-  WuiContainer,
   WuiPage,
-  WuiPageContent,
   WuiPageService,
   WuiScrollbar,
 } from '@wajek/wui';
@@ -13,9 +11,7 @@ import { SnackbarBasicExample } from '../../../examples/snackbar-basic-example/s
   selector: 'app-snackbar-page',
   standalone: true,
   imports: [
-    WuiContainer,
     WuiPage,
-    WuiPageContent,
     WuiScrollbar,
     ShowcaseComponent,
     SnackbarBasicExample,

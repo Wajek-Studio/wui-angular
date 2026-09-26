@@ -1,9 +1,9 @@
 import { Component, OnInit, TemplateRef, inject, viewChild } from '@angular/core';
-import { WuiBadge, WuiPage, WuiPageContent, WuiPageService, WuiScrollbar, WuiContainer } from '@wajek/wui';
+import { WuiBadge, WuiPage, WuiPageService, WuiScrollbar } from '@wajek/wui';
 
 @Component({
   selector: 'app-tipografi.page',
-  imports: [WuiPage, WuiPageContent, WuiScrollbar, WuiBadge, WuiContainer],
+  imports: [WuiPage, WuiScrollbar, WuiBadge],
   templateUrl: './tipografi.page.html',
   styleUrl: './tipografi.page.scss',
 })

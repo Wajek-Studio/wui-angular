@@ -26,8 +26,7 @@ export * from './select/option';
 export * from './page/page';
 export * from './page/page.ref';
 export * from './page/page.service';
-
-export { WuiPageHost } from './page/page.host';
+export * from './page/page.host';
 
 export * from './sidenav/sidenav.container';
 export * from './sidenav/sidenav.service';
@@ -59,5 +58,3 @@ export * from './radio/radio-button';
 export * from './radio/radio-group';
 
 export * from './scrollbar/scrollbar';
-
-export * from './container/container';

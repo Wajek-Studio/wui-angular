@@ -1,8 +1,6 @@
 import { Component, OnInit, TemplateRef, inject, viewChild } from '@angular/core';
 import {
-  WuiContainer,
   WuiPage,
-  WuiPageContent,
   WuiPageService,
   WuiScrollbar,
 } from '@wajek/wui';
@@ -15,9 +13,7 @@ import { RadioDisabledExample } from '../../../examples/radio-disabled-example/r
   selector: 'app-radio-page',
   standalone: true,
   imports: [
-    WuiContainer,
     WuiPage,
-    WuiPageContent,
     WuiScrollbar,
     ShowcaseComponent,
     RadioBasicExample,
