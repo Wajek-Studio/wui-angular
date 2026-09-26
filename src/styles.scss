@@ -17,6 +17,12 @@
     }
 }
 
+div.app-shell {
+    wui-app {
+        position: absolute;
+    }
+}
+
 body {
     background-color: var(--wui-color-surface-container);
 }
