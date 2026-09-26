@@ -10,68 +10,43 @@
         </div>
 
         <!-- ─── SHOWCASE (TABEL VARIASI) ─────────────────────────────────────────────── -->
-        <h2 class="wui-title-large--em wui-mb-4">Showcase</h2>
+        <h2 class="wui-title-large--em wui-mb-4">Text Field</h2>
 
-        <div class="wui-edge-fix-4 wui-mb-4">
-          <table wuiTable>
-            <thead>
-              <tr>
-                <th width="150">Tipe Input</th>
-                <th>Outlined (Default)</th>
-                <th>Filled</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Baris 1: Input Normal -->
-              <tr>
-                <td>Text Input</td>
-                <td>
-                  <wui-form-field variant="outlined">
-                    <label wuiLabel>Nama Lengkap</label>
-                    <input wuiInput type="text" placeholder="mis. Budi" />
-                  </wui-form-field>
-                </td>
-                <td>
-                  <wui-form-field variant="filled">
-                    <label wuiLabel>Nama Lengkap</label>
-                    <input wuiInput type="text" placeholder="mis. Budi" />
-                  </wui-form-field>
-                </td>
-              </tr>
-              <!-- Baris 2: Textarea -->
-              <tr>
-                <td>Textarea</td>
-                <td>
-                  <wui-form-field variant="outlined">
-                    <label wuiLabel>Catatan</label>
-                    <textarea wuiInput rows="2" placeholder="Tulis catatan..."></textarea>
-                  </wui-form-field>
-                </td>
-                <td>
-                  <wui-form-field variant="filled">
-                    <label wuiLabel>Catatan</label>
-                    <textarea wuiInput rows="2" placeholder="Tulis catatan..."></textarea>
-                  </wui-form-field>
-                </td>
-              </tr>
-              <!-- Baris 3: Input Error State -->
-              <tr>
-                <td>Error State</td>
-                <td>
-                  <wui-form-field variant="outlined" error="Wajib diisi!">
-                    <label wuiLabel>Email</label>
-                    <input wuiInput type="email" value="salah@format" />
-                  </wui-form-field>
-                </td>
-                <td>
-                  <wui-form-field variant="filled" error="Wajib diisi!">
-                    <label wuiLabel>Email</label>
-                    <input wuiInput type="email" value="salah@format" />
-                  </wui-form-field>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="wui-grid wui-grid-col-2 wui-gap-col-4 wui-mb-5">
+          <wui-form-field variant="outlined">
+            <label wuiLabel>Nama Lengkap</label>
+            <input wuiInput type="text" placeholder="mis. Budi" />
+          </wui-form-field>
+          <wui-form-field variant="filled">
+            <label wuiLabel>Nama Lengkap</label>
+            <input wuiInput type="text" placeholder="mis. Budi" />
+          </wui-form-field>
+        </div>
+
+        <h2 class="wui-title-large--em wui-mb-4">Textarea</h2>
+
+        <div class="wui-grid wui-grid-col-2 wui-gap-col-4 wui-mb-5">
+          <wui-form-field variant="outlined">
+            <label wuiLabel>Catatan</label>
+            <textarea wuiInput rows="2" placeholder="Tulis catatan..."></textarea>
+          </wui-form-field>
+          <wui-form-field variant="filled">
+            <label wuiLabel>Catatan</label>
+            <textarea wuiInput rows="2" placeholder="Tulis catatan..."></textarea>
+          </wui-form-field>
+        </div>
+
+        <h2 class="wui-title-large--em wui-mb-4">Error State</h2>
+
+        <div class="wui-grid wui-grid-col-2 wui-gap-col-4 wui-mb-5">
+          <wui-form-field variant="outlined" error="Wajib diisi!">
+            <label wuiLabel>Email</label>
+            <input wuiInput type="email" value="salah@format" />
+          </wui-form-field>
+          <wui-form-field variant="filled" error="Wajib diisi!">
+            <label wuiLabel>Email</label>
+            <input wuiInput type="email" value="salah@format" />
+          </wui-form-field>
         </div>
 
         <!-- ─── USAGE ─────────────────────────────────────────────────── -->
