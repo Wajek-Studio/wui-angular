@@ -1,0 +1,37 @@
+.demo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.demo-boundary {
+  border: 1px dashed color-mix(in srgb, var(--wui-color-on-surface) 25%, transparent);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--wui-color-on-surface) 3%, transparent);
+}
+
+.auto-box {
+  max-width: 260px;
+  padding: 0.75rem 1rem;
+  text-align: center;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--wui-color-primary) 16%, transparent);
+  border: 1px solid var(--wui-color-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wui-color-on-surface);
+}
+
+.nav-item {
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 75%, transparent);
+  padding: 0.25rem 0.5rem;
+}

@@ -1,0 +1,170 @@
+<ng-template #page>
+  <wui-page>
+    <div wuiPageContent wuiScrollbar>
+      <div class="wui-container wui-pt-5 wui-pb-5">
+        <h1 class="wui-headline-large--em wui-mb-4">Grid &amp; Container</h1>
+        
+        <p class="wui-mb-5">
+          Sistem pembungkus terpusat responsif (<code>.wui-container</code>) dan kisi 12-kolom berbasis
+          CSS Grid native (<code>.wui-row</code> &amp; <code>.wui-col-*</code>) di <code>@wajek/wui</code>.
+          Penggunaan CSS Grid murni (<code>display: grid</code>) dengan 12 kolom dan <code>minmax(0, 1fr)</code> 
+          membuat kolom anti-bocor pada konten panjang. Breakpoint menggunakan sistem <em>mobile-first</em>.
+        </p>
+
+        <!-- ─── 1. CONTAINER ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">1. Container (Pembungkus Halaman)</h2>
+        
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Container vs Container Fluid"
+            description="Perbandingan visual batas lebar antara kontainer standar (maks 1200px) dan fluid (selalu 100%)."
+            [tabs]="[
+              { label: 'grid-container-example.html', code: '/examples/grid-container-example/grid-container-example.html', language: 'html' },
+              { label: 'grid-container-example.ts', code: '/examples/grid-container-example/grid-container-example.ts', language: 'typescript' }
+            ]"
+          >
+            <grid-container-example></grid-container-example>
+          </app-showcase>
+        </div>
+
+        <!-- ─── 2. BASIC 12-COLUMN GRID ──────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">2. Basic 12-Column Grid</h2>
+        
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Pembagian 12 Kolom"
+            description="Grid 12-kolom native dengan berbagai kombinasi lebar kolom. Jarak sel diatur dengan class utilitas."
+            [tabs]="[
+              { label: 'grid-basic-example.html', code: '/examples/grid-basic-example/grid-basic-example.html', language: 'html' },
+              { label: 'grid-basic-example.ts', code: '/examples/grid-basic-example/grid-basic-example.ts', language: 'typescript' }
+            ]"
+          >
+            <grid-basic-example></grid-basic-example>
+          </app-showcase>
+        </div>
+
+        <!-- ─── 3. RESPONSIVE BREAKPOINTS ────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">3. Responsive Breakpoints</h2>
+        
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Kolom Responsif Mobile-First"
+            description="Ubah ukuran layar untuk melihat perpindahan pembagian kolom secara dinamis pada breakpoint md dan lg."
+            [tabs]="[
+              { label: 'grid-responsive-example.html', code: '/examples/grid-responsive-example/grid-responsive-example.html', language: 'html' },
+              { label: 'grid-responsive-example.ts', code: '/examples/grid-responsive-example/grid-responsive-example.ts', language: 'typescript' }
+            ]"
+          >
+            <grid-responsive-example></grid-responsive-example>
+          </app-showcase>
+        </div>
+
+        <!-- ─── 4. GRID GAPS ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">4. Pengaturan Gap</h2>
+        
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Kombinasi Row & Column Gap"
+            description="Karena berbasis CSS Grid, Anda dapat memasang wui-gap-col dan wui-gap-row yang berbeda tanpa margin negatif."
+            [tabs]="[
+              { label: 'grid-gap-example.html', code: '/examples/grid-gap-example/grid-gap-example.html', language: 'html' },
+              { label: 'grid-gap-example.ts', code: '/examples/grid-gap-example/grid-gap-example.ts', language: 'typescript' }
+            ]"
+          >
+            <grid-gap-example></grid-gap-example>
+          </app-showcase>
+        </div>
+
+        <!-- ─── API REFERENCE (CLASS UTILITIES) ──────────────────────────── -->
+        <h2 class="wui-headline-medium--em wui-mt-5 wui-mb-4">Daftar Class (Referensi)</h2>
+
+        <div class="wui-border wui-px-4 wui-pt-4 wui-radius-3 wui-mb-4 wui-bg-surface-container">
+          <h3 class="wui-title-medium--em wui-mb-3">A. Container</h3>
+          <div class="wui-edge-fix-4 wui-mb-5">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-container</code></td>
+                  <td>Memusatkan layout dan membatasi lebar maksimal proporsional (mentok 1200px di layar lebar).</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-container-fluid</code></td>
+                  <td>Selalu mengisi 100% lebar layar (tanpa batas maksimal).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="wui-title-medium--em wui-mb-3">B. Parent Grid (Wadah)</h3>
+          <div class="wui-edge-fix-4 wui-mb-5">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-row</code></td>
+                  <td>Memulai wadah CSS Grid dengan definisi 12 kolom merata.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="wui-title-medium--em wui-mb-3">C. Child Grid (Kolom)</h3>
+          <div class="wui-edge-fix-4 wui-mb-5">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-col</code></td>
+                  <td>Setara dengan rentang (span) 1 kolom.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-col-[1..12]</code></td>
+                  <td>Ukuran kolom statis di semua ukuran layar (misal: <code>.wui-col-6</code> memakan 6 kolom).</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-col-[bp]-[1..12]</code></td>
+                  <td>Ukuran kolom yang berlaku mulai <em>breakpoint</em> <code>bp</code> (sm, md, lg, xl, xxl) ke atas.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="wui-title-medium--em wui-mb-3">D. Gap (Jarak Antar Sel)</h3>
+          <div class="wui-edge-fix-4 wui-mb-1">
+            <table wuiTable>
+              <thead>
+                <tr><th>Class</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>.wui-gap-row-[0..5]</code></td>
+                  <td>Mengatur jarak vertikal antar baris untuk semua ukuran layar.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-gap-row-[bp]-[0..5]</code></td>
+                  <td>Mengatur jarak vertikal antar baris mulai <em>breakpoint</em> <code>bp</code> ke atas.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-gap-col-[0..5]</code></td>
+                  <td>Mengatur jarak horizontal antar kolom untuk semua ukuran layar.</td>
+                </tr>
+                <tr>
+                  <td><code>.wui-gap-col-[bp]-[0..5]</code></td>
+                  <td>Mengatur jarak horizontal antar kolom mulai <em>breakpoint</em> <code>bp</code> ke atas.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </wui-page>
+</ng-template>

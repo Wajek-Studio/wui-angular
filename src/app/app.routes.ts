@@ -31,7 +31,7 @@ export const routes: Routes = [{
 }, {
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
 }, {
-    path: 'grid', loadComponent: () => import('./pages/grid.page/grid.page').then(m => m.GridPage)
+    path: 'grid', loadComponent: () => import('./pages/grid/grid.page/grid.page').then(m => m.GridPage)
 }, {
     path: 'flex', loadComponent: () => import('./pages/flex.page/flex.page').then(m => m.FlexPage)
 }, {
