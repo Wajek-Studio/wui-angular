@@ -1,13 +1,13 @@
 import { Component, inject, TemplateRef, viewChild } from "@angular/core";
-import { WuiButton, WuiPage, WuiPageContent, WuiPageHost, WuiPageRef, WuiPageService } from "@wajek/wui";
+import { WuiButton, WuiPage, WuiPageContent, WuiPageRef, WuiPageService, WuiPageHost } from "@wajek/wui";
 
 @Component({
     imports: [
-        WuiButton,
-        WuiPage,
-        WuiPageHost,
-        WuiPageContent
-    ],
+    WuiButton,
+    WuiPage,
+    WuiPageContent,
+    WuiPageHost
+],
     selector: 'page-simple-example',
     templateUrl: './page-simple-example.html',
     styleUrl: './page-simple-example.scss'

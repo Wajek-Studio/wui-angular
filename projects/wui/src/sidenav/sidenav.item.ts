@@ -13,6 +13,8 @@ export class WuiSidenavItem implements OnInit {
     label = input.required<string>();
     
     ngOnInit(): void {
+        const existing = this.element.nativeElement.querySelector('span.wui-sidenav-item--label');
+        if(existing) return;
         const label = this.renderer.createElement('span');
         this.renderer.addClass(label, 'wui-sidenav-item--label');
         const labelText = this.renderer.createText(this.label());
@@ -34,6 +36,8 @@ export class WuiSidenavSubheader implements OnInit {
     label = input.required<string>();
 
     ngOnInit(): void {
+        const existing = this.element.nativeElement.querySelector('span.wui-sidenav-subheader--label');
+        if(existing) return;
         const label = this.renderer.createElement('span');
         this.renderer.addClass(label, 'wui-sidenav-subheader--label');
         const labelText = this.renderer.createText(this.label());

@@ -1,12 +1,12 @@
 import { Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { WuiPage, WuiPageContent, WuiPageService, WuiScrollbar, WuiContainer } from '@wajek/wui';
-import { AppSimpleExample } from '../../../../examples/app-simple-example/app-simple-example';
+import { ShowcaseComponent } from '../../../shared/showcase';
 import { Code } from '../../../shared/code/code';
-import { ShowcaseComponent } from '../../../shared/showcase/showcase.component';
+import { AppSimpleExample } from '../../../../examples/app-simple-example/app-simple-example';
 
 @Component({
   selector: 'app-home.page',
-  imports: [WuiPage, WuiPageContent, WuiScrollbar, WuiContainer, Code, ShowcaseComponent, AppSimpleExample],
+  imports: [WuiPage, WuiPageContent, WuiScrollbar, WuiContainer, ShowcaseComponent, Code, AppSimpleExample],
   templateUrl: './home.page.html',
   styleUrl: './home.page.scss',
 })

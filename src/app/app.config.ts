@@ -1,11 +1,12 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideIcons } from '@wajek/wui';
 import { provideHighlightOptions } from 'ngx-highlightjs';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { appIcons } from './app.icons';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,10 +19,12 @@ export const appConfig: ApplicationConfig = {
       languages: {
         typescript: () => import('highlight.js/lib/languages/typescript'),
         html: () => import('highlight.js/lib/languages/xml'),
-        scss: () => import('highlight.js/lib/languages/scss')
+        scss: () => import('highlight.js/lib/languages/scss'),
+        bash: () => import('highlight.js/lib/languages/bash')
       },
-      themePath: 'highlight.js/styles/github-dark.min.css'
+      themePath: 'highlight.js/styles/atom-one-dark.min.css'
     }),
-    provideHttpClient()
+    provideHttpClient(withFetch()), 
+    ...(isDevMode() ? [] : [provideClientHydration(withEventReplay())])
   ],
 };

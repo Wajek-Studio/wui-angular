@@ -26,7 +26,8 @@ export * from './select/option';
 export * from './page/page';
 export * from './page/page.ref';
 export * from './page/page.service';
-export * from './page/page.host';
+
+export { WuiPageHost } from './page/page.host';
 
 export * from './sidenav/sidenav.container';
 export * from './sidenav/sidenav.service';

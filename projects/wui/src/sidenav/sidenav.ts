@@ -39,6 +39,7 @@ export class WuiSidenav implements OnInit, OnDestroy {
             mode: this._mode()
         });
         this.sidenavService.stateChange.pipe(takeUntil(this.unsub)).subscribe((state) => {
+            if(state.id != this.id()) return;
             this._show.set(state.show);
             this._mode.set(state.mode);
         });
