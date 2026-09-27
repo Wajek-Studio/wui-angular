@@ -1,0 +1,21 @@
+<ng-template #pageTpl>
+    <wui-page>
+        <div class="wui-page-content wui-py-5" wuiScrollbar>
+            <div class="wui-container">
+                <h1 class="wui-headline-large--em wui-mb-4">Tabs</h1>
+    
+                <div class="wui-mb-4">
+                    <p>Tab digunakan untuk menampilkan halaman banyak dalam 1 tampilan</p>
+                </div>
+
+                <app-showcase [tabs]="[{
+                    language: 'typescript',
+                    label: 'tab-simple-example.ts',
+                    code: '/examples/tab-simple-example/tab-simple-example.ts'
+                }]">
+                <tab-simple-example></tab-simple-example>
+                </app-showcase>
+            </div>
+        </div>
+    </wui-page>
+</ng-template>

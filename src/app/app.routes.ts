@@ -40,6 +40,8 @@ export const routes: Routes = [{
     path: 'select', loadComponent: () => import('./pages/select/select.page/select.page').then(m => m.SelectPage)
 }, {
     path: 'menu', loadComponent: () => import('./pages/menu/menu.page').then(m => m.AppMenuPage)
+}, {
+    path: 'tabs', loadComponent: () => import('./pages/tab/tab.page').then(m => m.TabPage)
 },
 // {
 //     path: 'context-menu', loadComponent: () => import('./pages/context-menu/context-menu.page/context-menu.page').then(m => m.ContextMenuPage)

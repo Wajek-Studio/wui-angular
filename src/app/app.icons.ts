@@ -24,6 +24,8 @@ import {
   mdiPencil,
   mdiTrashCan,
   mdiFolderMove,
+  mdiSendCircle,
+  mdiTab,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -54,5 +56,6 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'pencil', path: mdiPencil },
       { name: 'trash-can', path: mdiTrashCan},
       { name: 'folder-move', path: mdiFolderMove},
-      { name: 'send-circle', path: mdiFolderMove},
+      { name: 'send-circle', path: mdiSendCircle},
+      { name: 'tab', path: mdiTab},
 ]

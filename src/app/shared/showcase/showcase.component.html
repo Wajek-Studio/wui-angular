@@ -17,22 +17,18 @@
 
   <!-- Dynamic Tabs & Code Viewer Bar -->
   @if (hasTabs()) {
-    <div class="showcase-code-bar">
-      <div class="code-tabs">
+    <div class="showcase-code-bar wui-ps-4 wui-pe-2">
+      <div class="wui-tab wui-gap-col-3">
         @for (tab of tabs(); track tab.label) {
-          <button
-            type="button"
-            class="tab-btn"
-            [class.is-active]="selectedLabel() === tab.label"
+          <button class="wui-tab-item"
+            [class.active]="selectedLabel() === tab.label"
             (click)="selectTab(tab.label)"
-          >
-            {{ tab.label }}
-          </button>
+          >{{ tab.label }}</button>
         }
       </div>
 
       @if (collapsible()) {
-        <button type="button" class="toggle-btn" (click)="toggleCode()">
+        <button type="button" wuiButton size="sm" variant="text" (click)="toggleCode()">
           {{ showCode() ? 'Sembunyikan Kode' : 'Lihat Kode' }}
         </button>
       }

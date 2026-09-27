@@ -1,6 +1,7 @@
 import { Component, computed, effect, input, signal } from '@angular/core';
 import { Highlight } from 'ngx-highlightjs';
 import { Code } from '../code/code';
+import { WuiButton } from '@wajek/wui';
 
 export interface ShowcaseTab {
   /** Label teks tab, mis. 'HTML', 'TypeScript', 'SCSS', 'JSON' */
@@ -15,7 +16,7 @@ export interface ShowcaseTab {
   selector: 'app-showcase',
   templateUrl: './showcase.component.html',
   styleUrl: './showcase.component.scss',
-  imports: [Code],
+  imports: [Code, WuiButton],
 })
 export class ShowcaseComponent {
   readonly title = input<string>('');
