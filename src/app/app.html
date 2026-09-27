@@ -21,7 +21,7 @@
 
   <wui-sidenav-container>
     <wui-sidenav [id]="sidenavId" [show]="true">
-      <div class="wui-sidenav-content" wuiScrollbar>
+      <div class="wui-sidenav-content wui-py-4 wui-px-2" wuiScrollbar>
         <a wuiSidenavItem label="Memulai" routerLink="/home" routerLinkActive="active">
           <wui-icon icon="play"></wui-icon>
         </a>
@@ -55,6 +55,9 @@
         </a>
         <a wuiSidenavItem label="Snackbar" routerLink="/snackbar" routerLinkActive="active">
           <wui-icon icon="snackbar"></wui-icon>
+        </a>
+        <a wuiSidenavItem label="Menu" routerLink="/menu" routerLinkActive="active">
+          <wui-icon icon="more"></wui-icon>
         </a>
       </div>
     </wui-sidenav>

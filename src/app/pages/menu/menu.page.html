@@ -1,0 +1,23 @@
+<ng-template #pageTpl>
+    <wui-page>
+        <div class="wui-page-content wui-py-5" wuiScrollbar>
+            <div class="wui-container">
+                <h1 class="wui-headline-large--em wui-mb-4">Menu</h1>
+
+                <div class="wui-mb-4">
+                    <p>Menampilkan menu yang dapat memuat banyak operasi untuk sebuah konteks tertentu.</p>
+                </div>
+
+                <h2 class="wui-title-large--em wui-mb-4">Showcase</h2>
+
+                <app-showcase [tabs]="[{
+                    code: '/examples/menu-simple-example/menu-simple-example.ts',
+                    label: 'menu-simple-example.ts',
+                    language: 'typescript'
+                }]">
+                    <menu-simple-example/>
+                </app-showcase>
+            </div>
+        </div>
+    </wui-page>
+</ng-template>

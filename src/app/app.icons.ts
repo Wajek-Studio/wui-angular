@@ -20,6 +20,10 @@ import {
   mdiFormatLineSpacing,
   mdiRadioboxMarked,
   mdiTextBox,
+  mdiMore,
+  mdiPencil,
+  mdiTrashCan,
+  mdiFolderMove,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -46,4 +50,9 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'grid', path: mdiViewGridOutline },
       { name: 'flex', path: mdiViewArrayOutline },
       { name: 'snackbar', path: mdiSquareRoundedBadge},
+      { name: 'more', path: mdiMore },
+      { name: 'pencil', path: mdiPencil },
+      { name: 'trash-can', path: mdiTrashCan},
+      { name: 'folder-move', path: mdiFolderMove},
+      { name: 'send-circle', path: mdiFolderMove},
 ]

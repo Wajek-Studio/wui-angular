@@ -222,9 +222,6 @@ $wui-button-radius: 9999px !default;
 $wui-disabled-container-opacity: 0.12 !default;
 $wui-disabled-content-opacity: 0.38 !default;
 
-// Elevasi level 1 M3 — dipakai tombol filled saat hover.
-$wui-elevation-1: 0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%) !default;
-
 // ── Spasi ───────────────────────────────────────────────────────────────────
 // Metrik Bootstrap: 0 · 0.25rem · 0.5rem · 1rem · 1.5rem · 3rem
 // `$wui-spacers` adalah sumber kebenarannya — dipakai utilitas `.wui-m-*` / `.wui-p-*`
@@ -307,6 +304,28 @@ $wui-radii: (
     'full': $wui-radius-full,
 ) !default;
 
+// ── Elevasi (Material 3) ────────────────────────────────────────────────────
+// Sumber tunggal bayangan: token **`md.sys.elevation.level0…5`** M3 apa adanya. Tiap level terdiri
+// dari dua lapis — lapisan rapat (30%) memberi ketajaman tepi, lapisan lebar (15%) memberi sebaran.
+// Level dipakai ulang komponen lewat `map.get()` supaya angkanya tidak bercabang: tombol filled saat
+// hover = 1, panel menu = 2, dialog = 3 (lihat `$wui-menu-elevation` / `$wui-dialog-elevation`).
+// Level `0` = `none` — permukaan yang menempel di latar (mis. tombol outlined saat diam) memang
+// tidak boleh punya bayangan, jadi level ini ada sebagai nilai eksplisit, bukan cuma dihilangkan.
+// ⚠️ Warnanya masih hitam keras, **belum** memakai peran `--wui-color-shadow` (utang yang dicatat di
+// `docs/panduan-warna.md` §10). Selama migrasi itu belum dilakukan, semua level harus seragam begini.
+$wui-elevations: (
+    0: none,
+    1: (0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%)),
+    2: (0 1px 2px 0 rgb(0 0 0 / 30%), 0 2px 6px 2px rgb(0 0 0 / 15%)),
+    3: (0 1px 3px 0 rgb(0 0 0 / 30%), 0 4px 8px 3px rgb(0 0 0 / 15%)),
+    4: (0 2px 3px 0 rgb(0 0 0 / 30%), 0 6px 10px 4px rgb(0 0 0 / 15%)),
+    5: (0 4px 4px 0 rgb(0 0 0 / 30%), 0 8px 12px 6px rgb(0 0 0 / 15%)),
+) !default;
+
+// Token tunggal level 1 — dipakai tombol filled saat hover dan sudah didokumentasikan sebagai
+// `--wui-elevation-1` (`docs/panduan-warna.md` §10). Turunan map supaya nilainya tetap satu sumber.
+$wui-elevation-1: map.get($wui-elevations, 1) !default;
+
 // ── Z-index ─────────────────────────────────────────────────────────────────
 // Wajib dipakai semua komponen — dilarang menulis z-index mentah.
 $wui-z-base: 0 !default;
@@ -365,7 +384,10 @@ $wui-field-label-rest: 28px !default;
 
 // Mengikuti `$wui-radius-md`; ditulis terpisah supaya field bisa berubah tanpa mengubah radius global.
 $wui-field-radius: 8px !default;
-$wui-dialog-elevation: 0 1px 3px 0 rgb(0 0 0 / 30%), 0 4px 8px 3px rgb(0 0 0 / 15%) !default;
+
+// Elevasi M3 **level 3** (`md.comp.dialog.container.elevation`) — diambil dari `$wui-elevations`,
+// bukan ditulis ulang, supaya skala umum dan dialog tidak bisa berbeda diam-diam.
+$wui-dialog-elevation: map.get($wui-elevations, 3) !default;
 
 // ── Select ──────────────────────────────────────────────────────────────────
 // Kotak, radius, border, dan varian select **memakai token field di atas** lewat class `.wui-input`
@@ -400,8 +422,9 @@ $wui-menu-divider-height: 1px !default;
 // supaya tetap benar saat bilah alamat ponsel muncul/hilang.
 $wui-menu-max-height: calc(100dvh - 16px) !default;
 
-// Elevasi M3 **level 2** (`md.comp.menu.container.elevation`) — satu tingkat di bawah dialog.
-$wui-menu-elevation: 0 1px 2px 0 rgb(0 0 0 / 30%), 0 2px 6px 2px rgb(0 0 0 / 15%) !default;
+// Elevasi M3 **level 2** (`md.comp.menu.container.elevation`) — satu tingkat di bawah dialog,
+// diambil dari `$wui-elevations`.
+$wui-menu-elevation: map.get($wui-elevations, 2) !default;
 
 // ── Tipografi: Bobot Font ───────────────────────────────────────────────────
 $wui-font-weight-regular: 400 !default;

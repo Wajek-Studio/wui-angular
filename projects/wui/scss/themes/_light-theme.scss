@@ -85,8 +85,12 @@
     --wui-color-disabled-container: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-container-opacity * 100}%, transparent);
     --wui-color-disabled-content: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-content-opacity * 100}%, transparent);
 
-    // Elevasi
-    --wui-elevation-1: #{a.$wui-elevation-1};
+    // Elevasi — skala M3 level 0–5 dari `abstracts/_tokens.scss`. Dibaca utilitas
+    // `.wui-elevation-<level>` (dengan token sebagai fallback) dan komponen: tombol filled hover = 1,
+    // panel menu = 2, dialog = 3.
+    @each $wui-level, $wui-shadow in a.$wui-elevations {
+      --wui-elevation-#{$wui-level}: #{$wui-shadow};
+    }
 
     // Tipografi: Bobot Font
     --wui-font-weight-regular: #{a.$wui-font-weight-regular};

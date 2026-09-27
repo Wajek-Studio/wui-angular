@@ -38,14 +38,14 @@ export const routes: Routes = [{
     path: 'layout', redirectTo: '/grid', pathMatch: 'full'
 }, {
     path: 'select', loadComponent: () => import('./pages/select/select.page/select.page').then(m => m.SelectPage)
-}, 
+}, {
+    path: 'menu', loadComponent: () => import('./pages/menu/menu.page').then(m => m.AppMenuPage)
+},
 // {
 //     path: 'context-menu', loadComponent: () => import('./pages/context-menu/context-menu.page/context-menu.page').then(m => m.ContextMenuPage)
 // }, 
 {
     path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
-}, {
-    path: 'context-menu-spike', loadComponent: () => import('./pages/context-menu-spike/context-menu-spike.page').then(m => m.ContextMenuSpikePage)
 }, {
     path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)
 },{

@@ -26,8 +26,6 @@
 
         &-content {
             transform: translateX(-100%);
-            padding-inline: var(--wui-space-2);
-            padding-block: var(--wui-space-4);
             height: 100%;
 
             transition: 
@@ -71,7 +69,7 @@
             align-items: center;
             width: 100%;
             padding-inline: 1.125rem;
-            height: 2.75rem;
+            height: 2.5rem;
             column-gap: var(--wui-space-4);
             color: var(--wui-color-on-surface);
             text-decoration: none;

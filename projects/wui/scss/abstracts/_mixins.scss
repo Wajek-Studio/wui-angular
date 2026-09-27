@@ -91,6 +91,22 @@
   }
 }
 
+/// Bayangan permukaan sesuai skala Material 3 (`tokens.$wui-elevations`, level `0`–`5`).
+/// Nilainya dibaca lewat `--wui-elevation-<level>` dengan token sebagai fallback, jadi aplikasi bisa
+/// menimpanya saat runtime tanpa rebuild. Level `0` = `none` (permukaan yang menempel di latar).
+/// Contoh:
+///   `@include a.elevation(0);` → `box-shadow: var(--wui-elevation-0, none)`
+///   `@include a.elevation(3);` → level dialog — sama angkanya dengan `.wui-dialog`
+@mixin elevation($level) {
+  $wui-shadow: map.get(tokens.$wui-elevations, $level);
+
+  @if not $wui-shadow {
+    @error 'wui: level elevasi `#{$level}` tidak dikenal. Pakai: 0, 1, 2, 3, 4, 5.';
+  }
+
+  box-shadow: var(--wui-elevation-#{$level}, #{$wui-shadow});
+}
+
 /// Menempelkan state layer standar pada elemen interaktif: hover `0.08`, pressed `0.10`,
 /// dragged `0.16`. Hover dibungkus `@media (hover: hover)` supaya tidak "lengket" di layar sentuh.
 /// @param {String} $wui-role - `'primary'` (default), atau `'on-primary'` bila elemen
