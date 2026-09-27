@@ -68,16 +68,9 @@ export class WuiPageHost implements OnInit, OnDestroy {
 
     const trigger = this.isBrowser ? (this.document.activeElement as HTMLElement | null) : null;
 
-    // Layer dibuat sebagai komponen supaya container untuk template page hidup DI DALAM
-    // pembungkusnya, bukan di container elemen host lalu dipindah. Pemindahan node view ke parent
-    // lain membuat hidrasi SSR gagal: Angular mencocokkan container dengan dehydrated view-nya
-    // lewat `nextSibling` pada posisi container, sehingga tidak menemukan node yang diharapkan.
-
     const layer = layers.createComponent(WuiPageLayer);
     const wrapper: HTMLElement = layer.location.nativeElement;
 
-    // Injector elemen host dipakai sebagai parent injector view — sama dengan yang dipakai
-    // container host sebelumnya, supaya DI di dalam template page tetap mencari ke rantai host.
     const view = layer.instance.slot().createEmbeddedView(template, undefined, {
       injector: this.injector,
     });

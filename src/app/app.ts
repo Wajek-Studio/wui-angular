@@ -35,7 +35,6 @@ export class App implements OnInit {
   sidenavShow = signal(true);
 
   ngOnInit(): void {
-    console.log(this.sidenavShow());
     this.sidenavService.stateChange.subscribe((state) => {
       if(state.id !== this.sidenavId)return;
       this.sidenavShow.set(state.show);

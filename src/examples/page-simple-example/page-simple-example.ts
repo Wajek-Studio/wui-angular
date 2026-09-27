@@ -3,10 +3,10 @@ import { WuiButton, WuiPage, WuiPageRef, WuiPageService, WuiPageHost } from "@wa
 
 @Component({
     imports: [
-    WuiButton,
-    WuiPage,
-    WuiPageHost
-],
+        WuiButton,
+        WuiPage,
+        WuiPageHost
+    ],
     selector: 'page-simple-example',
     templateUrl: './page-simple-example.html',
     styleUrl: './page-simple-example.scss'

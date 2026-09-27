@@ -11,7 +11,8 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine({
-  allowedHosts: ['localhost:4000', '127.0.0.1:4000', 'localhost', '127.0.0.1']
+  allowedHosts: ['localhost:4000', '127.0.0.1:4000', 'localhost', '127.0.0.1', 'ui.wajek.id', 'wui.local'],
+  trustProxyHeaders: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-server', 'x-forwarded-proto', 'x-forwarded-scheme']
 });
 
 /**

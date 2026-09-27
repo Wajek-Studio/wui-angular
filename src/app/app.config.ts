@@ -21,8 +21,7 @@ export const appConfig: ApplicationConfig = {
         html: () => import('highlight.js/lib/languages/xml'),
         scss: () => import('highlight.js/lib/languages/scss'),
         bash: () => import('highlight.js/lib/languages/bash')
-      },
-      themePath: 'highlight.js/styles/atom-one-dark.min.css'
+      }
     }),
     provideHttpClient(withFetch()), 
     ...(isDevMode() ? [] : [provideClientHydration(withEventReplay())])
