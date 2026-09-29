@@ -9,6 +9,13 @@
 > Status: **F0 ✅ selesai** (17 Sep 2026) — termasuk label mengapung + varian `outlined`/`filled`;
 > K1, K2, K3, K4 dikunci. F1 berjalan sebagian.
 >
+> **Plan baru (22 Sep 2026):** select dipecah ke dokumen sendiri — **`docs/planning/wui-select-plan.md`**
+> (prefix keputusan **L**; K1–K7 di dokumen ini **diwarisi**, tidak dibahas ulang di sana).
+>
+> **Revisi K4 (22 Sep 2026):** bagian "`CdkListbox`" pada K4 digantikan **L10 = (b)** di plan select —
+> navigasi memakai `ActiveDescendantKeyManager`/`ListKeyManager` (`cdk/a11y`) + markup listbox kita
+> sendiri. `cdk/overlay` dan "select custom sejak awal" **tetap**.
+>
 > **Revisi API (17 Sep 2026):** input `label` dihapus. Label ditulis aplikasi sebagai elemen asli
 > yang diproyeksi (`<label wuiLabel>`), sejajar dengan pola directive `[wuiButton]`/`[wuiInput]`.
 > Geometri label varian `outlined` sudah diukur ulang (§8).
@@ -29,6 +36,23 @@
 > bersamaan, dan menganimasikan salah satu saja membuat kolom teks berkedip 1px di tengah animasi.
 > `$wui-field-focused-border-width` kini **di-emit** ke `:root` (sebelumnya hanya fallback `2px`,
 > yang berarti nilai desain hidup di dua tempat).
+>
+> **State nonaktif checkbox (23 Sep 2026):** checkbox memakai token disabled M3 yang **sudah ada** —
+> `--wui-color-disabled-container` (12%) & `--wui-color-disabled-content` (38%), keduanya turunan
+> `on-surface` di `themes/_light-theme.scss`, jadi satu definisi untuk dua mode. Dua variabel lepas
+> lama (`--wui-checkbox-disabled-color: #1c1b1f`, `--wui-checkbox-disabled-opacity: 0.38`)
+> **dihapus**: tidak ada lagi warna ditulis tangan di `_checkbox.scss`. Nama barunya
+> `--wui-checkbox-disabled-container` / `-content` (pola indirection seperti `--wui-button-*`)
+> supaya pewarnaan bisa ditimpa per pemakaian.
+> Pemetaan M3: belum dicentang = garis `on-surface` 38% + latar transparan; dicentang = latar
+> `on-surface` 12% + centang 38% (garis mengikuti container); label 38%; **tanpa state layer**.
+> Hook-nya kelas host `.wui-checkbox--disabled` — satu-satunya sisi yang bisa menjangkau `cursor`
+> pada `label` pembungkus, dan sudah dipasang komponen dari field `disabled`.
+> ⚠️ Aturan hover label harus `&:where(:hover)` (0,2,1). Kalau tetap `&:hover` (0,3,1), state layer
+> tetap muncul di kotak nonaktif karena specificity mengalahkan urutan (jebakan §10 `panduan-scss.md`).
+> ⚠️ **Belum diukur di browser**, dan **belum bisa dipanggil dari template**: `WuiCheckbox` belum
+> punya `@Input() disabled` — padahal K1 menyebut kontrol harus tetap mengekspos `input()` biasa —
+> jadi satu-satunya jalur sekarang adalah `setDisabledState()` lewat Reactive Forms/`ngModel`.
 
 ---
 
@@ -167,6 +191,12 @@ Konsekuensi yang harus disadari sebelum F3 dimulai:
   adalah pengecualiannya.
 - Yang tadinya gratis dari `<select>` (mobile picker, keyboard, screen reader) kini tanggung jawab
   kita → masuk daftar pengujian manual (bukan cukup "build hijau").
+- ⚠️ **K4 bagian "`CdkListbox`" DIREVISI (22 Sep 2026)** — lihat **L10 = (b)** di
+  `docs/planning/wui-select-plan.md` (disetujui user): karena opsinya komponen `<wui-option>` (L4) dan
+  fokus harus tetap di trigger (L3), navigasi memakai **`ActiveDescendantKeyManager` + `ListKeyManager`
+  dari `cdk/a11y`** dengan markup listbox kita sendiri; `CdkListbox` tidak dipakai.
+  Dua bagian K4 yang **tidak** berubah: `cdk/overlay` untuk panel, dan "select custom sejak awal"
+  (`<select>` native tetap tidak dipakai).
 
 ### K5 — Siapa yang memiliki teks pesan error?
 
@@ -225,7 +255,7 @@ tetap bisa dipakai di luar forms.
 | **F0** ✅ | Token field + `scss/components/_form-field.scss` + `<wui-form-field>` (label mengapung, hint/error, varian `outlined`/`filled`) | **Selesai** — lihat §8 untuk hasil pengukurannya |
 | **F1** ⏳ | `wuiInput` (teks, number, password, prefix/suffix) + textarea & autosize, CVA + state invalid/disabled | ✅ teks + textarea (tanpa CVA — native sudah bekerja dengan `formControlName`); ⏳ number/password, prefix/suffix, autosize |
 | **F2** | Checkbox, radio group, switch | Keyboard & screen reader benar (diuji manual + inspeksi ARIA) |
-| **F3** | `wuiSelect` **custom**: trigger + panel (`cdk/overlay` + `CdkListbox`), single-select, keyboard lengkap | Bisa dipilih hanya dengan keyboard; panel tidak terpotong induk; diukur di `wui.local` |
+| **F3** | `wuiSelect` **custom**: trigger + panel (`cdk/overlay`) + navigasi `ActiveDescendantKeyManager` (L10 = b), single-select, keyboard lengkap — rinciannya di **`docs/planning/wui-select-plan.md`** | Bisa dipilih hanya dengan keyboard; panel tidak terpotong induk; diukur di `wui.local` |
 | **F4** | `wuiSelect` multiple + filter/type-ahead, lalu combobox/autocomplete + slider | — |
 | **F5** | Upload (+drag-drop), chips, tanggal native | — |
 | **F6** | README + halaman demo lengkap + contoh form validasi | Mencakup contoh error dari API (dipadukan dengan `WuiDialogService.alert()`) |
@@ -239,7 +269,7 @@ tetap bisa dipakai di luar forms.
 | CVA + `ngModel` di zoneless | Nilai tidak ter-update sampai ada event lain | Selalu panggil `onChange`; uji eksplisit dengan `[(ngModel)]` |
 | `providers: [NG_VALUE_ACCESSOR]` lupa `forwardRef` | Kontrol tidak dikenali forms | Satu pola di semua kontrol + satu test/demo |
 | Overlay (combobox, kalender) di dalam `<wui-field>` | Panel terpotong `overflow`/`transform` induk | Selalu render panel lewat `cdk/overlay` ke `body` (pola yang sudah dipakai dialog) |
-| Select custom (K4) | Seluruh beban a11y keyboard ada di kita — salah sedikit = tidak bisa dipakai tanpa mouse | Ikuti pola combobox WAI-ARIA; `CdkListbox` menyediakan navigasi & `aria-selected`; uji manual hanya-keyboard |
+| Select custom (K4) | Seluruh beban a11y keyboard ada di kita — salah sedikit = tidak bisa dipakai tanpa mouse | Ikuti pola combobox WAI-ARIA; navigasi dari `ActiveDescendantKeyManager`/`ListKeyManager` (`cdk/a11y`) — type-ahead, wrap, Home/End, `skipPredicate`; uji manual hanya-keyboard |
 | Panel select vs focus trap page/dialog | Fokus bisa direbut balik oleh trap milik page | Panel dirender lewat `cdk/overlay` (di `body`) dan page memakai `FocusTrap` **dasar** — bukan yang ber-`FocusTrapManager`, yang memasang listener `focus` global (lihat `wui-app-page-stack-plan.md` §6) |
 | stylelint | Pelanggaran berulang yang sudah pernah kena (`declaration-empty-line-before`, komentar `//` kosong, `$` variabel lokal) | Ikuti pola berkas komponen yang sudah ada |
 | Teks error | Bahasa/i18n bocor ke library | K5: teks milik aplikasi |
@@ -256,6 +286,9 @@ tetap bisa dipakai di luar forms.
 2. Kumpulkan angka desain untuk tinggi/padding/border kontrol — nilainya sekarang placeholder,
    tersentralisasi di `$wui-field-*` sehingga memperbaruinya cukup di `abstracts/_tokens.scss`.
 3. Lanjut **F1**: `input[type=number]`, `input[type=password]`, prefix/suffix, dan `CdkTextareaAutosize`.
+4. Select dikerjakan menurut **`wui-select-plan.md`** — dimulai dari **F0 di dokumen itu**: spike
+   pengukuran overlay (terpotong/tidak, `z-index` vs dialog, focus trap page) **sebelum** menulis
+   komponennya.
 
 ---
 

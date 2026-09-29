@@ -1,0 +1,156 @@
+// =============================================================================
+// GENERATED — JANGAN DIEDIT TANGAN.
+// Sumber    : src/theme/default.json
+// Label     : TYPE: CUSTOM
+//             Material Theme Builder export 2026-09-22 02:33:56
+// Seed      : #ffde3f
+// Sha256    : 341b1738536db01d8a0148b03c09f8b4a59b368a46d87086d6df84f576376247
+// Skema     : light, dark — 2 dari 6 skema; varian kontras menyusul (M5)
+// Dilewati  : background, onBackground, surfaceTint, surfaceVariant — deprecated M3
+// Alat      : @wajek/wui · bin/wui-theme.mjs
+// Regenerate: node projects/wui/bin/wui-theme.mjs src/theme/default.json
+// =============================================================================
+
+$wui-schemes: (
+  'light': (
+    'primary': #6d5e0f,
+    'on-primary': #fff,
+    'primary-container': #f8e287,
+    'on-primary-container': #534600,
+
+    'secondary': #665e40,
+    'on-secondary': #fff,
+    'secondary-container': #eee2bc,
+    'on-secondary-container': #4e472a,
+
+    'tertiary': #43664e,
+    'on-tertiary': #fff,
+    'tertiary-container': #c5ecce,
+    'on-tertiary-container': #2c4e38,
+
+    'error': #ba1a1a,
+    'on-error': #fff,
+    'error-container': #ffdad6,
+    'on-error-container': #93000a,
+
+    'surface': #fff9ee,
+    'on-surface': #1e1b13,
+    'on-surface-variant': #4b4739,
+    'surface-dim': #e0d9cc,
+    'surface-bright': #fff9ee,
+    'surface-container-lowest': #fff,
+    'surface-container-low': #faf3e5,
+    'surface-container': #f4eddf,
+    'surface-container-high': #eee8da,
+    'surface-container-highest': #e8e2d4,
+
+    'outline': #7c7767,
+    'outline-variant': #cdc6b4,
+
+    'inverse-surface': #333027,
+    'inverse-on-surface': #f7f0e2,
+    'inverse-primary': #dbc66e,
+
+    'shadow': #000,
+    'scrim': #000,
+
+    'primary-fixed': #f8e287,
+    'on-primary-fixed': #221b00,
+    'primary-fixed-dim': #dbc66e,
+    'on-primary-fixed-variant': #534600,
+    'secondary-fixed': #eee2bc,
+    'on-secondary-fixed': #211b04,
+    'secondary-fixed-dim': #d1c6a1,
+    'on-secondary-fixed-variant': #4e472a,
+    'tertiary-fixed': #c5ecce,
+    'on-tertiary-fixed': #00210f,
+    'tertiary-fixed-dim': #a9d0b3,
+    'on-tertiary-fixed-variant': #2c4e38,
+  ),
+
+  'dark': (
+    'primary': #dbc66e,
+    'on-primary': #3a3000,
+    'primary-container': #534600,
+    'on-primary-container': #f8e287,
+
+    'secondary': #d1c6a1,
+    'on-secondary': #363016,
+    'secondary-container': #4e472a,
+    'on-secondary-container': #eee2bc,
+
+    'tertiary': #a9d0b3,
+    'on-tertiary': #143723,
+    'tertiary-container': #2c4e38,
+    'on-tertiary-container': #c5ecce,
+
+    'error': #ffb4ab,
+    'on-error': #690005,
+    'error-container': #93000a,
+    'on-error-container': #ffdad6,
+
+    'surface': #15130b,
+    'on-surface': #e8e2d4,
+    'on-surface-variant': #cdc6b4,
+    'surface-dim': #15130b,
+    'surface-bright': #3c3930,
+    'surface-container-lowest': #100e07,
+    'surface-container-low': #1e1b13,
+    'surface-container': #222017,
+    'surface-container-high': #2d2a21,
+    'surface-container-highest': #38352b,
+
+    'outline': #969080,
+    'outline-variant': #4b4739,
+
+    'inverse-surface': #e8e2d4,
+    'inverse-on-surface': #333027,
+    'inverse-primary': #6d5e0f,
+
+    'shadow': #000,
+    'scrim': #000,
+
+    'primary-fixed': #f8e287,
+    'on-primary-fixed': #221b00,
+    'primary-fixed-dim': #dbc66e,
+    'on-primary-fixed-variant': #534600,
+    'secondary-fixed': #eee2bc,
+    'on-secondary-fixed': #211b04,
+    'secondary-fixed-dim': #d1c6a1,
+    'on-secondary-fixed-variant': #4e472a,
+    'tertiary-fixed': #c5ecce,
+    'on-tertiary-fixed': #00210f,
+    'tertiary-fixed-dim': #a9d0b3,
+    'on-tertiary-fixed-variant': #2c4e38,
+  ),
+);
+
+// Skala tone mentah dari `palettes` — DATA RUJUKAN, tidak dipakai library (M6).
+// Mode tidak perlu dipisah: tone MTB absolut (0 = hitam, 100 = putih) untuk kedua mode.
+$wui-palletes: (
+  'primary': (
+    0: #000, 5: #151100, 10: #221b00, 15: #2d2500, 20: #3a3000, 25: #463b00,
+    30: #534600, 35: #615200, 40: #6e5d00, 50: #8b7600, 60: #a88f00, 70: #c7aa00,
+    80: #e5c524, 90: #ffe25e, 95: #fff1be, 98: #fff9ee, 99: #fffbff, 100: #fff,
+  ),
+  'secondary': (
+    0: #000, 5: #151100, 10: #211b01, 15: #2c2506, 20: #373010, 25: #433b1a,
+    30: #4f4724, 35: #5b522f, 40: #675e3a, 50: #817750, 60: #9b9168, 70: #b7ab80,
+    80: #d3c69a, 90: #f0e2b4, 95: #fef1c1, 98: #fff9ee, 99: #fffbff, 100: #fff,
+  ),
+  'tertiary': (
+    0: #000, 5: #001508, 10: #00210f, 15: #002d17, 20: #083820, 25: #16442a,
+    30: #234f35, 35: #2f5b40, 40: #3b684b, 50: #548163, 60: #6d9b7b, 70: #87b695,
+    80: #a1d2af, 90: #bdeeca, 95: #cbfdd8, 98: #e9ffec, 99: #f5fff4, 100: #fff,
+  ),
+  'neutral': (
+    0: #000, 5: #12110c, 10: #1d1b16, 15: #282620, 20: #32302a, 25: #3e3b35,
+    30: #494640, 35: #55524b, 40: #615e57, 50: #7a776f, 60: #949088, 70: #afaba2,
+    80: #cbc6bd, 90: #e7e2d9, 95: #f6f0e7, 98: #fff9ef, 99: #fffbff, 100: #fff,
+  ),
+  'neutral-variant': (
+    0: #000, 5: #131107, 10: #1e1b10, 15: #29261a, 20: #343024, 25: #3f3b2e,
+    30: #4b4739, 35: #575244, 40: #635e50, 50: #7c7767, 60: #969080, 70: #b1ab9a,
+    80: #cdc6b4, 90: #eae2d0, 95: #f8f0dd, 98: #fff9ee, 99: #fffbff, 100: #fff,
+  ),
+);

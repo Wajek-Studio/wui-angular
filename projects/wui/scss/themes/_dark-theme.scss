@@ -12,8 +12,8 @@
       // ikut menyesuaikan. Tanpa ini, bagian tersebut tetap terang di mode gelap.
       color-scheme: dark;
 
-      // Warna peran (`--wui-color-surface`, `-on-surface`, `-primary`, `-danger`, …) di-emit
-      // `themes/_roles.scss`, karena tiap peran punya nilai sendiri per mode. Berkas ini hanya
+      // Warna peran (`--wui-color-surface`, `-on-surface`, `-primary`, `-error`, …) di-emit
+      // `themes/_schemes.scss`, karena tiap peran punya nilai sendiri per mode. Berkas ini hanya
       // mengurus hal yang bukan warna.
     }
   }

@@ -1,0 +1,19 @@
+.demo-card {
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid color-mix(in srgb, var(--wui-color-on-surface) 15%, transparent);
+  background: color-mix(in srgb, var(--wui-color-on-surface) 2%, transparent);
+}
+
+.demo-card-title {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--wui-color-on-surface);
+}
+
+.demo-card-desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 70%, transparent);
+}

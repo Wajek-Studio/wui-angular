@@ -15,12 +15,13 @@
 // =============================================================================
 
 // `@forward` wajib SEBELUM `@use` modul yang sama. Konfigurasi dari aplikasi
-// (`@use '@wajek/wui/scss/wui.scss' with (…)` — mis. `$wui-roles`, `$wui-palette`, `$wui-palettes-extra`)
+// (`@use '@wajek/wui/scss/wui.scss' with (…)` — mis. `$wui-schemes`, `$wui-palette`, `$wui-palettes-extra`)
 // hanya mengalir lewat `@forward`; urutan terbalik membuat build gagal: "This module was already loaded…".
 // `abstracts` di-forward juga supaya aplikasi bisa memakai fungsi/mixin-nya langsung,
 // mis. `@use '@wajek/wui/scss/wui.scss' as wui;` lalu `@include wui.space(mt, 3);`.
 @forward 'abstracts';
 @forward 'themes';
+
 @use 'base';
 @use 'components';
 @use 'layout';
@@ -30,21 +31,24 @@
 // Salakan layer — hapus barisnya kalau tidak ingin dipakai.
 @include base.reset;
 @include base.typography;
+@include base.heading;
 @include base.layout;
+
+@include themes.variables;
 @include themes.light-theme;
 @include themes.dark-theme;
+@include themes.schemes;
 
-// Peran warna: `--wui-color-primary`, `-on-primary`, `-secondary`, `-danger`, `-surface`, …
-// untuk mode terang & gelap. Dikonfigurasi aplikasi lewat `with ($wui-roles: (…))`.
-@include themes.roles;
-
-// Skala palet: `--wui-color-<palet>-<tone>`.
-// Kalau aplikasi menyetel `$wui-palette: false`, baris ini tidak melakukan apa pun.
+// Skala palet: `--wui-color-<palet>-<tone>` (data pasif, M6).
+// Bawaannya `$wui-palette: false` → tidak ada yang di-emit; setel ke nama palet **non-peran**
+// kalau skalanya memang dibutuhkan.
 @include themes.palette(themes.$wui-palette);
 @include components.app;
 @include components.button;
 @include components.dialog;
 @include components.form-field;
+@include components.menu;
+@include components.select;
 @include components.page;
 @include components.sidenav;
 @include components.topbar;
@@ -53,6 +57,11 @@
 @include components.pagination;
 @include components.loading;
 @include components.badge;
+@include components.snackbar;
+@include components.checkbox;
+@include components.radio;
+@include components.scrollbar;
+@include components.tabs;
 
 // Primitif layout (container, grid) dipanggil setelah komponen supaya boleh menimpa style komponen
 // tanpa `!important`, tapi sebelum utilitas.
@@ -63,3 +72,8 @@
 @include utilities.spacing;
 @include utilities.gap;
 @include utilities.flex;
+@include utilities.grid;
+@include utilities.border;
+@include utilities.background;
+@include utilities.elevation;
+@include utilities.edge-fix;

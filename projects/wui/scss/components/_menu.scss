@@ -1,0 +1,50 @@
+@use '../abstracts' as a;
+
+@keyframes wuiMenuEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@mixin menu {
+
+    .wui-menu {
+        padding: .25rem;
+        min-width: 8rem;
+        background-color: var(--wui-color-surface-container-low);
+        border-radius: 1rem;
+        @include a.elevation(2);
+        animation: wuiMenuEnter 150ms cubic-bezier(0.2, 0, 0, 1);
+
+        &-item {
+            height: 2.5rem;
+            padding-inline: .75rem;
+            border-radius: .75rem;
+            display: flex;
+            align-items: center;
+            color: var(--wui-color-on-surface);
+            text-decoration: none;
+            cursor: pointer;
+
+            wui-icon {
+                margin-right: 1rem;
+            }
+
+            &:hover {
+                background-color: var(--wui-color-state-layer-on-surface-opacity-08)
+            }
+        }
+
+        &-divider {
+            margin-top: .5rem;
+            margin-bottom: .5rem;
+            border-bottom: 1px solid var(--wui-color-state-layer-on-surface-opacity-08);
+        }
+    }
+
+}

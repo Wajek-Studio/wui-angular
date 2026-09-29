@@ -8,6 +8,7 @@
 // Tidak ada `!important` di sini: yang menjamin utilitas menang adalah urutan layer
 // (`utilities/` dipanggil paling akhir di `wui.scss`), sama seperti utilitas spacing.
 @use 'sass:map';
+@use 'sass:string';
 @use '../abstracts' as a;
 
 /// Utilitas flex + varian responsifnya.
@@ -16,13 +17,17 @@
     // Kunci peta selalu ditulis sebagai string — angka tanpa kutip akan dinormalisasi Sass
     // (mis. `08` jadi `8`) dan nama class-nya ikut berubah.
     $wui-groups: (
-        'd': (
-            'property': 'display',
-            'values': ('flex': flex, 'inline-flex': inline-flex),
-        ),
         'flex': (
+            'property': 'display',
+            'values': ('': flex, 'inline': inline-flex),
+        ),
+        'flex-row': (
             'property': 'flex-direction',
-            'values': ('row': row, 'row-reverse': row-reverse, 'column': column, 'column-reverse': column-reverse),
+            'values': ('': row, 'reverse': row-reverse)
+        ),
+        'flex-col': (
+            'property': 'flex-direction',
+            'values': ('': column, 'reverse': column-reverse),
         ),
         'flex-wrap': (
             'property': 'flex-wrap',
@@ -64,7 +69,10 @@
     // breakpoint terkecil ke terbesar, supaya `.wui-flex-lg-column` menang atas `.wui-flex-md-row`.
     @each $wui-name, $wui-group in $wui-groups {
         @each $wui-suffix, $wui-value in map.get($wui-group, 'values') {
-            .wui-#{$wui-name}-#{$wui-suffix} {
+            // Suffix kosong = class tanpa akhiran (`.wui-flex`), bukan `.wui-flex-`.
+            $wui-tail: if(string.length($wui-suffix) > 0, '-#{$wui-suffix}', '');
+
+            .wui-#{$wui-name}#{$wui-tail} {
                 #{map.get($wui-group, 'property')}: #{$wui-value};
             }
         }
@@ -80,7 +88,9 @@
         @include a.media-up($wui-min) {
             @each $wui-name, $wui-group in $wui-groups {
                 @each $wui-suffix, $wui-value in map.get($wui-group, 'values') {
-                    .wui-#{$wui-name}-#{$wui-key}-#{$wui-suffix} {
+                    $wui-tail: if(string.length($wui-suffix) > 0, '-#{$wui-suffix}', '');
+
+                    .wui-#{$wui-name}-#{$wui-key}#{$wui-tail} {
                         #{map.get($wui-group, 'property')}: #{$wui-value};
                     }
                 }

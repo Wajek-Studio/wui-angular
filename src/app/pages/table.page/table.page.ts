@@ -9,6 +9,7 @@ import {
   WuiPage,
   WuiPageService,
   WuiPagination,
+  WuiScrollbar,
   WuiTable,
   WuiTableResponsive,
 } from '@wajek/wui';
@@ -27,6 +28,7 @@ export interface SampleUser {
     RouterLink,
     DecimalPipe,
     WuiPage,
+    WuiScrollbar,
     WuiTable,
     WuiTableResponsive,
     WuiButton,
@@ -81,7 +83,7 @@ export class TablePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
     this.refreshData();
   }
 

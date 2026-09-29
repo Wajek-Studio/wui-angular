@@ -1,0 +1,40 @@
+@mixin tabs {
+    
+    .wui-tab {
+        display: flex;
+        height: 3rem;
+        align-items: stretch;
+
+        &-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--wui-color-on-surface);
+            text-decoration: none;
+            position: relative;
+
+            &.active {
+                color: var(--wui-color-primary);
+                &:after {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    height: 2px;
+                    background-color: var(--wui-color-primary);
+                    display: block;
+                }
+            }
+
+        }
+    }
+
+    button.wui-tab-item {
+        appearance: none;
+        border: none;
+        background: none;
+        font: inherit;
+    }
+
+}

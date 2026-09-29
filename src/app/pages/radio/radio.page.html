@@ -1,0 +1,99 @@
+<ng-template #pageTpl>
+  <wui-page>
+    <div class="wui-page-content" wuiScrollbar>
+      <div class="wui-container wui-py-5">
+        
+        <h1 class="wui-headline-large--em wui-mb-4">Radio Button</h1>
+        
+        <div class="wui-mb-4">
+          <p>
+            Komponen <code>&lt;wui-radio-group&gt;</code> dan <code>&lt;wui-radio-button&gt;</code> untuk pemilihan opsi tunggal eksklusif. Terintegrasi penuh dengan <code>[(ngModel)]</code> maupun <i>Reactive Forms</i>.
+          </p>
+        </div>
+
+        <!-- ─── USAGE ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Usage</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Radio Group Horizontal"
+            description="Bawaan standar untuk susunan menyamping. Otomatis sinkron via [(ngModel)]."
+            [tabs]="[
+              { label: 'radio-basic-example.html', code: '/examples/radio-basic-example/radio-basic-example.html', language: 'html' },
+              { label: 'radio-basic-example.ts', code: '/examples/radio-basic-example/radio-basic-example.ts', language: 'typescript' }
+            ]"
+          >
+            <radio-basic-example></radio-basic-example>
+          </app-showcase>
+        </div>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Disabled State"
+            description="Tambahkan properti [disabled] pada <wui-radio-group> untuk langsung mematikan semua pilihan di dalamnya."
+            [tabs]="[
+              { label: 'radio-disabled-example.html', code: '/examples/radio-disabled-example/radio-disabled-example.html', language: 'html' },
+              { label: 'radio-disabled-example.ts', code: '/examples/radio-disabled-example/radio-disabled-example.ts', language: 'typescript' }
+            ]"
+          >
+            <radio-disabled-example></radio-disabled-example>
+          </app-showcase>
+        </div>
+
+        <!-- ─── MODIFIER ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Modifier</h2>
+
+        <h3 class="wui-title-medium--em wui-mb-3">wui-radio-group</h3>
+        <div class="wui-edge-fix-4 wui-mb-5">
+          <table wuiTable>
+            <thead>
+              <tr>
+                <th>Properti</th>
+                <th>Tipe</th>
+                <th>Default</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>[(ngModel)]</code></td>
+                <td><code>any</code></td>
+                <td>-</td>
+                <td>Mengikat nilai terpilih dari grup. Mendukung <i>two-way binding</i> dan <i>Reactive Forms</i>.</td>
+              </tr>
+              <tr>
+                <td><code>disabled</code></td>
+                <td><code>boolean</code></td>
+                <td><code>false</code></td>
+                <td>Menonaktifkan seluruh <code>wui-radio-button</code> yang ada di dalam grup ini.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="wui-title-medium--em wui-mb-3">wui-radio-button</h3>
+        <div class="wui-edge-fix-4 wui-mb-5">
+          <table wuiTable>
+            <thead>
+              <tr>
+                <th>Properti</th>
+                <th>Tipe</th>
+                <th>Default</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>value</code></td>
+                <td><code>any</code> <em>(Required)</em></td>
+                <td>-</td>
+                <td>Nilai spesifik untuk opsi ini. Jika diklik, <code>wui-radio-group</code> akan di-update dengan nilai ini.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </wui-page>
+</ng-template>

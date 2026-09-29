@@ -3,64 +3,11 @@
 // style komponen tanpa `!important` (lint melarangnya), tapi masih kalah oleh utilitas.
 // Seperti `utilities/`, file di level ini murni class — tidak ada komponen Angular di belakangnya.
 
-@use 'sass:map';
 @use '../abstracts' as a;
 
-/// Container: membatasi lebar isi, memusatkannya, dan — sejak `md` — selalu menyisakan batas
-/// kiri-kanan di layar.
-///
-/// ```html
-/// <div class="wui-container">…</div>        <!-- 100% → batas 3rem → berhenti di 1200px -->
-/// <div class="wui-container-fluid">…</div>  <!-- selalu 100%, tanpa batas & tanpa cap -->
-/// ```
-///
-/// Tiga tahapnya:
-/// 1. **di bawah `md`** (768px) — `width: 100%`; konten hanya dijauhkan dari tepi oleh gutter;
-/// 2. **sejak `md`** — `width: 100% − 2 × margin`, jadi jarak kiri-kanan ke tepi layar **tetap**
-///    (tidak ikut melebar saat layar bertambah lebar);
-/// 3. **setelah mencapai cap** — lebar berhenti di `max-width` dan sisa ruang menjadi margin.
-///    Dengan nilai bawaan (1200px + 2 × 3rem) tahap 2 dan 3 bertemu di jendela 1296px.
-///
-/// Semua nilai dibaca dari CSS variable, jadi aplikasi bisa menyetelnya saat runtime tanpa rebuild
-/// SCSS. Hanya **breakpoint** `md` yang compile-time, karena media query tidak bisa memakai `var()`.
 @mixin container {
     .wui-container {
         width: 100%;
-        max-width: map-get(a.$wui-container-max-widths, 'md');
-        margin-inline: auto;
-        padding-inline: var(--wui-space-4);
+        padding-inline: var(--wui-container-padding-inline);
     }
-
-    @include a.media-up(map-get(a.$wui-breakpoints, 'lg')) {
-        .wui-container {
-            max-width: map-get(a.$wui-container-max-widths, 'lg');
-        }
-    }
-
-    @include a.media-up(map-get(a.$wui-breakpoints, 'xl')) {
-        .wui-container {
-            max-width: map-get(a.$wui-container-max-widths, 'xl');
-        }
-    }
-
-    @include a.media-up(map-get(a.$wui-breakpoints, 'xxl')) {
-        .wui-container {
-            max-width: map-get(a.$wui-container-max-widths, 'xxl');
-        }
-    }
-
-    // @media (min-width: map-get(a.$wui-container-max-widths, 'lg')) {
-    // }
-
-    // @media (min-width: map-get(a.$wui-container-max-widths, 'xl')) {
-    //     .wui-container {
-    //         max-width: map-get(a.$wui-container-max-widths, 'xl');
-    //     }
-    // }
-
-    // @media (min-width: map-get(a.$wui-container-max-widths, 'xxl')) {
-    //     .wui-container {
-    //         max-width: map-get(a.$wui-container-max-widths, 'xxl');
-    //     }
-    // }
 }

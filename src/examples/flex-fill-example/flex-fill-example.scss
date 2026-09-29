@@ -1,0 +1,37 @@
+.demo-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.demo-track {
+  border: 1px dashed color-mix(in srgb, var(--wui-color-on-surface) 25%, transparent);
+  border-radius: 8px;
+  padding: 0.75rem;
+  background: color-mix(in srgb, var(--wui-color-on-surface) 3%, transparent);
+}
+
+.flex-box {
+  padding: 0.65rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wui-color-primary);
+  background: color-mix(in srgb, var(--wui-color-primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--wui-color-primary) 25%, transparent);
+  text-align: center;
+
+  &--primary {
+    color: var(--wui-color-primary);
+    background: color-mix(in srgb, var(--wui-color-primary) 18%, transparent);
+    border-color: var(--wui-color-primary);
+  }
+}

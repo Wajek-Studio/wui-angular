@@ -67,8 +67,8 @@
     //   --wui-button-accent     label varian `outlined`/`text` + warna state layernya
     //   --wui-button-outline    border varian `outlined`
     // Untuk `default` (netral) accent-nya `on-surface` supaya terbaca, sedangkan bordernya tetap
-    // `outline` yang lebih tenang; untuk warna peran lain (primary/danger) border mengikuti warna itu.
-    // `default` sendiri diturunkan dari `surface`/`on-surface` (`themes/_roles.scss`).
+    // `outline` yang lebih tenang; untuk warna peran lain (primary/error) border mengikuti warna itu.
+    // `default` sendiri diturunkan dari `surface`/`on-surface` (`themes/_schemes.scss`).
     .wui-button {
         --wui-button-container: var(--wui-color-default);
         --wui-button-content: var(--wui-color-on-default);
@@ -83,11 +83,13 @@
         --wui-button-outline: var(--wui-color-primary);
     }
 
+    // `--color-danger` dipertahankan sebagai alias satu mayor (S3/K4) — akar CSS-nya sama.
+    .wui-button--color-error,
     .wui-button--color-danger {
-        --wui-button-container: var(--wui-color-danger);
-        --wui-button-content: var(--wui-color-on-danger);
-        --wui-button-accent: var(--wui-color-danger);
-        --wui-button-outline: var(--wui-color-danger);
+        --wui-button-container: var(--wui-color-error);
+        --wui-button-content: var(--wui-color-on-error);
+        --wui-button-accent: var(--wui-color-error);
+        --wui-button-outline: var(--wui-color-error);
     }
 
     // ── Varian filled (default) ─────────────────────────────────────────────

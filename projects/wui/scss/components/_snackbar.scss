@@ -1,0 +1,42 @@
+@mixin snackbar {
+
+    @keyframes wui-snackbar-enter {
+        from { opacity: 0; transform: translateY(16px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes wui-snackbar-leave {
+        from { opacity: 1; transform: translateY(0); }
+        to   { opacity: 0; transform: translateY(16px); }
+    }
+
+    wui-snackbar {
+        display: flex;
+        align-items: center;
+        gap: var(--wui-space-4);
+        animation: wui-snackbar-enter 200ms ease-out;
+        min-width: 16rem;
+        background-color: var(--wui-color-inverse-surface);
+        padding-left: 1rem;
+        height: 3rem;
+        padding-right: .5rem;
+        border-radius: .25rem;
+    }
+
+    wui-snackbar.wui-snackbar--leaving {
+        animation: wui-snackbar-leave 150ms ease-in forwards;
+    }
+
+    .wui-snackbar {
+        &-label {
+            flex: 1 1 auto;
+            color: var(--wui-color-inverse-on-surface);
+        }
+
+        &-action {
+            --wui-button-accent: var(--wui-color-inverse-primary);
+            flex: 0 0 auto;
+        }
+    }
+
+}

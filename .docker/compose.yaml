@@ -11,6 +11,8 @@ services:
       - NG_VERSION=20
     networks:
       - environment
+    ports:
+      - 4000:4000
 
 networks:
   environment:

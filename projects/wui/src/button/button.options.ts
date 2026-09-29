@@ -7,11 +7,12 @@ export type WuiButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 /**
  * Peran warna tombol — berlaku untuk ketiga varian (`filled`/`outlined`/`text`).
  *
- * - `default` — netral; container diturunkan dari `surface`/`on-surface` (peran `default`).
+ * - `default` — netral; memakai permukaan `surface-container-high` lewat peran `default`.
  * - `primary` — warna brand (`primary`/`on-primary`).
- * - `danger` — untuk aksi destruktif (`danger`/`on-danger`).
+ * - `error` — untuk aksi destruktif (`error`/`on-error`), mengikuti Material 3.
+ * - `danger` — nama lama untuk `error`; masih diterima satu mayor (alias, lihat plan warna MTB).
  */
-export type WuiButtonColor = 'default' | 'primary' | 'danger';
+export type WuiButtonColor = 'default' | 'primary' | 'error' | 'danger';
 
 /**
  * Sisi tempat ikon berada.

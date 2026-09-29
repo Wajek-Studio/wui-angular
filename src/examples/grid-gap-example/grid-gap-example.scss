@@ -1,0 +1,14 @@
+.grid-cell {
+  padding: 0.85rem 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--wui-color-primary);
+  background-color: color-mix(in srgb, var(--wui-color-primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--wui-color-primary) 25%, transparent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+}

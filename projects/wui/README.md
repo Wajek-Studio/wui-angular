@@ -30,47 +30,50 @@ Tanpa langkah lain: tanpa entri di `angular.json → styles[]`, tanpa `stylePrep
 **Aturan pemuatan:** entry yang emit CSS saling eksklusif — pakai `wui.scss` **atau** kombinasi granular,
 jangan dua-duanya (CSS jadi dobel). File `components/*.scss` murni mixin, jadi aman digabung dengan entry apa pun.
 
-### Token warna: palet vs peran
+### Token warna: skema vs peran
 
-Ada dua lapisan yang sengaja dipisah:
+Istilahnya mengikuti Material 3, dan ada tiga lapisan:
 
 | Lapisan | Isi | Contoh token |
 | --- | --- | --- |
-| **Palet** — data intensitas | Satu skala tone `50…950` per mode, tanpa kunci peran | `--wui-color-purple-500`, `--wui-color-red-dark-950` |
-| **Peran** — token semantik | Yang dibaca komponen; nilainya diambil dari palet atau ditulis langsung | `--wui-color-primary`, `--wui-color-on-primary`, `--wui-color-danger`, `--wui-color-surface`, `--wui-color-on-surface`, `--wui-color-surface-container`, `--wui-color-outline` |
+| **Skema** — satu set peran per mode | Sumber nilai. Bawaannya = export **Material Theme Builder** (seed `#593bb4`), 45 peran | `$wui-schemes: ('light': ('primary': #635690, …), …)` |
+| **Peran** — token semantik | Yang dibaca komponen | `--wui-color-primary`, `--wui-color-on-surface-variant`, `--wui-color-error` |
+| **Palet** — data intensitas (opsional) | Skala tone mentah; tidak dipakai peran bawaan | `--wui-color-<palet>-<tone>` |
 
-Palet bawaan: `purple` (brand), `red` (dipakai `danger`), `magenta` (dipakai `secondary`), dan
-`neutral` — skala gray yang jadi acuan peran netral (`surface`, `on-surface`, `outline`). Di skala
-`neutral` tone besar = makin gelap **di kedua mode**, sehingga `surface` memakai tone `50` di mode
-terang dan tone `950` di mode gelap. Palet `red` & `magenta` masih placeholder.
+Cara termudah mengganti warna: pakai generator yang **ikut terbit di paket ini**.
 
-Peran bawaan: `primary`, `on-primary`, `secondary`, `on-secondary`, `danger`, `on-danger`, `surface`,
-`on-surface`, `surface-container`, `on-surface-container`, `outline` — semuanya mode-aware
-(`prefers-color-scheme`) dan sudah punya state layer `--wui-color-state-layer-<peran>-opacity-08/10/16`
-untuk peran interaktif.
-
-```scss
-// src/styles.scss — konfigurasi opsional dari sisi aplikasi
-@use '@wajek/wui/scss/wui.scss' with (
-  $wui-palette: 'purple',        // palet yang skalanya di-emit
-  $wui-roles: (
-    'light': (
-      'primary': ('brand', 500), // (palet, tone) → diambil dari data palet
-      'on-primary': #fff,        // atau warna langsung
-      'danger': ('red', 500),
-      'surface': #fdf8ff,
-      'on-surface': #1a1a1a,
-      'outline': #cac4d5,
-    ),
-    'dark': ( /* bentuk sama; boleh dikosongkan → ikut nilai 'light' */ ),
-  ),
-);
+```bash
+npx wui-theme src/theme/material-theme.json     # → src/theme/_wui-schemes.scss
 ```
 
-Aturan nilai sebuah peran: `(palet, tone)` · warna (`#rrggbb`) · string CSS apa adanya (mis.
-`color-mix(…)` untuk nilai turunan) · `false` untuk tidak meng-emit peran itu.
-Palet tambahan disuntik lewat `$wui-palettes-extra`. Peran yang tidak ada di `$wui-roles` tetapi
-terdaftar di `$wui-state-layer-roles` akan **menggagalkan build** dengan pesan yang jelas.
+Bungkus jadi skrip npm sendiri supaya tidak perlu mengingat path-nya (`wui-theme` otomatis ada di
+`node_modules/.bin` saat skrip npm berjalan):
+
+```json
+"theme:build": "wui-theme src/theme/material-theme.json"
+```
+
+```scss
+// src/styles.scss
+@use './theme/wui-schemes' as theme;
+@use '@wajek/wui/scss/wui.scss' with ($wui-schemes: theme.$wui-schemes);
+```
+
+Menulis skema sendiri juga boleh — nilai sebuah peran boleh `(palet, tone)` · warna (`#rrggbb`) ·
+string CSS apa adanya (mis. `color-mix(…)`) · `false` (peran tidak di-emit). Saat build diverifikasi:
+**`$wui-role-required` harus lengkap** (aksen + `on-*`, `surface`/`on-surface`/`on-surface-variant`,
+`surface-container-low`, `outline`/`outline-variant`, dan `*-container` + `on-*-container` untuk
+primary/secondary/error), dan setiap `X`/`X-container` yang ada harus punya `on-*`-nya. Kalau tidak →
+build gagal dengan pesan yang menyebut peran yang hilang. Peta yang diberikan **menggantikan** peta
+bawaan (tidak digabung), jadi praktisnya pakai generator di atas.
+
+Di luar peran M3, library menambahkan: `default`/`on-default` (permukaan netral untuk tombol
+`color="default"` — mendelegasikan ke `surface-container-high`), `disabled-container`,
+`disabled-content`, dan state layer `--wui-color-state-layer-<peran>-opacity-08/10/16`. Peran yang
+tidak ada di skema aplikasi dilewati — hanya yang wajib yang menggagalkan build.
+
+⚠️ **Breaking (satu mayor):** peran `danger`/`on-danger` sudah diganti `error`/`on-error` mengikuti
+M3; alias `--wui-color-danger` → `var(--wui-color-error)` masih di-emit supaya tidak pecah.
 
 ### Konvensi yang dibekukan
 

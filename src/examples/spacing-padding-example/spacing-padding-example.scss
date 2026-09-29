@@ -1,0 +1,22 @@
+.demo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.padding-card {
+  border: 1px solid color-mix(in srgb, var(--wui-color-secondary) 40%, transparent);
+  background: color-mix(in srgb, var(--wui-color-secondary) 12%, transparent);
+  color: var(--wui-color-on-surface);
+  border-radius: 6px;
+  font-size: 0.825rem;
+  font-weight: 600;
+}

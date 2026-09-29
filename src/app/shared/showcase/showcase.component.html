@@ -1,0 +1,43 @@
+<section class="showcase-card">
+  <!-- @if (title() || description()) {
+    <div class="showcase-header">
+      @if (title()) {
+        <h2 class="showcase-title">{{ title() }}</h2>
+      }
+      @if (description()) {
+        <p class="showcase-desc">{{ description() }}</p>
+      }
+    </div>
+  } -->
+
+  <!-- Live Interactive Preview / Demo Area -->
+  <div class="showcase-preview">
+    <ng-content />
+  </div>
+
+  <!-- Dynamic Tabs & Code Viewer Bar -->
+  @if (hasTabs()) {
+    <div class="showcase-code-bar wui-ps-4 wui-pe-2">
+      <div class="wui-tab wui-gap-col-3">
+        @for (tab of tabs(); track tab.label) {
+          <button class="wui-tab-item"
+            [class.active]="selectedLabel() === tab.label"
+            (click)="selectTab(tab.label)"
+          >{{ tab.label }}</button>
+        }
+      </div>
+
+      @if (collapsible()) {
+        <button type="button" wuiButton size="sm" variant="text" (click)="toggleCode()">
+          {{ showCode() ? 'Sembunyikan Kode' : 'Lihat Kode' }}
+        </button>
+      }
+    </div>
+
+    @if (showCode()) {
+      <div class="showcase-code-body">
+        <app-code [sourceUrl]="currentTab()?.code ?? ''" [lang]="currentTab()?.language ?? 'html'"></app-code>
+      </div>
+    }
+  }
+</section>

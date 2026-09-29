@@ -1,10 +1,10 @@
 import { Component, inject, TemplateRef, viewChild } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { WuiPage, WuiPageRef, WuiPageService } from '@wajek/wui';
+import { WuiPage, WuiPageRef, WuiPageService, WuiScrollbar } from '@wajek/wui';
 
 @Component({
   selector: 'app-home-nested.page',
-  imports: [WuiPage, RouterLink],
+  imports: [WuiPage, WuiScrollbar, RouterLink],
   templateUrl: './home-nested.page.html',
   styleUrl: './home-nested.page.scss',
 })
@@ -15,7 +15,7 @@ export class HomeNestedPage {
   pageRef? : WuiPageRef;
 
   ngOnInit(): void {
-    this.pageRef = this.pageService.push(this.pageTpl());
+    this.pageRef = this.pageService.open(this.pageTpl());
   }
 
   ngOnDestroy(): void {

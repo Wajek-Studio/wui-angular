@@ -30,10 +30,10 @@
 /// <!-- 1/12 dari 768px, lalu 3/12 dari 992px -->
 /// ```
 ///
-/// Jarak antar sel **bukan** bagian file ini: pakai utilitas `.wui-gap-*` / `.wui-row-gap-*` /
-/// `.wui-column-gap-*` (`utilities/_gap.scss`) yang nilainya dari skala spacing (`--wui-space-*`).
+/// Jarak antar sel **bukan** bagian file ini: pakai utilitas `.wui-gap-row-*` dan
+/// `.wui-gap-col-*` (`utilities/_gap.scss`) yang nilainya dari skala spacing (`--wui-space-*`).
 /// Jadi satu grid bisa punya jarak horizontal dan vertikal berbeda, mis.
-/// `<div class="wui-row wui-column-gap-3 wui-row-gap-1">`.
+/// `<div class="wui-row wui-gap-col-3 wui-gap-row-1">`.
 ///
 /// `minmax(0, 1fr)` dipakai sebagai jalur supaya isi yang panjang (teks tanpa spasi, gambar,
 /// `<pre>`) tidak melebarkan jalurnya — tanpa itu `1fr` setara `min-content` dan grid bisa bocor.

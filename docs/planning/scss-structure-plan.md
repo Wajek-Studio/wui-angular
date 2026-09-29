@@ -491,6 +491,13 @@ karena semua blok CSS di `www/styles.css` bisa ditelusuri ke layer lain.
 > `font: inherit`) sekarang 14px/21px, sedangkan yang memakai token peran (label field 16px, tombol
 > 14px, hint 12px, judul 28px) tidak berubah. `html` tetap 16px sehingga `1rem` tetap 16px.
 
+> **Revisi 23 Sep 2026 — skala `rem` dipatok 16px.** `:root` di `@mixin typography` sekarang menulis
+> `font-size: 16px` secara eksplisit. Sebelumnya `1rem` mengikuti setelan font bawaan browser
+> (12–24px), padahal seluruh token spacing & skala tipografi ditulis dengan asumsi root 16px — jadi
+> metrik bisa melar tanpa ada token yang berubah. Konsekuensi yang disadari: preferensi "perbesar
+> font" pengguna tidak lagi menggeser satuan `rem` (zoom halaman tetap berfungsi).
+> Ukuran teks bawaan (body/medium) tetap di `body`, bukan `:root`, dengan alasan seperti di atas.
+
 > Keputusan §10 no. 2 diambil: **minimal dulu**. Kalau nanti ingin lebih agresif (normalize penuh),
 > cukup ganti isi `@mixin reset` — `wui.scss` tidak perlu diubah.
 

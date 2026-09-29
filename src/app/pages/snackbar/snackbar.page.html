@@ -1,0 +1,63 @@
+<ng-template #pageTpl>
+  <wui-page>
+    <div class="wui-page-content" wuiScrollbar>
+      <div class="wui-container wui-py-5">
+        
+        <h1 class="wui-headline-large--em wui-mb-4">Snackbar</h1>
+        
+        <div class="wui-mb-4">
+          <p>
+            Pemberitahuan singkat (<i>toast</i>) di sudut bawah layar. Dikelola melalui <code>WuiSnackbarService</code> dengan animasi halus dan penutupan otomatis.
+          </p>
+        </div>
+
+        <!-- ─── USAGE ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">Usage</h2>
+
+        <div class="wui-mb-5">
+          <app-showcase
+            title="Penggunaan Snackbar"
+            description="Contoh pemanggilan fungsi snackbarService.open() dasar."
+            [tabs]="[
+              { label: 'snackbar-basic-example.html', code: '/examples/snackbar-basic-example/snackbar-basic-example.html', language: 'html' },
+              { label: 'snackbar-basic-example.ts', code: '/examples/snackbar-basic-example/snackbar-basic-example.ts', language: 'typescript' }
+            ]"
+          >
+            <snackbar-basic-example></snackbar-basic-example>
+          </app-showcase>
+        </div>
+
+        <!-- ─── API & PROPERTI ─────────────────────────────────────────────── -->
+        <h2 class="wui-title-large--em wui-mb-4">API Reference</h2>
+
+        <h3 class="wui-title-medium--em wui-mb-3">WuiSnackbarService</h3>
+        <div class="wui-edge-fix-4 wui-mb-5">
+          <table wuiTable>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Parameter</th>
+                <th>Return Type</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>open()</code></td>
+                <td><code>message: string, duration = 3000</code></td>
+                <td><code>WuiSnackbarRef</code></td>
+                <td>Membuka snackbar baru. Jika ada snackbar yang sedang aktif, instance lama otomatis ditutup (animasi keluar) terlebih dahulu.</td>
+              </tr>
+              <tr>
+                <td><code>close()</code></td>
+                <td>-</td>
+                <td><code>void</code></td>
+                <td>Menutup paksa snackbar yang saat ini sedang aktif (jika ada).</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </wui-page>
+</ng-template>

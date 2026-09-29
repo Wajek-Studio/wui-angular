@@ -1,0 +1,12 @@
+<label class="wui-checkbox">
+  <input
+    type="checkbox"
+    class="wui-checkbox__input"
+    [checked]="checked()"
+    [disabled]="disabled()"
+    (change)="onInputChange($event)"
+    (blur)="onBlur()"
+  />
+  <span class="wui-checkbox__box" aria-hidden="true"></span>
+  <span class="wui-checkbox__label"><ng-content /></span>
+</label>

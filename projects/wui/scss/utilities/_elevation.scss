@@ -1,0 +1,17 @@
+// Level 6 — utilitas elevasi (bayangan permukaan).
+// Satu class per level skala Material 3: `.wui-elevation-0` … `.wui-elevation-5`.
+// Logikanya tinggal di `abstracts/_mixins.scss` (`a.elevation($level)`) — berkas ini cuma
+// mengonsumsinya, jadi mixin yang sama bisa dipakai di class lain (`.wui-card`, panel custom, …)
+// tanpa menyalin nilai bayangannya.
+// Belum ada varian responsif — bayangan tidak bergantung breakpoint.
+@use 'sass:map';
+@use '../abstracts' as a;
+
+/// Class bantu bayangan permukaan (`.wui-elevation-0` … `.wui-elevation-5`).
+@mixin elevation {
+    @each $wui-level in map.keys(a.$wui-elevations) {
+        .wui-elevation-#{$wui-level} {
+            @include a.elevation($wui-level);
+        }
+    }
+}

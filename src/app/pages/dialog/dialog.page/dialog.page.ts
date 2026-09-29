@@ -1,8 +1,7 @@
-import { Component, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { WuiButton, WuiDialogRef, WuiDialogService, WuiPage, WuiPageService } from '@wajek/wui';
-
+import { Component, inject, OnInit, signal, TemplateRef, viewChild } from '@angular/core';
+import { WuiButton, WuiDialogRef, WuiDialogService, WuiPage, WuiPageService, WuiScrollbar, WuiTable } from '@wajek/wui';
 import { HapusDialog } from '../hapus-dialog/hapus-dialog';
+import { ShowcaseComponent } from '../../../shared/showcase';
 
 /**
  * Halaman demo `WuiDialogService`.
@@ -13,7 +12,7 @@ import { HapusDialog } from '../hapus-dialog/hapus-dialog';
  */
 @Component({
   selector: 'app-dialog.page',
-  imports: [RouterLink, WuiButton, WuiPage],
+  imports: [WuiButton, WuiPage, ShowcaseComponent, WuiScrollbar, WuiTable],
   templateUrl: './dialog.page.html',
   styleUrl: './dialog.page.scss',
 })
@@ -28,20 +27,19 @@ export class DialogPage implements OnInit {
 
   protected readonly hasilKomponen = signal('(belum dibuka)');
   protected readonly hasilTemplate = signal('(belum dibuka)');
-  protected readonly hasilAlert = signal('(belum dibuka)');
+  protected readonly hasilAlert    = signal('(belum dibuka)');
 
   /** Ref dialog template — tidak ada komponen pemilik, jadi ref-nya dipegang halaman. */
   private templateRef: WuiDialogRef<string> | null = null;
 
   ngOnInit(): void {
-    this.pageService.replace(this.pageTpl()!, { variant: 'full' });
+    this.pageService.replace(this.pageTpl()!);
   }
 
   /** Dialog dari komponen: ref-nya di-inject oleh komponen dialognya sendiri. */
   protected async bukaKomponen(): Promise<void> {
     const ref = this.dialogs.open<boolean>(HapusDialog, {
       data: { nama: 'Produk A' },
-      // Label untuk screen reader — mengarah ke `<h2 id="hapus-dialog-title">` di isi dialog.
       ariaLabelledBy: 'hapus-dialog-title',
     });
 
@@ -65,12 +63,7 @@ export class DialogPage implements OnInit {
     this.templateRef?.close(nilai);
   }
 
-  /**
-   * Alert: `role="alertdialog"` + `disableClose`.
-   *
-   * `disableClose` mematikan ESC dan klik backdrop, jadi satu-satunya jalan keluar adalah tombol
-   * di dalam dialog — perilaku yang diharapkan untuk dialog sistem.
-   */
+  /** Alert: `role="alertdialog"` + `disableClose`. */
   protected bukaAlert(): void {
     void this.dialogs
       .open<boolean>(HapusDialog, {
@@ -88,7 +81,6 @@ export class DialogPage implements OnInit {
   protected async alertError(): Promise<void> {
     const pilihan = await this.dialogs.alert({
       title: 'Gagal memuat kontak',
-      // `\n` dipertahankan (`white-space: pre-line` di isi dialog), jadi teks biasa tidak perlu HTML.
       content: 'Server tidak merespons.\nTidak ada data yang berubah.',
     });
 
@@ -118,7 +110,6 @@ export class DialogPage implements OnInit {
     this.hasilAlert.set(this.labelAlert(pilihan));
   }
 
-  /** `null` berarti ditutup tanpa memilih tombol (ESC / klik backdrop). */
   private labelAlert(pilihan: number | null): string {
     return pilihan === null ? 'null (ditutup)' : `index ${pilihan}`;
   }

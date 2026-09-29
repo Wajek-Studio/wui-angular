@@ -1,0 +1,37 @@
+.demo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 65%, transparent);
+  margin-bottom: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.margin-matrix {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.margin-slot {
+  display: inline-block;
+  border: 1px dashed color-mix(in srgb, var(--wui-color-primary) 40%, transparent);
+  background: color-mix(in srgb, var(--wui-color-primary) 4%, transparent);
+  border-radius: 6px;
+}
+
+.spacing-box {
+  padding: 0.5rem 0.85rem;
+  background: color-mix(in srgb, var(--wui-color-primary) 18%, transparent);
+  border: 1px solid var(--wui-color-primary);
+  color: var(--wui-color-on-surface);
+  border-radius: 4px;
+  font-size: 0.825rem;
+  font-weight: 600;
+}

@@ -27,17 +27,17 @@ import { WuiButtonColor, WuiButtonIconPos, WuiButtonSize, WuiButtonVariant } fro
  *
  * ## Warna
  *
- * Input `color` memilih peran warna — `default` (netral), `primary`, atau `danger` — dan berlaku
+ * Input `color` memilih peran warna — `default` (netral), `primary`, atau `error` — dan berlaku
  * untuk ketiga varian:
  *
  * ```html
  * <button wuiButton>Netral (default)</button>
  * <button wuiButton color="primary">Brand</button>
- * <button wuiButton color="danger" variant="outlined">Hapus</button>
+ * <button wuiButton color="error" variant="outlined">Hapus</button>
  * ```
  *
  * Warnanya berasal dari token peran (`--wui-color-default`, `--wui-color-primary`,
- * `--wui-color-danger`), yang bisa dipetakan aplikasi lewat `$wui-roles` di `styles.scss`.
+ * `--wui-color-error`), yang bisa dipetakan aplikasi lewat `$wui-schemes` di `styles.scss`.
  *
  * ## Ikon
  *
@@ -111,7 +111,7 @@ import { WuiButtonColor, WuiButtonIconPos, WuiButtonSize, WuiButtonVariant } fro
     '[class.wui-button--icon-only]': 'iconOnly()',
     '[class.wui-button--color-default]': "color() === 'default'",
     '[class.wui-button--color-primary]': "color() === 'primary'",
-    '[class.wui-button--color-danger]': "color() === 'danger'",
+    '[class.wui-button--color-error]': "color() === 'error' || color() === 'danger'",
   },
 })
 export class WuiButton {
@@ -139,10 +139,11 @@ export class WuiButton {
   readonly iconOnly = input(false, { transform: booleanAttribute });
 
   /**
-   * Peran warna: `default` (netral, default), `primary`, atau `danger`.
+   * Peran warna: `default` (netral, default), `primary`, atau `error` (`danger` masih diterima
+   * sebagai alias satu mayor).
    *
    * Nilainya tidak disimpan di komponen — komponen hanya membaca token peran
-   * (`--wui-color-default` / `-primary` / `-danger`), jadi mengganti warna cukup dari `$wui-roles`.
+   * (`--wui-color-default` / `-primary` / `-error`), jadi mengganti warna cukup dari `$wui-schemes`.
    */
   readonly color = input<WuiButtonColor>('default');
 }

@@ -1,0 +1,13 @@
+.demo-output {
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--wui-color-on-surface) 80%, transparent);
+  padding: 0.5rem 0.75rem;
+  background: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent);
+  border-radius: 6px;
+  display: inline-block;
+  align-self: flex-start;
+
+  strong {
+    color: var(--wui-color-primary);
+  }
+}

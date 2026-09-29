@@ -1,47 +1,45 @@
-import { Component, inject } from '@angular/core';
-import {
-  WuiApp,
-  WuiButton,
-  WuiIcon,
-  WuiSidenav,
-  WuiSidenavBody,
-  WuiSidenavFooter,
-  WuiSidenavFull,
-  WuiSidenavItem,
-  WuiSidenavMini,
-  WuiSidenavService,
-  WuiSidenavSubheader,
-  WuiTopbar,
-} from '@wajek/wui';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { WuiApp, WuiButton, WuiIcon, WuiTopbar, WuiSidenavContainer, WuiPageHost, WuiSidenav, WuiSidenavService, WuiSidenavItem, WuiSidenavSubheader, WuiScrollbar, WuiSidenavContainerContent } from '@wajek/wui';
+import { RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   imports: [
     WuiApp,
     RouterOutlet,
-    WuiSidenav,
-    WuiSidenavBody,
-    WuiSidenavFooter,
-    WuiSidenavMini,
-    WuiSidenavFull,
-    WuiSidenavItem,
-    WuiSidenavSubheader,
     WuiIcon,
     WuiButton,
-    RouterLink,
+    WuiTopbar,
+    WuiPageHost,
+    WuiSidenav,
+    RouterLinkWithHref,
     RouterLinkActive,
-    WuiTopbar
-  ],
+    WuiSidenavItem,
+    WuiSidenavSubheader,
+    WuiSidenavContainer,
+    WuiSidenavContainerContent,
+    WuiScrollbar,
+],
   templateUrl: './app.html',
   styleUrl: './app.scss',
+  host: {
+    '[class.sidenav-show]': 'sidenavShow()'
+  }
 })
-export class App {
+export class App implements OnInit {
 
   private readonly sidenavService = inject(WuiSidenavService);
 
   /** Id harus sama dengan `id` pada `<wui-sidenav>` di template. */
-  private readonly sidenavId = 'app-sidenav';
+  readonly sidenavId = 'app-sidenav';
+  sidenavShow = signal(true);
+
+  ngOnInit(): void {
+    this.sidenavService.stateChange.subscribe((state) => {
+      if(state.id !== this.sidenavId)return;
+      this.sidenavShow.set(state.show);
+    });
+  }
 
   toggleSidenav() {
     this.sidenavService.toggle(this.sidenavId);
