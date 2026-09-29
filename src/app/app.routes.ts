@@ -13,7 +13,9 @@ export const routes: Routes = [{
         path: 'nested', component: SettingNestedPage
     }]
 }, {
-    path: 'page', loadComponent: () => import('./pages/page/page.page').then(m => m.PagePage)
+    path: 'page', loadComponent: () => import('./pages/page/page.page').then(m => m.PagePage), children: [{
+        path: 'nested', loadComponent: () => import('./pages/page/page-nested.page').then(m => m.PageNestedPage)
+    }]
 }, {
     path: 'tipografi', loadComponent: () => import('./pages/tipografi.page/tipografi.page').then(m => m.TipografiPage)
 }, {
