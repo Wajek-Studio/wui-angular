@@ -21,6 +21,7 @@
 // mis. `@use '@wajek/wui/scss/wui.scss' as wui;` lalu `@include wui.space(mt, 3);`.
 @forward 'abstracts';
 @forward 'themes';
+
 @use 'base';
 @use 'components';
 @use 'layout';
@@ -32,11 +33,10 @@
 @include base.typography;
 @include base.heading;
 @include base.layout;
+
+@include themes.variables;
 @include themes.light-theme;
 @include themes.dark-theme;
-
-// Skema warna: `--wui-color-primary`, `-on-primary`, `-secondary`, `-error`, `-surface`, …
-// untuk mode terang & gelap. Dikonfigurasi aplikasi lewat `with ($wui-schemes: (…))`.
 @include themes.schemes;
 
 // Skala palet: `--wui-color-<palet>-<tone>` (data pasif, M6).

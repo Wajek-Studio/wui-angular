@@ -2,7 +2,7 @@ import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners, provi
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideIcons } from '@wajek/wui';
+import { provideIcons, provideWuiMenuConfig } from '@wajek/wui';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { appIcons } from './app.icons';
@@ -24,6 +24,21 @@ export const appConfig: ApplicationConfig = {
       }
     }),
     provideHttpClient(withFetch()), 
-    ...(isDevMode() ? [] : [provideClientHydration(withEventReplay())])
+    ...(isDevMode() ? [] : [provideClientHydration(withEventReplay())]),
+    provideWuiMenuConfig({
+      defaultPosition: 'over-top-right',
+      positions: {
+        'over-top-right' : [{
+            originX: 'end', originY: 'top',
+            overlayX: 'end', overlayY: 'top'
+        }, {
+            originX: 'end', originY: 'bottom',
+            overlayX: 'end', overlayY: 'bottom'
+        }, {
+            originX: 'end', originY: 'bottom',
+            overlayX: 'end', overlayY: 'bottom'
+        }]
+      }
+    })
   ],
 };

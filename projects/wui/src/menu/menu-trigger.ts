@@ -1,14 +1,22 @@
 import { ConnectedPosition, Overlay, OverlayConfig, OverlayRef } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
-import { Directive, ElementRef, inject, input, TemplateRef, ViewContainerRef } from "@angular/core";
+import { Directive, ElementRef, inject, Injector, input, TemplateRef, ViewContainerRef } from "@angular/core";
+import { WuiMenuStack } from "./menu-stack";
+import { WUI_MENU_CONFIG } from "./menu-config";
 
 @Directive({
     selector: '[wuiMenuTriggerFor]',
     host: {
         '(click)': 'toggle()'
-    }
+    },
+    providers: [
+        
+    ]
 })
 export class WuiMenuTriggerFor {
+
+    private config = inject(WUI_MENU_CONFIG);
+    private stack = inject(WuiMenuStack);
 
     private overlay = inject(Overlay);
     private elementRef = inject(ElementRef);
@@ -17,19 +25,8 @@ export class WuiMenuTriggerFor {
     menuTemplate = input.required<TemplateRef<unknown>>({alias: 'wuiMenuTriggerFor'});
     wuiMenuTriggerData = input<unknown>();
 
-    private overlayRef : OverlayRef | null = null;
-    private portal : TemplatePortal | null = null;
-
-    private readonly positions: ConnectedPosition[] = [
-        {
-            originX: 'start', originY: 'bottom',
-            overlayX: 'start', overlayY: 'top'
-        },
-        {
-            originX: 'start', originY: 'top',
-            overlayX: 'start', overlayY: 'bottom'
-        }
-    ];
+    private overlayRef: OverlayRef | null = null;
+    private portal: TemplatePortal | null = null;
 
     toggle() {
         this.overlayRef ? this.close() : this.open();
@@ -44,16 +41,29 @@ export class WuiMenuTriggerFor {
             positionStrategy: this.overlay
                 .position()
                 .flexibleConnectedTo(this.elementRef)
-                .withPositions(this.positions),
+                .withPositions(this.config.positions![this.config.defaultPosition!]),
             scrollStrategy: this.overlay.scrollStrategies.block()
         });
 
-        this.overlayRef = this.overlay.create(config);
-        this.portal = new TemplatePortal(this.menuTemplate(), this.viewContainerRef, {
-            $implicit: this.wuiMenuTriggerData()
+        const injector = Injector.create({
+            parent: this.viewContainerRef.injector,
+            providers: [{
+                provide: WuiMenuTriggerFor, useValue: this
+            }]
         });
-        this.overlayRef.attach(this.portal);
 
+        this.stack.push(this);
+
+        this.overlayRef = this.overlay.create(config);
+        this.portal = new TemplatePortal(
+            this.menuTemplate(),  // the template
+            this.viewContainerRef, // view container ref
+            {
+                $implicit: this.wuiMenuTriggerData()
+            }, // data
+            injector // injector
+        );
+        this.overlayRef.attach(this.portal);
         this.overlayRef.backdropClick().subscribe(() => this.close())
     }
 
@@ -61,6 +71,7 @@ export class WuiMenuTriggerFor {
         this.overlayRef?.dispose();
         this.overlayRef = null;
         this.portal = null;
+        this.stack.pop();
     }
 
     ngOnDestroy() {

@@ -1,143 +1,5 @@
-// =============================================================================
-// Design token @wajek/wui — sumber kebenaran nilai (compile-time).
-// File ini TIDAK boleh menghasilkan CSS. Emisinya ada di `themes/`.
-// Konsumen mengganti nilai lewat CSS variable, bukan lewat file ini.
-// =============================================================================
 @use 'sass:map';
 
-// ── Palet Warna (data intensitas) ───────────────────────────────────────────
-// Palet = **data pasif**: skala tone absolut seperti export Material Theme Builder (`0` = hitam,
-// `100` = putih) — **satu skala untuk kedua mode**. Peran semantik tidak lagi menunjuk palet;
-// nilainya hex di `themes/_schemes.scss` (M1/M9 di `docs/planning/wui-color-mtb-plan.md`).
-// `$wui-palettes-builtin` = data bawaan library (5 palet dari `default.json`), `$wui-palettes-extra`
-// = palet milik aplikasi. Keduanya digabung jadi `$wui-palettes` — satu-satunya map yang dibaca
-// fungsi & mixin lain.
-// ⚠️ Skala palet **tidak di-emit** secara default (`$wui-palette: false`, lihat `themes/_palette.scss`),
-// jadi nama bawaan yang sama dengan MTB (`primary`, `secondary`, …) tidak pernah sampai ke CSS.
-// Untuk memakai palet lewat peran `(palet, tone)`, pakai nama **non-peran**:
-//     $wui-palettes-extra: ('brand': (0: #000, …, 100: #fff))
-//     @use 'abstracts' as a;  →  a.color-raw('brand', 40)
-$wui-palettes-builtin: (
-  'primary': (
-    0: #000,
-    5: #140043,
-    10: #1f005f,
-    15: #2a007a,
-    20: #360891,
-    25: #411d9c,
-    30: #4d2da7,
-    35: #593bb4,
-    40: #6548c1,
-    50: #7e62dc,
-    60: #997df8,
-    70: #b29dff,
-    80: #cdbdff,
-    90: #e7deff,
-    95: #f5eeff,
-    98: #fdf7ff,
-    99: #fffbff,
-    100: #fff,
-  ),
-  'secondary': (
-    0: #000,
-    5: #120d25,
-    10: #1d1831,
-    15: #28223c,
-    20: #322d47,
-    25: #3e3852,
-    30: #49435e,
-    35: #554e6b,
-    40: #615a77,
-    50: #7a7391,
-    60: #948cac,
-    70: #afa7c7,
-    80: #cbc2e3,
-    90: #e7deff,
-    95: #f5eeff,
-    98: #fdf7ff,
-    99: #fffbff,
-    100: #fff,
-  ),
-  'tertiary': (
-    0: #000,
-    5: #280214,
-    10: #360c1f,
-    15: #42162a,
-    20: #4f2134,
-    25: #5c2c40,
-    30: #69374b,
-    35: #774257,
-    40: #854e63,
-    50: #a1667c,
-    60: #bd7f96,
-    70: #da99b0,
-    80: #f8b3cc,
-    90: #ffd9e4,
-    95: #ffecf0,
-    98: #fff8f8,
-    99: #fffbff,
-    100: #fff,
-  ),
-  'neutral': (
-    0: #000,
-    5: #111014,
-    10: #1c1b1e,
-    15: #272529,
-    20: #313033,
-    25: #3c3b3e,
-    30: #48464a,
-    35: #545156,
-    40: #605d62,
-    50: #79767a,
-    60: #938f94,
-    70: #aeaaaf,
-    80: #c9c5ca,
-    90: #e6e1e6,
-    95: #f4eff4,
-    98: #fdf8fd,
-    99: #fffbff,
-    100: #fff,
-  ),
-  'neutral-variant': (
-    0: #000,
-    5: #121017,
-    10: #1c1a22,
-    15: #27252d,
-    20: #322f38,
-    25: #3d3a43,
-    30: #48454e,
-    35: #54515a,
-    40: #605d66,
-    50: #79757f,
-    60: #938f99,
-    70: #aea9b4,
-    80: #cac4cf,
-    90: #e6e0ec,
-    95: #f5eefa,
-    98: #fdf7ff,
-    99: #fffbff,
-    100: #fff,
-  ),
-) !default;
-
-// Palet milik aplikasi — disuntik lewat `@use … with ($wui-palettes-extra: (…))`.
-$wui-palettes-extra: () !default;
-$wui-palettes: map.merge($wui-palettes-builtin, $wui-palettes-extra) !default;
-
-// ── Warna netral: sekarang dari palet ───────────────────────────────────────
-// Nilai `surface`/`on-surface`/`outline` TIDAK lagi disimpan sebagai variabel di sini —
-// semuanya tone dari palet `neutral` di atas, dipetakan di `themes/_schemes.scss`.
-
-// ── State layer ─────────────────────────────────────────────────────────────
-// Nilainya diturunkan di CSS dari warna perannya (lihat `themes/_schemes.scss`),
-// jadi tidak ada hex tambahan yang perlu diisi.
-// Kunci opacity WAJIB string: angka `08` dibaca Sass sebagai `8`, sehingga nama
-// token-nya jadi `opacity-8` — bukan `opacity-08`.
-// Peran yang **wajib** ada di setiap scheme, karena dibaca langsung oleh komponen/base. Scheme yang
-// tidak punya salah satunya **menggagalkan build** dengan pesan yang menyebut peran yang hilang —
-// custom property yang tidak terdefinisi bukan error CSS, jadi tanpa penjaga ini gejalanya cuma
-// "teks jadi transparan" atau "divider tak terlihat".
-// Aturan: begitu ada komponen yang membaca sebuah peran, masukkan peran itu ke daftar ini.
 $wui-role-required: (
   // aksen & teks di atasnya
   'primary',
@@ -163,8 +25,6 @@ $wui-role-required: (
   'on-error-container',
 ) !default;
 
-// Peran yang punya state layer (hover/pressed/dragged). Peran yang tidak ada di scheme aplikasi
-// dilewati tanpa error — yang wajib sudah dijaga `$wui-role-required` di atas.
 $wui-state-layer-roles: (
   'primary',
   'on-primary',
@@ -177,6 +37,7 @@ $wui-state-layer-roles: (
   'surface',
   'on-surface'
 ) !default;
+
 $wui-state-layer-opacities: (
   '08': 0.08,
   '10': 0.10,
@@ -304,15 +165,6 @@ $wui-radii: (
     'full': $wui-radius-full,
 ) !default;
 
-// ── Elevasi (Material 3) ────────────────────────────────────────────────────
-// Sumber tunggal bayangan: token **`md.sys.elevation.level0…5`** M3 apa adanya. Tiap level terdiri
-// dari dua lapis — lapisan rapat (30%) memberi ketajaman tepi, lapisan lebar (15%) memberi sebaran.
-// Level dipakai ulang komponen lewat `map.get()` supaya angkanya tidak bercabang: tombol filled saat
-// hover = 1, panel menu = 2, dialog = 3 (lihat `$wui-menu-elevation` / `$wui-dialog-elevation`).
-// Level `0` = `none` — permukaan yang menempel di latar (mis. tombol outlined saat diam) memang
-// tidak boleh punya bayangan, jadi level ini ada sebagai nilai eksplisit, bukan cuma dihilangkan.
-// ⚠️ Warnanya masih hitam keras, **belum** memakai peran `--wui-color-shadow` (utang yang dicatat di
-// `docs/panduan-warna.md` §10). Selama migrasi itu belum dilakukan, semua level harus seragam begini.
 $wui-elevations: (
     0: none,
     1: (0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%)),
@@ -321,10 +173,6 @@ $wui-elevations: (
     4: (0 2px 3px 0 rgb(0 0 0 / 30%), 0 6px 10px 4px rgb(0 0 0 / 15%)),
     5: (0 4px 4px 0 rgb(0 0 0 / 30%), 0 8px 12px 6px rgb(0 0 0 / 15%)),
 ) !default;
-
-// Token tunggal level 1 — dipakai tombol filled saat hover dan sudah didokumentasikan sebagai
-// `--wui-elevation-1` (`docs/panduan-warna.md` §10). Turunan map supaya nilainya tetap satu sumber.
-$wui-elevation-1: map.get($wui-elevations, 1) !default;
 
 // ── Z-index ─────────────────────────────────────────────────────────────────
 // Wajib dipakai semua komponen — dilarang menulis z-index mentah.
