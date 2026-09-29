@@ -52,6 +52,8 @@ export const routes: Routes = [{
     path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
 }, {
     path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)
+}, {
+    path: 'message', loadComponent: () => import('./pages/message/message.page').then(m => m.MessagePage)
 },{
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

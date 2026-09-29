@@ -1,8 +1,7 @@
 import { Component, inject, OnInit, TemplateRef, viewChild } from "@angular/core";
-import { WuiPage, WuiPageService, WuiScrollbar, WuiTable, WuiButton } from "@wajek/wui";
+import { WuiPage, WuiPageService, WuiScrollbar, WuiTable } from "@wajek/wui";
 import { PageSimpleExample } from "../../../examples/page-simple-example/page-simple-example";
 import { ShowcaseComponent } from "../../shared/showcase/showcase.component";
-import { RouterLink, RouterOutlet } from "@angular/router";
 
 @Component({
     selector: 'app-page-page',

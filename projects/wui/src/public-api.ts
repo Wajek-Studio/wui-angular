@@ -2,6 +2,8 @@
  * Public API Surface of wui
  */
 
+export * from './message.service';
+
 export * from './app/app';
 
 export * from './button/button';
