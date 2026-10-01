@@ -22,6 +22,18 @@
   @return var(--wui-space-#{$step}, #{spacing($step)});
 }
 
+/// Nilai radius dari skala `$wui-radii`, siap pakai dan membaca CSS variable dengan nilai map
+/// sebagai fallback: `radius-var(3)` → `var(--wui-radius-3, 12px)`.
+/// Dipakai mixin `radius()` dan utilitas `.wui-radius-*` supaya sudut bisa diubah aplikasi
+/// lewat `--wui-radius-*` tanpa rebuild.
+@function radius-var($step) {
+  @if not map.has-key(tokens.$wui-radii, $step) {
+    @error 'wui: radius(#{$step}) tidak ada. Ukuran yang tersedia: #{map.keys(tokens.$wui-radii)}.';
+  }
+
+  @return var(--wui-radius-#{$step}, #{map.get(tokens.$wui-radii, $step)});
+}
+
 /// Margin vertikal heading level `$level` (1–6) dari `$wui-heading-margins`, sebagai
 /// sepasang nilai `block-start block-end`: `heading-margin(1)` → `40px 16px`.
 /// Dipakai `base/_heading.scss` sebagai fallback `var(--wui-heading-margin-1, …)`.

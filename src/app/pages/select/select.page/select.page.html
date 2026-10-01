@@ -25,32 +25,27 @@
               <div class="wui-col-12 wui-col-md-6">
                 <wui-form-field hint="20 opsi kota dengan nilai aktif di tengah ('Bekasi') dan satu opsi nonaktif.">
                   <label wuiLabel>Kota</label>
-                  <wui-select
-                    wuiInput
-                    placeholder="Pilih kota"
-                    [value]="kota()"
-                    (valueChange)="kota.set($event)"
-                  >
-                    <wui-option>Banda Aceh</wui-option>
-                    <wui-option>Medan</wui-option>
-                    <wui-option>Padang</wui-option>
-                    <wui-option>Pekanbaru</wui-option>
-                    <wui-option>Batam</wui-option>
-                    <wui-option>Palembang</wui-option>
-                    <wui-option>Bandar Lampung</wui-option>
-                    <wui-option>Jakarta</wui-option>
-                    <wui-option>Bogor</wui-option>
-                    <wui-option>Tangerang</wui-option>
-                    <wui-option>Bekasi</wui-option>
-                    <wui-option>Bandung</wui-option>
-                    <wui-option>Cirebon</wui-option>
-                    <wui-option>Semarang</wui-option>
-                    <wui-option>Surakarta (Solo)</wui-option>
-                    <wui-option>Yogyakarta</wui-option>
-                    <wui-option disabled>Surabaya (nonaktif)</wui-option>
-                    <wui-option>Malang</wui-option>
-                    <wui-option>Denpasar</wui-option>
-                    <wui-option>Makassar</wui-option>
+                  <wui-select wuiInput placeholder="Pilih kota" value="Banda Aceh">
+                    <wui-option value="aceh">Banda Aceh</wui-option>
+                    <wui-option value="medan">Medan</wui-option>
+                    <wui-option value="padang">Padang</wui-option>
+                    <wui-option value="pekanbaru">Pekanbaru</wui-option>
+                    <wui-option value="batam">Batam</wui-option>
+                    <wui-option value="palembang">Palembang</wui-option>
+                    <wui-option value="lampung">Bandar Lampung</wui-option>
+                    <wui-option value="jakarta">Jakarta</wui-option>
+                    <wui-option value="bogor">Bogor</wui-option>
+                    <wui-option value="tangerang">Tangerang</wui-option>
+                    <wui-option value="bekasi">Bekasi</wui-option>
+                    <wui-option value="bandung">Bandung</wui-option>
+                    <wui-option value="cirebon">Cirebon</wui-option>
+                    <wui-option value="semarang">Semarang</wui-option>
+                    <wui-option value="solo">Surakarta (Solo)</wui-option>
+                    <wui-option value="yogya">Yogyakarta</wui-option>
+                    <wui-option value="surabaya" disabled>Surabaya (nonaktif)</wui-option>
+                    <wui-option value="malang">Malang</wui-option>
+                    <wui-option value="denpasar">Denpasar</wui-option>
+                    <wui-option value="makassar">Makassar</wui-option>
                   </wui-select>
                 </wui-form-field>
 
@@ -63,7 +58,7 @@
               <div class="wui-col-12 wui-col-md-6">
                 <wui-form-field hint="Field select dalam kondisi nonaktif (disabled).">
                   <label wuiLabel>Negara (disabled)</label>
-                  <wui-select wuiInput placeholder="Pilih negara" disabled [value]="negara()">
+                  <wui-select wuiInput placeholder="Pilih negara" disabled>
                     <wui-option>Indonesia</wui-option>
                     <wui-option>Malaysia</wui-option>
                     <wui-option>Singapura</wui-option>
@@ -91,10 +86,10 @@
               <div class="wui-col-12 wui-col-md-6">
                 <wui-form-field variant="filled" hint="Placeholder baru tampil saat select difokus.">
                   <label wuiLabel>Kota (filled)</label>
-                  <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
-                    <wui-option>Jakarta</wui-option>
-                    <wui-option>Bandung</wui-option>
-                    <wui-option>Denpasar</wui-option>
+                  <wui-select wuiInput placeholder="Pilih kota">
+                    <wui-option value="jakarta">Jakarta</wui-option>
+                    <wui-option value="bandung">Bandung</wui-option>
+                    <wui-option value="denpasar">Denpasar</wui-option>
                   </wui-select>
                 </wui-form-field>
               </div>
@@ -102,10 +97,10 @@
               <div class="wui-col-12 wui-col-md-6">
                 <wui-form-field variant="filled" hint="Label mengapung di dalam kotak.">
                   <label wuiLabel>Negara (filled)</label>
-                  <wui-select wuiInput placeholder="Pilih negara" [value]="negara()">
-                    <wui-option>Indonesia</wui-option>
-                    <wui-option>Malaysia</wui-option>
-                    <wui-option>Singapura</wui-option>
+                  <wui-select wuiInput placeholder="Pilih negara">
+                    <wui-option value="indonesia">Indonesia</wui-option>
+                    <wui-option value="malaysia">Malaysia</wui-option>
+                    <wui-option value="singapura">Singapura</wui-option>
                   </wui-select>
                 </wui-form-field>
               </div>
@@ -127,7 +122,7 @@
               <div class="wui-col-12 wui-col-md-6">
                 <wui-form-field hint="Tidak bisa dibuka.">
                   <label wuiLabel>Kota (nonaktif)</label>
-                  <wui-select wuiInput placeholder="Pilih kota" disabled [value]="kota()">
+                  <wui-select wuiInput placeholder="Pilih kota">
                     <wui-option>Jakarta</wui-option>
                     <wui-option>Bandung</wui-option>
                   </wui-select>
@@ -137,7 +132,7 @@
               <div class="wui-col-12 wui-col-md-6">
                 <wui-form-field error="Wajib dipilih sebelum menyimpan.">
                   <label wuiLabel>Kota (invalid)</label>
-                  <wui-select wuiInput placeholder="Pilih kota" [value]="kota()">
+                  <wui-select wuiInput placeholder="Pilih kota">
                     <wui-option>Jakarta</wui-option>
                     <wui-option>Bandung</wui-option>
                   </wui-select>
@@ -164,7 +159,7 @@
                   <wui-select
                     wuiInput
                     placeholder="Pilih kota"
-                    [value]="kotaKaya()"
+                    
                     (valueChange)="kotaKaya.set($event)"
                   >
                     <wui-option value="jkt" typeaheadLabel="Jakarta">

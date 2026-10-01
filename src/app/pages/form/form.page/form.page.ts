@@ -2,29 +2,21 @@ import { Component, OnInit, TemplateRef, inject, viewChild } from '@angular/core
 import {
   WuiPage,
   WuiPageService,
-  WuiScrollbar,
-  WuiTable,
-  WuiFormField,
-  WuiInput,
-  WuiLabel,
+  WuiScrollbar
 } from '@wajek/wui';
-import { ShowcaseComponent } from '../../../shared/showcase/showcase.component';
+import { ShowcaseComponent } from '../../../shared/showcase';
 import { FormSimpleExample } from '../../../../examples/form-simple-example/form-simple-example';
-import { FormReactiveFullExample } from '../../../../examples/form-reactive-full-example/form-reactive-full-example';
+import { FormFilledExample } from '../../../../examples/form-filled-example/form-filled-example';
 
 @Component({
   selector: 'app-form.page',
   imports: [
     WuiPage,
     WuiScrollbar,
-    WuiTable,
-    WuiFormField,
-    WuiInput,
-    WuiLabel,
     ShowcaseComponent,
     FormSimpleExample,
-    FormReactiveFullExample,
-  ],
+    // FormFilledExample
+],
   templateUrl: './form.page.html',
   styleUrl: './form.page.scss',
 })

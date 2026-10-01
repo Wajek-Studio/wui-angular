@@ -16,6 +16,12 @@ export * from './dialog/dialog.service';
 export * from './form-field/form-field';
 export * from './form-field/input';
 export * from './form-field/label';
+export * from './form-field/suffix';
+export * from './form-field/prefix';
+export * from './form-field/hint';
+export * from './form-field/error';
+export * from './form-field/error-matcher';
+export * from './form-field/form-config';
 
 export * from './menu/menu-trigger';
 export * from './menu/menu';
@@ -43,10 +49,12 @@ export * from './icon/icon.service';
 export * from './icon/icon.model';
 
 export * from './table/table';
+
 export * from './pagination/pagination';
 export * from './pagination/pagination.options';
+
 export * from './loading/loading';
-export * from './loading/loading.options';
+
 export * from './badge/badge';
 export * from './badge/badge.options';
 

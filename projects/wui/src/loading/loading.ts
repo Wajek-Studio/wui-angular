@@ -4,27 +4,7 @@ import {
   input,
   numberAttribute,
 } from '@angular/core';
-import { WuiLoadingMode } from './loading.options';
 
-/**
- * Komponen indikator loading Material / WUI.
- *
- * Mendukung tiga mode tampilan:
- * - `circular` (default): Spinner lingkaran SVG dengan animasi rotasi kontinu dan dash stretch.
- * - `indeterminate`: Garis progress bar horizontal kontinu.
- * - `linear`: Garis progress bar horizontal persentase dengan input `pos`.
- *
- * ```html
- * <!-- Mode circular standar (32px) -->
- * <wui-loading mode="circular"></wui-loading>
- *
- * <!-- Mode circular inline di dalam tabel atau di samping teks -->
- * <wui-loading mode="circular" [style.display]="'inline-block'"></wui-loading>
- *
- * <!-- Kustomisasi ukuran dan warna -->
- * <wui-loading mode="circular" [size]="48" color="var(--wui-color-primary)"></wui-loading>
- * ```
- */
 @Component({
   selector: 'wui-loading',
   standalone: true,
@@ -74,15 +54,8 @@ import { WuiLoadingMode } from './loading.options';
   `,
 })
 export class WuiLoading {
-  /** Mode tampilan indikator loading (`circular` | `indeterminate` | `linear`). */
-  readonly mode = input<WuiLoadingMode>('circular');
-
-  /** Ukuran diameter spinner lingkaran dalam pixel (khusus mode circular, default 32px). */
+  readonly mode = input<'circular' | 'indeterminate' | 'linear'>('circular');
   readonly size = input<number, number | string>(32, { transform: numberAttribute });
-
-  /** Posisi persentase progres dari 0 hingga 100 (khusus mode linear). */
   readonly pos = input<number, number | string>(0, { transform: numberAttribute });
-
-  /** Warna kustom indikator loading (default mewarisi `--wui-color-primary`). */
   readonly color = input<string | undefined>(undefined);
 }

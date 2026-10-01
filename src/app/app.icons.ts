@@ -26,6 +26,9 @@ import {
   mdiFolderMove,
   mdiSendCircle,
   mdiTab,
+  mdiBell,
+  mdiEye,
+  mdiCurrencyUsd,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -58,4 +61,7 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'folder-move', path: mdiFolderMove},
       { name: 'send-circle', path: mdiSendCircle},
       { name: 'tab', path: mdiTab},
+      { name: 'bell', path: mdiBell},
+      { name: 'eye', path: mdiEye},
+      { name: 'currency-usd', path: mdiCurrencyUsd}
 ]

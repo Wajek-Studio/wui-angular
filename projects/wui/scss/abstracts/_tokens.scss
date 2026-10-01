@@ -165,6 +165,18 @@ $wui-radii: (
     'full': $wui-radius-full,
 ) !default;
 
+// Peta arah radius → properti CSS sudut yang harus ditulis. Sumber tunggal untuk mixin `radius()`
+// (dipakai komponen) dan utilitas `.wui-radius-*` (dipakai template), jadi keduanya tidak mungkin
+// beda. Sisi `top`/`bottom`/`start`/`end` memakai logical property supaya RTL ikut benar;
+// `all` = keempat sudut sekaligus.
+$wui-radius-dirs: (
+    'all': (border-radius),
+    'top': (border-start-start-radius, border-start-end-radius),
+    'bottom': (border-end-start-radius, border-end-end-radius),
+    'start': (border-start-start-radius, border-end-start-radius),
+    'end': (border-start-end-radius, border-end-end-radius),
+) !default;
+
 $wui-elevations: (
     0: none,
     1: (0 1px 2px rgb(0 0 0 / 30%), 0 1px 3px 1px rgb(0 0 0 / 15%)),

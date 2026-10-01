@@ -91,6 +91,27 @@
   }
 }
 
+/// Menuliskan `border-radius` untuk satu kelompok sudut tanpa mengetik properti CSS-nya manual.
+/// `$dir` mengacu ke `tokens.$wui-radius-dirs` (`all`, `top`, `bottom`, `start`, `end`) dan `$step`
+/// ke skala `tokens.$wui-radii` (`0`–`4`, `'full'`). Nilainya dibaca lewat `--wui-radius-*` dengan
+/// token sebagai fallback, jadi aplikasi bisa mengubah sudut saat runtime tanpa rebuild.
+/// Contoh:
+///   `@include a.radius('all', 3);`  → `border-radius: var(--wui-radius-3, 12px)`
+///   `@include a.radius('top', 2);`  → radius dua sudut atas (logical, jadi RTL benar)
+@mixin radius($dir, $step) {
+  $wui-props: map.get(tokens.$wui-radius-dirs, $dir);
+
+  @if not $wui-props {
+    @error 'wui: arah radius `#{$dir}` tidak dikenal. Pakai: #{map.keys(tokens.$wui-radius-dirs)}.';
+  }
+
+  $wui-value: functions.radius-var($step);
+
+  @each $wui-prop in $wui-props {
+    #{$wui-prop}: $wui-value;
+  }
+}
+
 /// Bayangan permukaan sesuai skala Material 3 (`tokens.$wui-elevations`, level `0`–`5`).
 /// Nilainya dibaca lewat `--wui-elevation-<level>` dengan token sebagai fallback, jadi aplikasi bisa
 /// menimpanya saat runtime tanpa rebuild. Level `0` = `none` (permukaan yang menempel di latar).

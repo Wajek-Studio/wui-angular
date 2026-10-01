@@ -3,7 +3,7 @@
 // sama seperti utilitas flex/gap. Semua nilainya diambil dari token di `abstracts/_tokens.scss`,
 // jadi menambah langkah skala di sana otomatis menambah class di sini.
 // Belum ada varian responsif (`-<bp>`); polanya bisa meniru `utilities/_gap.scss` kalau nanti perlu.
-@use 'sass:list';
+@use 'sass:map';
 @use '../abstracts' as a;
 
 /// Class bantu garis (border) dan sudut (radius).
@@ -14,14 +14,6 @@
         'bottom': 'border-bottom',
         'start': 'border-inline-start',
         'end': 'border-inline-end',
-    );
-
-    // Sisi → dua sudut logical yang menyusunnya (`top` = dua sudut atas, `start` = dua sudut sisi awal).
-    $wui-radius-sides: (
-        'top': ('border-start-start-radius', 'border-start-end-radius'),
-        'bottom': ('border-end-start-radius', 'border-end-end-radius'),
-        'start': ('border-start-start-radius', 'border-end-start-radius'),
-        'end': ('border-start-end-radius', 'border-end-end-radius'),
     );
 
     // Gaya garis.
@@ -82,15 +74,16 @@
         }
     }
 
-    @each $wui-step, $wui-radius in a.$wui-radii {
-        .wui-radius-#{$wui-step} {
-            border-radius: #{$wui-radius};
-        }
+    // Radius per langkah: `.wui-radius-<step>` (semua sudut) dan `.wui-radius-<sisi>-<step>`.
+    // Daftar arah & propertinya tinggal di `$wui-radius-dirs`, dan penulisan deklarasinya lewat
+    // mixin `radius()` — jadi class di sini dan pemakaian di komponen tidak mungkin beda.
+    @each $wui-dir in map.keys(a.$wui-radius-dirs) {
+        // `all` → `.wui-radius-3`; sisi lain → `.wui-radius-top-3`.
+        $wui-modifier: if($wui-dir == 'all', '', '-#{$wui-dir}');
 
-        @each $wui-side, $wui-corners in $wui-radius-sides {
-            .wui-radius-#{$wui-side}-#{$wui-step} {
-                #{list.nth($wui-corners, 1)}: #{$wui-radius};
-                #{list.nth($wui-corners, 2)}: #{$wui-radius};
+        @each $wui-step in map.keys(a.$wui-radii) {
+            .wui-radius#{$wui-modifier}-#{$wui-step} {
+                @include a.radius($wui-dir, $wui-step);
             }
         }
     }

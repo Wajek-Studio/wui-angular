@@ -1,13 +1,17 @@
-<ng-content select="[wuiLabel]"></ng-content>
-<ng-content />
+<div class="wui-form-field-stage">
+    @if(isOutlined()) {
+        <div class="wui-form-field-outline--notch">
+            <div class="wui-form-field-outline--notch-inner"></div>
+        </div>
+    }
 
-@if (message(); as pesan) {
-  <div
-    class="wui-form-field__message"
-    [class.wui-form-field__message--error]="invalid()"
-    [attr.id]="messageId()"
-    aria-live="polite"
-  >
-    {{ pesan }}
-  </div>
-}
+    <ng-content select="[wuiPrefix]"></ng-content>
+    <div class="wui-form-field-stage-main">
+        <ng-content select="[wuiLabel]"></ng-content>
+        <ng-content></ng-content>
+    </div>
+    <ng-content select="[wuiSuffix]"></ng-content>
+</div>
+
+<ng-content select="[wuiHint]"></ng-content>
+<ng-content select="[wuiError]"></ng-content>

@@ -1,74 +1,54 @@
-import { DestroyRef, Directive, ElementRef, effect, inject } from '@angular/core';
+import { DestroyRef, Directive, DoCheck, ElementRef, inject, signal } from '@angular/core';
+import { FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
+import { WUI_FORM_CONFIG, WuiFormConfig } from './form-config';
 
-import { FieldControl } from './field-control';
-import { WuiFormField } from './form-field';
-
-/**
- * Tampilan dan atribut a11y untuk kontrol di dalam `<wui-form-field>`.
- *
- * Dipasang pada elemen **native** (`input`/`textarea`) **dan** pada kontrol kustom milik library
- * (`wui-select`), jadi semua perilaku asli tetap milik browser: `type`,
- * `inputmode`, `autocomplete`, `required`, `disabled`, validasi bawaan, dan integrasi
- * `formControlName`/`ngModel` lewat `DefaultValueAccessor` Angular — directive ini tidak
- * menyentuh nilai sama sekali.
- *
- * ```html
- * <wui-form-field hint="Maksimal 200 karakter.">
- *   <label wuiLabel>Catatan</label>
- *   <textarea wuiInput rows="3" formControlName="catatan"></textarea>
- * </wui-form-field>
- * ```
- *
- * Yang dikerjakan directive ini:
- * - menambahkan class `.wui-input` (seluruh tampilannya dari style layer, bukan component style);
- * - memakai id buatan field kalau aplikasi tidak menulis `id` sendiri;
- * - menautkan pesan hint/error lewat `aria-describedby` dan menandai `aria-invalid="true"`.
- *
- * Atribut yang sudah ditulis aplikasi tidak hilang: nilai aslinya disimpan dan dikembalikan
- * saat directive dilepas, dan `aria-describedby` milik aplikasi digabung, bukan diganti.
- *
- * Pada kontrol kustom (`wui-select`) atribut itu ditulis di **host kontrolnya** — di situlah elemen
- * combobox yang difokus (keputusan L7) — dan satu langkah dilewati: placeholder kosong, sebab elemen
- * kustom tidak mengenal `:placeholder-shown`.
- */
 @Directive({
   selector: 'input[wuiInput], textarea[wuiInput], wui-select[wuiInput]',
-  host: { class: 'wui-input' },
-})
-export class WuiInput {
-  readonly #element = inject<ElementRef<HTMLElement>>(ElementRef);
-  readonly #field = inject(WuiFormField, { optional: true });
-  readonly #destroyRef = inject(DestroyRef);
-
-  /** Wiring atribut a11y — logikanya dipakai bersama `WuiSelect` (L8). */
-  readonly #wiring = new FieldControl(this.#element.nativeElement);
-
-  /** Kontrol kustom: tampilannya sama, tapi beberapa langkah wiring berbeda. */
-  readonly #kustom = this.#element.nativeElement.tagName === 'WUI-SELECT';
-
-  constructor() {
-    // Placeholder satu spasi dipasang kalau aplikasi tidak menulisnya sendiri — **tidak** untuk
-    // kontrol kustom (lihat `FieldControl.pasangPlaceholderKosong`).
-    if (!this.#kustom) {
-      this.#wiring.pasangPlaceholderKosong();
-    }
-
-    // Id milik aplikasi dilaporkan ke field supaya `for` label menunjuk elemen yang sama.
-    const field = this.#field;
-
-    if (field) {
-      this.#wiring.laporkanIdKe(field);
-    }
-
-    // `effect()` berjalan setelah input field terpasang, jadi id & pesannya sudah final di sini.
-    effect(() => {
-      const field = this.#field;
-
-      if (field) {
-        this.#wiring.sinkronDengan(field);
-      }
-    });
-
-    this.#destroyRef.onDestroy(() => this.#wiring.kembalikan());
+  host: { 
+    class: 'wui-input',
+    '[class.wui-input--has-value]': 'hasValue()',
+    '[class.wui-input--has-error]': 'hasError()'
   }
+})
+export class WuiInput implements DoCheck {
+
+  ngControl = inject<NgControl>(NgControl, {
+    optional: true,
+    self: true
+  });
+
+  elementRef = inject(ElementRef);
+  destroyRef = inject(DestroyRef);
+
+  form = inject(NgForm, {optional: true});
+  formGroup = inject(FormGroupDirective, {optional: true});
+
+  formConfig = inject<WuiFormConfig>(WUI_FORM_CONFIG, {optional: true});
+  
+  hasValue = signal(false);
+  hasError = signal(false);
+
+  update() {
+    let hasError: boolean = false;
+    if(this.formConfig?.errorMatcher != null) {
+      hasError = this.formConfig?.errorMatcher.isErrorState(this.ngControl?.control as FormControl, this.formGroup || this.form);
+    } else {
+      hasError = this.ngControl?.control?.errors != null;
+    }
+    this.hasError.set(hasError);
+
+    let hasValue: boolean = false;
+    const control = this.ngControl?.control;
+    if(typeof control?.value == 'string') {
+      hasValue = control.value != null && control.value.length > 0;
+    } else {
+      hasValue = control?.value != null;
+    }
+    this.hasValue.set(hasValue);
+  }
+
+  ngDoCheck(): void {
+    this.update();
+  }
+
 }

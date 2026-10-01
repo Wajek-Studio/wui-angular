@@ -16,6 +16,12 @@
         --wui-radius-lg: #{a.$wui-radius-lg};
         --wui-page-radius: #{a.$wui-page-radius};
 
+        // Skala radius → `--wui-radius-<step>` (0–4, full). Dibaca mixin `radius()` di komponen
+        // dan utilitas `.wui-radius-*`, jadi sudut bisa diubah aplikasi saat runtime.
+        @each $wui-step, $wui-radius in a.$wui-radii {
+        --wui-radius-#{$wui-step}: #{$wui-radius};
+        }
+
         // Border — dibaca utilitas `.wui-border*`. Warnanya menunjuk peran `outline-variant`,
         // peran yang sudah dipakai garis & pemisah di komponen.
         --wui-border-width: #{a.$wui-border-width};

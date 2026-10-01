@@ -135,7 +135,7 @@
               "tsConfig": "projects/wui/tsconfig.lib.json"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular/build:karma",
