@@ -6,7 +6,6 @@ import {
 } from '@wajek/wui';
 import { ShowcaseComponent } from '../../../shared/showcase';
 import { FormSimpleExample } from '../../../../examples/form-simple-example/form-simple-example';
-import { FormFilledExample } from '../../../../examples/form-filled-example/form-filled-example';
 
 @Component({
   selector: 'app-form.page',
@@ -14,8 +13,7 @@ import { FormFilledExample } from '../../../../examples/form-filled-example/form
     WuiPage,
     WuiScrollbar,
     ShowcaseComponent,
-    FormSimpleExample,
-    // FormFilledExample
+    FormSimpleExample
 ],
   templateUrl: './form.page.html',
   styleUrl: './form.page.scss',

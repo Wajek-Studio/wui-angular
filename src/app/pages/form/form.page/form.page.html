@@ -10,14 +10,17 @@
         </div>
 
         <h2 class="wui-headline-small--em wui-mb-4">Outlined Showcase</h2>
-        <app-showcase>
+        <app-showcase [tabs]="[{
+          label: 'form-simple-example.html',
+          code: '/examples/form-simple-example/form-simple-example.html',
+          language: 'html'
+        }, {
+          label: 'form-simple-example.ts',
+          code: '/examples/form-simple-example/form-simple-example.ts',
+          language: 'typescript'
+        }]">
           <form-simple-example></form-simple-example>
         </app-showcase>
-
-        <!-- <h2 class="wui-headline-small--em wui-mb-4">Filled Showcase</h2>
-        <app-showcase>
-          <form-filled-example></form-filled-example>
-        </app-showcase> -->
       </div>
     </div>
   </wui-page>

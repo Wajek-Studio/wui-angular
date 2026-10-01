@@ -147,11 +147,19 @@
         .wui-prefix {
             padding-inline-start: 1rem;
             color: var(--wui-prefix-color);
+
+            > .wui-button:first-child {
+                margin-inline-start: -.5rem;
+            }
         }
 
         .wui-suffix {
             padding-inline-end: 1rem;
             color: var(--wui-suffix-color);
+
+            > .wui-button:last-child {
+                margin-inline-end: -.5rem;
+            }
         }
     }
 

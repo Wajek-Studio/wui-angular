@@ -4,6 +4,7 @@ import { WUI_FORM_CONFIG, WuiFormConfig } from './form-config';
 
 @Directive({
   selector: 'input[wuiInput], textarea[wuiInput], wui-select[wuiInput]',
+  exportAs: 'wuiInput',
   host: { 
     class: 'wui-input',
     '[class.wui-input--has-value]': 'hasValue()',
@@ -27,6 +28,12 @@ export class WuiInput implements DoCheck {
   
   hasValue = signal(false);
   hasError = signal(false);
+
+  firstError() : string | null {
+    const errors = this.ngControl?.control?.errors;
+    if(!errors) return null;
+    return Object.keys(errors).find(key => errors[key] === true) ?? null;
+  }
 
   update() {
     let hasError: boolean = false;

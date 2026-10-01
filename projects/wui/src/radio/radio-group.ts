@@ -1,4 +1,4 @@
-import { Component, computed, forwardRef, input, signal } from "@angular/core";
+import { Component, computed, forwardRef, input, output, signal } from "@angular/core";
 import { WuiRadioButton } from "./radio-button";
 import { WUI_RADIO_GROUP } from "./radio-group.token";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";

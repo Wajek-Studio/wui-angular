@@ -1,7 +1,6 @@
-import { AfterContentInit, Component, computed, contentChild, ElementRef, inject, input, Renderer2, RendererStyleFlags2 } from '@angular/core';
+import { AfterContentChecked, Component, computed, contentChild, ElementRef, inject, input, Renderer2, RendererStyleFlags2 } from '@angular/core';
 import { WuiLabel } from './label';
 import { WuiPrefix } from './prefix';
-import { WuiHint } from './hint';
 
 @Component({
   selector: 'wui-form-field',
@@ -12,19 +11,19 @@ import { WuiHint } from './hint';
     '[class.wui-form-field-filled]': 'isFilled()'
   }
 })
-export class WuiFormField implements AfterContentInit {
+export class WuiFormField implements AfterContentChecked {
   
   readonly variant = input<'outlined' | 'filled'>('outlined');
 
   isOutlined = computed(() => this.variant() == 'outlined');
   isFilled = computed(() => this.variant() == 'filled');
-
+  
   renderer = inject(Renderer2);
   elementRef = inject(ElementRef);
   label = contentChild(WuiLabel, {read: ElementRef});
   prefix = contentChild(WuiPrefix, {read: ElementRef});
 
-  ngAfterContentInit(): void {
+  ngAfterContentChecked(): void {
     const labelWidth = this.label()?.nativeElement.clientWidth;
     this.renderer.setStyle(
       this.elementRef.nativeElement,

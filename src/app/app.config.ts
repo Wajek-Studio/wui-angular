@@ -2,7 +2,7 @@ import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners, provi
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideIcons, provideWuiFormConfig, provideWuiMenuConfig, WuiErrorMatcher } from '@wajek/wui';
+import { provideIcons, provideWuiFormConfig, provideWuiMenuConfig } from '@wajek/wui';
 import { provideHighlightOptions } from 'ngx-highlightjs';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { appIcons } from './app.icons';

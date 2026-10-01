@@ -17,7 +17,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
     '[attr.role]': '"combobox"',
     '[attr.tabindex]': 'disabled() ? -1 : tabindex()',
     '(click)': 'openPanel()',
-    '(keydown)': 'onKeyDown($event)'
+    '(keydown)': 'onKeyDown($event)',
+    '(blur)': 'onBlur()'
   },
   providers: [{
     provide: WUI_SELECT_PARENT,
@@ -205,7 +206,11 @@ export class WuiSelect implements ControlValueAccessor{
   select(option: WuiOption): void {
     this.selectedValue.set(option.value());
     this.onChange(this.selectedValue());
-    this.onTouched();
     this.close();
   }
+
+  onBlur() {
+    this.onTouched();
+  }
+
 }
