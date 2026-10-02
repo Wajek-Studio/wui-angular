@@ -5,7 +5,7 @@ import {
   WuiScrollbar
 } from '@wajek/wui';
 import { ShowcaseComponent } from '../../../shared/showcase';
-import { FormSimpleExample } from '../../../../examples/form-simple-example/form-simple-example';
+import { FormReactiveExample } from '../../../../examples/form-reactive-example/form-reactive-example';
 
 @Component({
   selector: 'app-form.page',
@@ -13,7 +13,7 @@ import { FormSimpleExample } from '../../../../examples/form-simple-example/form
     WuiPage,
     WuiScrollbar,
     ShowcaseComponent,
-    FormSimpleExample
+    FormReactiveExample
 ],
   templateUrl: './form.page.html',
   styleUrl: './form.page.scss',

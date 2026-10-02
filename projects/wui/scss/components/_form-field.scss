@@ -49,7 +49,7 @@
             --wui-base-prefix-suffix-color: var(--wui-base-error-color);
         }
 
-        &:has(.wui-input--disabled) {
+        &:has(.wui-input.wui-input--disabled) {
             pointer-events: none;
             --wui-label-color: color-mix(in srgb, var(--wui-base-label-color) 38%, transparent);
             --wui-input-color: color-mix(in srgb, var(--wui-base-input-color) 38%, transparent);;
@@ -175,7 +175,6 @@
 
         .wui-prefix {
             padding-inline-start: 1rem;
-            color: var(--wui-prefix-color);
 
             > .wui-button:first-child {
                 margin-inline-start: -.5rem;
@@ -184,7 +183,6 @@
 
         .wui-suffix {
             padding-inline-end: 1rem;
-            color: var(--wui-suffix-color);
 
             > .wui-button:last-child {
                 margin-inline-end: -.5rem;

@@ -17,7 +17,7 @@ interface Kota {
 }
 
 @Component({
-  selector: 'form-simple-example',
+  selector: 'form-reactive-example',
   imports: [
     WuiFormField,
     WuiInput,
@@ -37,37 +37,33 @@ interface Kota {
     WuiRadioButton,
     WuiCheckbox
 ],
-  templateUrl: './form-simple-example.html'
+  templateUrl: './form-reactive-example.html'
 })
-export class FormSimpleExample implements OnInit {
+export class FormReactiveExample implements OnInit {
 
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   destroyRef = inject(DestroyRef);
 
+  formVariant = signal<'outlined' | 'filled'>('outlined');
+  disabled = signal<boolean>(false);
+  simulateBackendError = signal<boolean>(false);
+
   formRegister = new FormGroup({
     nmLengkap: new FormControl<string | null>(null, Validators.required),
-    email: new FormControl<string | null>({
-      value: null,
-      disabled: true
-    }, [Validators.required, Validators.email]),
+    email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
     password: new FormControl<string | null>(null, Validators.required),
     jumlah: new FormControl<number | null>(null, [Validators.required]),
-    negara: new FormControl<string | null>({
-      value: 'indonesia',
-      disabled: true
-    }, Validators.required),
+    negara: new FormControl<string | null>(null, Validators.required),
     kota: new FormControl<string | null>(null, Validators.required),
     agree: new FormControl<boolean | null>(null, Validators.required),
     profil: new FormControl<string | null>(null)
   });
 
-  backendError : any = {};
+  backendError = signal<Record<string, string>>({});
 
   formValue = signal<any>(null);
   showPassword = signal<boolean>(false);
-
-  formVariant = signal<'outlined' | 'filled'>('outlined');
 
   protected readonly dataNegara = signal<Negara[]>([
     { value: 'indonesia', label: 'Indonesia' },
@@ -103,14 +99,23 @@ export class FormSimpleExample implements OnInit {
   }
 
   submit() {
-    this.formRegister.controls['nmLengkap'].setErrors({backend: true});
-    this.backendError['nmLengkap'] = 'Nama sudah digunakan, pilih yang lain';
+    if(this.simulateBackendError() == true) {
+      this.backendError.set({
+        'nmLengkap': 'Nama lengkap sudah ada di database',
+        'email': 'Email sudah terdaftar',
+        'password': 'Password kurang kuat',
+        'jumlah': 'Jumlah tidak boleh melebihi $3',
+        'kota': 'Kota tidak terjangkau layanan kami',
+        'negara': 'negara tidak terjangkau layanan kami',
+      });
 
-    this.formRegister.controls['email'].setErrors({backend: true});
-    this.backendError['email'] = 'Email sudah digunakan';
-
-    console.log(this.backendError);
-
+      this.formRegister.get('nmLengkap')?.setErrors({backend: true});
+      this.formRegister.get('email')?.setErrors({backend: true});
+      this.formRegister.get('password')?.setErrors({backend: true});
+      this.formRegister.get('jumlah')?.setErrors({backend: true});
+      this.formRegister.get('kota')?.setErrors({backend: true});
+      this.formRegister.get('negara')?.setErrors({backend: true});
+    }
     if(this.formRegister.invalid) return;
     this.formValue.set(this.formRegister.value);
   }
@@ -118,13 +123,34 @@ export class FormSimpleExample implements OnInit {
   onVariantChange(variant: any) {
     this.router.navigate(['./'], {
       relativeTo: this.activatedRoute,
-      queryParams: { variant }
+      queryParams: { variant },
+      queryParamsHandling: 'merge'
     });
+  }
+
+  setDisable(disable: boolean) {
+    this.disabled.set(disable);
+    Object.keys(this.formRegister.controls).forEach((key: string) => {
+      if(disable === true) {
+        this.formRegister.get(key)?.disable();
+      } else {
+        this.formRegister.get(key)?.enable();
+      }
+    });
+  }
+
+  onDisableChange(disable: boolean) {
+    this.router.navigate(['./'], {
+      relativeTo: this.activatedRoute,
+      queryParams: { disable : disable ? 1 : 0 },
+      queryParamsHandling: 'merge'
+    })
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
-      this.formVariant.update(variant => params['variant'] ?? 'outlined');
+      this.formVariant.set(params['variant'] ?? 'outlined');
+      this.setDisable(params['disable'] == 1 ? true : false);
     });
   }
 

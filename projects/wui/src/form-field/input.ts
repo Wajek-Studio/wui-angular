@@ -9,7 +9,7 @@ import { WUI_FORM_CONFIG, WuiFormConfig } from './form-config';
     class: 'wui-input',
     '[class.wui-input--has-value]': 'hasValue()',
     '[class.wui-input--has-error]': 'hasError()',
-    '[class.wui-input--disabled]': 'isDisabled()'
+    '[class.wui-input--disabled]': 'disabled()'
   }
 })
 export class WuiInput implements DoCheck {
@@ -29,7 +29,7 @@ export class WuiInput implements DoCheck {
   
   hasValue = signal(false);
   hasError = signal(false);
-  isDisabled = signal(false);
+  disabled = signal(false);
 
   firstError() : string | null {
     const errors = this.ngControl?.control?.errors;
@@ -39,12 +39,14 @@ export class WuiInput implements DoCheck {
 
   update() {
     const control = this.ngControl?.control;
+    console.log('update check control : ', control);
     if(control != null) {
       if(this.formConfig?.errorMatcher != null) {
         this.hasError.set(this.formConfig?.errorMatcher.isErrorState(control as FormControl, this.formGroup || this.form));
       } else {
         this.hasError.set(control.errors != null);
       }
+      console.log(this.hasError());
 
       if(typeof control?.value == 'string') {
         this.hasValue.set(control.value != null && control.value.length > 0);
@@ -52,11 +54,12 @@ export class WuiInput implements DoCheck {
         this.hasValue.set(control?.value != null);
       }
 
-      this.isDisabled.set(control.disabled);
+      this.disabled.set(control.disabled);
     }
   }
 
   ngDoCheck(): void {
+    console.log('do Check', this.elementRef.nativeElement.tagName);
     this.update();
   }
 

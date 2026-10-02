@@ -1,9 +1,18 @@
 <form [formGroup]="formRegister" (submit)="submit()">
   <div class="wui-mb-4">
-    <wui-radio-group [ngModel]="formVariant()" [ngModelOptions]="{standalone: true}" (ngModelChange)="onVariantChange($event)">
-      <wui-radio-button [value]="'outlined'">Outlined</wui-radio-button>
-      <wui-radio-button [value]="'filled'">Filled</wui-radio-button>
-    </wui-radio-group>
+    <div class="wui-row wui-gap-col-4">
+      <div class="wui-col-6">
+        <wui-radio-group [ngModel]="formVariant()" [ngModelOptions]="{standalone: true}" (ngModelChange)="onVariantChange($event)">
+          <wui-radio-button [value]="'outlined'">Outlined</wui-radio-button>
+          <wui-radio-button [value]="'filled'">Filled</wui-radio-button>
+        </wui-radio-group>
+      </div>
+      <div class="wui-col-6">
+        <wui-checkbox [ngModel]="disabled()" [ngModelOptions]="{standalone: true}" (ngModelChange)="onDisableChange($event)">
+          Disable All Controls
+        </wui-checkbox>
+      </div>
+    </div>
   </div>
 
   <div class="wui-row wui-gap-col-4 wui-mb-4">
@@ -19,7 +28,7 @@
           <div wuiError>Harus diisi</div>
         }
         @if(userName.firstError() == 'backend') {
-          <div wuiError>{{backendError['nmLengkap']}}</div>
+          <div wuiError>{{backendError()['nmLengkap']}}</div>
         }
       </wui-form-field>
     </div>
@@ -33,6 +42,9 @@
         }
         @if(email.firstError() == 'email') {
           <div wuiError>Format email tidak valid</div>
+        }
+        @if(userName.firstError() == 'backend') {
+          <div wuiError>{{backendError()['email']}}</div>
         }
       </wui-form-field>
     </div>
@@ -52,6 +64,9 @@
         @if(password.firstError() == 'required') {
           <div wuiError>Harus diisi</div>
         }
+        @if(userName.firstError() == 'backend') {
+          <div wuiError>{{backendError()['password']}}</div>
+        }
       </wui-form-field>
     </div>
     <div class="wui-col-6">
@@ -64,6 +79,9 @@
         <div wuiHint>Jumlah donasi anda melalui organisasi kami</div>
         @if(jumlah.firstError() == 'required') {
           <div wuiError>Harus diisi</div>
+        }
+        @if(userName.firstError() == 'backend') {
+          <div wuiError>{{backendError()['jumlah']}}</div>
         }
       </wui-form-field>
     </div>
@@ -82,12 +100,15 @@
         @if(kota.firstError() == 'required') {
           <div wuiError>Harus diisi</div>
         }
+        @if(userName.firstError() == 'backend') {
+          <div wuiError>{{backendError()['kota']}}</div>
+        }
       </wui-form-field>
     </div>
 
     <div class="wui-col-12 wui-col-md-6">
-      <wui-form-field [variant]="formVariant()" hint="Field select dalam kondisi nonaktif (disabled).">
-        <label wuiLabel>Negara (disabled)</label>
+      <wui-form-field [variant]="formVariant()">
+        <label wuiLabel>Negara</label>
         <wui-select wuiInput #negara="wuiInput" placeholder="Pilih negara" formControlName="negara">
           @for (negara of dataNegara(); track negara.value) {
             <wui-option [value]="negara.value">{{ negara.label }}</wui-option>
@@ -96,6 +117,9 @@
         <div wuiHint>Sesuai kartu identitas</div>
         @if(negara.firstError() == 'required') {
           <div wuiError>Harus diisi</div>
+        }
+        @if(userName.firstError() == 'backend') {
+          <div wuiError>{{backendError()['negara']}}</div>
         }
       </wui-form-field>
     </div>
@@ -109,13 +133,15 @@
 
   <wui-checkbox class="wui-mb-4" formControlName="agree">Saya menyetujui syarat dan ketentuan yang berlaku</wui-checkbox>
 
-  <div class="wui-mb-4">
-    <button wuiButton variant="filled" color="primary">Submit</button>
+  <div class="wui-mb-4 wui-flex wui-gap-col-4 wui-align-items-center">
+    <button wuiButton variant="filled" color="primary" [disabled]="disabled()">Submit</button>
+    <div class="wui-flex-grow-1">
+      <wui-checkbox [(ngModel)]="simulateBackendError" [ngModelOptions]="{standalone: true}">Simulate Backend Error</wui-checkbox>
+    </div>
   </div>
 
   <div class="wui-border wui-radius-2 wui-p-4">
     <div class="wui-mb-3 wui-title-medium--em">Result:</div>
-    {{userName.firstError()}}
     {{formValue() | json}}
   </div>
 </form>
