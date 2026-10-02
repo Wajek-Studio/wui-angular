@@ -4,35 +4,58 @@
         display: flex;
         flex-direction: column;
         position: relative;
+        row-gap: .5rem;
 
-        // initial variable
-        --wui-form-field-border-width: 1px;
-        --wui-form-field-border-color: var(--wui-color-outline);
-        --wui-form-field-outline-radius: .25rem;
-        --wui-form-field-outline-label-scale: .75;
+        // modifier
+        --wui-base-primary-color: var(--wui-color-primary);
+        --wui-base-error-color: var(--wui-color-danger);
+
+        // base variable
+        --wui-base-label-color: var(--wui-color-on-surface-variant);
+        --wui-base-input-color: var(--wui-color-on-surface-variant);
+        --wui-base-border-color: var(--wui-color-outline);
+        --wui-base-hint-color: var(--wui-color-on-surface-variant);
+        --wui-base-prefix-suffix-color: var(--wui-color-on-surface-variant);
+
+        // stateless variable
+        --wui-outline-radius: .25rem;
+        --wui-label-scale: .75;
+        
+        // stateful variable
+        --wui-border-width: 1px;
         --wui-hint-display: block;
         --wui-error-display: none;
-        --wui-hint-color: var(--wui-color-on-surface-variant);
-        --wui-label-color: var(--wui-color-on-surface-variant);
-        --wui-prefix-color: var(--wui-color-on-surface-variant);
-        --wui-suffix-color: var(--wui-color-on-surface-variant);
+        --wui-label-color: var(--wui-base-label-color);
+        --wui-input-color: var(--wui-base-input-color);
+        --wui-border-color: var(--wui-base-border-color);
+        --wui-hint-color: var(--wui-base-hint-color);
+        --wui-prefix-suffix-color: var(--wui-base-prefix-suffix-color);
 
         // sedang menerima focus
         &:has(.wui-input:focus, .wui-input:focus-visible) {
-            --wui-label-color: var(--wui-color-primary);
-            --wui-form-field-border-color: var(--wui-color-primary);
-            --wui-form-field-border-width: 2px;
+            --wui-border-width: 2px;
+            --wui-base-label-color: var(--wui-base-primary-color);
+            --wui-base-border-color: var(--wui-base-primary-color);
         }
 
         // memiliki error
-        &:has(.wui-input:user-invalid, .wui-input.wui-input--has-error) {
-            --wui-form-field-border-color: var(--wui-color-danger);
-            --wui-label-color: var(--wui-color-danger);
+        &:has(.wui-input.wui-input--has-error) {
             --wui-hint-display: none;
             --wui-error-display: block;
-            --wui-hint-color: var(--wui-color-danger);
-            --wui-prefix-color: var(--wui-color-danger);
-            --wui-suffix-color: var(--wui-color-danger);
+            --wui-base-label-color: var(--wui-base-error-color);
+            --wui-base-input-color: var(--wui-base-error-color);
+            --wui-base-border-color: var(--wui-base-error-color);
+            --wui-base-hint-color: var(--wui-base-error-color);
+            --wui-base-prefix-suffix-color: var(--wui-base-error-color);
+        }
+
+        &:has(.wui-input--disabled) {
+            pointer-events: none;
+            --wui-label-color: color-mix(in srgb, var(--wui-base-label-color) 38%, transparent);
+            --wui-input-color: color-mix(in srgb, var(--wui-base-input-color) 38%, transparent);;
+            --wui-border-color: color-mix(in srgb, var(--wui-base-border-color) 12%, transparent);
+            --wui-hint-color: color-mix(in srgb, var(--wui-base-hint-color) 38%, transparent);;
+            --wui-prefix-suffix-color: color-mix(in srgb, var(--wui-base-prefix-suffix-color) 38%, transparent);
         }
 
         &-filled {
@@ -40,6 +63,10 @@
                 background-color: var(--wui-color-state-layer-on-surface-opacity-08);
                 border-top-left-radius: .25rem;
                 border-top-right-radius: .25rem;
+
+                &:has(.wui-input--disabled) {
+                    background-color: color-mix(in srgb, var(--wui-color-on-surface) 4%, transparent);
+                }
 
                 input.wui-input, wui-select .wui-select--value, wui-select .wui-select--placeholder {
                     padding-top: 1.125rem;
@@ -55,7 +82,7 @@
                     position: absolute;
                     bottom: 0; left: 0; right: 0;
                     height: 1px;
-                    background-color: var(--wui-form-field-border-color);
+                    background-color: var(--wui-border-color);
                     z-index: 0;
                 }
 
@@ -64,8 +91,8 @@
                     opacity: 0;
                     position: absolute;
                     bottom: 0; left: 0; right: 0;
-                    height: var(--wui-form-field-border-width);
-                    background-color: var(--wui-form-field-border-color);
+                    height: var(--wui-border-width);
+                    background-color: var(--wui-border-color);
                     width: 0;
                     z-index: 1;
                     transform: translateX(50%);
@@ -85,7 +112,7 @@
                     .wui-label {
                         top: .375rem; 
                         left: 1rem;
-                        transform: scale(var(--wui-form-field-outline-label-scale)) translateY(0);
+                        transform: scale(var(--wui-label-scale)) translateY(0);
                     }
                 }
             }
@@ -97,7 +124,7 @@
                     .wui-label {
                         top: 0; 
                         left: 1rem;
-                        transform: scale(var(--wui-form-field-outline-label-scale)) translateY(-50%);
+                        transform: scale(var(--wui-label-scale)) translateY(-50%);
                     }
     
                     .wui-form-field-outline--notch {
@@ -133,6 +160,8 @@
         textarea.wui-input {
             min-height: 3.5rem;
             padding-block: 1rem;
+            resize: vertical;
+            width: 100%;
         }
 
         &:has(textarea.wui-input) {
@@ -174,13 +203,13 @@
             content: "";
             display: block;
             width: calc(1rem - .25rem);
-            border-top-left-radius: var(--wui-form-field-outline-radius);
-            border-bottom-left-radius: var(--wui-form-field-outline-radius);
+            border-top-left-radius: var(--wui-outline-radius);
+            border-bottom-left-radius: var(--wui-outline-radius);
             border-style: solid;
-            border-color: var(--wui-form-field-border-color);
-            border-top-width: var(--wui-form-field-border-width);
-            border-left-width: var(--wui-form-field-border-width);
-            border-bottom-width: var(--wui-form-field-border-width);
+            border-color: var(--wui-border-color);
+            border-top-width: var(--wui-border-width);
+            border-left-width: var(--wui-border-width);
+            border-bottom-width: var(--wui-border-width);
             border-right-width: 0;
         }
 
@@ -189,22 +218,22 @@
             display: block;
             width: auto;
             flex: 1 1 auto;
-            border-top-right-radius: var(--wui-form-field-outline-radius);
-            border-bottom-right-radius: var(--wui-form-field-outline-radius);
+            border-top-right-radius: var(--wui-outline-radius);
+            border-bottom-right-radius: var(--wui-outline-radius);
             border-style: solid;
-            border-color: var(--wui-form-field-border-color);
-            border-top-width: var(--wui-form-field-border-width);
-            border-right-width: var(--wui-form-field-border-width);
-            border-bottom-width: var(--wui-form-field-border-width);
+            border-color: var(--wui-border-color);
+            border-top-width: var(--wui-border-width);
+            border-right-width: var(--wui-border-width);
+            border-bottom-width: var(--wui-border-width);
             border-left-width: 0;
         }
 
         &-inner {
-            width: calc(var(--wui-label-width) * var(--wui-form-field-outline-label-scale) + .5rem);
+            width: calc(var(--wui-label-width) * var(--wui-label-scale) + .5rem);
             border-style: solid;
-            border-color: var(--wui-form-field-border-color);
-            border-top-width: var(--wui-form-field-border-width);
-            border-bottom-width: var(--wui-form-field-border-width);
+            border-color: var(--wui-border-color);
+            border-top-width: var(--wui-border-width);
+            border-bottom-width: var(--wui-border-width);
             border-right-width: 0;
             border-left-width: 0;
         }
@@ -221,7 +250,7 @@
         outline: none;
         padding-inline: 1rem;
         z-index: 2;
-        color: var(--wui-color-on-surface-variant);
+        color: var(--wui-input-color);
 
         &::placeholder, .wui-select--placeholder {
             color: var(--wui-color-on-surface);
@@ -252,7 +281,6 @@
         font-size: .75rem;
         color: var(--wui-hint-color);
         padding-inline: 1rem;
-        padding-block: .5rem;
     }
 
     .wui-hint {
@@ -266,7 +294,7 @@
     .wui-prefix, .wui-suffix {
         display: flex;
         align-items: center;
-        color: var(--wui-color-on-surface-variant);
+        color: var(--wui-prefix-suffix-color);
         z-index: 2;
     }
 

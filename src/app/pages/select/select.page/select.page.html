@@ -17,55 +17,11 @@
             title="Outlined (Default)"
             description="Klik labelnya: fokus pindah ke select. Label mengapung saat difokus atau memiliki nilai. Placeholder baru tampil saat select difokus."
             [tabs]="[
-              { label: 'HTML',       code: '/snippets/select/outlined/outlined.html', language: 'html' },
-              { label: 'TypeScript', code: '/snippets/select/outlined/outlined.ts',  language: 'typescript' }
+              { label: 'select-simple-example.html',       code: '/examples/select-simple-example/select-simple-example.html', language: 'html' },
+              { label: 'select-simple-example.ts', code: '/examples/select-simple-example/select-simple-example.ts',  language: 'typescript' }
             ]"
           >
-            <div class="wui-row wui-gap-col-4 wui-align-items-start">
-              <div class="wui-col-12 wui-col-md-6">
-                <wui-form-field hint="20 opsi kota dengan nilai aktif di tengah ('Bekasi') dan satu opsi nonaktif.">
-                  <label wuiLabel>Kota</label>
-                  <wui-select wuiInput placeholder="Pilih kota" value="Banda Aceh">
-                    <wui-option value="aceh">Banda Aceh</wui-option>
-                    <wui-option value="medan">Medan</wui-option>
-                    <wui-option value="padang">Padang</wui-option>
-                    <wui-option value="pekanbaru">Pekanbaru</wui-option>
-                    <wui-option value="batam">Batam</wui-option>
-                    <wui-option value="palembang">Palembang</wui-option>
-                    <wui-option value="lampung">Bandar Lampung</wui-option>
-                    <wui-option value="jakarta">Jakarta</wui-option>
-                    <wui-option value="bogor">Bogor</wui-option>
-                    <wui-option value="tangerang">Tangerang</wui-option>
-                    <wui-option value="bekasi">Bekasi</wui-option>
-                    <wui-option value="bandung">Bandung</wui-option>
-                    <wui-option value="cirebon">Cirebon</wui-option>
-                    <wui-option value="semarang">Semarang</wui-option>
-                    <wui-option value="solo">Surakarta (Solo)</wui-option>
-                    <wui-option value="yogya">Yogyakarta</wui-option>
-                    <wui-option value="surabaya" disabled>Surabaya (nonaktif)</wui-option>
-                    <wui-option value="malang">Malang</wui-option>
-                    <wui-option value="denpasar">Denpasar</wui-option>
-                    <wui-option value="makassar">Makassar</wui-option>
-                  </wui-select>
-                </wui-form-field>
-
-                <div class="wui-mt-3 wui-d-flex wui-gap-col-2">
-                  <button wuiButton variant="outlined" (click)="isi()">Pilih Bandung</button>
-                  <button wuiButton variant="text" (click)="kosongkan()">Kosongkan</button>
-                </div>
-              </div>
-
-              <div class="wui-col-12 wui-col-md-6">
-                <wui-form-field hint="Field select dalam kondisi nonaktif (disabled).">
-                  <label wuiLabel>Negara (disabled)</label>
-                  <wui-select wuiInput placeholder="Pilih negara" disabled>
-                    <wui-option>Indonesia</wui-option>
-                    <wui-option>Malaysia</wui-option>
-                    <wui-option>Singapura</wui-option>
-                  </wui-select>
-                </wui-form-field>
-              </div>
-            </div>
+            <select-simple-example></select-simple-example>
           </app-showcase>
         </div>
 

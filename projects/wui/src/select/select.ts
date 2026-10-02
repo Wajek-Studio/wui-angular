@@ -1,13 +1,12 @@
+import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
 import { Overlay, OverlayConfig, OverlayRef } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
-import { booleanAttribute, Component, computed, contentChildren, DestroyRef, effect, ElementRef, forwardRef, inject, input, OnInit, signal, TemplateRef, viewChild, ViewContainerRef } from "@angular/core";
+import { Component, computed, contentChildren, DestroyRef, effect, ElementRef, forwardRef, inject, input, signal, TemplateRef, viewChild, ViewContainerRef } from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { filter } from "rxjs";
-import { toObservable } from "@angular/core/rxjs-interop";
 import { WuiScrollbar } from "../scrollbar/scrollbar";
 import { WuiOption } from "./option";
-import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
 import { WUI_SELECT_PARENT } from "./select-token";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
   selector: 'wui-select',
@@ -32,37 +31,31 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 })
 export class WuiSelect implements ControlValueAccessor{
 
-  elementRef = inject(ElementRef);
-  destroyRef = inject(DestroyRef);
-  viewContainerRef = inject(ViewContainerRef);
+  private elementRef = inject(ElementRef);
+  private destroyRef = inject(DestroyRef);
+  private viewContainerRef = inject(ViewContainerRef);
 
-  overlay = inject(Overlay);
-  overlayRef?: OverlayRef;
-  portal? : TemplatePortal;
+  private overlay = inject(Overlay);
+  private overlayRef?: OverlayRef;
+  private portal? : TemplatePortal;
 
   panel = viewChild.required<TemplateRef<any>>('panel');
 
   tabindex = input<number>(0);
 
-  readonly disabled = input(false, {transform: booleanAttribute});
-  isDisabled = signal<boolean>(this.disabled());
+  disabled = signal(false);
 
   placeholder = input<string | null>(null);
   options = contentChildren(WuiOption);
 
-  value = input<unknown | null>(null);
-  selectedValue = signal<unknown | null>(this.value());
+  selectedValue = signal<unknown | null>(null);
   selectedOption = computed<WuiOption | null>(() => {
     let item = this.options().find(o => o.value() === this.selectedValue());
     if(item) return item;
     return null;
   });
 
-  hasValue = computed(() => {
-    return this.selectedValue() !== null;
-  });
-  valueChange = toObservable(this.selectedValue);
-
+  hasValue = computed(() => this.selectedValue() !== null);
   isOpen = signal(false);
 
   private readonly keyManager = computed(() => 
@@ -112,8 +105,8 @@ export class WuiSelect implements ControlValueAccessor{
     this.onTouched = fn;
   }
 
-  setDisabledState?(isDisabled: boolean): void {
-    this.isDisabled.set(isDisabled);
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
   }
 
   openPanel() {

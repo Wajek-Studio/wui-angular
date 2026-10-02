@@ -18,6 +18,9 @@
         @if(userName.firstError() == 'required') {
           <div wuiError>Harus diisi</div>
         }
+        @if(userName.firstError() == 'backend') {
+          <div wuiError>{{backendError['nmLengkap']}}</div>
+        }
       </wui-form-field>
     </div>
     <div class="wui-col-6">
@@ -42,7 +45,7 @@
         <input wuiInput #password="wuiInput" [type]="showPassword() ? 'text' : 'password'" id="outlined_user_pass" name="user_pass" placeholder="Tulis password yang kuat" formControlName="password"/>
         <div wuiSuffix>
           <button wuiButton variant="text" iconOnly type="button" (click)="toggleShowPassword()">
-            <wui-icon icon="eye"></wui-icon>
+            <wui-icon icon="{{showPassword() ? 'eye-off' : 'eye'}}"></wui-icon>
           </button>
         </div>
         <div wuiHint>Minimal 8 karakter, huruf besar dan kecil serta karakter spesial</div>
@@ -104,12 +107,15 @@
     <div wuiHint>Tuliskan catatan terkait</div>
   </wui-form-field>
 
+  <wui-checkbox class="wui-mb-4" formControlName="agree">Saya menyetujui syarat dan ketentuan yang berlaku</wui-checkbox>
+
   <div class="wui-mb-4">
     <button wuiButton variant="filled" color="primary">Submit</button>
   </div>
 
   <div class="wui-border wui-radius-2 wui-p-4">
     <div class="wui-mb-3 wui-title-medium--em">Result:</div>
+    {{userName.firstError()}}
     {{formValue() | json}}
   </div>
 </form>
