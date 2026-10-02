@@ -39,7 +39,7 @@
         }
 
         // memiliki error
-        &:has(.wui-input.wui-input--has-error) {
+        &:has(.wui-input:user-invalid, .wui-input.wui-input--has-error) {
             --wui-hint-display: none;
             --wui-error-display: block;
             --wui-base-label-color: var(--wui-base-error-color);
@@ -49,7 +49,7 @@
             --wui-base-prefix-suffix-color: var(--wui-base-error-color);
         }
 
-        &:has(.wui-input.wui-input--disabled) {
+        &:has(.wui-input:disabled, .wui-input.wui-input--disabled) {
             pointer-events: none;
             --wui-label-color: color-mix(in srgb, var(--wui-base-label-color) 38%, transparent);
             --wui-input-color: color-mix(in srgb, var(--wui-base-input-color) 38%, transparent);;
@@ -100,7 +100,10 @@
                     will-change: width, transform;
                 }
 
-                &:has(.wui-input:focus, .wui-input:focus-visible) {
+                &:has(
+                    .wui-input:focus,
+                    .wui-input:focus-visible
+                ) {
                     &:after {
                         opacity: 1;
                         width: 100%;
@@ -108,7 +111,13 @@
                     }
                 }
 
-                &:has(.wui-input:focus, .wui-input:focus-visible, .wui-input--has-value, .wui-select--has-value) {
+                &:has(
+                    .wui-input:focus,
+                    .wui-input:focus-visible,
+                    .wui-input--has-value,
+                    .wui-input[type="date"],
+                    .wui-input[type="datetime-local"]
+                ) {
                     .wui-label {
                         top: .375rem; 
                         left: 1rem;
@@ -120,7 +129,16 @@
 
         &-outlined {
             .wui-form-field-stage {
-                &:has(.wui-input:focus, .wui-input:focus-visible, .wui-input--has-value, .wui-select--has-value) {
+                &:has(
+                    .wui-input:focus,
+                    .wui-input:focus-visible,
+                    .wui-input--has-value,
+                    .wui-input[type="date"],
+                    .wui-input[type="time"],
+                    .wui-input[type="datetime-local"],
+                    .wui-input[type="month"],
+                    .wui-input[type="week"]
+                ) {
                     .wui-label {
                         top: 0; 
                         left: 1rem;
@@ -135,7 +153,16 @@
                 }
 
                 &:has(.wui-prefix) {
-                    &:has(.wui-input:focus, .wui-input:focus-visible, .wui-input--has-value, .wui-select--has-value) {
+                    &:has(
+                        .wui-input:focus,
+                        .wui-input:focus-visible,
+                        .wui-input--has-value,
+                        .wui-input[type="date"],
+                        .wui-input[type="time"],
+                        .wui-input[type="datetime-local"],
+                        .wui-input[type="month"],
+                        .wui-input[type="week"]
+                    ) {
                         .wui-label {
                             left: calc(1rem - var(--wui-prefix-width));
                         }

@@ -7,6 +7,7 @@ import { WUI_FORM_CONFIG, WuiFormConfig } from './form-config';
   exportAs: 'wuiInput',
   host: { 
     class: 'wui-input',
+    '(keyup)': 'onBlur($event)',
     '[class.wui-input--has-value]': 'hasValue()',
     '[class.wui-input--has-error]': 'hasError()',
     '[class.wui-input--disabled]': 'disabled()'
@@ -39,27 +40,39 @@ export class WuiInput implements DoCheck {
 
   update() {
     const control = this.ngControl?.control;
-    console.log('update check control : ', control);
     if(control != null) {
       if(this.formConfig?.errorMatcher != null) {
         this.hasError.set(this.formConfig?.errorMatcher.isErrorState(control as FormControl, this.formGroup || this.form));
       } else {
         this.hasError.set(control.errors != null);
       }
-      console.log(this.hasError());
 
-      if(typeof control?.value == 'string') {
-        this.hasValue.set(control.value != null && control.value.length > 0);
-      } else {
-        this.hasValue.set(control?.value != null);
-      }
+      this.checkValue(control?.value);
 
       this.disabled.set(control.disabled);
+    } else {
+      const target = this.elementRef?.nativeElement as HTMLInputElement;
+      this.checkValue(target.value);
     }
   }
 
+  checkValue(value: string | null) {
+    if(typeof value == 'string') {
+      this.hasValue.set(value != null && value.length > 0);
+    } else {
+      this.hasValue.set(value != null);
+    }
+  }
+
+  onBlur(e: Event) {
+    const control = this.ngControl?.control;
+    if(control) return;
+
+    const target = e.target as HTMLInputElement;
+    this.checkValue(target.value);
+  }
+
   ngDoCheck(): void {
-    console.log('do Check', this.elementRef.nativeElement.tagName);
     this.update();
   }
 

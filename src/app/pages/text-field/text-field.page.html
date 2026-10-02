@@ -1,0 +1,61 @@
+<ng-template #pageTpl>
+    <wui-page>
+        <div class="wui-page-content">
+            <div class="wui-container wui-py-5">
+                <h1 class="wui-headline-medium--em wui-mb-4">Text Fields</h1>
+
+                <div class="wui-mb-4">
+                    <p>Mendukung native HTML tag <code class="wui-code-inline">&lt;input type="text|number|date|time|month|week|datetime-local"&gt;</code>, <code class="wui-code-inline">&lt;textarea&gt;</code> yang dibungkus dengan <code class="wui-code-inline">&lt;wui-form-field&gt;</code>.</p>
+                </div>
+
+                <app-showcase [tabs]="[{
+                    label: 'text-field-simple.example.ts',
+                    code: '/examples/text-field/text-field-simple.example.ts',
+                    language: 'typescript'
+                }]">
+                    <text-field-example></text-field-example>
+                </app-showcase>
+
+                <h2 class="wui-title-large--em wui-mb-4">Password Field</h2>
+
+                <app-showcase [tabs]="[{
+                    label: 'text-field-password.example.ts',
+                    code: '/examples/text-field/text-field-password.example.ts',
+                    language: 'typescript'
+                }]">
+                    <text-field-password-example></text-field-password-example>
+                </app-showcase>
+
+                <h2 class="wui-title-large--em wui-mb-4">Numeric Field</h2>
+
+                 <app-showcase [tabs]="[{
+                    label: 'text-field-numeric.example.ts',
+                    code: '/examples/text-field/text-field-numeric.example.ts',
+                    language: 'typescript'
+                }]">
+                    <text-field-numeric-example></text-field-numeric-example>
+                </app-showcase>
+
+                <h2 class="wui-title-large--em wui-mb-4">Date Field</h2>
+
+                 <app-showcase [tabs]="[{
+                    label: 'text-field-date.example.ts',
+                    code: '/examples/text-field/text-field-date.example.ts',
+                    language: 'typescript'
+                }]">
+                    <text-field-date-example></text-field-date-example>
+                </app-showcase>
+
+                <h2 class="wui-title-large--em wui-mb-4">Textarea</h2>
+
+                 <app-showcase [tabs]="[{
+                    label: 'text-field-textarea.example.ts',
+                    code: '/examples/text-field/text-field-textarea.example.ts',
+                    language: 'typescript'
+                }]">
+                    <text-field-textarea-example></text-field-textarea-example>
+                </app-showcase>
+            </div>
+        </div>
+    </wui-page>
+</ng-template>

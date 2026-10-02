@@ -30,6 +30,8 @@ import {
   mdiEye,
   mdiCurrencyUsd,
   mdiEyeOff,
+  mdiAtomVariant,
+  mdiCalendar,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -65,5 +67,7 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'bell', path: mdiBell},
       { name: 'eye', path: mdiEye},
       { name: 'eye-off', path: mdiEyeOff},
-      { name: 'currency-usd', path: mdiCurrencyUsd}
+      { name: 'currency-usd', path: mdiCurrencyUsd},
+      { name: 'atom-variant', path: mdiAtomVariant},
+      { name: 'calendar', path: mdiCalendar}
 ]

@@ -20,9 +20,9 @@ import { FormReactiveExample } from '../../../../examples/form-reactive-example/
 })
 export class FormPage implements OnInit {
   private readonly pageService = inject(WuiPageService);
-  readonly pageTpl = viewChild<TemplateRef<unknown>>('page');
+  readonly pageTpl = viewChild.required<TemplateRef<any>>('page');
 
   ngOnInit(): void {
-    this.pageService.replace(this.pageTpl()!);
+    this.pageService.replace(this.pageTpl());
   }
 }

@@ -29,6 +29,8 @@ export const routes: Routes = [{
 }, {
     path: 'form', loadComponent: () => import('./pages/form/form.page/form.page').then(m => m.FormPage)
 }, {
+    path: 'text-field', loadComponent: () => import('./pages/text-field/text-field.page').then(m => m.TextFieldPage)
+}, {
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
 }, {
     path: 'grid', loadComponent: () => import('./pages/grid/grid.page/grid.page').then(m => m.GridPage)
@@ -44,11 +46,7 @@ export const routes: Routes = [{
     path: 'menu', loadComponent: () => import('./pages/menu/menu.page').then(m => m.AppMenuPage)
 }, {
     path: 'tabs', loadComponent: () => import('./pages/tab/tab.page').then(m => m.TabPage)
-},
-// {
-//     path: 'context-menu', loadComponent: () => import('./pages/context-menu/context-menu.page/context-menu.page').then(m => m.ContextMenuPage)
-// }, 
-{
+}, {
     path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
 }, {
     path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)

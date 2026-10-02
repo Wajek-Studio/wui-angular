@@ -13,10 +13,10 @@ import { AppSimpleExample } from '../../../../examples/app-simple-example/app-si
 export class HomePage {
 
   private readonly pageService: WuiPageService = inject(WuiPageService);
-  pageTpl = viewChild<TemplateRef<any>>('page');
+  pageTpl = viewChild.required<TemplateRef<any>>('page');
 
   ngOnInit(): void {
-    this.pageService.replace(this.pageTpl()!);
+    this.pageService.replace(this.pageTpl());
   }
 
 }
