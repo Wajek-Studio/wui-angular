@@ -32,6 +32,10 @@ import {
   mdiEyeOff,
   mdiAtomVariant,
   mdiCalendar,
+  mdiDockWindow,
+  mdiArrangeBringForward,
+  mdiDotsHorizontalCircle,
+  mdiClose,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -48,6 +52,7 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'view-array-outline', path: mdiViewArrayOutline },
       { name: 'spacing', path: mdiFormatLineSpacing },
       { name: 'dots-vertical', path: mdiDotsVertical },
+      { name: 'dots-horizontal-circle', path: mdiDotsHorizontalCircle },
       { name: 'window-maximize', path: mdiWindowMaximize },
       { name: 'form-textbox', path: mdiFormTextbox },
       { name: 'form-select', path: mdiFormSelect },
@@ -69,5 +74,9 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'eye-off', path: mdiEyeOff},
       { name: 'currency-usd', path: mdiCurrencyUsd},
       { name: 'atom-variant', path: mdiAtomVariant},
-      { name: 'calendar', path: mdiCalendar}
+      { name: 'calendar', path: mdiCalendar},
+      { name: 'dock-window', path: mdiDockWindow},
+      { name: 'arrange-bring-forward', path: mdiArrangeBringForward},
+      { name: 'square-rounded-badge', path: mdiSquareRoundedBadge},
+      { name: 'close', path: mdiClose}
 ]

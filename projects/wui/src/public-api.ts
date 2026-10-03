@@ -9,9 +9,8 @@ export * from './app/app';
 export * from './button/button';
 export * from './button/button.options';
 
-export * from './dialog/dialog.options';
-export * from './dialog/dialog.ref';
 export * from './dialog/dialog.service';
+export * from './dialog/dialog.ref';
 
 export * from './form-field/form-field';
 export * from './form-field/input';

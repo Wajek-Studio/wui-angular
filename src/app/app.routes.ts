@@ -20,12 +20,10 @@ export const routes: Routes = [{
     path: 'tipografi', loadComponent: () => import('./pages/tipografi.page/tipografi.page').then(m => m.TipografiPage)
 }, {
     path: 'radio', loadComponent: () => import('./pages/radio/radio.page').then(m => m.RadioPage)
-}, 
-{
+}, {
     path: 'button', loadComponent: () => import('./pages/button/button.page/button.page').then(m => m.ButtonPage)
-}, 
-{
-    path: 'dialog', loadComponent: () => import('./pages/dialog/dialog.page/dialog.page').then(m => m.DialogPage)
+}, {
+    path: 'dialog', loadComponent: () => import('./pages/dialog/dialog.page').then(m => m.DialogPage)
 }, {
     path: 'form', loadComponent: () => import('./pages/form/form.page/form.page').then(m => m.FormPage)
 }, {
@@ -48,8 +46,6 @@ export const routes: Routes = [{
     path: 'tabs', loadComponent: () => import('./pages/tab/tab.page').then(m => m.TabPage)
 }, {
     path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
-}, {
-    path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)
 }, {
     path: 'message', loadComponent: () => import('./pages/message/message.page').then(m => m.MessagePage)
 },{

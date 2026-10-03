@@ -1,0 +1,23 @@
+<button wuiButton (click)="open()">Open Dialog</button>
+
+<ng-template #dialogTpl>
+    <div class="wui-dialog-header">
+        <div class="wui-flex">
+            <div class="wui-flex-grow-1">
+                Dialog Header
+            </div>
+            <button wuiButton iconOnly (click)="cancel()" size="sm" variant="text" tabindex="-1">
+                <wui-icon icon="close"/>
+            </button>
+        </div>
+    </div>
+    <div class="wui-dialog-content">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966
+    </div>
+    <div class="wui-dialog-footer">
+        <div class="wui-flex wui-justify-content-end wui-gap-col-3">
+            <button wuiButton variant="text" (click)="cancel()">Cancel</button>
+            <button wuiButton variant="filled" color="primary" (click)="continue()">Continue</button>
+        </div>
+    </div>
+</ng-template>
