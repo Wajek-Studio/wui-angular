@@ -32,12 +32,6 @@ export class WuiDialog implements OnDestroy {
         runInInjectionContext(this.injector, () => {
             afterNextRender(() => {
                 this.focusTrap?.focusInitialElement();
-
-                const active = document.activeElement as HTMLElement | null;
-                if (active && active !== document.body) {
-                    active.blur();
-                    active.focus({ focusVisible: true } as FocusOptions);
-                }
             });
         })
     }

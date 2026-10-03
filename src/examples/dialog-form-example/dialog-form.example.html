@@ -1,0 +1,19 @@
+<button wuiButton (click)="open()">Open Reactive Form</button>
+
+<ng-template #dialogTpl>
+    <form [formGroup]="formReactive">
+        <div class="wui-dialog-header">Reactive Form Inside Dialog</div>
+        <div class="wui-dialog-content">
+            <wui-form-field>
+                <label wuiLabel for="fullName">Full Name</label>
+                <input type="text" wuiInput #fullName="wuiInput" formControlName="fullName" id="fullName">
+                @if(fullName.firstError() == 'required') {
+                    <div wuiError>Harus diisi</div>
+                }
+            </wui-form-field>
+        </div>
+        <div class="wui-dialog-footer">
+            <button wuiButton type="submit">Submit</button>
+        </div>
+    </form>
+</ng-template>
