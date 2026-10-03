@@ -3,15 +3,15 @@ import { Component, signal } from "@angular/core";
 @Component({
     selector: 'tab-simple-example',
     template: `
-        <div class="wui-tab wui-gap-col-4">
+        <div class="wui-tab wui-gap-col-3">
             <button class="wui-tab-item" [class.active]="active() == 'stats'" (click)="setActive('stats')">
-                Statistics
+                STATISTICS
             </button>
             <button class="wui-tab-item" [class.active]="active() == 'profile'" (click)="setActive('profile')">
-                Profile
+                PROFILE
             </button>
             <button class="wui-tab-item" [class.active]="active() == 'settings'" (click)="setActive('settings')">
-                Settings
+                SETTINGS
             </button>
         </div>
     `

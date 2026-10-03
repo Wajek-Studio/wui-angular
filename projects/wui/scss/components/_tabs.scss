@@ -1,3 +1,6 @@
+
+@use '../abstracts' as a;
+
 @mixin tabs {
     
     .wui-tab {
@@ -9,21 +12,41 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--wui-color-on-surface);
+            color: var(--wui-color-on-surface-variant);
             text-decoration: none;
             position: relative;
+            font-size: .875rem;
+            font-weight: 600;
+            cursor: pointer;
+
+            &:after {
+                content: "";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 2px;
+                background-color: var(--wui-color-on-surface-variant);
+                display: block;
+                opacity: 0;
+                border-radius: 9999px;
+            }
+
+            &:hover {
+                color: var(--wui-color-on-surface);
+
+                &:after {
+                    opacity: .38;
+                    background-color: var(--wui-color-on-surface);
+                }
+            }
 
             &.active {
                 color: var(--wui-color-primary);
+
                 &:after {
-                    content: "";
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    height: 2px;
+                    opacity: 1;
                     background-color: var(--wui-color-primary);
-                    display: block;
                 }
             }
 
@@ -34,7 +57,6 @@
         appearance: none;
         border: none;
         background: none;
-        font: inherit;
     }
 
 }

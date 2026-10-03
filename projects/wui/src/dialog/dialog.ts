@@ -1,6 +1,6 @@
 import { FocusTrap, FocusTrapFactory } from "@angular/cdk/a11y";
 import { isPlatformBrowser } from "@angular/common";
-import { afterNextRender, AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Injector, OnDestroy, PLATFORM_ID, runInInjectionContext, TemplateRef, viewChild, ViewContainerRef } from "@angular/core";
+import { afterNextRender, ChangeDetectorRef, Component, ElementRef, inject, Injector, OnDestroy, PLATFORM_ID, runInInjectionContext, TemplateRef, viewChild, ViewContainerRef } from "@angular/core";
 
 @Component({
     selector: 'wui-dialog',

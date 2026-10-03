@@ -37,13 +37,7 @@ export class WuiDialogService {
             maxHeight: dialogConfig.maxHeight
         });
 
-        const portal = new ComponentPortal(
-            WuiDialog, 
-            null,
-            this.injector
-        );
-
-        let ref = new WuiDialogRef<T>(portal, overlayRef);
+        let ref = new WuiDialogRef<T>(overlayRef);
 
         if(dialogConfig.dismissable) {
             overlayRef
@@ -56,6 +50,12 @@ export class WuiDialogService {
                 ref.close(null);
             });
         }
+
+        const portal = new ComponentPortal(
+            WuiDialog, 
+            null,
+            this.injector
+        );
 
         const componentRef = overlayRef.attach(portal);
         componentRef.changeDetectorRef.detectChanges();
