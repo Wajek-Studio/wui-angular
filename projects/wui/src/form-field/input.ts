@@ -1,4 +1,4 @@
-import { booleanAttribute, computed, DestroyRef, Directive, DoCheck, ElementRef, inject, input, signal } from '@angular/core';
+import { booleanAttribute, computed, DestroyRef, Directive, DoCheck, ElementRef, inject, input, model, signal } from '@angular/core';
 import { FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { WUI_FORM_CONFIG, WuiFormConfig } from './form-config';
 
@@ -29,7 +29,7 @@ export class WuiInput implements DoCheck {
   formConfig = inject<WuiFormConfig>(WUI_FORM_CONFIG, {optional: true});
   
   hasValue = signal(false);
-  hasError = signal(false);
+  hasError = model(false, { alias: 'error' });
   disabled = signal(false);
 
   firstError() : string | null {

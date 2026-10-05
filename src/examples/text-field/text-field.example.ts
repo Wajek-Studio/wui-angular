@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
-import { WuiFormField, WuiInput, WuiLabel } from "@wajek/wui";
+import { WuiFormField, WuiInput, WuiLabel, WuiError } from "@wajek/wui";
 
 @Component({
-    imports: [WuiFormField, WuiInput, WuiLabel],
+    imports: [WuiFormField, WuiInput, WuiLabel, WuiError],
     selector: 'text-field-example',
     template: `
         <wui-form-field>
             <label for="text-field" wuiLabel>Text Input</label>
-            <input wuiInput type="text" id="text-field" required/>
+            <input wuiInput type="text" id="text-field" required [error]="true"/>
+            <div wuiError>Harus diisi</div>
         </wui-form-field>
     `
 })
