@@ -1,16 +1,26 @@
 import { Component, Directive, ElementRef, inject, input, OnInit, Renderer2 } from "@angular/core";
+import { WuiSidenav } from "./sidenav";
 
 @Directive({
-    selector: 'a[wuiSidenavItem]',
+    selector: '[wuiSidenavItem]',
     host: {
-        '[class.wui-sidenav-item]': 'true'
+        '[class.wui-sidenav-item]': 'true',
+        '(click)': 'onClick()'
     }
 })
 export class WuiSidenavItem implements OnInit {
 
+    private readonly sidenav = inject(WuiSidenav);
+
     private readonly renderer = inject(Renderer2);
     private readonly element = inject(ElementRef);
     label = input.required<string>();
+
+    onClick() {
+        if(this.sidenav.mode() == 'over') {
+            this.sidenav.show.set(false);
+        }
+    }
     
     ngOnInit(): void {
         const existing = this.element.nativeElement.querySelector('span.wui-sidenav-item--label');

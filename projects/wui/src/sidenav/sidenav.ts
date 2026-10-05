@@ -1,6 +1,6 @@
-import { Component, effect, inject, input, model, OnInit } from "@angular/core";
+import { Component, effect, forwardRef, inject, input, model, OnInit } from "@angular/core";
 import { toObservable } from "@angular/core/rxjs-interop";
-import { WUI_SIDENAV_CONTAINER } from "./sidenav.token";
+import { WUI_SIDENAV_CONTAINER, WUI_SIDENAV_PARENT } from "./sidenav.token";
 import { WuiSidenavContainer } from "./sidenav-container";
 import { combineLatestWith, merge, skip } from "rxjs";
 import { WuiScrollbar } from "../public-api";
@@ -18,7 +18,10 @@ import { WuiScrollbar } from "../public-api";
         '[class.wui-sidenav--over]': "mode() == 'over'",
         '[class.wui-sidenav--side]': "mode() == 'side'"
     },
-    imports: [WuiScrollbar]
+    providers: [{
+        provide: WUI_SIDENAV_PARENT,
+        useExisting: forwardRef(() => WuiSidenav)
+    }]
 })
 export class WuiSidenav implements OnInit {
 
