@@ -1,9 +1,9 @@
 <button wuiButton (click)="open()">Open Reactive Form</button>
 
-<ng-template #dialogTpl>
-    <form [formGroup]="formReactive">
+<form [formGroup]="formReactive">
+    <ng-template #dialogTpl>
         <div class="wui-dialog-header">Reactive Form Inside Dialog</div>
-        <div class="wui-dialog-content">
+        <div class="wui-dialog-content wui-pt-4">
             <wui-form-field>
                 <label wuiLabel for="fullName">Full Name</label>
                 <input type="text" wuiInput #fullName="wuiInput" formControlName="fullName" id="fullName">
@@ -12,8 +12,9 @@
                 }
             </wui-form-field>
         </div>
-        <div class="wui-dialog-footer">
+        <div class="wui-dialog-buttons">
+            <button wuiButton type="button" variant="text">Cancel</button>
             <button wuiButton type="submit">Submit</button>
         </div>
-    </form>
-</ng-template>
+    </ng-template>
+</form>

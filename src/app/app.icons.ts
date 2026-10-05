@@ -39,6 +39,8 @@ import {
   mdiMenuClose,
   mdiMenuOpen,
   mdiBookOpen,
+  mdiPlus,
+  mdiRefresh,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -84,5 +86,7 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'close', path: mdiClose},
       { name: 'menu-close', path: mdiMenuClose},
       { name: 'menu-open', path: mdiMenuOpen},
-      { name: 'book-open', path: mdiBookOpen}
+      { name: 'book-open', path: mdiBookOpen},
+      { name: 'plus', path: mdiPlus},
+      { name: 'refresh', path: mdiRefresh}
 ]

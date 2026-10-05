@@ -1,10 +1,3 @@
-// Level 4 — Style komponen `WuiTable`.
-// Menjaga tampilan visual persis seperti tabel wui-angular-17.x:
-// - Tinggi baris standar 3.5rem (56px)
-// - Padding tepi kiri/kanan 1.5rem (turun ke 1rem pada layar <= 768px)
-// - Garis pemisah baris dan kontras thead/tfoot yang adaptif di tema terang dan gelap
-// - Efek hover baris, kolom aksi pas lebar tombol, dan kolom lengket (sticky)
-
 @use '../abstracts' as a;
 
 @mixin table {
@@ -18,7 +11,6 @@
 
         width: 100%;
         border-collapse: collapse;
-        color: var(--wui-color-on-surface);
 
         tr {
             border-bottom: 1px solid var(--wui-color-outline-variant);
@@ -66,7 +58,7 @@
 
         th {
             font-weight: 600;
-            color: var(--wui-color-on-surface);
+            font-size: .75rem;
         }
 
         thead {
@@ -128,10 +120,6 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    // Layar sempit: tepi tabel turun dari 1.5rem ke 1rem. Cukup mengubah variabelnya — aturan
-    // `:first-child`/`:last-child` di atas sudah membaca variabel itu. Dulu blok ini menulis ulang
-    // `padding-left`/`padding-right` di dalam `tr > th, td`, yang membuat nesting-nya terlalu dalam
-    // (dan hasilnya sama saja).
     @media screen and (width <= 768px) {
         .wui-table,
         table[wuiTable],

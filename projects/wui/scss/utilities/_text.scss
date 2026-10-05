@@ -1,0 +1,38 @@
+@use 'sass:map';
+
+@mixin text {
+
+    $text: (
+        'start': (align: left),
+        'end': (align: right),
+        'nowrap': (whitespace: nowrap),
+        'truncate': (overlow: truncate)
+    );
+
+    @each $key, $properties in $text {
+        .wui-text-#{$key} {
+            @if map.has-key($properties, 'align') {
+                text-align: map.get($properties, 'align') !important;
+            }
+
+            @if map.has-key($properties, 'whitespace') {
+                white-space: map.get($properties, 'whitespace') !important;
+            }
+
+            @if map.has-key($properties, 'overflow') {
+                text-overflow: map.get($properties, 'overflow') !important;
+            }
+        }
+    }
+
+    @for $i from 1 to 5 {
+        .wui-text-clamp-#{$i} {
+            overflow: hidden;
+            line-clamp: #{$i};
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: #{$i};
+        }
+    }
+
+}

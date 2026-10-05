@@ -44,4 +44,10 @@
         }
     }
 
+    @include a.breakpoint-up('xxxl') {
+        .wui-container {
+            max-width: 1440px;
+        }
+    }
+
 }

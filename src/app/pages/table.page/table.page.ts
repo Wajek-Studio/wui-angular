@@ -1,18 +1,6 @@
-import { Component, OnInit, TemplateRef, computed, inject, signal, viewChild } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import {
-  WuiBadge,
-  WuiButton,
-  WuiIcon,
-  WuiLoading,
-  WuiPage,
-  WuiPageService,
-  WuiPagination,
-  WuiScrollbar,
-  WuiTable,
-  WuiTableResponsive,
-} from '@wajek/wui';
+import { Component, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
+import { WuiPage, WuiPageService, WuiScrollbar, WuiTable, WuiBadge, WuiIcon, WuiButton, WuiFormField, WuiInput, WuiLabel } from '@wajek/wui';
 
 export interface SampleUser {
   id: number;
@@ -25,18 +13,17 @@ export interface SampleUser {
 @Component({
   selector: 'app-table.page',
   imports: [
-    RouterLink,
-    DecimalPipe,
     WuiPage,
     WuiScrollbar,
+    DecimalPipe,
     WuiTable,
-    WuiTableResponsive,
-    WuiButton,
-    WuiIcon,
-    WuiPagination,
-    WuiLoading,
     WuiBadge,
-  ],
+    WuiIcon,
+    WuiButton,
+    WuiFormField,
+    WuiInput,
+    WuiLabel
+],
   templateUrl: './table.page.html',
   styleUrl: './table.page.scss',
 })

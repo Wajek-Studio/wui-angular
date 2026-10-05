@@ -28,3 +28,9 @@ export interface WuiConfirmDialogParam {
     message: string;
     actions: Array<WuiConfirmDialogAction | string>;
 }
+
+export interface WuiLoadingDialogConfig {
+    mode: 'circular' | 'linear' | 'indeterminate';
+    width?: string;
+    label?: string;
+}

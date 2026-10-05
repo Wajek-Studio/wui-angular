@@ -1,12 +1,13 @@
 import { createComponent, EnvironmentInjector, inject, Injectable, Injector, TemplateRef } from "@angular/core";
 import { WUI_DIALOG_REF, WuiDialogRef } from "./dialog.ref";
 import { Overlay, OverlayConfig } from "@angular/cdk/overlay";
-import { WuiAlertDialogConfig, WuiConfirmDialogParam, WuiDialogConfig } from "./dialog-config";
+import { WuiAlertDialogConfig, WuiConfirmDialogParam, WuiDialogConfig, WuiLoadingDialogConfig } from "./dialog-config";
 import { ComponentPortal } from "@angular/cdk/portal";
 import { WuiDialog } from "./dialog";
 import { filter } from "rxjs";
 import { WuiDialogAlert } from "./dialog-alert";
 import { WuiDialogConfirm } from "./dialog-confirm";
+import { WuiDialogLoading } from "./dialog-loading";
 
 @Injectable({
     providedIn: 'root'
@@ -75,6 +76,15 @@ export class WuiDialogService {
             environmentInjector: this.envInjector
         });
         return await ref.instance.open(config);
+    }
+
+    loading(config?: WuiLoadingDialogConfig): WuiDialogRef<void> {
+        console.log('loading called');
+        
+        const ref = createComponent(WuiDialogLoading, {
+            environmentInjector: this.envInjector
+        });
+        return ref.instance.open(config);
     }
 
 }

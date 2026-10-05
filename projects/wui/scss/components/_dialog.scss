@@ -8,21 +8,21 @@
         background-color: var(--wui-color-surface);
         width: 100%;
         border-radius: 1.5rem;
+        row-gap: var(--wui-space-3);
         @include a.elevation(3);
 
         &-header {
-            margin-bottom: 1rem;
             @include a.typography('headline', 'small');
-        }
-
-        &-content {
-            margin-bottom: 1.5rem;
         }
 
         &-buttons {
             display: flex;
             justify-content: end;
-            column-gap: var(--wui-space-3);
+            column-gap: var(--wui-space-2);
+        }
+
+        &-footer, &-buttons {
+            padding-top: var(--wui-space-2);
         }
     }
 }
