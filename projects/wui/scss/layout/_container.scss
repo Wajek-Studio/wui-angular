@@ -10,43 +10,74 @@
     .wui-container {
         display: block;
         width: 100%;
-        padding-inline: 1.5rem;
-        margin-inline: auto;
+
+        &-fluid {
+            padding-inline: 1.5rem;
+            margin-inline: auto;
+        }
     }
 
     @include a.breakpoint-up('sm') {
         .wui-container {
             max-width: 540px;
+
+            &-fluid {
+                max-width: none;
+            }
         }
     }
 
     @include a.breakpoint-up('md') {
         .wui-container {
             max-width: 720px;
+
+            &-fluid {
+                max-width: none;
+            }
         }
     }
 
     @include a.breakpoint-up('lg') {
         .wui-container {
             max-width: 960px;
+
+            &-fluid {
+                max-width: none;
+                padding-inline: 3rem;
+            }
         }
     }
 
     @include a.breakpoint-up('xl') {
         .wui-container {
             max-width: 1140px;
+
+            &-fluid {
+                max-width: none;
+                padding-inline: 3rem;
+            }
         }
     }
 
     @include a.breakpoint-up('xxl') {
         .wui-container {
             max-width: 1320px;
+
+            &-fluid {
+                max-width: none;
+                padding-inline: 4.5rem;
+            }
         }
     }
 
     @include a.breakpoint-up('xxxl') {
         .wui-container {
-            max-width: 1440px;
+            max-width: 1560px;
+
+            &-fluid {
+                max-width: none;
+                padding-inline: 4.5rem;
+            }
         }
     }
 

@@ -8,7 +8,6 @@
         background-color: var(--wui-color-surface);
         width: 100%;
         border-radius: 1.5rem;
-        row-gap: var(--wui-space-3);
         @include a.elevation(3);
 
         &-header {
@@ -21,8 +20,16 @@
             column-gap: var(--wui-space-2);
         }
 
-        &-footer, &-buttons {
-            padding-top: var(--wui-space-2);
+        &:has(.wui-dialog-content, .wui-dialog-footer, .wui-dialog-buttons) {
+            .wui-dialog-header {
+                margin-bottom: var(--wui-space-3);
+            }
+        }
+
+        &:has(.wui-dialog-footer, .wui-dialog-buttons) {
+            .wui-dialog-content {
+                margin-bottom: var(--wui-space-4);
+            }
         }
     }
 }
