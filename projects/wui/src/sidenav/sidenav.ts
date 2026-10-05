@@ -1,53 +1,56 @@
-import { Component, computed, inject, input, OnDestroy, OnInit, signal } from "@angular/core";
-import { WuiSidenavService } from "./sidenav.service";
-import { Subject, takeUntil } from "rxjs";
+import { Component, effect, inject, input, model, OnInit } from "@angular/core";
+import { toObservable } from "@angular/core/rxjs-interop";
+import { WUI_SIDENAV_CONTAINER } from "./sidenav.token";
+import { WuiSidenavContainer } from "./sidenav-container";
+import { combineLatestWith, merge, skip } from "rxjs";
+import { WuiScrollbar } from "../public-api";
 
 @Component({
     selector: 'wui-sidenav',
     template: `
+    <div class="wui-sidenav-inner">
         <ng-content/>
+    </div>
     `,
     host: {
-        '[class.wui-sidenav]': 'true',
-        '[class.wui-sidenav--show]': '_show()',
-        '[class.wui-sidenav--mini]': '_isMini()'
-    }
+        class: 'wui-sidenav',
+        '[class.wui-sidenav--show]': "show()",
+        '[class.wui-sidenav--over]': "mode() == 'over'",
+        '[class.wui-sidenav--side]': "mode() == 'side'"
+    },
+    imports: [WuiScrollbar]
 })
-export class WuiSidenav implements OnInit, OnDestroy {
+export class WuiSidenav implements OnInit {
 
-    private sidenavService = inject(WuiSidenavService);
+    container = inject<WuiSidenavContainer>(WUI_SIDENAV_CONTAINER);
 
-    id = input<string>('main');
+    mode = input<'over' | 'side'>('over');
+    modeChange = toObservable(this.mode);
 
-    mode = input<'full' | 'mini'>('full');
-    _mode = signal<'full' | 'mini'>('full');
-    
-    _isMini = computed<boolean>(() => this._mode() == 'mini');
+    show = model<boolean>(false);
+    showChange = toObservable(this.show);
 
-    show = input(true);
-    _show = signal(true);
-
-    private unsub = new Subject<void>();
+    initialized = false;
 
     ngOnInit(): void {
-        this._mode.set(this.mode());
-        this._show.set(this.show());
-
-        this.sidenavService.register({
-            id: this.id(),
-            show: this._show(),
-            mode: this._mode()
+        this.showChange.pipe(combineLatestWith(this.modeChange)).subscribe(([show, mode]) => {
+            if(show) {
+                if(mode == 'over') {
+                    if(this.container?.backdropState() == 'open') return;
+                    this.container?.openBackdrop();
+                } else {
+                    if(this.container?.backdropState() == 'hidden') return;
+                    this.container?.closeBackdrop();
+                }
+            } else {
+                if(this.container?.backdropState() == 'hidden') return;
+                this.container?.closeBackdrop();
+            }
         });
-        this.sidenavService.stateChange.pipe(takeUntil(this.unsub)).subscribe((state) => {
-            if(state.id != this.id()) return;
-            this._show.set(state.show);
-            this._mode.set(state.mode);
-        });
-    }
 
-    ngOnDestroy(): void {
-        this.unsub.next();
-        this.unsub.complete();
+        this.container.backdropClick.subscribe(() => {
+            if(this.show() === true) this.show.set(false);
+        });
     }
 
 }

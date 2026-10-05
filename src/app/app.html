@@ -6,22 +6,18 @@
       </button>
     </div>
 
-    <div class="wui-topbar-content">
-      <span class="wui-title-medium">
-        Wajek UI &mdash; WUI
-      </span>
-    </div>
+    <div class="wui-topbar-content"></div>
 
     <div class="wui-topbar-trailing">
-      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMini()">
-        <wui-icon icon="account-circle"></wui-icon>
+      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMode()">
+        <wui-icon icon="book-open"></wui-icon>
       </button>
     </div>
   </wui-topbar>
 
   <wui-sidenav-container>
-    <wui-sidenav [id]="sidenavId" [show]="true">
-      <div class="wui-sidenav-content wui-py-4 wui-px-2" wuiScrollbar>
+    <wui-sidenav [mode]="sidenavMode()" [(show)]="sidenavShow">
+      <div class="wui-sidenav-content wui-py-4" wuiScrollbar>
         <a wuiSidenavItem label="Memulai" routerLink="/home" routerLinkActive="active">
           <wui-icon icon="play"></wui-icon>
         </a>
@@ -80,7 +76,7 @@
       </div>
     </wui-sidenav>
 
-    <div wuiSidenavContainerContent>
+    <div class="wui-sidenav-container-content">
       <wui-page-host>
         <router-outlet/>
       </wui-page-host>

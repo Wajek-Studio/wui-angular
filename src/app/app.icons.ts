@@ -36,6 +36,9 @@ import {
   mdiArrangeBringForward,
   mdiDotsHorizontalCircle,
   mdiClose,
+  mdiMenuClose,
+  mdiMenuOpen,
+  mdiBookOpen,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -78,5 +81,8 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'dock-window', path: mdiDockWindow},
       { name: 'arrange-bring-forward', path: mdiArrangeBringForward},
       { name: 'square-rounded-badge', path: mdiSquareRoundedBadge},
-      { name: 'close', path: mdiClose}
+      { name: 'close', path: mdiClose},
+      { name: 'menu-close', path: mdiMenuClose},
+      { name: 'menu-open', path: mdiMenuOpen},
+      { name: 'book-open', path: mdiBookOpen}
 ]

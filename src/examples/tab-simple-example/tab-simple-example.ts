@@ -3,7 +3,7 @@ import { Component, signal } from "@angular/core";
 @Component({
     selector: 'tab-simple-example',
     template: `
-        <div class="wui-tab wui-gap-col-3">
+        <div class="wui-tab">
             <button class="wui-tab-item" [class.active]="active() == 'stats'" (click)="setActive('stats')">
                 STATISTICS
             </button>

@@ -12,6 +12,12 @@
   }
 }
 
+@mixin breakpoint-up($breakpoint) {
+  @media (width >= map.get(tokens.$wui-breakpoints, $breakpoint)) {
+    @content;
+  }
+}
+
 /// Cincin fokus yang konsisten — hanya muncul untuk navigasi keyboard.
 @mixin focus-ring {
   &:focus-visible,&:focus {

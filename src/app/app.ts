@@ -1,52 +1,38 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { WuiApp, WuiButton, WuiIcon, WuiTopbar, WuiSidenavContainer, WuiPageHost, WuiSidenav, WuiSidenavService, WuiSidenavItem, WuiSidenavSubheader, WuiScrollbar, WuiSidenavContainerContent } from '@wajek/wui';
-import { RouterOutlet, RouterLinkWithHref, RouterLinkActive } from '@angular/router';
+import { Component, signal } from '@angular/core';
+import { WuiApp, WuiIcon, WuiSidenavContainer, WuiSidenav, WuiSidenavItem, WuiSidenavSubheader, WuiScrollbar, WuiPageHost, WuiTopbar, WuiButton } from '@wajek/wui';
+import { RouterLinkWithHref, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   imports: [
     WuiApp,
-    RouterOutlet,
     WuiIcon,
-    WuiButton,
-    WuiTopbar,
-    WuiPageHost,
     WuiSidenav,
     RouterLinkWithHref,
     RouterLinkActive,
     WuiSidenavItem,
     WuiSidenavSubheader,
     WuiSidenavContainer,
-    WuiSidenavContainerContent,
-    WuiScrollbar,
+    WuiPageHost,
+    RouterOutlet,
+    WuiTopbar,
+    WuiButton,
+    WuiScrollbar
 ],
   templateUrl: './app.html',
-  styleUrl: './app.scss',
-  host: {
-    '[class.sidenav-show]': 'sidenavShow()'
-  }
+  styleUrl: './app.scss'
 })
-export class App implements OnInit {
+export class App {
 
-  private readonly sidenavService = inject(WuiSidenavService);
-
-  /** Id harus sama dengan `id` pada `<wui-sidenav>` di template. */
-  readonly sidenavId = 'app-sidenav';
-  sidenavShow = signal(true);
-
-  ngOnInit(): void {
-    this.sidenavService.stateChange.subscribe((state) => {
-      if(state.id !== this.sidenavId)return;
-      this.sidenavShow.set(state.show);
-    });
-  }
+  sidenavShow = signal<boolean>(true);
+  sidenavMode = signal<'over' | 'side'>('side');
 
   toggleSidenav() {
-    this.sidenavService.toggle(this.sidenavId);
+    this.sidenavShow.update(show => !show);
   }
 
-  toggleSidenavMini() {
-    this.sidenavService.toggleMini(this.sidenavId);
+  toggleSidenavMode() {
+    this.sidenavMode.update(mode => mode == 'over' ? 'side' : 'over');
   }
 
 }

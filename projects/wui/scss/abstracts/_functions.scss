@@ -60,6 +60,7 @@
   $wui-type: map.get(tokens.$wui-heading-typography, $level);
   $wui-role: map.get($wui-type, 'role');
   $wui-size: map.get($wui-type, 'size');
+  
 
   @if not map.has-key(tokens.$wui-typography-scales, $wui-role) {
     @error 'wui: peran tipografi `#{$wui-role}` (heading #{$level}) tidak ada di $wui-typography-scales.';

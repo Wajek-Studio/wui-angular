@@ -6,8 +6,42 @@
 @use '../abstracts' as a;
 
 @mixin container {
+
     .wui-container {
+        display: block;
         width: 100%;
-        padding-inline: var(--wui-container-padding-inline);
+        padding-inline: 1.5rem;
+        margin-inline: auto;
     }
+
+    @include a.breakpoint-up('sm') {
+        .wui-container {
+            max-width: 540px;
+        }
+    }
+
+    @include a.breakpoint-up('md') {
+        .wui-container {
+            max-width: 720px;
+        }
+    }
+
+    @include a.breakpoint-up('lg') {
+        .wui-container {
+            max-width: 960px;
+        }
+    }
+
+    @include a.breakpoint-up('xl') {
+        .wui-container {
+            max-width: 1140px;
+        }
+    }
+
+    @include a.breakpoint-up('xxl') {
+        .wui-container {
+            max-width: 1320px;
+        }
+    }
+
 }

@@ -7,6 +7,7 @@
         display: flex;
         height: 3rem;
         align-items: stretch;
+        column-gap: a.spacing(4);
 
         &-item {
             display: flex;
@@ -16,7 +17,7 @@
             text-decoration: none;
             position: relative;
             font-size: .875rem;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
 
             &:after {
@@ -57,6 +58,7 @@
         appearance: none;
         border: none;
         background: none;
+        padding-inline: 0;
     }
 
 }
