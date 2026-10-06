@@ -79,8 +79,6 @@ export class WuiDialogService {
     }
 
     loading(config?: WuiLoadingDialogConfig): WuiDialogRef<void> {
-        console.log('loading called');
-        
         const ref = createComponent(WuiDialogLoading, {
             environmentInjector: this.envInjector
         });

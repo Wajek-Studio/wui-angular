@@ -170,157 +170,159 @@
                 }
             }
         }
+
+        .wui-form-field-stage {
+            width: 100%;
+            display: flex;
+            height: 3.5rem;
+            position: relative;
+
+            &-main {
+                flex: 1 1 auto;
+                z-index: 2;
+                position: relative;
+            }
+
+            textarea.wui-input {
+                min-height: 3.5rem;
+                padding-block: 1rem;
+                resize: vertical;
+                width: 100%;
+            }
+
+            &:has(textarea.wui-input) {
+                height: auto;
+                min-height: 3.5rem;
+
+                .wui-label {
+                    top: 1.75rem;
+                }
+            }
+
+            .wui-prefix {
+                padding-inline-start: 1rem;
+
+                > .wui-button:first-child {
+                    margin-inline-start: -.5rem;
+                }
+            }
+
+            .wui-suffix {
+                padding-inline-end: 1rem;
+
+                > .wui-button:last-child {
+                    margin-inline-end: -.5rem;
+                }
+            }
+        }
+
+        .wui-form-field-outline--notch {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: stretch;
+            z-index: 0;
+
+            &::before {
+                content: "";
+                display: block;
+                width: calc(1rem - .25rem);
+                border-top-left-radius: var(--wui-outline-radius);
+                border-bottom-left-radius: var(--wui-outline-radius);
+                border-style: solid;
+                border-color: var(--wui-border-color);
+                border-top-width: var(--wui-border-width);
+                border-left-width: var(--wui-border-width);
+                border-bottom-width: var(--wui-border-width);
+                border-right-width: 0;
+            }
+
+            &::after {
+                content: "";
+                display: block;
+                width: auto;
+                flex: 1 1 auto;
+                border-top-right-radius: var(--wui-outline-radius);
+                border-bottom-right-radius: var(--wui-outline-radius);
+                border-style: solid;
+                border-color: var(--wui-border-color);
+                border-top-width: var(--wui-border-width);
+                border-right-width: var(--wui-border-width);
+                border-bottom-width: var(--wui-border-width);
+                border-left-width: 0;
+            }
+
+            &-inner {
+                width: calc(var(--wui-label-width) * var(--wui-label-scale) + .5rem);
+                border-style: solid;
+                border-color: var(--wui-border-color);
+                border-top-width: var(--wui-border-width);
+                border-bottom-width: var(--wui-border-width);
+                border-right-width: 0;
+                border-left-width: 0;
+            }
+        }
+
+        .wui-input {
+            appearance: none;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            font-family: inherit;
+            font-size: 1rem;
+            border: none;
+            outline: none;
+            padding-inline: 1rem;
+            z-index: 2;
+            color: var(--wui-input-color);
+
+            &::placeholder, .wui-select--placeholder {
+                color: var(--wui-color-on-surface);
+                opacity: 0;
+            }
+
+            &:focus, &:focus-visible {
+                &::placeholder, .wui-select--placeholder {
+                    opacity: .54;
+                }
+            }
+        }
+
+        .wui-label {
+            z-index: 1;
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: top 100ms linear, transform 100ms linear, left 100ms linear;
+            will-change: top, transform, left;
+            transform-origin: left center;
+            color: var(--wui-label-color);
+            font-size: 1rem;
+        }
+
+        .wui-hint, .wui-error {
+            font-size: .75rem;
+            color: var(--wui-hint-color);
+            padding-inline: 1rem;
+        }
+
+        .wui-hint {
+            display: var(--wui-hint-display);
+        }
+
+        .wui-error {
+            display: var(--wui-error-display);
+        }
+
+        .wui-prefix, .wui-suffix {
+            display: flex;
+            align-items: center;
+            color: var(--wui-prefix-suffix-color);
+            z-index: 2;
+        }
     }
  
-    .wui-form-field-stage {
-        width: 100%;
-        display: flex;
-        height: 3.5rem;
-        position: relative;
-
-        &-main {
-            flex: 1 1 auto;
-            z-index: 2;
-            position: relative;
-        }
-
-        textarea.wui-input {
-            min-height: 3.5rem;
-            padding-block: 1rem;
-            resize: vertical;
-            width: 100%;
-        }
-
-        &:has(textarea.wui-input) {
-            height: auto;
-            min-height: 3.5rem;
-
-            .wui-label {
-                top: 1.75rem;
-            }
-        }
-
-        .wui-prefix {
-            padding-inline-start: 1rem;
-
-            > .wui-button:first-child {
-                margin-inline-start: -.5rem;
-            }
-        }
-
-        .wui-suffix {
-            padding-inline-end: 1rem;
-
-            > .wui-button:last-child {
-                margin-inline-end: -.5rem;
-            }
-        }
-    }
-
-    .wui-form-field-outline--notch {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        display: flex;
-        align-items: stretch;
-        z-index: 0;
-
-        &::before {
-            content: "";
-            display: block;
-            width: calc(1rem - .25rem);
-            border-top-left-radius: var(--wui-outline-radius);
-            border-bottom-left-radius: var(--wui-outline-radius);
-            border-style: solid;
-            border-color: var(--wui-border-color);
-            border-top-width: var(--wui-border-width);
-            border-left-width: var(--wui-border-width);
-            border-bottom-width: var(--wui-border-width);
-            border-right-width: 0;
-        }
-
-        &::after {
-            content: "";
-            display: block;
-            width: auto;
-            flex: 1 1 auto;
-            border-top-right-radius: var(--wui-outline-radius);
-            border-bottom-right-radius: var(--wui-outline-radius);
-            border-style: solid;
-            border-color: var(--wui-border-color);
-            border-top-width: var(--wui-border-width);
-            border-right-width: var(--wui-border-width);
-            border-bottom-width: var(--wui-border-width);
-            border-left-width: 0;
-        }
-
-        &-inner {
-            width: calc(var(--wui-label-width) * var(--wui-label-scale) + .5rem);
-            border-style: solid;
-            border-color: var(--wui-border-color);
-            border-top-width: var(--wui-border-width);
-            border-bottom-width: var(--wui-border-width);
-            border-right-width: 0;
-            border-left-width: 0;
-        }
-    }
-
-    .wui-input {
-        appearance: none;
-        width: 100%;
-        height: 100%;
-        background: transparent;
-        font-family: inherit;
-        font-size: 1rem;
-        border: none;
-        outline: none;
-        padding-inline: 1rem;
-        z-index: 2;
-        color: var(--wui-input-color);
-
-        &::placeholder, .wui-select--placeholder {
-            color: var(--wui-color-on-surface);
-            opacity: 0;
-        }
-
-        &:focus, &:focus-visible {
-            &::placeholder, .wui-select--placeholder {
-                opacity: .54;
-            }
-        }
-    }
-
-    .wui-label {
-        z-index: 1;
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        transition: top 100ms linear, transform 100ms linear, left 100ms linear;
-        will-change: top, transform, left;
-        transform-origin: left center;
-        color: var(--wui-label-color);
-        font-size: 1rem;
-    }
-
-    .wui-hint, .wui-error {
-        font-size: .75rem;
-        color: var(--wui-hint-color);
-        padding-inline: 1rem;
-    }
-
-    .wui-hint {
-        display: var(--wui-hint-display);
-    }
-
-    .wui-error {
-        display: var(--wui-error-display);
-    }
-
-    .wui-prefix, .wui-suffix {
-        display: flex;
-        align-items: center;
-        color: var(--wui-prefix-suffix-color);
-        z-index: 2;
-    }
+    
 
 }

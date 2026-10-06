@@ -41,6 +41,9 @@ import {
   mdiBookOpen,
   mdiPlus,
   mdiRefresh,
+  mdiSquareEditOutline,
+  mdiMagnify,
+  mdiFolder,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -88,5 +91,8 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'menu-open', path: mdiMenuOpen},
       { name: 'book-open', path: mdiBookOpen},
       { name: 'plus', path: mdiPlus},
-      { name: 'refresh', path: mdiRefresh}
+      { name: 'refresh', path: mdiRefresh},
+      { name: 'square-edit-outline', path: mdiSquareEditOutline},
+      { name: 'magnify', path: mdiMagnify},
+      { name: 'folder', path: mdiFolder}
 ]

@@ -12,7 +12,6 @@ export * from './button/button.options';
 export * from './dialog/dialog.service';
 export * from './dialog/dialog.ref';
 
-export * from './form-field/form-field';
 export * from './form-field/input';
 export * from './form-field/label';
 export * from './form-field/suffix';
@@ -21,6 +20,9 @@ export * from './form-field/hint';
 export * from './form-field/error';
 export * from './form-field/error-matcher';
 export * from './form-field/form-config';
+
+export * from './form-field/form-field';
+export * from './form-input/form-input';
 
 export * from './menu/menu-trigger';
 export * from './menu/menu';

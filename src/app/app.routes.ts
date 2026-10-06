@@ -48,6 +48,8 @@ export const routes: Routes = [{
     path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
 }, {
     path: 'message', loadComponent: () => import('./pages/message/message.page').then(m => m.MessagePage)
+}, {
+    path: 'form-input', loadComponent: () => import('./pages/form-input/form-input.page').then(m => m.FormInputPage)
 },{
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

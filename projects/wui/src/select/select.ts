@@ -199,11 +199,16 @@ export class WuiSelect implements ControlValueAccessor{
   select(option: WuiOption): void {
     this.selectedValue.set(option.value());
     this.onChange(this.selectedValue());
-    this.close();
+    setTimeout(() => {
+      this.close();
+    }, 100);
   }
 
   onBlur() {
     this.onTouched();
+    setTimeout(() => {
+      this.close();
+    }, 100);
   }
 
 }

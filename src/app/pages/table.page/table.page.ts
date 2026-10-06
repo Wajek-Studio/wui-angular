@@ -1,6 +1,7 @@
 import { DecimalPipe } from '@angular/common';
-import { Component, OnInit, TemplateRef, inject, signal, viewChild } from '@angular/core';
-import { WuiPage, WuiPageService, WuiScrollbar, WuiTable, WuiBadge, WuiIcon, WuiButton, WuiFormField, WuiInput, WuiLabel } from '@wajek/wui';
+import { Component, OnInit, TemplateRef, inject, model, signal, viewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { WuiPage, WuiPageService, WuiScrollbar, WuiTable, WuiBadge, WuiIcon, WuiButton, WuiFormField, WuiInput, WuiLabel, WuiFormInput, WuiPrefix, WuiSuffix, WuiSelect, WuiOption } from '@wajek/wui';
 
 export interface SampleUser {
   id: number;
@@ -20,9 +21,12 @@ export interface SampleUser {
     WuiBadge,
     WuiIcon,
     WuiButton,
-    WuiFormField,
     WuiInput,
-    WuiLabel
+    WuiFormInput,
+    WuiPrefix,
+    WuiSelect,
+    WuiOption,
+    FormsModule
 ],
   templateUrl: './table.page.html',
   styleUrl: './table.page.scss',
@@ -30,6 +34,8 @@ export interface SampleUser {
 export class TablePage implements OnInit {
   private readonly pageService: WuiPageService = inject(WuiPageService);
   readonly pageTpl = viewChild<TemplateRef<unknown>>('pageTpl');
+
+  grup = model('all');
 
   // Kontrol playground interaktif tabel
   readonly isHover = signal(true);
@@ -72,6 +78,10 @@ export class TablePage implements OnInit {
   ngOnInit(): void {
     this.pageService.replace(this.pageTpl()!);
     this.refreshData();
+  }
+
+  changeGrup(e: any) {
+    console.log(e);
   }
 
   /**

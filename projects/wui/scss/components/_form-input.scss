@@ -1,0 +1,152 @@
+@mixin form-input {
+
+    .wui-form-input {
+        display: flex;
+        flex-direction: column;
+        row-gap: .5rem;
+
+        .wui-prefix, .wui-suffix {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            color: var(--wui-form-input-prefix-suffix-color);
+        }
+        
+        .wui-prefix {
+            padding-left: .75rem;
+            top: 0; left: 0; bottom: 0;
+        }
+
+        .wui-suffix {
+            padding-right: .5rem;
+            top: 0; right: 0; bottom: 0;
+        }
+
+        .wui-input {
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            color: var(--wui-form-input-color);
+            padding-left: var(--wui-form-input-padding-left);
+            padding-right: var(--wui-form-input-padding-right);
+            width: 100%;
+            height: 100%;
+            position: relative;
+            font-family: inherit;
+
+            &.wui-select {
+                .wui-select--caret {
+                    right: .5rem;
+                }
+            }
+        }
+
+        .wui-label {
+            font-weight: 500;
+            font-size: .875rem;
+            line-height: 1rem;
+            display: inline-block;
+            color: var(--wui-form-input-label-color);
+        }
+
+        .wui-hint, .wui-error {
+            font-size: .75rem;
+        }
+        
+        .wui-hint {
+            color: var(--wui-form-input-hint-color);
+            display: block;
+        }
+
+        .wui-error {
+            color: var(--wui-color-danger);
+            display: none;
+        }
+
+        --base-color: var(--wui-color-on-surface-variant);
+        --base-border-color: var(--wui-color-outline);
+        --base-label-color: var(--wui-color-on-surface-variant);
+        --base-hint-color: var(--wui-color-on-surface-variant);
+        --base-prefix-suffix-color: var(--wui-color-on-surface-variant);
+
+        --wui-form-input-color: var(--base-color);
+        --wui-form-input-border-color: var(--base-border-color);
+        --wui-form-input-label-color: var(--base-label-color);
+        --wui-form-input-hint-color: var(--base-hint-color);
+        --wui-form-input-prefix-suffix-color: var(--base-prefix-suffix-color);
+        --wui-form-input-padding-left: calc(var(--wui-prefix-width) + .75rem);
+        --wui-form-input-padding-right: calc(var(--wui-suffix-width) + .75rem);
+
+        &:has(.wui-input:focus, .wui-input:focus-visible) {
+            --wui-form-input-color: var(--wui-color-on-surface);
+            --wui-form-input-border-color: var(--wui-color-primary);
+            --wui-form-input-label-color: var(--wui-color-primary);
+            --wui-form-input-prefix-suffix-color: var(--wui-color-on-surface);
+
+            .wui-form-input--stage {
+                &:before {
+                    outline: .25rem solid var(--wui-color-state-layer-primary-opacity-16);
+                }
+            }
+        }
+
+        &:has(.wui-input.wui-input--has-error) {
+            --wui-form-input-label-color: var(--wui-color-danger);
+            --wui-form-input-border-color: var(--wui-color-danger);
+            --wui-form-input-hint-color: var(--wui-color-danger);
+            --wui-form-input-prefix-suffix-color: var(--wui-color-danger);
+
+            .wui-hint {
+                display: none;
+            }
+
+            .wui-error {
+                display: block;
+            }
+        }
+
+        &--rounded {
+            --wui-form-input-padding-left: calc(var(--wui-prefix-width) + 1rem);
+            --wui-form-input-padding-right: calc(var(--wui-suffix-width) + 1rem);
+
+            .wui-form-input--stage {
+                &:before {
+                    border-radius: 9999px;
+                }
+            }
+
+            .wui-prefix {
+                padding-left: 1rem;
+            }
+
+            .wui-suffix {
+                padding-right: 1rem;
+            }
+        }
+
+        &--stage {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            height: 2.5rem;
+            box-sizing: border-box;
+
+            &:before {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0;
+                box-sizing: border-box;
+                background-color: var(--wui-color-surface);
+                border: 1px solid var(--wui-form-input-border-color);
+                border-radius: .5rem;
+                outline: 0rem solid transparent;
+                transition: outline 100ms linear;
+            }
+        }
+    }
+
+}

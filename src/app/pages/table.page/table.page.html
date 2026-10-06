@@ -5,20 +5,27 @@
         <h1 class="wui-headline-medium wui-m-0 wui-mb-5">Data Table</h1>
 
         <div class="wui-flex wui-justify-content-between wui-mb-4">
-          <button wuiButton color="primary">
-            <wui-icon icon="plus"/> Baru
-          </button>
 
           <div class="wui-flex wui-align-items-center wui-gap-col-3">
-            <wui-form-field dense variant="filled">
-              <label wuiLabel>Kata kunci</label>
-              <input type="text" wuiInput placeholder="Cari...">
-            </wui-form-field>
+            <wui-form-input variant="filled" class="grup">
+              <div wuiPrefix><wui-icon icon="folder"/></div>
+              <wui-select wuiInput [(ngModel)]="grup" (ngModelChange)="changeGrup($event)">
+                <wui-option value="all">Semua Grup</wui-option>
+                <wui-option value="investor">Investor</wui-option>
+                <wui-option value="mitra-usaha">Mitra Usaha</wui-option>
+                <wui-option value="pengembang">Pengembang</wui-option>
+              </wui-select>
+            </wui-form-input>
 
-            <button wuiButton>
-              <wui-icon icon="refresh"/> Refresh
-            </button>
+            <wui-form-input variant="filled">
+              <div wuiPrefix><wui-icon icon="magnify"/></div>
+              <input type="text" wuiInput placeholder="Cari...">
+            </wui-form-input>
           </div>
+
+          <button wuiButton>
+            <wui-icon icon="refresh"/> Refresh
+          </button>
         </div>
 
         <div class="wui-edge-fix-4">
