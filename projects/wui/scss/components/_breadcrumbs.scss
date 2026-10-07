@@ -30,6 +30,7 @@
             a {
                 color: color-mix(in srgb, var(--wui-color-on-surface) 67%, transparent);
                 text-decoration: none;
+                cursor: pointer;
 
                 &:hover {
                     color: var(--wui-color-on-surface);
