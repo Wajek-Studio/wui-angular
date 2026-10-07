@@ -2,9 +2,7 @@
 
 @mixin table {
 
-    .wui-table,
-    table[wuiTable],
-    table[wui-table] {
+    .wui-table {
         --wui-table-cell-padding-y: 1rem;
         --wui-table-cell-padding-x: 1rem;
         --wui-table-edge-padding: 1.5rem;
@@ -111,9 +109,7 @@
         }
     }
 
-    .wui-table-responsive,
-    [wuiTableResponsive],
-    [wui-table-responsive] {
+    .wui-table-responsive {
         width: 100%;
         max-width: 100%;
         overflow-x: auto;
