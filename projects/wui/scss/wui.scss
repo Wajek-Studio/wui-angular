@@ -1,24 +1,3 @@
-// =============================================================================
-// @wajek/wui — Entry point style layer
-// -----------------------------------------------------------------------------
-// Konsumsi di real app (dipasang manual di src/styles.scss):
-//     @use '@wajek/wui/scss/wui.scss';
-// Struktur 5 level: abstracts → base → themes → components → utilities
-//   abstracts/   token, fungsi, mixin — tanpa output
-//   base/        reset, tipografi, layout dasar
-//   themes/      --wui-* untuk mode terang & gelap (prefers-color-scheme)
-//   components/  style per komponen
-//   utilities/   class bantu (spacing)
-// File ini hanya MEMANGGIL mixin tiap layer — tidak ada style yang ditulis di sini.
-// Mencopot sesuatu = menghapus satu baris `@include` di bawah.
-// Urutan wajib: themes sebelum components (komponen membaca var(--wui-*) dari tema).
-// =============================================================================
-
-// `@forward` wajib SEBELUM `@use` modul yang sama. Konfigurasi dari aplikasi
-// (`@use '@wajek/wui/scss/wui.scss' with (…)` — mis. `$wui-schemes`, `$wui-palette`, `$wui-palettes-extra`)
-// hanya mengalir lewat `@forward`; urutan terbalik membuat build gagal: "This module was already loaded…".
-// `abstracts` di-forward juga supaya aplikasi bisa memakai fungsi/mixin-nya langsung,
-// mis. `@use '@wajek/wui/scss/wui.scss' as wui;` lalu `@include wui.space(mt, 3);`.
 @forward 'abstracts';
 @forward 'themes';
 
@@ -28,55 +7,59 @@
 @use 'themes';
 @use 'utilities';
 
-// Salakan layer — hapus barisnya kalau tidak ingin dipakai.
-@include base.reset;
-@include base.typography;
-@include base.heading;
-@include base.layout;
+@layer reset {
+    @include base.reset;
+    @include base.typography;
+    @include base.heading;
+    @include base.layout;
+}
 
-@include themes.variables;
-@include themes.light-theme;
-@include themes.dark-theme;
-@include themes.schemes;
+@layer layout {
+    @include layout.container;
+    @include layout.grid;
+}
 
-// Skala palet: `--wui-color-<palet>-<tone>` (data pasif, M6).
-// Bawaannya `$wui-palette: false` → tidak ada yang di-emit; setel ke nama palet **non-peran**
-// kalau skalanya memang dibutuhkan.
-@include themes.palette(themes.$wui-palette);
-@include components.app;
-@include components.button;
-@include components.dialog;
-@include components.form-field;
-@include components.form-input;
-@include components.menu;
-@include components.select;
-@include components.page;
-@include components.sidenav;
-@include components.topbar;
-@include components.icon;
-@include components.table;
-@include components.pagination;
-@include components.loading;
-@include components.badge;
-@include components.snackbar;
-@include components.checkbox;
-@include components.radio;
-@include components.scrollbar;
-@include components.tabs;
-@include components.breadcrumbs;
+@layer themes {
+    @include themes.variables;
+    @include themes.light-theme;
+    @include themes.dark-theme;
+    @include themes.schemes;
+    @include themes.palette(themes.$wui-palette);
+}
 
-// Primitif layout (container, grid) dipanggil setelah komponen supaya boleh menimpa style komponen
-// tanpa `!important`, tapi sebelum utilitas.
-@include layout.container;
-@include layout.grid;
 
-// Utilitas dipanggil TERAKHIR supaya bisa menimpa style komponen tanpa perlu `!important`.
-@include utilities.spacing;
-@include utilities.gap;
-@include utilities.flex;
-@include utilities.grid;
-@include utilities.border;
-@include utilities.background;
-@include utilities.elevation;
-@include utilities.edge-fix;
-@include utilities.text;
+@layer components {
+    @include components.app;
+    @include components.button;
+    @include components.dialog;
+    @include components.form-field;
+    @include components.form-input;
+    @include components.menu;
+    @include components.select;
+    @include components.page;
+    @include components.sidenav;
+    @include components.topbar;
+    @include components.icon;
+    @include components.table;
+    @include components.pagination;
+    @include components.loading;
+    @include components.badge;
+    @include components.snackbar;
+    @include components.checkbox;
+    @include components.radio;
+    @include components.scrollbar;
+    @include components.tabs;
+    @include components.breadcrumbs;
+}
+
+@layer utilities {
+    @include utilities.spacing;
+    @include utilities.gap;
+    @include utilities.flex;
+    @include utilities.grid;
+    @include utilities.border;
+    @include utilities.background;
+    @include utilities.elevation;
+    @include utilities.edge-fix;
+    @include utilities.text;
+}

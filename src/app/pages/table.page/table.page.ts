@@ -1,6 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, OnInit, TemplateRef, inject, model, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { WuiPage, WuiPageService, WuiScrollbar, WuiTable, WuiBadge, WuiIcon, WuiButton, WuiFormField, WuiInput, WuiLabel, WuiFormInput, WuiPrefix, WuiSuffix, WuiSelect, WuiOption } from '@wajek/wui';
 
 export interface SampleUser {
@@ -26,7 +27,8 @@ export interface SampleUser {
     WuiPrefix,
     WuiSelect,
     WuiOption,
-    FormsModule
+    FormsModule,
+    RouterLink
 ],
   templateUrl: './table.page.html',
   styleUrl: './table.page.scss',
