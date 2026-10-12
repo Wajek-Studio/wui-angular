@@ -4,13 +4,26 @@
 @mixin variables {
 
     :root {
+        /**
+        * Start of Evaluated Variables
+        **/
+
+        
+
+        /**
+        * End of Evaluated Variables
+        **/
+
         // Spasi & radius
-        --wui-space-0: #{a.$wui-space-0};
-        --wui-space-1: #{a.$wui-space-1};
-        --wui-space-2: #{a.$wui-space-2};
-        --wui-space-3: #{a.$wui-space-3};
-        --wui-space-4: #{a.$wui-space-4};
-        --wui-space-5: #{a.$wui-space-5};
+        @each $size, $value in a.$wui-spacers {
+            --wui-space-#{$size}: #{$value};
+        }
+        // --wui-space-0: #{a.$wui-space-0};
+        // --wui-space-1: #{a.$wui-space-1};
+        // --wui-space-2: #{a.$wui-space-2};
+        // --wui-space-3: #{a.$wui-space-3};
+        // --wui-space-4: #{a.$wui-space-4};
+        // --wui-space-5: #{a.$wui-space-5};
         
         --wui-radius-md: #{a.$wui-radius-md};
         --wui-radius-lg: #{a.$wui-radius-lg};
@@ -79,22 +92,12 @@
 
         --wui-container-padding-inline: #{a.$wui-container-padding-inline};
 
-        // Disabled — diturunkan dari `on-surface`, jadi satu definisi berlaku untuk dua mode.
-        --wui-color-disabled-container: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-container-opacity * 100}%, transparent);
-        --wui-color-disabled-content: color-mix(in srgb, var(--wui-color-on-surface) #{a.$wui-disabled-content-opacity * 100}%, transparent);
-
         // Elevasi — skala M3 level 0–5 dari `abstracts/_tokens.scss`. Dibaca utilitas
         // `.wui-elevation-<level>` (dengan token sebagai fallback) dan komponen: tombol filled hover = 1,
         // panel menu = 2, dialog = 3.
         @each $wui-level, $wui-shadow in a.$wui-elevations {
         --wui-elevation-#{$wui-level}: #{$wui-shadow};
         }
-
-        // Tipografi: Bobot Font
-        --wui-font-weight-regular: #{a.$wui-font-weight-regular};
-        --wui-font-weight-medium: #{a.$wui-font-weight-medium};
-        --wui-font-weight-semibold: #{a.$wui-font-weight-semibold};
-        --wui-font-weight-bold: #{a.$wui-font-weight-bold};
 
         // Tipografi: Custom Properties (Display, Headline, Title, Body, Label)
         @each $role, $sizes in a.$wui-typography-scales {

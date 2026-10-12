@@ -1,11 +1,8 @@
-// Fungsi SCSS kustom. TIDAK menghasilkan CSS.
 @use 'sass:color';
 @use 'sass:list';
 @use 'sass:map';
 @use 'tokens';
 
-/// Jarak dari skala spasi. Contoh: `spacing(3)` → `1rem`.
-/// Ukuran yang tersedia: 0, 1, 2, 3, 4, 5 (metrik Bootstrap).
 @function spacing($step) {
   @if not map.has-key(tokens.$wui-spacers, $step) {
     @error 'wui: spacing(#{$step}) tidak ada. Ukuran yang tersedia: 0, 1, 2, 3, 4, 5.';
@@ -14,18 +11,10 @@
   @return map.get(tokens.$wui-spacers, $step);
 }
 
-/// Nilai spasi siap pakai yang membaca CSS variable, dengan nilai dari map
-/// sebagai fallback: `spacing-var(3)` → `var(--wui-space-3, 1rem)`.
-/// Dipakai mixin `space()` dan utilitas `.wui-*` supaya ukuran spasi bisa
-/// diubah aplikasi lewat `--wui-space-*` tanpa rebuild.
 @function spacing-var($step) {
   @return var(--wui-space-#{$step}, #{spacing($step)});
 }
 
-/// Nilai radius dari skala `$wui-radii`, siap pakai dan membaca CSS variable dengan nilai map
-/// sebagai fallback: `radius-var(3)` → `var(--wui-radius-3, 12px)`.
-/// Dipakai mixin `radius()` dan utilitas `.wui-radius-*` supaya sudut bisa diubah aplikasi
-/// lewat `--wui-radius-*` tanpa rebuild.
 @function radius-var($step) {
   @if not map.has-key(tokens.$wui-radii, $step) {
     @error 'wui: radius(#{$step}) tidak ada. Ukuran yang tersedia: #{map.keys(tokens.$wui-radii)}.';
@@ -34,10 +23,6 @@
   @return var(--wui-radius-#{$step}, #{map.get(tokens.$wui-radii, $step)});
 }
 
-/// Margin vertikal heading level `$level` (1–6) dari `$wui-heading-margins`, sebagai
-/// sepasang nilai `block-start block-end`: `heading-margin(1)` → `40px 16px`.
-/// Dipakai `base/_heading.scss` sebagai fallback `var(--wui-heading-margin-1, …)`.
-/// Sengaja **satu nilai** (bukan dipisah per sisi) supaya ritme judul diubah sebagai satu kesatuan.
 @function heading-margin($level) {
   @if not map.has-key(tokens.$wui-heading-margins, $level) {
     @error 'wui: heading-margin(#{$level}) tidak ada. Level yang tersedia: #{map.keys(tokens.$wui-heading-margins)}.';
@@ -48,10 +33,6 @@
   @return map.get($wui-margin, 'start') map.get($wui-margin, 'end');
 }
 
-/// Peran & ukuran tipografi untuk heading level `$level` (1–6) dari `$wui-heading-typography`.
-/// Hasilnya dipakai `base/_heading.scss`: `map.get(heading-type(1), 'role')` → `display`.
-/// Divalidasi terhadap `$wui-typography-scales` supaya salah tulis peran/ukuran gagal **saat build**,
-/// bukan diam-diam jadi `var(--wui-font-size-…)` yang tidak pernah didefinisikan.
 @function heading-type($level) {
   @if not map.has-key(tokens.$wui-heading-typography, $level) {
     @error 'wui: heading-type(#{$level}) tidak ada. Level yang tersedia: #{map.keys(tokens.$wui-heading-typography)}.';
@@ -73,21 +54,14 @@
   @return $wui-type;
 }
 
-/// Mengubah tingkat transparansi sebuah warna. Contoh: `alpha(#0057ff, 0.2)`.
 @function alpha($color, $amount) {
   @return color.change($color, $alpha: $amount);
 }
 
-/// Mengembalikan CSS variable skala palet: `color('brand', 40)` → `var(--wui-color-brand-40)`.
-/// Hanya berguna kalau skalanya memang di-emit (`$wui-palette` di `themes/_palette.scss` bawaannya
-/// `false`). Warna **peran** dibaca langsung sebagai `var(--wui-color-<peran>)` di komponen.
 @function color($name, $tone) {
   @return var(--wui-color-#{$name}-#{$tone});
 }
 
-/// Mengambil warna mentah (compile-time) dari data palet `$wui-palettes`.
-/// Tone MTB **absolut** (`0` = hitam, `100` = putih) dan sama untuk kedua mode.
-/// Contoh: `color-raw('brand', 40)` → `#6548c1`
 @function color-raw($name, $tone) {
   $wui-palette: map.get(tokens.$wui-palettes, $name);
 
@@ -104,11 +78,6 @@
   @return $wui-hex;
 }
 
-/// Mengembalikan CSS variable state layer satu peran — dipakai komponen lewat mixin
-/// `interactive-state()`, supaya nama token-nya tidak ditulis manual.
-/// Contoh: `state-layer('primary', '08')` → `var(--wui-color-state-layer-primary-opacity-08)`
-/// @param {String|null} $surface - Warna dasar elemen. Bila diisi, lapisan dicampur ke permukaan
-///   itu lewat `color-mix()` sehingga warna dasarnya tidak tertimpa (dipakai tombol `filled`).
 @function state-layer($role, $opacity, $surface: null) {
   @if not list.index(tokens.$wui-state-layer-roles, $role) {
     @error 'wui: state-layer(#{$role}, …) tidak ada. Peran yang tersedia: #{tokens.$wui-state-layer-roles}.';
@@ -120,23 +89,15 @@
     @return var(--wui-color-state-layer-#{$role}-opacity-#{$wui-step});
   }
 
-  // `* 100%` (bukan `#{}%`) supaya hasilnya `8%` tanpa spasi — spasi antara angka dan `%`
-  // membuat deklarasinya tidak valid dan dibuang browser.
   @return color-mix(in srgb, var(--wui-color-#{$role}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface});
 }
 
-/// Sama seperti `state-layer()`, tetapi warnanya diambil dari CSS variable bebas (bukan nama peran).
-/// Dipakai komponen yang warnanya bisa ditukar dari CSS — mis. tombol `color="danger"` memakai
-/// `--wui-button-content`, sehingga satu aturan CSS melayani semua warna tanpa token state layer baru.
-/// Contoh: `state-layer-color('--wui-button-content', '08')`
-///   → `color-mix(in srgb, var(--wui-button-content) 8%, transparent)`
 @function state-layer-color($wui-color-var, $opacity, $surface: null) {
   $wui-step: state-layer-step($opacity);
 
   @return color-mix(in srgb, var(#{$wui-color-var}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface or transparent});
 }
 
-/// Memvalidasi kunci opacity state layer sekaligus mengembalikannya.
 @function state-layer-step($opacity) {
   @if not map.has-key(tokens.$wui-state-layer-opacities, $opacity) {
     @error 'wui: opacity state layer #{$opacity} tidak ada. Nilai yang tersedia: #{map.keys(tokens.$wui-state-layer-opacities)}.';

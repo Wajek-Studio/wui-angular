@@ -9,6 +9,20 @@
     <div class="wui-topbar-content"></div>
 
     <div class="wui-topbar-trailing">
+      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="switchTheme()">
+        @if(currentTheme() == 'system') {
+          <wui-icon icon="monitor"></wui-icon>
+        }
+
+        @if(currentTheme() == 'light') {
+          <wui-icon icon="brightness-5"></wui-icon>
+        }
+
+        @if(currentTheme() == 'dark') {
+          <wui-icon icon="brightness-7"></wui-icon>
+        }
+      </button>
+
       <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMode()">
         <wui-icon icon="book-open"></wui-icon>
       </button>

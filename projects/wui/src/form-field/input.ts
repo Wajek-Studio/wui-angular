@@ -3,7 +3,7 @@ import { FormControl, FormGroupDirective, NgControl, NgForm } from '@angular/for
 import { WUI_FORM_CONFIG, WuiFormConfig } from './form-config';
 
 @Directive({
-  selector: 'input[wuiInput], textarea[wuiInput], wui-select[wuiInput]',
+  selector: '[wuiInput]',
   exportAs: 'wuiInput',
   host: { 
     class: 'wui-input',

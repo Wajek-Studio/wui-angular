@@ -12,7 +12,7 @@ import { WuiButton } from "../public-api";
             <div class="wui-dialog-content">{{message()}}</div>
             <div class="wui-dialog-buttons">
                 @for(action of actions(); track $index) {
-                    <button wuiButton variant="text" (click)="close($index)">{{action.label}}</button>
+                    <button wuiButton [variant]="action.variant" [color]="action.color" (click)="close($index)">{{action.label}}</button>
                 }
             </div>
         </ng-template>
@@ -38,7 +38,9 @@ export class WuiDialogConfirm {
                 ...config,
                 actions: (config?.actions ?? []).map((a: WuiConfirmDialogAction | string) => {
                     if(typeof a == 'string') return <WuiConfirmDialogAction> {
-                        label: a
+                        label: a,
+                        variant: 'text',
+                        color: 'default'
                     };
                     return a;
                 }),

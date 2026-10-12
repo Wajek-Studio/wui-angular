@@ -1,5 +1,69 @@
 @use 'sass:map';
 
+/**
+* Start of Evaluted
+**/
+
+$wui-typography-scales: (
+  'display': (
+    'large':  ('size': 3.5625rem, 'line-height': 4rem,    'letter-spacing': -0.25px, 'weight': 400, 'weight-em': 500),
+    'medium': ('size': 2.8125rem, 'line-height': 3.25rem, 'letter-spacing': 0px,     'weight': 400, 'weight-em': 500),
+    'small':  ('size': 2.25rem,   'line-height': 2.75rem, 'letter-spacing': 0px,     'weight': 400, 'weight-em': 500),
+  ),
+  'headline': (
+    'large':  ('size': 2rem,      'line-height': 2.5rem,  'letter-spacing': 0px,     'weight': 400, 'weight-em': 500),
+    'medium': ('size': 1.75rem,   'line-height': 2.25rem, 'letter-spacing': 0px,     'weight': 400, 'weight-em': 500),
+    'small':  ('size': 1.5rem,    'line-height': 2rem,    'letter-spacing': 0px,     'weight': 400, 'weight-em': 500),
+  ),
+  'title': (
+    'large':  ('size': 1.375rem,  'line-height': 1.75rem, 'letter-spacing': 0px,     'weight': 400, 'weight-em': 500),
+    'medium': ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.15px,  'weight': 500, 'weight-em': 600),
+    'small':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,   'weight': 500, 'weight-em': 600),
+  ),
+  'body': (
+    'large':  ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.5px,   'weight': 400, 'weight-em': 500),
+    'medium': ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.25px,  'weight': 400, 'weight-em': 500),
+    'small':  ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.4px,   'weight': 400, 'weight-em': 500),
+  ),
+  'label': (
+    'large':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,   'weight': 500, 'weight-em': 600),
+    'medium': ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.5px,   'weight': 500, 'weight-em': 600),
+    'small':  ('size': 0.6875rem, 'line-height': 1rem,    'letter-spacing': 0.5px,   'weight': 500, 'weight-em': 600),
+  ),
+) !default;
+
+$wui-heading-typography: (
+  1: ('role': 'display',  'size': 'large'),
+  2: ('role': 'display',  'size': 'medium'),
+  3: ('role': 'display',  'size': 'small'),
+  4: ('role': 'headline', 'size': 'large'),
+  5: ('role': 'headline', 'size': 'medium'),
+  6: ('role': 'headline', 'size': 'small'),
+) !default;
+
+$wui-font-weight: (400, 500, 600, 700) !default;
+
+$wui-spacer: 1rem !default;
+$wui-spacers: (
+    0: 0,
+    1: $wui-spacer * 0.25,
+    2: $wui-spacer * 0.5,
+    3: $wui-spacer,
+    4: $wui-spacer * 1.5,
+    5: $wui-spacer * 3,
+) !default;
+
+$wui-button-sizes: (
+  'sm': ('height': 2rem,   'padding': 1rem,    'padding-text': 0.5rem,  'icon': 1.25rem, 'line-height': 1.25rem, 'label-role': 'label', 'label-size': 'medium'),
+  'md': ('height': 2.5rem, 'padding': 1.5rem,  'padding-text': 0.75rem, 'icon': 1.5rem,  'line-height': 1.5rem,  'label-role': 'label', 'label-size': 'large'),
+  'lg': ('height': 3rem,   'padding': 1.75rem, 'padding-text': 1rem,    'icon': 1.75rem, 'line-height': 1.75rem, 'label-role': 'label', 'label-size': 'large'),
+  'xl': ('height': 3.5rem, 'padding': 2rem,    'padding-text': 1.25rem, 'icon': 2rem,    'line-height': 2rem,    'label-role': 'title', 'label-size': 'medium'),
+) !default;
+
+/**
+* End of Evaluated Variables
+**/
+
 $wui-role-required: (
   // aksen & teks di atasnya
   'primary',
@@ -44,66 +108,32 @@ $wui-state-layer-opacities: (
   '16': 0.16,
 ) !default;
 
-// `surface-container` & `surface-container-high` **bukan** nilai di sini: keduanya peran M3 yang
-// datang dari scheme. Dua peta di bawah hanya **fallback** untuk scheme yang belum punya peran itu
-// (mis. peta tulisan tangan yang minimal) — `themes/_schemes.scss` yang menurunkannya dari `surface`
-// + `on-surface`. Mengubah angkanya = mengubah seberapa kuat tint netralnya.
 $wui-surface-container-tint: (
   'light': 0.05,
   'dark': 0.08,
 ) !default;
 
-// Fallback `surface-container-high` — level permukaan yang dipakai tombol `color="default"` (M8).
-// Tint-nya lebih kuat dari `surface-container` supaya latar tombol tetap terbaca.
 $wui-surface-container-high-tint: (
   'light': 0.08,
   'dark': 0.14,
 ) !default;
 
-// ── Button (Material 3) ─────────────────────────────────────────────────────
-// Satu sumber kebenaran ukuran tombol — `components/_button.scss` menerjemahkannya jadi CSS
-// variable, jadi mengubah satu angka cukup di sini.
-// `padding`      = padding inline varian filled/outlined (kiri = kanan, simetris)
-// `padding-text` = varian text (tanpa border, lebih rapat; juga simetris)
-// `icon`         = ukuran ikon (dibaca tombol lewat `--wui-button-icon-size`)
-// `line-height`  = tinggi baris label. Sengaja sama dengan `icon` di tiap tingkatan supaya kotak
-//                  teks dan kotak ikon kongruen, jadi keduanya sejajar sempurna lewat
-//                  `align-items: center` (mengalahkan `line-height` peran tipografi).
-$wui-button-sizes: (
-  'sm': ('height': 2rem,   'padding': 1rem,    'padding-text': 0.5rem,  'icon': 1.25rem, 'line-height': 1.25rem, 'label-role': 'label', 'label-size': 'medium'),
-  'md': ('height': 2.5rem, 'padding': 1.5rem,  'padding-text': 0.75rem, 'icon': 1.5rem,  'line-height': 1.5rem,  'label-role': 'label', 'label-size': 'large'),
-  'lg': ('height': 3rem,   'padding': 1.75rem, 'padding-text': 1rem,    'icon': 1.75rem, 'line-height': 1.75rem, 'label-role': 'label', 'label-size': 'large'),
-  'xl': ('height': 3.5rem, 'padding': 2rem,    'padding-text': 1.25rem, 'icon': 2rem,    'line-height': 2rem,    'label-role': 'title', 'label-size': 'medium'),
-) !default;
 
-// Radius penuh (bentuk pil) sesuai shape `round` default M3.
+
 $wui-button-radius: 9999px !default;
 
-// Disabled M3: container 12%, isi (label/border) 38% dari warna `on-surface`.
 $wui-disabled-container-opacity: 0.12 !default;
 $wui-disabled-content-opacity: 0.38 !default;
 
-// ── Spasi ───────────────────────────────────────────────────────────────────
-// Metrik Bootstrap: 0 · 0.25rem · 0.5rem · 1rem · 1.5rem · 3rem
-// `$wui-spacers` adalah sumber kebenarannya — dipakai utilitas `.wui-m-*` / `.wui-p-*`
-// dan fungsi `spacing()`.
-$wui-spacer: 1rem !default;
-$wui-spacers: (
-    0: 0,
-    1: $wui-spacer * 0.25,
-    2: $wui-spacer * 0.5,
-    3: $wui-spacer,
-    4: $wui-spacer * 1.5,
-    5: $wui-spacer * 3,
-) !default;
+
 
 // Turunan dari map di atas — dipakai `themes/` untuk meng-emit `--wui-space-*`.
-$wui-space-0: map.get($wui-spacers, 0) !default;
-$wui-space-1: map.get($wui-spacers, 1) !default;
-$wui-space-2: map.get($wui-spacers, 2) !default;
-$wui-space-3: map.get($wui-spacers, 3) !default;
-$wui-space-4: map.get($wui-spacers, 4) !default;
-$wui-space-5: map.get($wui-spacers, 5) !default;
+// $wui-space-0: map.get($wui-spacers, 0) !default;
+// $wui-space-1: map.get($wui-spacers, 1) !default;
+// $wui-space-2: map.get($wui-spacers, 2) !default;
+// $wui-space-3: map.get($wui-spacers, 3) !default;
+// $wui-space-4: map.get($wui-spacers, 4) !default;
+// $wui-space-5: map.get($wui-spacers, 5) !default;
 
 // Peta arah spasi → properti CSS yang harus ditulis. Dua peta di bawah adalah
 // sumber kebenaran bersama untuk mixin `space()` (dipakai di dalam komponen)
@@ -286,49 +316,7 @@ $wui-menu-max-height: calc(100dvh - 16px) !default;
 // diambil dari `$wui-elevations`.
 $wui-menu-elevation: map.get($wui-elevations, 2) !default;
 
-// ── Tipografi: Bobot Font ───────────────────────────────────────────────────
-$wui-font-weight-regular: 400 !default;
-$wui-font-weight-medium: 500 !default;
-$wui-font-weight-semibold: 600 !default;
-$wui-font-weight-bold: 700 !default;
 
-// ── Tipografi: Master Map Skala Tipografi (Figma wui/*) ──────────────────────
-$wui-typography-scales: (
-  'display': (
-    'large':  ('size': 3.5625rem, 'line-height': 4rem,    'letter-spacing': -0.25px, 'weight': 400, 'weight-em': 500),
-    'medium': ('size': 2.8125rem, 'line-height': 3.25rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
-    'small':  ('size': 2.25rem,   'line-height': 2.75rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
-  ),
-  'headline': (
-    'large':  ('size': 2rem,      'line-height': 2.5rem,  'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
-    'medium': ('size': 1.75rem,   'line-height': 2.25rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
-    'small':  ('size': 1.5rem,    'line-height': 2rem,    'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
-  ),
-  'title': (
-    'large':  ('size': 1.375rem,  'line-height': 1.75rem, 'letter-spacing': 0px,    'weight': 400, 'weight-em': 500),
-    'medium': ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.15px, 'weight': 500, 'weight-em': 600),
-    'small':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,  'weight': 500, 'weight-em': 600),
-  ),
-  'body': (
-    'large':  ('size': 1rem,      'line-height': 1.5rem,  'letter-spacing': 0.5px,  'weight': 400, 'weight-em': 500),
-    'medium': ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.25px, 'weight': 400, 'weight-em': 500),
-    'small':  ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.4px,  'weight': 400, 'weight-em': 500),
-  ),
-  'label': (
-    'large':  ('size': 0.875rem,  'line-height': 1.25rem, 'letter-spacing': 0.1px,  'weight': 500, 'weight-em': 600),
-    'medium': ('size': 0.75rem,   'line-height': 1rem,    'letter-spacing': 0.5px,  'weight': 500, 'weight-em': 600),
-    'small':  ('size': 0.6875rem, 'line-height': 1rem,    'letter-spacing': 0.5px,  'weight': 500, 'weight-em': 600),
-  ),
-) !default;
-
-$wui-heading-typography: (
-  1: ('role': 'display',  'size': 'large', 'block-start': $wui-spacer * 2.5, 'block-end': $wui-space-3),
-  2: ('role': 'display',  'size': 'medium', 'block-start': $wui-spacer * 2, 'block-end': $wui-space-3),
-  3: ('role': 'display',  'size': 'small', 'block-start': $wui-spacer * 1.75, 'block-end': $wui-spacer * 0.75),
-  4: ('role': 'headline', 'size': 'large', 'block-start': $wui-space-4, 'block-end': $wui-spacer * 0.75),
-  5: ('role': 'headline', 'size': 'medium', 'block-start': $wui-spacer * 1.25, 'block-end': $wui-space-2),
-  6: ('role': 'headline', 'size': 'small', 'block-start': $wui-space-3, 'block-end': $wui-space-2),
-) !default;
 
 // ── Sidenav ─────────────────────────────────────────────────────────────────
 $wui-sidenav-width: 16rem !default;
@@ -357,4 +345,3 @@ $wui-grid-columns: 12 !default;
 
 // ── Topbar ─────────────────────────────────────────────────────────────────
 $wui-topbar-padding-inline: 0.875rem !default;
-

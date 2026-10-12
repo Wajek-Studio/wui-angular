@@ -44,6 +44,11 @@ import {
   mdiSquareEditOutline,
   mdiMagnify,
   mdiFolder,
+  mdiMonitor,
+  mdiLightbulbOn,
+  mdiLightbulbOff,
+  mdiBrightness5,
+  mdiBrightness7,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -94,5 +99,10 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'refresh', path: mdiRefresh},
       { name: 'square-edit-outline', path: mdiSquareEditOutline},
       { name: 'magnify', path: mdiMagnify},
-      { name: 'folder', path: mdiFolder}
+      { name: 'folder', path: mdiFolder},
+      { name: 'monitor', path: mdiMonitor},
+      { name: 'lightbulb-on', path: mdiLightbulbOn},
+      { name: 'lightbulb-off', path: mdiLightbulbOff},
+      { name: 'brightness-5', path: mdiBrightness5},
+      { name: 'brightness-7', path: mdiBrightness7}
 ]

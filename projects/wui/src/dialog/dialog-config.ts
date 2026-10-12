@@ -14,7 +14,7 @@ export interface WuiAlertDialogConfig {
 export interface WuiConfirmDialogAction {
     label: string;
     variant: "text" | "filled" | "outlined",
-    color: "default" | "primary" | "danger"
+    color: "default" | "primary" | "error"
 }
 
 export interface WuiConfirmDialogConfig {

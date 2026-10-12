@@ -1,9 +1,2 @@
-// Level 3 — definisi tema.
-// Urutan `@forward` penting: modul yang punya variabel `!default` (`palette`, `schemes`) di-forward
-// lebih dulu, karena `schemes` melakukan `@use 'palette'` dan konfigurasi aplikasi (`with (…)`)
-// hanya mengalir lewat `@forward`.
-@forward 'palette';
 @forward 'schemes';
-@forward 'dark-theme';
-@forward 'light-theme';
 @forward 'variables';

@@ -1,12 +1,13 @@
 import { ActiveDescendantKeyManager } from "@angular/cdk/a11y";
 import { Overlay, OverlayConfig, OverlayRef } from "@angular/cdk/overlay";
 import { TemplatePortal } from "@angular/cdk/portal";
-import { Component, computed, contentChildren, DestroyRef, effect, ElementRef, forwardRef, inject, input, signal, TemplateRef, viewChild, ViewContainerRef } from "@angular/core";
+import { AfterContentInit, AfterViewInit, Component, computed, contentChildren, DestroyRef, effect, ElementRef, forwardRef, inject, input, signal, TemplateRef, viewChild, ViewContainerRef } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
-import { filter } from "rxjs";
+import { filter, takeUntil } from "rxjs";
 import { WuiScrollbar } from "../scrollbar/scrollbar";
 import { WuiOption } from "./option";
 import { WUI_SELECT_PARENT } from "./select-token";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'wui-select',
@@ -29,7 +30,7 @@ import { WUI_SELECT_PARENT } from "./select-token";
   }],
   imports: [WuiScrollbar]
 })
-export class WuiSelect implements ControlValueAccessor{
+export class WuiSelect implements ControlValueAccessor, AfterContentInit{
 
   private elementRef = inject(ElementRef);
   private destroyRef = inject(DestroyRef);
@@ -58,12 +59,7 @@ export class WuiSelect implements ControlValueAccessor{
   hasValue = computed(() => this.selectedValue() !== null);
   isOpen = signal(false);
 
-  private readonly keyManager = computed(() => 
-    new ActiveDescendantKeyManager(this.options())
-      .withWrap()
-      .withTypeAhead()
-      .withVerticalOrientation()
-  );
+  private keyManager? : ActiveDescendantKeyManager<WuiOption>; 
 
   highlightedId = signal<string | null>(null);
 
@@ -80,21 +76,25 @@ export class WuiSelect implements ControlValueAccessor{
     });
     resizeObserver.observe(this.elementRef.nativeElement);
     this.destroyRef.onDestroy(() => resizeObserver.disconnect);
+  }
 
-    effect((onCleanUp) => {
-      const km = this.keyManager();
-      this.highlightedId.set(km.activeItem?.id ?? null);
-      const sub = km.change.subscribe(() => {
-        const active = km.activeItem;
-        this.highlightedId.set(active?.id ?? null);
-        active?.scrollIntoView();        
-      });
-      onCleanUp(() => sub.unsubscribe());
-    });
+  syncKeyManager() {
+    if(this.keyManager == null) return;
+    const index = this.options().findIndex(o => o.value() == this.selectedValue());
+    this.keyManager?.setActiveItem(index >= 0 ? index : 0);
+  }
+
+  ngAfterContentInit(): void {
+    this.keyManager = new ActiveDescendantKeyManager(this.options())
+      .withWrap()
+      .withTypeAhead()
+      .withVerticalOrientation();
+    this.syncKeyManager();
   }
 
   writeValue(obj: any): void {
     this.selectedValue.set(obj);
+    this.syncKeyManager();
   }
 
   registerOnChange(fn: any): void {
@@ -174,12 +174,16 @@ export class WuiSelect implements ControlValueAccessor{
       case 'Spacebar':
       case 'Enter':
         event.preventDefault();
-        if(!this.isOpen()) {
-          this.openPanel();
-        } else {
-          const active = this.keyManager().activeItem;
+
+        // if opened, directly change value
+        if(this.isOpen()) {
+          const active = this.keyManager?.activeItem;
           if(active) this.select(active);
+          return;
         }
+        
+        // if closed, open the option panel
+        this.openPanel();
         return;
 
       case 'ArrowDown':
@@ -187,28 +191,43 @@ export class WuiSelect implements ControlValueAccessor{
       case 'Home':
       case 'End':
         event.preventDefault();
-        this.keyManager().onKeydown(event);
+        this.keyManager?.onKeydown(event);
+
+        // if closed, pass to keymanager
         if(!this.isOpen()) {
-          const active = this.keyManager().activeItem;
+          const active = this.keyManager?.activeItem;
           if(active) this.select(active);
+          return;
         }
-        return;
     }
   }
 
+  /**
+   * Called when control focused and :
+   * 1. Opened then Option clicked
+   * 2. Opened then Enter key pressed
+   * 3. Closed with Keymanager navigation
+   */
   select(option: WuiOption): void {
     this.selectedValue.set(option.value());
+    this.syncKeyManager();
+
+    // Notify model about value and set touched
     this.onChange(this.selectedValue());
-    setTimeout(() => {
-      this.close();
-    }, 100);
+    this.onTouched();
+
+    // close if opened
+    if(this.isOpen()) this.close();
   }
 
+  /**
+   * Called when control lost its focus
+   */
   onBlur() {
-    this.onTouched();
     setTimeout(() => {
-      this.close();
-    }, 100);
+      this.onTouched(); // set control touched
+      if(this.isOpen()) this.close(); // close if opened
+    }, 500);
   }
 
 }

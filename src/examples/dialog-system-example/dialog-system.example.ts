@@ -26,7 +26,11 @@ export class DialogSystemExample {
         let res = await this.dialogService.confirm({
             title: 'Alert',
             message: 'This is just simple alert',
-            actions: ["Batal", "Hapus"]
+            actions: ["Batal", {
+                variant: 'text',
+                color: 'error',
+                label: 'Hapus'
+            }]
         });
         console.log(res);
     }

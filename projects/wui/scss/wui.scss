@@ -7,6 +7,11 @@
 @use 'themes';
 @use 'utilities';
 
+@layer themes {
+    @include themes.schemes;
+    @include themes.variables;
+}
+
 @layer reset {
     @include base.reset;
     @include base.typography;
@@ -18,15 +23,6 @@
     @include layout.container;
     @include layout.grid;
 }
-
-@layer themes {
-    @include themes.variables;
-    @include themes.light-theme;
-    @include themes.dark-theme;
-    @include themes.schemes;
-    @include themes.palette(themes.$wui-palette);
-}
-
 
 @layer components {
     @include components.app;

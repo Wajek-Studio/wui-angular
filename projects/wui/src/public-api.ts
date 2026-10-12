@@ -3,6 +3,7 @@
  */
 
 export * from './message.service';
+export * from './theme.service';
 
 export * from './app/app';
 
