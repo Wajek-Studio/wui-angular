@@ -1,14 +1,22 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { WuiButton, WuiFormField, WuiInput, WuiSelect, WuiOption, WuiLabel } from '@wajek/wui';
+import { WuiButton, WuiFormField, WuiInput, WuiSelect, WuiOption, WuiLabel, WuiIcon, WuiCheckbox } from '@wajek/wui';
 
 @Component({
     selector: 'button-simple-example',
-    imports: [WuiButton, WuiFormField, WuiInput, WuiSelect, FormsModule, WuiOption, WuiLabel],
+    imports: [WuiButton, WuiFormField, WuiInput, WuiSelect, FormsModule, WuiOption, WuiLabel, WuiIcon, WuiCheckbox],
     template: `
         <div class="wui-row">
             <div class="wui-col-6 wui-flex wui-align-items-center wui-justify-content-center">
-                <button wuiButton [variant]="variant()" [color]="color()" [size]="size()">Filled Button</button>
+                <div class="wui-flex-inline wui-gap-col-3">
+                    <button wuiButton iconOnly [variant]="variant()" [color]="color()" [size]="size()" [disabled]="disabled()">
+                        <wui-icon icon="home"/>
+                    </button>
+                    <button wuiButton [variant]="variant()" [color]="color()" [size]="size()" [disabled]="disabled()">Button</button>
+                    <button wuiButton [variant]="variant()" [color]="color()" [size]="size()" [disabled]="disabled()">
+                        <wui-icon icon="home"/>Button
+                    </button>
+                </div>
             </div>
             <div class="wui-col-6">
                 <wui-form-field class="wui-mb-4">
@@ -36,14 +44,16 @@ import { WuiButton, WuiFormField, WuiInput, WuiSelect, WuiOption, WuiLabel } fro
                         <wui-option value="xl">Extra Large</wui-option>
                     </wui-select>
                 </wui-form-field>
+                <wui-checkbox [(ngModel)]="disabled">Disabled</wui-checkbox>
             </div>
         </div>
     `
 })
 export class ButtonSimpleExample {
     
-    variant = signal<'filled' | 'outlined' | 'text'>('outlined');
+    variant = signal<'filled' | 'outlined' | 'text'>('filled');
     color = signal<'default' | 'primary' | 'danger'>('default');
     size = signal<'sm' | 'md' | 'lg' | 'xl'>('md');
+    disabled = signal<boolean>(false);
     
 }

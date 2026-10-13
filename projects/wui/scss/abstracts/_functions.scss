@@ -92,16 +92,15 @@
   @return color-mix(in srgb, var(--wui-color-#{$role}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface});
 }
 
-@function state-layer-color($wui-color-var, $opacity, $surface: null) {
-  $wui-step: state-layer-step($opacity);
-
-  @return color-mix(in srgb, var(#{$wui-color-var}) #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface or transparent});
-}
-
 @function state-layer-step($opacity) {
   @if not map.has-key(tokens.$wui-state-layer-opacities, $opacity) {
     @error 'wui: opacity state layer #{$opacity} tidak ada. Nilai yang tersedia: #{map.keys(tokens.$wui-state-layer-opacities)}.';
   }
 
   @return $opacity;
+}
+
+@function state-layer-color($wui-color, $opacity, $surface: null) {
+  $wui-step: state-layer-step($opacity);
+  @return color-mix(in srgb,#{$wui-color} #{map.get(tokens.$wui-state-layer-opacities, $wui-step) * 100%}, #{$surface or transparent});
 }

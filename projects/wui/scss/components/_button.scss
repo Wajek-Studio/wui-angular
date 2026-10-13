@@ -1,6 +1,254 @@
 @use 'sass:map';
 @use '../abstracts' as a;
 
+
+$wui-button-filled-colors: (
+  'default': (
+      'normal': (
+          'surface': var(--wui-color-surface-container), 
+          'content': var(--wui-color-on-surface)
+      ),
+      'hover': (
+          'surface': a.state-layer-color(var(--wui-color-on-surface), '08', var(--wui-color-surface-container)), 
+          'content': var(--wui-color-on-surface)
+      ),
+      'active': (
+          'surface': a.state-layer-color(var(--wui-color-on-surface), '10', var(--wui-color-surface-container)), 
+          'content': var(--wui-color-on-surface)
+      ),
+      'disabled': (
+          'surface': a.state-layer-color(var(--wui-color-on-surface), '10', transparent), 
+          'content': a.state-layer-color(var(--wui-color-on-surface), '38', transparent)
+      )
+  ),
+  'primary': (
+      'normal': (
+          'surface': var(--wui-color-primary), 
+          'content': var(--wui-color-on-primary)
+      ),
+      'hover': (
+          'surface': a.state-layer-color(var(--wui-color-on-primary), '08', var(--wui-color-primary)), 
+          'content': var(--wui-color-on-primary)
+      ),
+      'active': (
+          'surface': a.state-layer-color(var(--wui-color-on-primary), '10', var(--wui-color-primary)), 
+          'content': var(--wui-color-on-primary)
+      ),
+      'disabled': (
+          'surface': a.state-layer-color(var(--wui-color-primary), '10', transparent), 
+          'content': a.state-layer-color(var(--wui-color-primary), '38', transparent)
+      )
+  ),
+  'error': (
+      'normal': (
+          'surface': var(--wui-color-error), 
+          'content': var(--wui-color-on-error)
+      ),
+      'hover': (
+          'surface': a.state-layer-color(var(--wui-color-on-error), '08', var(--wui-color-error)), 
+          'content': var(--wui-color-on-error)
+      ),
+      'active': (
+          'surface': a.state-layer-color(var(--wui-color-on-error), '10', var(--wui-color-error)), 
+          'content': var(--wui-color-on-error)
+      ),
+      'disabled': (
+          'surface': a.state-layer-color(var(--wui-color-error), '10', transparent), 
+          'content': a.state-layer-color(var(--wui-color-error), '38', transparent)
+      )
+  )
+) !default;
+
+$wui-button-outlined-colors: (
+    'default': (
+        'normal': (
+            'surface': transparent, 
+            'content': var(--wui-color-on-surface-variant),
+            'border': var(--wui-color-outline-variant)
+        ),
+        'hover': (
+            'surface': a.state-layer-color(var(--wui-color-on-surface-variant), '08', transparent), 
+            'content': var(--wui-color-on-surface-variant),
+            'border': var(--wui-color-outline-variant)
+        ),
+        'active': (
+            'surface': a.state-layer-color(var(--wui-color-on-surface-variant), '10', transparent), 
+            'content': var(--wui-color-on-surface-variant),
+            'border': var(--wui-color-outline-variant)
+        ),
+        'disabled': (
+            'surface': a.state-layer-color(var(--wui-color-on-surface), '10', transparent), 
+            'content': a.state-layer-color(var(--wui-color-on-surface), '38', transparent),
+            'border': var(--wui-color-outline-variant)
+        )
+    ),
+    'primary': (
+        'normal': (
+            'surface': transparent, 
+            'content': var(--wui-color-primary),
+            'border': var(--wui-color-primary)
+        ),
+        'hover': (
+            'surface': a.state-layer-color(var(--wui-color-primary), '08', transparent), 
+            'content': var(--wui-color-primary),
+            'border': var(--wui-color-primary)
+        ),
+        'active': (
+            'surface': a.state-layer-color(var(--wui-color-primary), '10', transparent), 
+            'content': var(--wui-color-primary),
+            'border': var(--wui-color-primary)
+        ),
+        'disabled': (
+            'surface': a.state-layer-color(var(--wui-color-primary), '10', transparent), 
+            'content': a.state-layer-color(var(--wui-color-primary), '38', transparent),
+            'border': a.state-layer-color(var(--wui-color-primary), '10', transparent)
+        )
+    ),
+    'error': (
+        'normal': (
+            'surface': transparent, 
+            'content': var(--wui-color-error),
+            'border': var(--wui-color-error)
+        ),
+        'hover': (
+            'surface': a.state-layer-color(var(--wui-color-error), '08', transparent), 
+            'content': var(--wui-color-error),
+            'border': var(--wui-color-error)
+        ),
+        'active': (
+            'surface': a.state-layer-color(var(--wui-color-error), '10', transparent), 
+            'content': var(--wui-color-error),
+            'border': var(--wui-color-error)
+        ),
+        'disabled': (
+            'surface': a.state-layer-color(var(--wui-color-error), '10', transparent), 
+            'content': a.state-layer-color(var(--wui-color-error), '38', transparent),
+            'border': a.state-layer-color(var(--wui-color-error), '10', transparent)
+        )
+    )
+) !default;
+
+$wui-button-text-colors: (
+    'default': (
+        'normal': (
+            'surface': transparent, 
+            'content': var(--wui-color-on-surface-variant)
+        ),
+        'hover': (
+            'surface': a.state-layer-color(var(--wui-color-on-surface-variant), '08', transparent), 
+            'content': var(--wui-color-on-surface-variant)
+        ),
+        'active': (
+            'surface': a.state-layer-color(var(--wui-color-on-surface-variant), '10', transparent), 
+            'content': var(--wui-color-on-surface-variant)
+        ),
+        'disabled': (
+            'surface': a.state-layer-color(var(--wui-color-on-surface), '10', transparent), 
+            'content': a.state-layer-color(var(--wui-color-on-surface), '38', transparent)
+        )
+    ),
+    'primary': (
+        'normal': (
+            'surface': transparent, 
+            'content': var(--wui-color-primary)
+        ),
+        'hover': (
+            'surface': a.state-layer-color(var(--wui-color-primary), '08', transparent), 
+            'content': var(--wui-color-primary)
+        ),
+        'active': (
+            'surface': a.state-layer-color(var(--wui-color-primary), '10', transparent), 
+            'content': var(--wui-color-primary)
+        ),
+        'disabled': (
+            'surface': a.state-layer-color(var(--wui-color-primary), '10', transparent), 
+            'content': a.state-layer-color(var(--wui-color-primary), '38', transparent)
+        )
+    ),
+    'error': (
+        'normal': (
+            'surface': transparent, 
+            'content': var(--wui-color-error)
+        ),
+        'hover': (
+            'surface': a.state-layer-color(var(--wui-color-error), '08', transparent), 
+            'content': var(--wui-color-error)
+        ),
+        'active': (
+            'surface': a.state-layer-color(var(--wui-color-error), '10', transparent), 
+            'content': var(--wui-color-error)
+        ),
+        'disabled': (
+            'surface': a.state-layer-color(var(--wui-color-error), '10', transparent), 
+            'content': a.state-layer-color(var(--wui-color-error), '38', transparent)
+        )
+    )
+) !default;
+
+@mixin button-filled-states($color: 'default') {
+    --wui-button-surface-color: #{map.get($wui-button-filled-colors, $color, 'normal', 'surface')};
+    --wui-button-content-color: #{map.get($wui-button-filled-colors, $color, 'normal', 'content')};
+
+    &:hover {
+        --wui-button-surface-color: #{map.get($wui-button-filled-colors, $color, 'hover', 'surface')};
+    }
+
+    &:active {
+        --wui-button-surface-color: #{map.get($wui-button-filled-colors, $color, 'active', 'surface')};
+    }
+
+    &:disabled {
+        --wui-button-surface-color: #{map.get($wui-button-filled-colors, $color, 'disabled', 'surface')};
+        --wui-button-content-color: #{map.get($wui-button-filled-colors, $color, 'disabled', 'content')};
+    }
+}
+
+@mixin button-outlined-states($color: 'default') {
+    --wui-button-surface-color: #{map.get($wui-button-outlined-colors, $color, 'normal', 'surface')};
+    --wui-button-content-color: #{map.get($wui-button-outlined-colors, $color, 'normal', 'content')};
+    --wui-button-border-color: #{map.get($wui-button-outlined-colors, $color, 'normal', 'border')};
+
+    border: 1px solid var(--wui-button-border-color);
+
+    &:hover {
+        --wui-button-surface-color: #{map.get($wui-button-outlined-colors, $color, 'hover', 'surface')};
+        --wui-button-content-color: #{map.get($wui-button-outlined-colors, $color, 'hover', 'content')};
+        --wui-button-border-color: #{map.get($wui-button-outlined-colors, $color, 'hover', 'border')};
+    }
+
+    &:active {
+        --wui-button-surface-color: #{map.get($wui-button-outlined-colors, $color, 'active', 'surface')};
+        --wui-button-content-color: #{map.get($wui-button-outlined-colors, $color, 'active', 'content')};
+        --wui-button-border-color: #{map.get($wui-button-outlined-colors, $color, 'active', 'border')};
+    }
+
+    &:disabled {
+        --wui-button-surface-color: #{map.get($wui-button-outlined-colors, $color, 'disabled', 'surface')};
+        --wui-button-content-color: #{map.get($wui-button-outlined-colors, $color, 'disabled', 'content')};
+        --wui-button-border-color: #{map.get($wui-button-outlined-colors, $color, 'disabled', 'border')};
+    }
+}
+
+@mixin button-text-states($color: 'default') {
+    --wui-button-surface-color: #{map.get($wui-button-text-colors, $color, 'normal', 'surface')};
+    --wui-button-content-color: #{map.get($wui-button-text-colors, $color, 'normal', 'content')};
+
+    &:hover {
+        --wui-button-surface-color: #{map.get($wui-button-text-colors, $color, 'hover', 'surface')};
+        --wui-button-content-color: #{map.get($wui-button-text-colors, $color, 'hover', 'content')};
+    }
+
+    &:active {
+        --wui-button-surface-color: #{map.get($wui-button-text-colors, $color, 'active', 'surface')};
+        --wui-button-content-color: #{map.get($wui-button-text-colors, $color, 'active', 'content')};
+    }
+
+    &:disabled {
+        --wui-button-surface-color: #{map.get($wui-button-text-colors, $color, 'disabled', 'surface')};
+        --wui-button-content-color: #{map.get($wui-button-text-colors, $color, 'disabled', 'content')};
+    }
+}
+
 @mixin button {
     $wui-default-size: map.get(a.$wui-button-sizes, 'md');
 
@@ -11,7 +259,15 @@
         --wui-button-icon-size: #{map.get($wui-default-size, 'icon')};
         --wui-button-line-height: #{map.get($wui-default-size, 'line-height')};
         --wui-button-radius: #{a.$wui-button-radius};
+
+        --wui-button-surface-color: map.get($wui-button-filled-colors, 'default', 'normal', 'surface');
+        --wui-button-content-color: map.get($wui-button-filled-colors, 'default', 'normal', 'content');
+        --wui-button-border-color: transparent;
         
+        background-color: var(--wui-button-surface-color);
+        color: var(--wui-button-content-color);
+        border: none;
+
         appearance: none;
         border: 0;
         display: inline-flex;
@@ -37,160 +293,47 @@
             pointer-events: none;
         }
 
-        &, &--filled {
-            --wui-button-fill-color: var(--wui-color-surface-container);
-            --wui-button-content-color: var(--wui-color-on-surface-variant);
+        &--filled {
+            @include button-filled-states('default');
 
-            background-color: var(--wui-button-fill-color);
-            color: var(--wui-button-content-color);
-            border: none;
+            &.wui-button--color {
+                &-primary {
+                    @include button-filled-states('primary');
+                }
 
-            &:hover {
-                --wui-button-fill-color: var(--wui-color-surface-container-high);
-                --wui-button-content-color: var(--wui-color-on-surface);
-            }
-
-            &:active {
-                --wui-button-fill-color: var(--wui-color-surface-container-low);
-                --wui-button-content-color: var(--wui-color-on-surface);
-            }
-
-            &:disabled {
-                --wui-button-fill-color: color-mix(in srgb, var(--wui-color-on-surface) 10%, transparent);
-                --wui-button-content-color: color-mix(in srgb, var(--wui-color-on-surface) 38%, transparent);
+                &-error {
+                    @include button-filled-states('error');
+                }
             }
         }
 
         &--outlined {
-            --wui-button-border-color: var(--wui-color-outline-variant);
-            --wui-button-fill-color: transparent;
-            border: 1px solid var(--wui-button-border-color);
+            @include button-outlined-states('default');
 
-            &:hover {
-                --wui-button-fill-color: var(--wui-color-state-layer-on-surface-opacity-08);
-                --wui-button-content-color: var(--wui-color-on-surface);
-            }
+            &.wui-button--color {
+                &-primary {
+                    @include button-outlined-states('primary');
+                }
 
-            &:active {
-                --wui-button-fill-color: var(--wui-color-state-layer-on-surface-opacity-10);
-                --wui-button-content-color: var(--wui-color-on-surface);
-            }
-
-            &:disabled {
-                --wui-button-fill-color: transparent;
-                --wui-button-content-color: color-mix(in srgb, var(--wui-color-on-surface) 38%, transparent);
+                &-error {
+                    @include button-outlined-states('error');
+                }
             }
         }
 
         &--text {
-            --wui-button-fill-color: transparent;
             padding-inline: var(--wui-button-padding-text);
-            border: none;
+            @include button-text-states('default');
 
-            &:hover {
-                --wui-button-fill-color: var(--wui-color-surface-container);
-                --wui-button-content-color: var(--wui-color-on-surface);
-            }
+            &.wui-button--color {
+                &-primary {
+                    @include button-text-states('primary');
+                }
 
-            &:active {
-                --wui-button-fill-color: var(--wui-color-surface-container-high);
-                --wui-button-content-color: var(--wui-color-on-surface);
-            }
-
-            &:disabled {
-                --wui-button-fill-color: color-mix(in srgb, var(--wui-color-on-surface) 10%, transparent);
-                --wui-button-content-color: color-mix(in srgb, var(--wui-color-on-surface) 38%, transparent);
-            }
-        }
-
-        &--color {
-            &-primary {
-                &.wui-button {
-                    &--filled {
-                        --wui-button-fill-color: var(--wui-color-primary-container);
-
-                        &:hover {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-primary) 8%, var(--wui-color-primary-container));
-                        }
-
-                        &:active {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-primary) 16%, var(--wui-color-primary-container));
-                        }
-                    }
-
-                    &--outlined {
-                        --wui-button-border-color: var(--wui-color-primary);
-                        --wui-button-content-color: var(--wui-color-primary);
-
-                        &:hover {
-                            --wui-button-fill-color: var(--wui-color-state-layer-primary-opacity-10);
-                        }
-
-                        &:active {
-                            --wui-button-fill-color: var(--wui-color-state-layer-primary-opacity-16);
-                        }
-                    }
-
-                    &--text {
-                        --wui-button-fill-color: transparent;
-                        --wui-button-content-color: var(--wui-color-primary);
-
-                        &:hover {
-                            --wui-button-fill-color: var(--wui-color-state-layer-primary-opacity-08);
-                        }
-
-                        &:active {
-                            --wui-button-fill-color: var(--wui-color-state-layer-primary-opacity-10);
-                        }
-                    }
+                &-error {
+                    @include button-text-states('error');
                 }
             }
-
-            &-error {
-                &.wui-button {
-                    &--filled {
-                        --wui-button-fill-color: var(--wui-color-error-container);
-                        --wui-button-content-color: var(--wui-color-error);
-
-                        &:hover {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-error) 8%, var(--wui-color-error-container));
-                        }
-
-                        &:active {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-error) 16%, var(--wui-color-error-container));
-                        }
-                    }
-
-                    &--outlined {
-                        --wui-button-border-color: var(--wui-color-error);
-                        --wui-button-content-color: var(--wui-color-error);
-
-                        &:hover {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-error) 8%, transparent);
-                        }
-
-                        &:active {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-error) 10%, transparent);
-                        }
-                    }
-
-                    &--text {
-                        --wui-button-fill-color: transparent;
-                        --wui-button-content-color: var(--wui-color-error);
-                        border: none;
-
-                        &:hover {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-error) 10%, transparent);
-                        }
-
-                        &:active {
-                            --wui-button-fill-color: color-mix(in srgb, var(--wui-color-error) 16%, transparent);
-                        }
-                    }
-                }
-            }
-
-            
         }
     }
 
