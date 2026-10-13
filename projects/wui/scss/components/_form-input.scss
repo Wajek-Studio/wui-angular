@@ -61,12 +61,12 @@
         }
 
         .wui-error {
-            color: var(--wui-color-danger);
+            color: var(--wui-color-error);
             display: none;
         }
 
         --base-color: var(--wui-color-on-surface-variant);
-        --base-border-color: var(--wui-color-outline);
+        --base-border-color: var(--wui-color-outline-variant);
         --base-label-color: var(--wui-color-on-surface-variant);
         --base-hint-color: var(--wui-color-on-surface-variant);
         --base-prefix-suffix-color: var(--wui-color-on-surface-variant);
@@ -93,10 +93,10 @@
         }
 
         &:has(.wui-input.wui-input--has-error) {
-            --wui-form-input-label-color: var(--wui-color-danger);
-            --wui-form-input-border-color: var(--wui-color-danger);
-            --wui-form-input-hint-color: var(--wui-color-danger);
-            --wui-form-input-prefix-suffix-color: var(--wui-color-danger);
+            --wui-form-input-label-color: var(--wui-color-error);
+            --wui-form-input-border-color: var(--wui-color-error);
+            --wui-form-input-hint-color: var(--wui-color-error);
+            --wui-form-input-prefix-suffix-color: var(--wui-color-error);
 
             .wui-hint {
                 display: none;

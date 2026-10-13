@@ -30,6 +30,9 @@ export class WuiSidenav implements OnInit {
     mode = input<'over' | 'side'>('over');
     modeChange = toObservable(this.mode);
 
+    size = input<'mini' | 'full'>('full');
+    sizeChange = toObservable(this.size);
+
     show = model<boolean>(false);
     showChange = toObservable(this.show);
 

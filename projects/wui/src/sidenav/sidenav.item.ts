@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, inject, input, OnInit, Renderer2 } from "@angular/core";
+import { Directive, ElementRef, inject, input, OnInit, Renderer2 } from "@angular/core";
 import { WuiSidenav } from "./sidenav";
 
 @Directive({
