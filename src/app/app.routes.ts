@@ -50,6 +50,8 @@ export const routes: Routes = [{
     path: 'message', loadComponent: () => import('./pages/message/message.page').then(m => m.MessagePage)
 }, {
     path: 'form-input', loadComponent: () => import('./pages/form-input/form-input.page').then(m => m.FormInputPage)
-},{
+}, {
+    path: 'sidenav', loadComponent: () => import('./pages/sidenav/sidenav.page').then(m => m.SidenavPage)
+}, {
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

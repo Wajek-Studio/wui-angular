@@ -49,6 +49,7 @@ import {
   mdiLightbulbOff,
   mdiBrightness5,
   mdiBrightness7,
+  mdiBackburger,
 } from '@mdi/js';
 
 export const appIcons = [{ name: 'home', path: mdiHome },
@@ -104,5 +105,6 @@ export const appIcons = [{ name: 'home', path: mdiHome },
       { name: 'lightbulb-on', path: mdiLightbulbOn},
       { name: 'lightbulb-off', path: mdiLightbulbOff},
       { name: 'brightness-5', path: mdiBrightness5},
-      { name: 'brightness-7', path: mdiBrightness7}
+      { name: 'brightness-7', path: mdiBrightness7},
+      { name: 'backburger', path: mdiBackburger}
 ]

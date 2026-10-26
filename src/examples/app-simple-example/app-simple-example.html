@@ -1,7 +1,7 @@
 <wui-app>
     <wui-topbar>
         <div class="wui-topbar-leading">
-            <button wuiButton size="lg" iconOnly variant="text">
+            <button wuiButton size="lg" iconOnly variant="text" (click)="sidenavToggle()">
                 <wui-icon icon="menu"></wui-icon>
             </button>
         </div>
@@ -11,12 +11,12 @@
     </wui-topbar>
 
     <wui-sidenav-container>
-        <wui-sidenav id="app-simple-sidenav">
+        <wui-sidenav [(show)]="sidenavShow" mode="side">
             <div class="wui-sidenav-content">
                 Sidenav
             </div>
         </wui-sidenav>
-        <div wuiSidenavContainerContent>
+        <div class="wui-sidenav-container-content">
             Content
         </div>
     </wui-sidenav-container>

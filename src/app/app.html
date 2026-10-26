@@ -9,7 +9,7 @@
     <div class="wui-topbar-content"></div>
 
     <div class="wui-topbar-trailing">
-      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="switchTheme()">
+      <button wuiButton iconOnly="true" variant="text" (click)="switchTheme()">
         @if(currentTheme() == 'system') {
           <wui-icon icon="monitor"></wui-icon>
         }
@@ -23,7 +23,7 @@
         }
       </button>
 
-      <button wuiButton iconOnly="true" variant="text" size="lg" (click)="toggleSidenavMode()">
+      <button wuiButton iconOnly="true" variant="text" (click)="toggleSidenavMode()">
         <wui-icon icon="book-open"></wui-icon>
       </button>
     </div>
@@ -84,6 +84,10 @@
 
         <a wuiSidenavItem label="Table" routerLink="/table" routerLinkActive="active">
           <wui-icon icon="table"></wui-icon>
+        </a>
+
+        <a wuiSidenavItem label="Sidenav" routerLink="/sidenav" routerLinkActive="active">
+          <wui-icon icon="backburger"></wui-icon>
         </a>
 
         <div wuiSidenavSubheader label="EXAMPLES"></div>
