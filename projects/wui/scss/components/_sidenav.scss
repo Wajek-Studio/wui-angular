@@ -85,23 +85,23 @@
         &-item {
             display: flex;
             column-gap: 1.5rem;
-            margin-inline: 1rem;
-            padding-inline: .625rem;
+            margin-inline: .5rem;
+            padding-inline: 1.125rem;
             height: 2.25rem;
             align-items: center;
             color: color-mix(in srgb, var(--wui-color-on-surface) 74%, transparent);
             text-decoration: none;
-            border-radius: .5rem;
+            border-radius: 1.125rem;
             font-weight: 500;
 
             &:hover {
-                background-color: var(--wui-color-state-layer-on-surface-opacity-08);
+                background-color: var(--wui-color-state-layer-on-surface-opacity-10);
                 color: var(--wui-color-on-surface);
             }
 
             &.active {
-                background-color: var(--wui-color-state-layer-primary-opacity-10);
-                color: var(--wui-color-on-surface);
+                background-color: var(--wui-color-state-layer-primary-opacity-16);
+                color: var(--wui-color-state-layer-on-primary);
             }
         }
 
@@ -111,6 +111,7 @@
             font-weight: 500;
             margin-top: 1rem;
             margin-bottom: .5rem;
+            opacity: .75;
         }
     }
 
