@@ -13,19 +13,21 @@ export const routes: Routes = [{
         path: 'nested', component: SettingNestedPage
     }]
 }, {
-    path: 'page', loadComponent: () => import('./pages/page/page.page').then(m => m.PagePage)
+    path: 'page', loadComponent: () => import('./pages/page/page.page').then(m => m.PagePage), children: [{
+        path: 'nested', loadComponent: () => import('./pages/page/page-nested.page').then(m => m.PageNestedPage)
+    }]
 }, {
     path: 'tipografi', loadComponent: () => import('./pages/tipografi.page/tipografi.page').then(m => m.TipografiPage)
 }, {
     path: 'radio', loadComponent: () => import('./pages/radio/radio.page').then(m => m.RadioPage)
-}, 
-{
+}, {
     path: 'button', loadComponent: () => import('./pages/button/button.page/button.page').then(m => m.ButtonPage)
-}, 
-{
-    path: 'dialog', loadComponent: () => import('./pages/dialog/dialog.page/dialog.page').then(m => m.DialogPage)
+}, {
+    path: 'dialog', loadComponent: () => import('./pages/dialog/dialog.page').then(m => m.DialogPage)
 }, {
     path: 'form', loadComponent: () => import('./pages/form/form.page/form.page').then(m => m.FormPage)
+}, {
+    path: 'text-field', loadComponent: () => import('./pages/text-field/text-field.page').then(m => m.TextFieldPage)
 }, {
     path: 'table', loadComponent: () => import('./pages/table.page/table.page').then(m => m.TablePage)
 }, {
@@ -42,14 +44,14 @@ export const routes: Routes = [{
     path: 'menu', loadComponent: () => import('./pages/menu/menu.page').then(m => m.AppMenuPage)
 }, {
     path: 'tabs', loadComponent: () => import('./pages/tab/tab.page').then(m => m.TabPage)
-},
-// {
-//     path: 'context-menu', loadComponent: () => import('./pages/context-menu/context-menu.page/context-menu.page').then(m => m.ContextMenuPage)
-// }, 
-{
+}, {
     path: 'snackbar', loadComponent: () => import('./pages/snackbar/snackbar.page').then(m => m.SnackbarPage)
 }, {
-    path: 'select-spike', loadComponent: () => import('./pages/select-spike/select-spike.page').then(m => m.SelectSpikePage)
-},{
+    path: 'message', loadComponent: () => import('./pages/message/message.page').then(m => m.MessagePage)
+}, {
+    path: 'form-input', loadComponent: () => import('./pages/form-input/form-input.page').then(m => m.FormInputPage)
+}, {
+    path: 'sidenav', loadComponent: () => import('./pages/sidenav/sidenav.page').then(m => m.SidenavPage)
+}, {
     path: '', redirectTo: '/home', pathMatch: 'full'
 }];

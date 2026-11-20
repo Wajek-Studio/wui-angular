@@ -1,0 +1,36 @@
+export interface WuiDialogConfig {
+    width?: string;
+    maxWidth?: string;
+    height?: string;
+    maxHeight?: string;
+    dismissable?: boolean;
+}
+
+export interface WuiAlertDialogConfig {
+    title: string;
+    message: string;
+}
+
+export interface WuiConfirmDialogAction {
+    label: string;
+    variant: "text" | "filled" | "outlined",
+    color: "default" | "primary" | "error"
+}
+
+export interface WuiConfirmDialogConfig {
+    title?: string;
+    message?: string;
+    actions?: WuiConfirmDialogAction[]
+}
+
+export interface WuiConfirmDialogParam {
+    title: string;
+    message: string;
+    actions: Array<WuiConfirmDialogAction | string>;
+}
+
+export interface WuiLoadingDialogConfig {
+    mode: 'circular' | 'linear' | 'indeterminate';
+    width?: string;
+    label?: string;
+}

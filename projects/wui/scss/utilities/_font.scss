@@ -1,0 +1,11 @@
+@use '../abstracts' as a;
+
+@mixin font {
+
+    @each $fw-value in a.$wui-font-weight {
+        .wui-fw-#{$fw-value} {
+            font-weight: $fw-value;
+        }
+    }
+
+}

@@ -47,7 +47,6 @@ export class WuiPageHost implements OnInit, OnDestroy {
   readonly name = input<string>('main');
 
   private readonly pages = inject(WuiPageService);
-  private readonly injector = inject(Injector);
   private readonly trapFactory = inject(FocusTrapFactory);
   private readonly document = inject(DOCUMENT);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
@@ -71,9 +70,7 @@ export class WuiPageHost implements OnInit, OnDestroy {
     const layer = layers.createComponent(WuiPageLayer);
     const wrapper: HTMLElement = layer.location.nativeElement;
 
-    const view = layer.instance.slot().createEmbeddedView(template, undefined, {
-      injector: this.injector,
-    });
+    const view = layer.instance.slot().createEmbeddedView(template, undefined);
 
     const trap = this.isBrowser ? this.trapFactory.create(wrapper) : null;
 

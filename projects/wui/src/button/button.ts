@@ -109,41 +109,15 @@ import { WuiButtonColor, WuiButtonIconPos, WuiButtonSize, WuiButtonVariant } fro
     '[class.wui-button--icon-start]': "iconPos() === 'start'",
     '[class.wui-button--icon-end]': "iconPos() === 'end'",
     '[class.wui-button--icon-only]': 'iconOnly()',
-    '[class.wui-button--color-default]': "color() === 'default'",
     '[class.wui-button--color-primary]': "color() === 'primary'",
-    '[class.wui-button--color-error]': "color() === 'error' || color() === 'danger'",
+    '[class.wui-button--color-error]': "color() === 'error'",
   },
 })
 export class WuiButton {
-  /** Varian warna: `filled` (default), `outlined`, atau `text`. */
   readonly variant = input<WuiButtonVariant>('filled');
-
-  /** Ukuran: `sm` | `md` (default) | `lg` | `xl`. */
   readonly size = input<WuiButtonSize>('md');
-
-  /**
-   * Sisi ikon: `start` (default) atau `end`.
-   *
-   * Hanya terasa bila tombol punya `<wui-icon>` anak langsung; sisi visual diatur CSS (`order`),
-   * jadi posisi ikon di markup tidak berpengaruh.
-   */
-  readonly iconPos = input<WuiButtonIconPos>('start');
-
-  /**
-   * Tombol hanya berisi ikon (tanpa label teks) → tombol jadi persegi.
-   *
-   * Ditulis sebagai atribut tanpa nilai: `<button wuiButton iconOnly aria-label="…">`.
-   * Penanda ini eksplisit karena CSS tidak bisa mendeteksi "tombol tanpa label teks".
-   * `aria-label` wajib supaya tombol tetap punya nama aksesibel.
-   */
-  readonly iconOnly = input(false, { transform: booleanAttribute });
-
-  /**
-   * Peran warna: `default` (netral, default), `primary`, atau `error` (`danger` masih diterima
-   * sebagai alias satu mayor).
-   *
-   * Nilainya tidak disimpan di komponen — komponen hanya membaca token peran
-   * (`--wui-color-default` / `-primary` / `-error`), jadi mengganti warna cukup dari `$wui-schemes`.
-   */
   readonly color = input<WuiButtonColor>('default');
+
+  readonly iconPos = input<WuiButtonIconPos>('start');
+  readonly iconOnly = input(false, { transform: booleanAttribute });
 }

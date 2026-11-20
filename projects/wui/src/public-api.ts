@@ -2,18 +2,28 @@
  * Public API Surface of wui
  */
 
+export * from './message.service';
+export * from './theme.service';
+
 export * from './app/app';
 
 export * from './button/button';
 export * from './button/button.options';
 
-export * from './dialog/dialog.options';
-export * from './dialog/dialog.ref';
 export * from './dialog/dialog.service';
+export * from './dialog/dialog.ref';
 
-export * from './form-field/form-field';
 export * from './form-field/input';
 export * from './form-field/label';
+export * from './form-field/suffix';
+export * from './form-field/prefix';
+export * from './form-field/hint';
+export * from './form-field/error';
+export * from './form-field/error-matcher';
+export * from './form-field/form-config';
+
+export * from './form-field/form-field';
+export * from './form-input/form-input';
 
 export * from './menu/menu-trigger';
 export * from './menu/menu';
@@ -28,8 +38,7 @@ export * from './page/page.ref';
 export * from './page/page.service';
 export * from './page/page.host';
 
-export * from './sidenav/sidenav.container';
-export * from './sidenav/sidenav.service';
+export * from './sidenav/sidenav-container';
 export * from './sidenav/sidenav.item';
 export * from './sidenav/sidenav';
 
@@ -41,10 +50,12 @@ export * from './icon/icon.service';
 export * from './icon/icon.model';
 
 export * from './table/table';
+
 export * from './pagination/pagination';
 export * from './pagination/pagination.options';
+
 export * from './loading/loading';
-export * from './loading/loading.options';
+
 export * from './badge/badge';
 export * from './badge/badge.options';
 

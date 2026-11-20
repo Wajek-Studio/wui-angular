@@ -5,10 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "build:wui": "ng build wui",
+    "build:wui:prod": "ng build wui --configuration production",
     "theme:build": "node projects/wui/bin/wui-theme.mjs src/theme/default.json",
     "theme:check": "node projects/wui/bin/wui-theme.mjs src/theme/default.json --check",
-    "publish:wui": "npm run build:wui && cd dist/@wajek/wui && npm publish",
+    "publish:wui": "npm run build:wui:prod && cd dist/@wajek/wui && npm publish",
     "watch": "ng build --watch --configuration development",
     "lint:styles": "stylelint \"projects/wui/scss/**/*.scss\"",
     "test": "ng test",
@@ -45,7 +47,8 @@
     "express": "^5.1.0",
     "ngx-highlightjs": "^14.0.1",
     "rxjs": "~7.8.0",
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular/build": "^20.3.37",

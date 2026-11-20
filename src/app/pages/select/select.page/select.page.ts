@@ -13,6 +13,7 @@ import {
   WuiTable,
 } from '@wajek/wui';
 import { ShowcaseComponent } from '../../../shared/showcase';
+import { SelectSimpleExample } from '../../../../examples/select-simple-example/select-simple-example';
 
 /**
  * Halaman demo `<wui-select>`.
@@ -22,7 +23,6 @@ import { ShowcaseComponent } from '../../../shared/showcase';
 @Component({
   selector: 'app-select.page',
   imports: [
-    WuiButton,
     WuiFormField,
     WuiIcon,
     WuiInput,
@@ -33,7 +33,8 @@ import { ShowcaseComponent } from '../../../shared/showcase';
     WuiSelect,
     WuiTable,
     ShowcaseComponent,
-  ],
+    SelectSimpleExample
+],
   templateUrl: './select.page.html',
 })
 export class SelectPage implements OnInit {

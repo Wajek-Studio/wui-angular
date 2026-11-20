@@ -1,0 +1,31 @@
+<div class="wui-row wui-gap-col-4 wui-align-items-start">
+    <div class="wui-col-12 wui-col-md-6">
+        
+        <wui-form-field>
+            <label wuiLabel>Kota</label>
+            <wui-select wuiInput id="outline_user_kota" placeholder="Pilih kota" [(ngModel)]="selectedKota">
+                @for (kota of dataKota(); track kota.value) {
+                    <wui-option [value]="kota.value">{{ kota.label }}</wui-option>
+                }
+            </wui-select>
+            <div wuiHint>Kota asal anda</div>
+        </wui-form-field>
+
+        <div class="wui-mt-3 wui-d-flex wui-gap-col-2">
+            <button wuiButton variant="outlined" (click)="pilih('bandung')">Pilih Bandung</button>
+            <button wuiButton variant="text" (click)="reset()">Kosongkan</button>
+        </div>
+    </div>
+
+    <div class="wui-col-12 wui-col-md-6">
+        <wui-form-field>
+            <label wuiLabel>Negara (disabled)</label>
+            <wui-select wuiInput placeholder="Pilih negara" disabled [(ngModel)]="selectedNegara">
+                @for (negara of dataNegara(); track negara.value) {
+                    <wui-option [value]="negara.value">{{ negara.label }}</wui-option>
+                }
+            </wui-select>
+            <div wuiHint>Negara tempat asal anda</div>
+        </wui-form-field>
+    </div>
+</div>
